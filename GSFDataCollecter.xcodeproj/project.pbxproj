@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D3E6D0671890642500F2C004 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3E6D0661890642500F2C004 /* opencv2.framework */; };
 		DBB4283B1880A64F00139082 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB4283A1880A64F00139082 /* Foundation.framework */; };
 		DBB4283D1880A64F00139082 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB4283C1880A64F00139082 /* CoreGraphics.framework */; };
 		DBB4283F1880A64F00139082 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB4283E1880A64F00139082 /* UIKit.framework */; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D3E6D0661890642500F2C004 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = ../ios/opencv2.framework; sourceTree = "<group>"; };
 		DBB428371880A64F00139082 /* GSFDataCollecter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GSFDataCollecter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBB4283A1880A64F00139082 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DBB4283C1880A64F00139082 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -62,6 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3E6D0671890642500F2C004 /* opencv2.framework in Frameworks */,
 				DBB4283D1880A64F00139082 /* CoreGraphics.framework in Frameworks */,
 				DBB4283F1880A64F00139082 /* UIKit.framework in Frameworks */,
 				DBB4283B1880A64F00139082 /* Foundation.framework in Frameworks */,
@@ -103,6 +106,7 @@
 		DBB428391880A64F00139082 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D3E6D0661890642500F2C004 /* opencv2.framework */,
 				DBB4283A1880A64F00139082 /* Foundation.framework */,
 				DBB4283C1880A64F00139082 /* CoreGraphics.framework */,
 				DBB4283E1880A64F00139082 /* UIKit.framework */,
@@ -203,6 +207,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Michael Baptist - LLNL";
 				TargetAttributes = {
+					DBB428361880A64F00139082 = {
+						DevelopmentTeam = Z5SLZ6QPTL;
+					};
 					DBB4285A1880A64F00139082 = {
 						TestTargetID = DBB428361880A64F00139082;
 					};
@@ -393,6 +400,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/brilliantsquid/code/llnl/ios,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GSFDataCollecter/GSFDataCollecter-Prefix.pch";
 				INFOPLIST_FILE = "GSFDataCollecter/GSFDataCollecter-Info.plist";
@@ -406,6 +418,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/brilliantsquid/code/llnl/ios,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GSFDataCollecter/GSFDataCollecter-Prefix.pch";
 				INFOPLIST_FILE = "GSFDataCollecter/GSFDataCollecter-Info.plist";
@@ -475,6 +492,7 @@
 				DBB4286E1880A64F00139082 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DBB4286F1880A64F00139082 /* Build configuration list for PBXNativeTarget "GSFDataCollecterTests" */ = {
 			isa = XCConfigurationList;
@@ -483,6 +501,7 @@
 				DBB428711880A64F00139082 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
