@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GSFViewController : UIViewController
+@interface GSFViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @end

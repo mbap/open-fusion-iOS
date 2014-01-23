@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D3E6D0671890642500F2C004 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3E6D0661890642500F2C004 /* opencv2.framework */; };
+		96B598FE1890DDBB001D29CF /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96B598FD1890DDBB001D29CF /* opencv2.framework */; };
+		96B599001890E2F0001D29CF /* OverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96B598FF1890E2F0001D29CF /* OverlayView.xib */; };
 		DBB4283B1880A64F00139082 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB4283A1880A64F00139082 /* Foundation.framework */; };
 		DBB4283D1880A64F00139082 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB4283C1880A64F00139082 /* CoreGraphics.framework */; };
 		DBB4283F1880A64F00139082 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB4283E1880A64F00139082 /* UIKit.framework */; };
@@ -36,7 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		D3E6D0661890642500F2C004 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = ../ios/opencv2.framework; sourceTree = "<group>"; };
+		96B598FD1890DDBB001D29CF /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = ../opencv/ios/opencv2.framework; sourceTree = "<group>"; };
+		96B598FF1890E2F0001D29CF /* OverlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OverlayView.xib; sourceTree = "<group>"; };
 		DBB428371880A64F00139082 /* GSFDataCollecter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GSFDataCollecter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBB4283A1880A64F00139082 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DBB4283C1880A64F00139082 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -64,7 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D3E6D0671890642500F2C004 /* opencv2.framework in Frameworks */,
+				96B598FE1890DDBB001D29CF /* opencv2.framework in Frameworks */,
 				DBB4283D1880A64F00139082 /* CoreGraphics.framework in Frameworks */,
 				DBB4283F1880A64F00139082 /* UIKit.framework in Frameworks */,
 				DBB4283B1880A64F00139082 /* Foundation.framework in Frameworks */,
@@ -106,7 +108,7 @@
 		DBB428391880A64F00139082 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D3E6D0661890642500F2C004 /* opencv2.framework */,
+				96B598FD1890DDBB001D29CF /* opencv2.framework */,
 				DBB4283A1880A64F00139082 /* Foundation.framework */,
 				DBB4283C1880A64F00139082 /* CoreGraphics.framework */,
 				DBB4283E1880A64F00139082 /* UIKit.framework */,
@@ -122,6 +124,7 @@
 				DBB4284A1880A64F00139082 /* GSFAppDelegate.m */,
 				DBB4284C1880A64F00139082 /* Main_iPhone.storyboard */,
 				DBB4284F1880A64F00139082 /* Main_iPad.storyboard */,
+				96B598FF1890E2F0001D29CF /* OverlayView.xib */,
 				DBB428521880A64F00139082 /* GSFViewController.h */,
 				DBB428531880A64F00139082 /* GSFViewController.m */,
 				DBB428551880A64F00139082 /* Images.xcassets */,
@@ -241,6 +244,7 @@
 			files = (
 				DBB428511880A64F00139082 /* Main_iPad.storyboard in Resources */,
 				DBB428561880A64F00139082 /* Images.xcassets in Resources */,
+				96B599001890E2F0001D29CF /* OverlayView.xib in Resources */,
 				DBB4284E1880A64F00139082 /* Main_iPhone.storyboard in Resources */,
 				DBB428451880A64F00139082 /* InfoPlist.strings in Resources */,
 			);
@@ -404,6 +408,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/brilliantsquid/code/llnl/ios,
+					/Users/mbaptist/Code/opencv/ios,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GSFDataCollecter/GSFDataCollecter-Prefix.pch";
@@ -422,6 +427,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/brilliantsquid/code/llnl/ios,
+					/Users/mbaptist/Code/opencv/ios,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GSFDataCollecter/GSFDataCollecter-Prefix.pch";
