@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		96B599001890E2F0001D29CF /* OverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96B598FF1890E2F0001D29CF /* OverlayView.xib */; };
 		96B5990318920061001D29CF /* GSFDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B5990218920061001D29CF /* GSFDataViewController.m */; };
+		D3E6D06A189314E200F2C004 /* GSFPhotoSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = D3E6D069189314E200F2C004 /* GSFPhotoSelector.m */; };
 		DBB4283B1880A64F00139082 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB4283A1880A64F00139082 /* Foundation.framework */; };
 		DBB4283D1880A64F00139082 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB4283C1880A64F00139082 /* CoreGraphics.framework */; };
 		DBB4283F1880A64F00139082 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB4283E1880A64F00139082 /* UIKit.framework */; };
@@ -41,6 +42,8 @@
 		96B598FF1890E2F0001D29CF /* OverlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OverlayView.xib; sourceTree = "<group>"; };
 		96B5990118920061001D29CF /* GSFDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFDataViewController.h; sourceTree = "<group>"; };
 		96B5990218920061001D29CF /* GSFDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFDataViewController.m; sourceTree = "<group>"; };
+		D3E6D068189314E200F2C004 /* GSFPhotoSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFPhotoSelector.h; sourceTree = "<group>"; };
+		D3E6D069189314E200F2C004 /* GSFPhotoSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFPhotoSelector.m; sourceTree = "<group>"; };
 		DBB428371880A64F00139082 /* GSFDataCollecter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GSFDataCollecter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBB4283A1880A64F00139082 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DBB4283C1880A64F00139082 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -124,6 +127,8 @@
 				DBB428491880A64F00139082 /* GSFAppDelegate.h */,
 				DBB4284A1880A64F00139082 /* GSFAppDelegate.m */,
 				DBB4284C1880A64F00139082 /* Main_iPhone.storyboard */,
+				D3E6D068189314E200F2C004 /* GSFPhotoSelector.h */,
+				D3E6D069189314E200F2C004 /* GSFPhotoSelector.m */,
 				96B5990118920061001D29CF /* GSFDataViewController.h */,
 				96B5990218920061001D29CF /* GSFDataViewController.m */,
 				DBB4284F1880A64F00139082 /* Main_iPad.storyboard */,
@@ -214,7 +219,7 @@
 				ORGANIZATIONNAME = "Michael Baptist - LLNL";
 				TargetAttributes = {
 					DBB428361880A64F00139082 = {
-						DevelopmentTeam = 58K2V57UB6;
+						DevelopmentTeam = Z5SLZ6QPTL;
 					};
 					DBB4285A1880A64F00139082 = {
 						TestTargetID = DBB428361880A64F00139082;
@@ -268,6 +273,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3E6D06A189314E200F2C004 /* GSFPhotoSelector.m in Sources */,
 				DBB428471880A64F00139082 /* main.m in Sources */,
 				DBB4284B1880A64F00139082 /* GSFAppDelegate.m in Sources */,
 				DBB428541880A64F00139082 /* GSFViewController.m in Sources */,

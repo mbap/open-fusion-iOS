@@ -11,13 +11,14 @@
 @interface GSFViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *imagePreview;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
+
 @property (nonatomic) IBOutlet UIView *overlayView;
+@property (weak, nonatomic) IBOutlet UIToolbar *overlayToolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *done;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *snap;
+
 @property (nonatomic) UIImagePickerController *imagePickerController;
-
-
-
+@property (nonatomic, weak) NSTimer *cameraTimer;
 @end
 
 @implementation GSFViewController
@@ -54,6 +55,7 @@
 
 - (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType
 {
+    /*
     if (self.imagePreview.isAnimating)
     {
         [self.imagePreview stopAnimating];
@@ -63,26 +65,31 @@
     {
         [self.capturedImages removeAllObjects];
     }
+    */
     
     UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
     imagePickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
     imagePickerController.sourceType = sourceType;
     imagePickerController.delegate = self;
+    imagePickerController.allowsEditing = YES;
     
     if (sourceType == UIImagePickerControllerSourceTypeCamera)
     {
         /*
          The user wants to use the camera interface. Set up our custom overlay view for the camera.
          */
-        imagePickerController.showsCameraControls = NO;
+        imagePickerController.showsCameraControls = YES;
         
         /*
          Load the overlay view from the OverlayView nib file. Self is the File's Owner for the nib file, so the overlayView outlet is set to the main view in the nib. Pass that view to the image picker controller to use as its overlay view, and set self's reference to the view to nil.
          */
+        
+        /*
         [[NSBundle mainBundle] loadNibNamed:@"OverlayView" owner:self options:nil];
         self.overlayView.frame = imagePickerController.cameraOverlayView.frame;
         imagePickerController.cameraOverlayView = self.overlayView;
         self.overlayView = nil;
+        */
     }
     
     self.imagePickerController = imagePickerController;
@@ -101,6 +108,7 @@
 - (IBAction)takePhoto:(id)sender
 {
     [self.imagePickerController takePicture];
+    [self.view bringSubviewToFront:self.toolbar];
 }
 
 - (void)finishAndUpdate
