@@ -5,31 +5,31 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="APLViewController">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GSFViewController">
             <connections>
-                <outlet property="doneButton" destination="14" id="33"/>
-                <outlet property="overlayView" destination="37" id="42"/>
-                <outlet property="takePictureButton" destination="15" id="34"/>
+                <outlet property="done" destination="14" id="2LZ-Sf-sT9"/>
+                <outlet property="overlayView" destination="37" id="Km3-ez-kja"/>
+                <outlet property="snap" destination="15" id="RMf-bP-Bhd"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="37">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="blackTranslucent" translatesAutoresizingMaskIntoConstraints="NO" id="13" userLabel="Overlay View (Toolbar)">
-                    <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                    <rect key="frame" x="0.0" y="436" width="320" height="44"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <items>
                         <barButtonItem title="Done" id="14">
                             <connections>
-                                <action selector="done:" destination="-1" id="29"/>
+                                <action selector="done:" destination="-1" id="E4e-cP-RA2"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="18"/>
                         <barButtonItem title="Snap" id="15">
                             <connections>
-                                <action selector="takePhoto:" destination="-1" id="27"/>
+                                <action selector="takePhoto:" destination="-1" id="cZP-Eg-psf"/>
                             </connections>
                         </barButtonItem>
                     </items>
@@ -40,7 +40,7 @@
                 <constraint firstItem="13" firstAttribute="trailing" secondItem="37" secondAttribute="trailing" id="39"/>
                 <constraint firstItem="13" firstAttribute="bottom" secondItem="37" secondAttribute="bottom" id="41"/>
             </constraints>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
         </view>
     </objects>
 </document>
