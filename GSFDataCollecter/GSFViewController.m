@@ -7,6 +7,7 @@
 //
 
 #import "GSFViewController.h"
+#import "GSFPhotoSelector.h"
 
 @interface GSFViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *imagePreview;
@@ -19,6 +20,8 @@
 
 @property (nonatomic) UIImagePickerController *imagePickerController;
 @property (nonatomic, weak) NSTimer *cameraTimer;
+@property (nonatomic) NSMutableArray *capturedImages;
+
 @end
 
 @implementation GSFViewController
@@ -160,6 +163,14 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"selectorsegue"]) {
+        GSFPhotoSelector *photoselector = (GSFPhotoSelector*)segue.destinationViewController;
+        photoselector.capturedImages = self.capturedImages;
+    }
 }
 
 @end
