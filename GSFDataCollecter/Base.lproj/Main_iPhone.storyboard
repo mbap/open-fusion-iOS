@@ -46,7 +46,7 @@
                     <connections>
                         <outlet property="imagePreview" destination="ilg-vF-43O" id="LPl-KJ-vIO"/>
                         <outlet property="toolbar" destination="vCw-mH-zuq" id="03p-Qi-gfg"/>
-                        <segue destination="m8u-xS-ePy" kind="push" identifier="selectorsegue" id="Dpn-ZL-Hfj"/>
+                        <segue destination="m8u-xS-ePy" kind="push" identifier="selectorsegue" id="mYA-56-EA2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="txS-EV-dAM" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -66,7 +66,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="BNO-Wu-MTF">
-                                <rect key="frame" x="0.0" y="109" width="320" height="327"/>
+                                <rect key="frame" x="0.0" y="65" width="320" height="371"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="W3y-4x-xcT">
                                     <size key="itemSize" width="155" height="155"/>
@@ -109,13 +109,6 @@
                                     <barButtonItem title="More" id="gq6-is-9JU"/>
                                 </items>
                             </toolbar>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uFw-Wh-xhp">
-                                <rect key="frame" x="0.0" y="65" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <items>
-                                    <barButtonItem title="Discard All" id="oQ6-pC-vYM"/>
-                                </items>
-                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -123,15 +116,13 @@
                     <connections>
                         <outlet property="bottomToolbar" destination="Pyv-Yg-jeY" id="723-gW-tlo"/>
                         <outlet property="collectionView" destination="BNO-Wu-MTF" id="62a-ph-PiL"/>
-                        <outlet property="discardAll" destination="oQ6-pC-vYM" id="ubG-nu-hMP"/>
                         <outlet property="done" destination="H7F-2c-x1W" id="Thl-4w-bLi"/>
                         <outlet property="more" destination="gq6-is-9JU" id="nPG-D6-p0K"/>
-                        <outlet property="topToolbar" destination="uFw-Wh-xhp" id="xJx-NI-0xa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0ee-at-zpF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="575" y="195"/>
+            <point key="canvasLocation" x="574" y="195"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="k4e-SX-qqE">

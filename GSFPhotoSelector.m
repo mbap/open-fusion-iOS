@@ -31,6 +31,10 @@
 	// Do any additional setup after loading the view.
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -41,7 +45,7 @@
 // specifies number of collection view cells to allocate.
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    NSLog(@"%lu", (unsigned long)self.capturedImages.count);
+    NSLog(@"number of cells:%d", self.capturedImages.count);
     return self.capturedImages.count;
 }
 

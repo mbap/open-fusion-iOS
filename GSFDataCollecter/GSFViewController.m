@@ -171,10 +171,9 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"selectorsegue"]) {
-        GSFPhotoSelector *photoselector = (GSFPhotoSelector*)segue.destinationViewController;
-        photoselector.capturedImages = self.capturedImages;
-        
-        NSLog(@"captured %d image(s)", self.capturedImages.count);
+        GSFPhotoSelector *selector = (GSFPhotoSelector*)segue.destinationViewController;
+        selector.capturedImages = [[NSMutableArray alloc] initWithArray:self.capturedImages];
+        NSLog(@"captured %d image(s), dest:%d", self.capturedImages.count, selector.capturedImages.count);
     }
 }
 
