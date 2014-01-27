@@ -142,6 +142,8 @@
     }
     
     self.imagePickerController = nil;
+    [self.view bringSubviewToFront:self.toolbar];
+
 }
 
 // This method is called when an image has been chosen from the library or taken from the camera.
@@ -173,7 +175,7 @@
     if ([[segue identifier] isEqualToString:@"selectorsegue"]) {
         GSFPhotoSelector *selector = (GSFPhotoSelector*)segue.destinationViewController;
         selector.capturedImages = [[NSMutableArray alloc] initWithArray:self.capturedImages];
-        NSLog(@"captured %d image(s), dest:%d", self.capturedImages.count, selector.capturedImages.count);
+        NSLog(@"captured %lu image(s), dest:%lu", (unsigned long)self.capturedImages.count, (unsigned long)selector.capturedImages.count);
     }
 }
 

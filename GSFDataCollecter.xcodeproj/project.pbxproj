@@ -11,6 +11,7 @@
 		96B5990318920061001D29CF /* GSFDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B5990218920061001D29CF /* GSFDataViewController.m */; };
 		96B599061894437F001D29CF /* GSFPhotoSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B599051894437F001D29CF /* GSFPhotoSelector.m */; };
 		96B599091895FB4D001D29CF /* GSFImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B599081895FB4D001D29CF /* GSFImageCollectionViewCell.m */; };
+		96B5990C18963A5A001D29CF /* GSFImageSelectorPreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B5990B18963A5A001D29CF /* GSFImageSelectorPreview.m */; };
 		DBB4283B1880A64F00139082 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB4283A1880A64F00139082 /* Foundation.framework */; };
 		DBB4283D1880A64F00139082 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB4283C1880A64F00139082 /* CoreGraphics.framework */; };
 		DBB4283F1880A64F00139082 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB4283E1880A64F00139082 /* UIKit.framework */; };
@@ -47,6 +48,8 @@
 		96B599051894437F001D29CF /* GSFPhotoSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GSFPhotoSelector.m; path = ../GSFPhotoSelector.m; sourceTree = "<group>"; };
 		96B599071895FB4D001D29CF /* GSFImageCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFImageCollectionViewCell.h; sourceTree = "<group>"; };
 		96B599081895FB4D001D29CF /* GSFImageCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFImageCollectionViewCell.m; sourceTree = "<group>"; };
+		96B5990A18963A5A001D29CF /* GSFImageSelectorPreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GSFImageSelectorPreview.h; path = ../GSFImageSelectorPreview.h; sourceTree = "<group>"; };
+		96B5990B18963A5A001D29CF /* GSFImageSelectorPreview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GSFImageSelectorPreview.m; path = ../GSFImageSelectorPreview.m; sourceTree = "<group>"; };
 		DBB428371880A64F00139082 /* GSFDataCollecter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GSFDataCollecter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBB4283A1880A64F00139082 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DBB4283C1880A64F00139082 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -138,6 +141,8 @@
 				DBB428531880A64F00139082 /* GSFViewController.m */,
 				96B599041894437F001D29CF /* GSFPhotoSelector.h */,
 				96B599051894437F001D29CF /* GSFPhotoSelector.m */,
+				96B5990A18963A5A001D29CF /* GSFImageSelectorPreview.h */,
+				96B5990B18963A5A001D29CF /* GSFImageSelectorPreview.m */,
 				96B599071895FB4D001D29CF /* GSFImageCollectionViewCell.h */,
 				96B599081895FB4D001D29CF /* GSFImageCollectionViewCell.m */,
 				DBB428551880A64F00139082 /* Images.xcassets */,
@@ -284,6 +289,7 @@
 				DBB4284B1880A64F00139082 /* GSFAppDelegate.m in Sources */,
 				DBB428541880A64F00139082 /* GSFViewController.m in Sources */,
 				96B5990318920061001D29CF /* GSFDataViewController.m in Sources */,
+				96B5990C18963A5A001D29CF /* GSFImageSelectorPreview.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
