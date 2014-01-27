@@ -7,6 +7,7 @@
 //
 
 #import "GSFViewController.h"
+#import "GSFPhotoSelector.h"
 
 @interface GSFViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *imagePreview;
@@ -19,6 +20,8 @@
 
 @property (nonatomic) UIImagePickerController *imagePickerController;
 @property (nonatomic, weak) NSTimer *cameraTimer;
+@property (nonatomic) NSMutableArray *capturedImages;
+
 @end
 
 @implementation GSFViewController
@@ -28,8 +31,10 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
+    //allocate the images array.
     self.capturedImages = [[NSMutableArray alloc] init];
     
+    // check for a camera
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
     {
         // There is not a camera on this device, so don't show the camera button.
@@ -40,19 +45,20 @@
     
 }
 
-
+// button action for showing the camera
 - (IBAction)showImagePickerForCamera:(id)sender
 {
     [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
 }
 
-
+// button action for showing the library
 - (IBAction)showImagePickerForPhotoPicker:(id)sender
 {
     [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
 }
 
-
+// loads the image picker for either the library or the camera.
+// also will discard all images in the captured array.
 - (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType
 {
     /*
@@ -76,11 +82,11 @@
     if (sourceType == UIImagePickerControllerSourceTypeCamera)
     {
         /*
-         The user wants to use the camera interface. Set up our custom overlay view for the camera.
+         The user wants to use the camera interface.
          */
         imagePickerController.showsCameraControls = YES;
         
-        /*
+        /* Set up our custom overlay view for the camera.
          Load the overlay view from the OverlayView nib file. Self is the File's Owner for the nib file, so the overlayView outlet is set to the main view in the nib. Pass that view to the image picker controller to use as its overlay view, and set self's reference to the view to nil.
          */
         
@@ -138,14 +144,13 @@
     self.imagePickerController = nil;
 }
 
-#pragma mark - UIImagePickerControllerDelegate
-
 // This method is called when an image has been chosen from the library or taken from the camera.
+// we segue here to the collection view.
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
-    
     [self.capturedImages addObject:image];
+    [self performSegueWithIdentifier:@"selectorsegue" sender:self];
     [self finishAndUpdate];
 }
 
@@ -160,6 +165,16 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+// called before the segue happens
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"selectorsegue"]) {
+        GSFPhotoSelector *selector = (GSFPhotoSelector*)segue.destinationViewController;
+        selector.capturedImages = [[NSMutableArray alloc] initWithArray:self.capturedImages];
+        NSLog(@"captured %d image(s), dest:%d", self.capturedImages.count, selector.capturedImages.count);
+    }
 }
 
 @end

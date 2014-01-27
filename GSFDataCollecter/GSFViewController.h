@@ -10,6 +10,4 @@
 
 @interface GSFViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
-@property (nonatomic) NSMutableArray *capturedImages;
-
 @end
