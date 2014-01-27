@@ -8,18 +8,18 @@
 
 #import "GSFPhotoSelector.h"
 #import "GSFImageCollectionViewCell.h"
+#import "GSFImageSelectorPreview.h"
+
 
 
 @interface GSFPhotoSelector () <UICollectionViewDataSource, UICollectionViewDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
-
 @property (weak, nonatomic) IBOutlet UIToolbar *bottomToolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *done;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *more;
 
-@property (weak, nonatomic) IBOutlet UIToolbar *topToolbar;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *discardAll;
+@property (nonatomic) UIImageView *imagePreview;
 
 @end
 
@@ -29,10 +29,6 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
 }
 
 - (void)didReceiveMemoryWarning
@@ -45,7 +41,7 @@
 // specifies number of collection view cells to allocate.
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    NSLog(@"number of cells:%d", self.capturedImages.count);
+    NSLog(@"number of cells:%lu", (unsigned long)self.capturedImages.count);
     return self.capturedImages.count;
 }
 
@@ -63,6 +59,30 @@
     return cell;
     
 }
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([[segue identifier] isEqualToString:@"selectorImagePreviewSegue"]) {
+        GSFImageSelectorPreview *preview = (GSFImageSelectorPreview *)segue.destinationViewController;
+        preview.imagePreview = [[UIImageView alloc] init];
+        preview.imagePreview = self.imagePreview;
+    }
+}
+
+- (IBAction)viewPhotoPreview:(UITapGestureRecognizer *)gesture
+{
+    CGPoint tapLocation = [gesture locationInView:self.collectionView];
+    NSIndexPath *index = [self.collectionView indexPathForItemAtPoint:tapLocation];
+    if (index) {
+        NSLog(@"index is valid");
+        GSFImageCollectionViewCell *cell = (GSFImageCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:index];
+        self.imagePreview = [[UIImageView alloc] init];
+        self.imagePreview = cell.imageView;
+        [self performSegueWithIdentifier:@"selectorImagePreviewSegue" sender:self];
+    }
+    
+}
+
 
 
 @end

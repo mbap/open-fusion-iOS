@@ -53,6 +53,34 @@
             </objects>
             <point key="canvasLocation" x="81" y="195"/>
         </scene>
+        <!--Image Selector Preview - Image Preview-->
+        <scene sceneID="vvb-wc-0p5">
+            <objects>
+                <viewController id="wg5-j6-O9O" customClass="GSFImageSelectorPreview" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1lj-2A-Ya5"/>
+                        <viewControllerLayoutGuide type="bottom" id="Irf-1N-fMP"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="4fg-dZ-46M">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mLd-1a-B98">
+                                <rect key="frame" x="0.0" y="63" width="320" height="417"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Image Preview" id="UvZ-hv-6lq"/>
+                    <connections>
+                        <outlet property="imagePreview" destination="mLd-1a-B98" id="aoO-tI-bib"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bF5-xe-k0l" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="574" y="-671"/>
+        </scene>
         <!--Photo Selector - Photo Selector-->
         <scene sceneID="Az6-WI-Swp">
             <objects>
@@ -66,30 +94,32 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="BNO-Wu-MTF">
-                                <rect key="frame" x="0.0" y="65" width="320" height="371"/>
+                                <rect key="frame" x="0.0" y="36" width="320" height="400"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <gestureRecognizers/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="W3y-4x-xcT">
-                                    <size key="itemSize" width="155" height="155"/>
+                                    <size key="itemSize" width="200" height="300"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="kcU-kX-8Wc" customClass="GSFImageCollectionViewCell">
-                                        <rect key="frame" x="0.0" y="64" width="155" height="155"/>
+                                        <rect key="frame" x="60" y="64" width="200" height="300"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="155" height="155"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="200" height="300"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ii1-bF-ThX">
-                                                    <rect key="frame" x="0.0" y="0.0" width="155" height="155"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="200" height="300"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <gestureRecognizers/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <size key="customSize" width="155" height="155"/>
+                                        <size key="customSize" width="200" height="300"/>
                                         <connections>
                                             <outlet property="imageView" destination="ii1-bF-ThX" id="Yic-Jc-opp"/>
                                         </connections>
@@ -98,6 +128,7 @@
                                 <connections>
                                     <outlet property="dataSource" destination="m8u-xS-ePy" id="1HE-3z-4w7"/>
                                     <outlet property="delegate" destination="m8u-xS-ePy" id="3hE-sL-DxC"/>
+                                    <outletCollection property="gestureRecognizers" destination="Z9P-Yk-Rga" appends="YES" id="IaB-Xh-OZk"/>
                                 </connections>
                             </collectionView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pyv-Yg-jeY">
@@ -115,12 +146,18 @@
                     <navigationItem key="navigationItem" title="Photo Selector" id="eTZ-Dv-qwX"/>
                     <connections>
                         <outlet property="bottomToolbar" destination="Pyv-Yg-jeY" id="723-gW-tlo"/>
-                        <outlet property="collectionView" destination="BNO-Wu-MTF" id="62a-ph-PiL"/>
+                        <outlet property="collectionView" destination="BNO-Wu-MTF" id="Lvs-PS-2EY"/>
                         <outlet property="done" destination="H7F-2c-x1W" id="Thl-4w-bLi"/>
                         <outlet property="more" destination="gq6-is-9JU" id="nPG-D6-p0K"/>
+                        <segue destination="wg5-j6-O9O" kind="push" identifier="selectorImagePreviewSegue" id="Bfa-Hn-Vtx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0ee-at-zpF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="Z9P-Yk-Rga">
+                    <connections>
+                        <action selector="viewPhotoPreview:" destination="m8u-xS-ePy" id="SoF-8B-2s4"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="574" y="195"/>
         </scene>
