@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *more;
 
 @property (nonatomic) UIImageView *imagePreview;
+@property (nonatomic) GSFImageCollectionViewCell *imagecell;
 
 @end
 
@@ -64,8 +65,8 @@
 {
     if([[segue identifier] isEqualToString:@"selectorImagePreviewSegue"]) {
         GSFImageSelectorPreview *preview = (GSFImageSelectorPreview *)segue.destinationViewController;
-        preview.imagePreview = [[UIImageView alloc] init];
-        preview.imagePreview = self.imagePreview;
+        preview.image = [[UIImage alloc] init];
+        preview.image = self.imagecell.imageView.image;
     }
 }
 
@@ -74,10 +75,7 @@
     CGPoint tapLocation = [gesture locationInView:self.collectionView];
     NSIndexPath *index = [self.collectionView indexPathForItemAtPoint:tapLocation];
     if (index) {
-        NSLog(@"index is valid");
-        GSFImageCollectionViewCell *cell = (GSFImageCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:index];
-        self.imagePreview = [[UIImageView alloc] init];
-        self.imagePreview = cell.imageView;
+        self.imagecell = (GSFImageCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:index];
         [self performSegueWithIdentifier:@"selectorImagePreviewSegue" sender:self];
     }
     

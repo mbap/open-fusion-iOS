@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface GSFImageSelectorPreview : UIViewController
-@property (nonatomic) IBOutlet UIImageView *imagePreview;
+
+@property (nonatomic) UIImage *image;
 
 @end

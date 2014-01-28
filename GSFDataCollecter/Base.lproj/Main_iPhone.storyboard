@@ -69,12 +69,23 @@
                                 <rect key="frame" x="0.0" y="63" width="320" height="417"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l3J-yg-KX2">
+                                <rect key="frame" x="0.0" y="436" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items>
+                                    <barButtonItem title="Discard" id="sbi-Hl-aQl">
+                                        <connections>
+                                            <action selector="discardImageFromSet:" destination="wg5-j6-O9O" id="NS1-CA-Tnx"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Image Preview" id="UvZ-hv-6lq"/>
                     <connections>
-                        <outlet property="imagePreview" destination="mLd-1a-B98" id="aoO-tI-bib"/>
+                        <outlet property="imageViewPreview" destination="mLd-1a-B98" id="5xU-Op-v9p"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bF5-xe-k0l" userLabel="First Responder" sceneMemberID="firstResponder"/>
