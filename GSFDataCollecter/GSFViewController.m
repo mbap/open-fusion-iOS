@@ -13,10 +13,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imagePreview;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 
-@property (nonatomic) IBOutlet UIView *overlayView;
-@property (weak, nonatomic) IBOutlet UIToolbar *overlayToolbar;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *done;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *snap;
 
 @property (nonatomic) UIImagePickerController *imagePickerController;
 @property (nonatomic, weak) NSTimer *cameraTimer;
@@ -39,7 +35,7 @@
     {
         // There is not a camera on this device, so don't show the camera button.
         NSMutableArray *toolbarItems = [self.toolbar.items mutableCopy];
-        [toolbarItems removeObjectAtIndex:2];
+        [toolbarItems removeObjectAtIndex:1];
         [self.toolbar setItems:toolbarItems animated:NO];
     }
     
@@ -51,14 +47,13 @@
     [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
 }
 
-// button action for showing the library
-- (IBAction)showImagePickerForPhotoPicker:(id)sender
+
+- (IBAction)doneWithPhotoPicker:(id)sender
 {
-    [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+    // needs to be implemented.
 }
 
-// loads the image picker for either the library or the camera.
-// also will discard all images in the captured array.
+// loads the image picker for the camera.
 - (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType
 {
     /*
@@ -132,13 +127,10 @@
         {
             // Camera took multiple pictures; use the list of images for animation.
             self.imagePreview.animationImages = self.capturedImages;
-            self.imagePreview.animationDuration = 5.0;    // Show each captured photo for 5 seconds.
+            self.imagePreview.animationDuration = 3.0;    // Show each captured photo for 3 seconds.
             self.imagePreview.animationRepeatCount = 0;   // Animate forever (show all photos).
             [self.imagePreview startAnimating];
         }
-        
-        // To be ready to start again, clear the captured images array.
-        [self.capturedImages removeAllObjects];
     }
     
     self.imagePickerController = nil;
@@ -162,7 +154,6 @@
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -175,8 +166,14 @@
     if ([[segue identifier] isEqualToString:@"selectorsegue"]) {
         GSFPhotoSelector *selector = (GSFPhotoSelector*)segue.destinationViewController;
         selector.capturedImages = [[NSMutableArray alloc] initWithArray:self.capturedImages];
-        NSLog(@"captured %lu image(s), dest:%lu", (unsigned long)self.capturedImages.count, (unsigned long)selector.capturedImages.count);
     }
+}
+
+// if remove button is pushed in the grandchild view controller remove the picture and shift everything into position.
+- (void)removeObjectFromImagePickerControllerAtIndex:(NSUInteger)index
+{
+    UIImage *clear = [self.capturedImages objectAtIndex:index];
+    clear = nil;
 }
 
 @end

@@ -20,9 +20,9 @@
                                 <rect key="frame" x="0.0" y="436" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
-                                    <barButtonItem title="Library" id="4Mk-DF-G6X">
+                                    <barButtonItem title="Done" id="YLC-bH-aZ1">
                                         <connections>
-                                            <action selector="showImagePickerForPhotoPicker:" destination="HvR-I5-gkG" id="UOt-bd-8cl"/>
+                                            <action selector="doneWithPhotoPicker:" destination="HvR-I5-gkG" id="E4x-89-Qtv"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="5Kc-cg-XeN"/>
@@ -33,14 +33,13 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ilg-vF-43O" customClass="GSFIm">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ilg-vF-43O">
                                 <rect key="frame" x="0.0" y="64" width="320" height="460"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 1" id="wSU-c6-oqF"/>
                     <navigationItem key="navigationItem" title="Person Detection" id="1Lh-8o-8Sv"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
@@ -69,12 +68,23 @@
                                 <rect key="frame" x="0.0" y="63" width="320" height="417"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l3J-yg-KX2">
+                                <rect key="frame" x="0.0" y="436" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items>
+                                    <barButtonItem title="Discard" id="sbi-Hl-aQl">
+                                        <connections>
+                                            <action selector="discardImageFromSet:" destination="wg5-j6-O9O" id="NS1-CA-Tnx"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Image Preview" id="UvZ-hv-6lq"/>
                     <connections>
-                        <outlet property="imagePreview" destination="mLd-1a-B98" id="aoO-tI-bib"/>
+                        <outlet property="imageViewPreview" destination="mLd-1a-B98" id="5xU-Op-v9p"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bF5-xe-k0l" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -135,9 +145,12 @@
                                 <rect key="frame" x="0.0" y="436" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
-                                    <barButtonItem title="Done" id="H7F-2c-x1W"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="RYS-wc-IWc"/>
-                                    <barButtonItem title="More" id="gq6-is-9JU"/>
+                                    <barButtonItem title="Continue" id="gq6-is-9JU">
+                                        <connections>
+                                            <action selector="takeMorePictures:" destination="m8u-xS-ePy" id="EtV-UL-MWG"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>
@@ -147,7 +160,6 @@
                     <connections>
                         <outlet property="bottomToolbar" destination="Pyv-Yg-jeY" id="723-gW-tlo"/>
                         <outlet property="collectionView" destination="BNO-Wu-MTF" id="Lvs-PS-2EY"/>
-                        <outlet property="done" destination="H7F-2c-x1W" id="Thl-4w-bLi"/>
                         <outlet property="more" destination="gq6-is-9JU" id="nPG-D6-p0K"/>
                         <segue destination="wg5-j6-O9O" kind="push" identifier="selectorImagePreviewSegue" id="Bfa-Hn-Vtx"/>
                     </connections>

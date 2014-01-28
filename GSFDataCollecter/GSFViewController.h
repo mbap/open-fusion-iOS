@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GSFImageSelectorPreview.h"
 
-@interface GSFViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+
+@interface GSFViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, GSFImageSelectorDelegate>
 
 @end

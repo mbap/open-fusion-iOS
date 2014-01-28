@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		96B599001890E2F0001D29CF /* OverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96B598FF1890E2F0001D29CF /* OverlayView.xib */; };
 		96B5990318920061001D29CF /* GSFDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B5990218920061001D29CF /* GSFDataViewController.m */; };
 		96B599061894437F001D29CF /* GSFPhotoSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B599051894437F001D29CF /* GSFPhotoSelector.m */; };
 		96B599091895FB4D001D29CF /* GSFImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B599081895FB4D001D29CF /* GSFImageCollectionViewCell.m */; };
@@ -41,7 +40,6 @@
 
 /* Begin PBXFileReference section */
 		96B598FD1890DDBB001D29CF /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = ../opencv/ios/opencv2.framework; sourceTree = "<group>"; };
-		96B598FF1890E2F0001D29CF /* OverlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OverlayView.xib; sourceTree = "<group>"; };
 		96B5990118920061001D29CF /* GSFDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFDataViewController.h; sourceTree = "<group>"; };
 		96B5990218920061001D29CF /* GSFDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFDataViewController.m; sourceTree = "<group>"; };
 		96B599041894437F001D29CF /* GSFPhotoSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GSFPhotoSelector.h; path = ../GSFPhotoSelector.h; sourceTree = "<group>"; };
@@ -134,7 +132,6 @@
 				DBB4284A1880A64F00139082 /* GSFAppDelegate.m */,
 				DBB4284F1880A64F00139082 /* Main_iPad.storyboard */,
 				DBB4284C1880A64F00139082 /* Main_iPhone.storyboard */,
-				96B598FF1890E2F0001D29CF /* OverlayView.xib */,
 				96B5990118920061001D29CF /* GSFDataViewController.h */,
 				96B5990218920061001D29CF /* GSFDataViewController.m */,
 				DBB428521880A64F00139082 /* GSFViewController.h */,
@@ -262,7 +259,6 @@
 			files = (
 				DBB428511880A64F00139082 /* Main_iPad.storyboard in Resources */,
 				DBB428561880A64F00139082 /* Images.xcassets in Resources */,
-				96B599001890E2F0001D29CF /* OverlayView.xib in Resources */,
 				DBB4284E1880A64F00139082 /* Main_iPhone.storyboard in Resources */,
 				DBB428451880A64F00139082 /* InfoPlist.strings in Resources */,
 			);

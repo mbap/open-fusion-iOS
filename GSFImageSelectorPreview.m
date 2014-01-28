@@ -10,6 +10,8 @@
 
 @interface GSFImageSelectorPreview ()
 
+@property (weak, nonatomic) IBOutlet UIImageView *imageViewPreview;
+
 @end
 
 @implementation GSFImageSelectorPreview
@@ -18,6 +20,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    self.imageViewPreview.image = self.image;
 }
 
 - (void)didReceiveMemoryWarning
@@ -25,5 +28,13 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+- (IBAction)discardImageFromSet:(id)sender
+{
+    GSFViewController *grandparent = (GSFViewController*)self.navigationController.parentViewController.parentViewController;
+}
+
+
 
 @end
