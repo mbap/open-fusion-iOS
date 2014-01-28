@@ -11,6 +11,15 @@
 		96B599061894437F001D29CF /* GSFPhotoSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B599051894437F001D29CF /* GSFPhotoSelector.m */; };
 		96B599091895FB4D001D29CF /* GSFImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B599081895FB4D001D29CF /* GSFImageCollectionViewCell.m */; };
 		96B5990C18963A5A001D29CF /* GSFImageSelectorPreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B5990B18963A5A001D29CF /* GSFImageSelectorPreview.m */; };
+		96C6A52318984390004D70F0 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96C6A52218984390004D70F0 /* opencv2.framework */; };
+		96C6A525189844F2004D70F0 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96C6A524189844F2004D70F0 /* Accelerate.framework */; };
+		96C6A52818984501004D70F0 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96C6A52618984501004D70F0 /* AssetsLibrary.framework */; };
+		96C6A52918984501004D70F0 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96C6A52718984501004D70F0 /* AVFoundation.framework */; };
+		96C6A52D1898451A004D70F0 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96C6A52A1898451A004D70F0 /* CoreImage.framework */; };
+		96C6A52E1898451A004D70F0 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96C6A52B1898451A004D70F0 /* CoreMedia.framework */; };
+		96C6A52F1898451A004D70F0 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96C6A52C1898451A004D70F0 /* CoreVideo.framework */; };
+		96C6A53118984534004D70F0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96C6A53018984534004D70F0 /* QuartzCore.framework */; };
+		96C6A534189845BB004D70F0 /* GSFOpenCvImageProcessor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 96C6A533189845BB004D70F0 /* GSFOpenCvImageProcessor.mm */; };
 		DBB4283B1880A64F00139082 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB4283A1880A64F00139082 /* Foundation.framework */; };
 		DBB4283D1880A64F00139082 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB4283C1880A64F00139082 /* CoreGraphics.framework */; };
 		DBB4283F1880A64F00139082 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB4283E1880A64F00139082 /* UIKit.framework */; };
@@ -39,7 +48,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		96B598FD1890DDBB001D29CF /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = ../opencv/ios/opencv2.framework; sourceTree = "<group>"; };
 		96B5990118920061001D29CF /* GSFDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFDataViewController.h; sourceTree = "<group>"; };
 		96B5990218920061001D29CF /* GSFDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFDataViewController.m; sourceTree = "<group>"; };
 		96B599041894437F001D29CF /* GSFPhotoSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GSFPhotoSelector.h; path = ../GSFPhotoSelector.h; sourceTree = "<group>"; };
@@ -48,6 +56,16 @@
 		96B599081895FB4D001D29CF /* GSFImageCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFImageCollectionViewCell.m; sourceTree = "<group>"; };
 		96B5990A18963A5A001D29CF /* GSFImageSelectorPreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GSFImageSelectorPreview.h; path = ../GSFImageSelectorPreview.h; sourceTree = "<group>"; };
 		96B5990B18963A5A001D29CF /* GSFImageSelectorPreview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GSFImageSelectorPreview.m; path = ../GSFImageSelectorPreview.m; sourceTree = "<group>"; };
+		96C6A52218984390004D70F0 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
+		96C6A524189844F2004D70F0 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		96C6A52618984501004D70F0 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		96C6A52718984501004D70F0 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		96C6A52A1898451A004D70F0 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		96C6A52B1898451A004D70F0 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		96C6A52C1898451A004D70F0 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		96C6A53018984534004D70F0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		96C6A532189845BB004D70F0 /* GSFOpenCvImageProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GSFOpenCvImageProcessor.h; path = ../GSFOpenCvImageProcessor.h; sourceTree = "<group>"; };
+		96C6A533189845BB004D70F0 /* GSFOpenCvImageProcessor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GSFOpenCvImageProcessor.mm; path = ../GSFOpenCvImageProcessor.mm; sourceTree = "<group>"; };
 		DBB428371880A64F00139082 /* GSFDataCollecter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GSFDataCollecter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBB4283A1880A64F00139082 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DBB4283C1880A64F00139082 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -75,8 +93,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96C6A53118984534004D70F0 /* QuartzCore.framework in Frameworks */,
+				96C6A52D1898451A004D70F0 /* CoreImage.framework in Frameworks */,
+				96C6A52E1898451A004D70F0 /* CoreMedia.framework in Frameworks */,
+				96C6A52F1898451A004D70F0 /* CoreVideo.framework in Frameworks */,
 				DBB4283D1880A64F00139082 /* CoreGraphics.framework in Frameworks */,
+				96C6A52818984501004D70F0 /* AssetsLibrary.framework in Frameworks */,
+				96C6A52918984501004D70F0 /* AVFoundation.framework in Frameworks */,
+				96C6A525189844F2004D70F0 /* Accelerate.framework in Frameworks */,
 				DBB4283F1880A64F00139082 /* UIKit.framework in Frameworks */,
+				96C6A52318984390004D70F0 /* opencv2.framework in Frameworks */,
 				DBB4283B1880A64F00139082 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -116,7 +142,14 @@
 		DBB428391880A64F00139082 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				96B598FD1890DDBB001D29CF /* opencv2.framework */,
+				96C6A53018984534004D70F0 /* QuartzCore.framework */,
+				96C6A52A1898451A004D70F0 /* CoreImage.framework */,
+				96C6A52B1898451A004D70F0 /* CoreMedia.framework */,
+				96C6A52C1898451A004D70F0 /* CoreVideo.framework */,
+				96C6A52618984501004D70F0 /* AssetsLibrary.framework */,
+				96C6A52718984501004D70F0 /* AVFoundation.framework */,
+				96C6A524189844F2004D70F0 /* Accelerate.framework */,
+				96C6A52218984390004D70F0 /* opencv2.framework */,
 				DBB4283A1880A64F00139082 /* Foundation.framework */,
 				DBB4283C1880A64F00139082 /* CoreGraphics.framework */,
 				DBB4283E1880A64F00139082 /* UIKit.framework */,
@@ -142,6 +175,8 @@
 				96B5990B18963A5A001D29CF /* GSFImageSelectorPreview.m */,
 				96B599071895FB4D001D29CF /* GSFImageCollectionViewCell.h */,
 				96B599081895FB4D001D29CF /* GSFImageCollectionViewCell.m */,
+				96C6A532189845BB004D70F0 /* GSFOpenCvImageProcessor.h */,
+				96C6A533189845BB004D70F0 /* GSFOpenCvImageProcessor.mm */,
 				DBB428551880A64F00139082 /* Images.xcassets */,
 				DBB428411880A64F00139082 /* Supporting Files */,
 			);
@@ -281,6 +316,7 @@
 			files = (
 				96B599061894437F001D29CF /* GSFPhotoSelector.m in Sources */,
 				96B599091895FB4D001D29CF /* GSFImageCollectionViewCell.m in Sources */,
+				96C6A534189845BB004D70F0 /* GSFOpenCvImageProcessor.mm in Sources */,
 				DBB428471880A64F00139082 /* main.m in Sources */,
 				DBB4284B1880A64F00139082 /* GSFAppDelegate.m in Sources */,
 				DBB428541880A64F00139082 /* GSFViewController.m in Sources */,
@@ -429,6 +465,7 @@
 					"$(inherited)",
 					"./**",
 					"/Users/mbaptist/Code/opencv/**",
+					"/Users/mbaptist/Code/open-fusion-iOS",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GSFDataCollecter/GSFDataCollecter-Prefix.pch";
@@ -450,6 +487,7 @@
 					"$(inherited)",
 					"./**",
 					"/Users/mbaptist/Code/opencv/**",
+					"/Users/mbaptist/Code/open-fusion-iOS",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GSFDataCollecter/GSFDataCollecter-Prefix.pch";
