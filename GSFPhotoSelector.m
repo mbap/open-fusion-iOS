@@ -16,7 +16,6 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @property (weak, nonatomic) IBOutlet UIToolbar *bottomToolbar;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *done;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *more;
 
 @property (nonatomic) UIImageView *imagePreview;
@@ -42,7 +41,6 @@
 // specifies number of collection view cells to allocate.
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    NSLog(@"number of cells:%lu", (unsigned long)self.capturedImages.count);
     return self.capturedImages.count;
 }
 
@@ -81,6 +79,10 @@
     
 }
 
+- (IBAction)takeMorePictures:(id)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 
 @end

@@ -32,7 +32,9 @@
 
 - (IBAction)discardImageFromSet:(id)sender
 {
-    
+    GSFViewController *grandparent = (GSFViewController*)self.navigationController.parentViewController.parentViewController;
 }
+
+
 
 @end

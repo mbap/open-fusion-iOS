@@ -7,6 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GSFViewController.h"
+
+@protocol GSFImageSelectorDelegate
+
+- (void)removeItemFromCapturedImageArrayAtIndex:(NSInteger*)index;
+
+@end
 
 @interface GSFImageSelectorPreview : UIViewController
 
