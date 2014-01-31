@@ -8,15 +8,19 @@
 
 #import "GSFViewController.h"
 #import "GSFPhotoSelector.h"
+#import "GSFOpenCvImageProcessor.h"
+
 
 @interface GSFViewController ()
+
 @property (weak, nonatomic) IBOutlet UIImageView *imagePreview;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
-
 
 @property (nonatomic) UIImagePickerController *imagePickerController;
 @property (nonatomic, weak) NSTimer *cameraTimer;
 @property (nonatomic) NSMutableArray *capturedImages;
+@property (nonatomic) NSMutableArray *newImages;
+@property (nonatomic) BOOL showDetectionImages;
 
 @end
 
@@ -48,20 +52,26 @@
 }
 
 
+// button action for done. here the images get processed by detecting number of
+// people in the image.
 - (IBAction)doneWithPhotoPicker:(id)sender
 {
-    // needs to be implemented.
+    if (self.capturedImages.count) {
+        self.showDetectionImages = YES;
+        GSFOpenCvImageProcessor *processor = [[GSFOpenCvImageProcessor alloc] init];
+        self.newImages = [processor detectPeopleUsingImageArray:self.capturedImages];
+    }
 }
 
 // loads the image picker for the camera.
 - (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType
 {
-    /*
+    
     if (self.imagePreview.isAnimating)
     {
         [self.imagePreview stopAnimating];
     }
-    
+    /*
     if (self.capturedImages.count > 0)
     {
         [self.capturedImages removeAllObjects];
@@ -97,39 +107,41 @@
     [self presentViewController:self.imagePickerController animated:YES completion:nil];
 }
 
-
-#pragma mark - Toolbar actions
-
-- (IBAction)done:(id)sender
-{
-    [self finishAndUpdate];
-}
-
-
-- (IBAction)takePhoto:(id)sender
-{
-    [self.imagePickerController takePicture];
-    [self.view bringSubviewToFront:self.toolbar];
-}
-
 - (void)finishAndUpdate
 {
     [self dismissViewControllerAnimated:YES completion:NULL];
     
     if ([self.capturedImages count] > 0)
     {
-        if ([self.capturedImages count] == 1)
+        if (!self.showDetectionImages)
         {
-            // Camera took a single picture.
-            [self.imagePreview setImage:[self.capturedImages objectAtIndex:0]];
-        }
-        else
-        {
-            // Camera took multiple pictures; use the list of images for animation.
-            self.imagePreview.animationImages = self.capturedImages;
-            self.imagePreview.animationDuration = 3.0;    // Show each captured photo for 3 seconds.
-            self.imagePreview.animationRepeatCount = 0;   // Animate forever (show all photos).
-            [self.imagePreview startAnimating];
+            if ([self.capturedImages count] == 1)
+            {
+                // Camera took a single picture.
+                [self.imagePreview setImage:[self.capturedImages objectAtIndex:0]];
+            }
+            else
+            {
+                // Camera took multiple pictures; use the list of images for animation.
+                self.imagePreview.animationImages = self.capturedImages;
+                self.imagePreview.animationDuration = 3.0;    // Show each captured photo for 3 seconds.
+                self.imagePreview.animationRepeatCount = 0;   // Animate forever (show all photos).
+                [self.imagePreview startAnimating];
+            }
+        } else {
+            if ([self.newImages count] == 1)
+            {
+                // Camera took a single picture.
+                [self.imagePreview setImage:[self.newImages objectAtIndex:0]];
+            }
+            else
+            {
+                // Camera took multiple pictures; use the list of images for animation.
+                self.imagePreview.animationImages = self.newImages;
+                self.imagePreview.animationDuration = 3.0;    // Show each captured photo for 3 seconds.
+                self.imagePreview.animationRepeatCount = 0;   // Animate forever (show all photos).
+                [self.imagePreview startAnimating];
+            }
         }
     }
     
@@ -137,6 +149,7 @@
     [self.view bringSubviewToFront:self.toolbar];
 
 }
+
 
 // This method is called when an image has been chosen from the library or taken from the camera.
 // we segue here to the collection view.
@@ -154,11 +167,13 @@
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 // called before the segue happens
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -168,6 +183,7 @@
         selector.capturedImages = [[NSMutableArray alloc] initWithArray:self.capturedImages];
     }
 }
+
 
 // if remove button is pushed in the grandchild view controller remove the picture and shift everything into position.
 - (void)removeObjectFromImagePickerControllerAtIndex:(NSUInteger)index

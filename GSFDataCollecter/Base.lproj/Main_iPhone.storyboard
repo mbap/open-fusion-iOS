@@ -22,13 +22,13 @@
                                 <items>
                                     <barButtonItem title="Done" id="YLC-bH-aZ1">
                                         <connections>
-                                            <action selector="doneWithPhotoPicker:" destination="HvR-I5-gkG" id="E4x-89-Qtv"/>
+                                            <action selector="doneWithPhotoPicker:" destination="HvR-I5-gkG" id="Dfv-XR-dy6"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="5Kc-cg-XeN"/>
                                     <barButtonItem systemItem="camera" id="HtA-9M-a0N">
                                         <connections>
-                                            <action selector="showImagePickerForCamera:" destination="HvR-I5-gkG" id="MZH-p5-a8c"/>
+                                            <action selector="showImagePickerForCamera:" destination="HvR-I5-gkG" id="9Nr-tI-0Ai"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
