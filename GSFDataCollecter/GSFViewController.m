@@ -192,4 +192,12 @@
     clear = nil;
 }
 
+- (void)removeItemFromCapturedImageArrayAtIndex:(NSUInteger)index
+{
+    if (index < self.capturedImages.count) {
+        [self.capturedImages removeObjectAtIndex:index];
+    }
+}
+
+
 @end

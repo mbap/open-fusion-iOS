@@ -23,6 +23,7 @@
 		D3D78071189996FE00E5AB50 /* GSFOpenCvImageProcessor.mm in Sources */ = {isa = PBXBuildFile; fileRef = D3D78070189996FE00E5AB50 /* GSFOpenCvImageProcessor.mm */; };
 		D3D7807C18A0396900E5AB50 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3D7807B18A0396900E5AB50 /* CoreLocation.framework */; };
 		D3D7807F18A0416400E5AB50 /* GSFTaggedVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3D7807E18A0416400E5AB50 /* GSFTaggedVCViewController.m */; };
+		D3D7808318A051DA00E5AB50 /* GSFData.m in Sources */ = {isa = PBXBuildFile; fileRef = D3D7808218A051DA00E5AB50 /* GSFData.m */; };
 		DBB4283B1880A64F00139082 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB4283A1880A64F00139082 /* Foundation.framework */; };
 		DBB4283D1880A64F00139082 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB4283C1880A64F00139082 /* CoreGraphics.framework */; };
 		DBB4283F1880A64F00139082 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB4283E1880A64F00139082 /* UIKit.framework */; };
@@ -73,6 +74,8 @@
 		D3D7807B18A0396900E5AB50 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		D3D7807D18A0416400E5AB50 /* GSFTaggedVCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFTaggedVCViewController.h; sourceTree = "<group>"; };
 		D3D7807E18A0416400E5AB50 /* GSFTaggedVCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFTaggedVCViewController.m; sourceTree = "<group>"; };
+		D3D7808118A051DA00E5AB50 /* GSFData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFData.h; sourceTree = "<group>"; };
+		D3D7808218A051DA00E5AB50 /* GSFData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFData.m; sourceTree = "<group>"; };
 		DBB428371880A64F00139082 /* GSFDataCollecter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GSFDataCollecter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBB4283A1880A64F00139082 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DBB4283C1880A64F00139082 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -153,12 +156,21 @@
 				DBB4284A1880A64F00139082 /* GSFAppDelegate.m */,
 				DBB4284F1880A64F00139082 /* Main_iPad.storyboard */,
 				DBB4284C1880A64F00139082 /* Main_iPhone.storyboard */,
-				96B5990118920061001D29CF /* GSFDataViewController.h */,
-				96B5990218920061001D29CF /* GSFDataViewController.m */,
 				D3D7807D18A0416400E5AB50 /* GSFTaggedVCViewController.h */,
 				D3D7807E18A0416400E5AB50 /* GSFTaggedVCViewController.m */,
+				96B5990118920061001D29CF /* GSFDataViewController.h */,
+				96B5990218920061001D29CF /* GSFDataViewController.m */,
 			);
 			name = Main;
+			sourceTree = "<group>";
+		};
+		D3D7808018A051B500E5AB50 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D3D7808118A051DA00E5AB50 /* GSFData.h */,
+				D3D7808218A051DA00E5AB50 /* GSFData.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 		DBB4282E1880A64F00139082 = {
@@ -204,6 +216,7 @@
 		DBB428401880A64F00139082 /* GSFDataCollecter */ = {
 			isa = PBXGroup;
 			children = (
+				D3D7808018A051B500E5AB50 /* Model */,
 				D3D7807918A038E400E5AB50 /* Main */,
 				D3D7807818A038B500E5AB50 /* ImagePicker Controller */,
 				DBB428551880A64F00139082 /* Images.xcassets */,
@@ -343,6 +356,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3D7808318A051DA00E5AB50 /* GSFData.m in Sources */,
 				D3D7807F18A0416400E5AB50 /* GSFTaggedVCViewController.m in Sources */,
 				96B599061894437F001D29CF /* GSFPhotoSelector.m in Sources */,
 				96B599091895FB4D001D29CF /* GSFImageCollectionViewCell.m in Sources */,

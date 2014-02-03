@@ -12,5 +12,6 @@
 @interface GSFTaggedVCViewController : UIViewController <CLLocationManagerDelegate>
 
 @property (weak, nonatomic) CLLocationManager *locationManager;
+@property (nonatomic) BOOL locationToggle;
 
 @end

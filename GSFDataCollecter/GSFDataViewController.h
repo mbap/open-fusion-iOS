@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GSFTaggedVCViewController.h"
 
 @interface GSFDataViewController : GSFTaggedVCViewController
 
