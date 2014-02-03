@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GSFDataViewController : UIViewController
+@interface GSFDataViewController : GSFTaggedVCViewController
 
 @end
