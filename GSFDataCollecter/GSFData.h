@@ -7,10 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 
 @interface GSFData : NSObject
 
-@property (nonatomic) NSMutableArray *capturedImages;
+@property (nonatomic) UIImage *image;
+@property (nonatomic) CLLocation *gpslocation;
 
+- (GSFData*)initWithImage:(UIImage*)image;
 
 @end

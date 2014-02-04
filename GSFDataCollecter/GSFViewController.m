@@ -9,6 +9,8 @@
 #import "GSFViewController.h"
 //#import "GSFOpenCvImageProcessor.h"
 #import "GSFImageCollectionViewCell.h"
+#import "GSFData.h"
+
 
 
 @interface GSFViewController () <UICollectionViewDataSource, UICollectionViewDelegate, GSFImageSelectorDelegate>
@@ -71,18 +73,6 @@
 // loads the image picker for the camera.
 - (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType
 {
-    
-    if (self.imagePreview.isAnimating)
-    {
-        [self.imagePreview stopAnimating];
-    }
-    /*
-    if (self.capturedImages.count > 0)
-    {
-        [self.capturedImages removeAllObjects];
-    }
-    */
-    
     UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
     imagePickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
     imagePickerController.sourceType = sourceType;
@@ -91,65 +81,17 @@
     
     if (sourceType == UIImagePickerControllerSourceTypeCamera)
     {
-        /*
-         The user wants to use the camera interface.
-         */
         imagePickerController.showsCameraControls = YES;
-        
-        /* Set up our custom overlay view for the camera.
-         Load the overlay view from the OverlayView nib file. Self is the File's Owner for the nib file, so the overlayView outlet is set to the main view in the nib. Pass that view to the image picker controller to use as its overlay view, and set self's reference to the view to nil.
-         */
-        
-        /*
-        [[NSBundle mainBundle] loadNibNamed:@"OverlayView" owner:self options:nil];
-        self.overlayView.frame = imagePickerController.cameraOverlayView.frame;
-        imagePickerController.cameraOverlayView = self.overlayView;
-        self.overlayView = nil;
-        */
     }
     
     self.imagePickerController = imagePickerController;
     [self presentViewController:self.imagePickerController animated:YES completion:nil];
 }
 
+// add gps location stuff in here.
 - (void)finishAndUpdate
 {
     [self dismissViewControllerAnimated:YES completion:NULL];
-    
-    /*if ([self.capturedImages count] > 0)
-    {
-        if (!self.showDetectionImages)
-        {
-            if ([self.capturedImages count] == 1)
-            {
-                // Camera took a single picture.
-                [self.imagePreview setImage:[self.capturedImages objectAtIndex:0]];
-            }
-            else
-            {
-                // Camera took multiple pictures; use the list of images for animation.
-                self.imagePreview.animationImages = self.capturedImages;
-                self.imagePreview.animationDuration = 3.0;    // Show each captured photo for 3 seconds.
-                self.imagePreview.animationRepeatCount = 0;   // Animate forever (show all photos).
-                [self.imagePreview startAnimating];
-            }
-        } else {
-            if ([self.cvCapturedImages count] == 1)
-            {
-                // Camera took a single picture.
-                [self.imagePreview setImage:[self.cvCapturedImages objectAtIndex:0]];
-            }
-            else
-            {
-                // Camera took multiple pictures; use the list of images for animation.
-                self.imagePreview.animationImages = self.cvCapturedImages;
-                self.imagePreview.animationDuration = 3.0;    // Show each captured photo for 3 seconds.
-                self.imagePreview.animationRepeatCount = 0;   // Animate forever (show all photos).
-                [self.imagePreview startAnimating];
-            }
-        }
-    }*/
-    
     self.imagePickerController = nil;
     [self.view bringSubviewToFront:self.toolbar];
 
@@ -161,7 +103,8 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
-    [self.capturedImages addObject:image];
+    GSFData *newdata = [[GSFData alloc] initWithImage:image];
+    [self.capturedImages addObject:newdata];
     [self.collectionView performBatchUpdates:^{
         [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
     } completion:nil];
@@ -192,10 +135,11 @@
 {
     UICollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     if ([self.capturedImages objectAtIndex:indexPath.item] != nil) {
-        UIImage *image = [self.capturedImages objectAtIndex:indexPath.item];
-        if ([cell isKindOfClass:[GSFImageCollectionViewCell class]]) {
-            UIImageView *imgview = ((GSFImageCollectionViewCell *)cell).imageView;
-            if ([[self.capturedImages objectAtIndex:indexPath.item] isKindOfClass:[UIImage class]]) {
+        if ([[self.capturedImages objectAtIndex:indexPath.item] isKindOfClass:[GSFData class]]) {
+            GSFData *data = [self.capturedImages objectAtIndex:indexPath.item];
+            UIImage *image = data.image;
+            if ([cell isKindOfClass:[GSFImageCollectionViewCell class]]) {
+                UIImageView *imgview = ((GSFImageCollectionViewCell *)cell).imageView;
                 imgview.image = image;
             }
         }
