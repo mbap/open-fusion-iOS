@@ -66,6 +66,8 @@
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
+                                    <outlet property="dataSource" destination="HvR-I5-gkG" id="0UI-GY-D8K"/>
+                                    <outlet property="delegate" destination="HvR-I5-gkG" id="xwr-2j-D06"/>
                                     <outletCollection property="gestureRecognizers" destination="zal-tZ-3uq" appends="YES" id="oIw-ve-PHK"/>
                                 </connections>
                             </collectionView>
