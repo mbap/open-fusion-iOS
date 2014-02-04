@@ -127,7 +127,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		D3D7807818A038B500E5AB50 /* ImagePicker Controller */ = {
+		D3D7807818A038B500E5AB50 /* ImagePickerController */ = {
 			isa = PBXGroup;
 			children = (
 				DBB428521880A64F00139082 /* GSFViewController.h */,
@@ -139,7 +139,7 @@
 				D3D7806F189996FE00E5AB50 /* GSFOpenCvImageProcessor.h */,
 				D3D78070189996FE00E5AB50 /* GSFOpenCvImageProcessor.mm */,
 			);
-			name = "ImagePicker Controller";
+			name = ImagePickerController;
 			sourceTree = "<group>";
 		};
 		D3D7807918A038E400E5AB50 /* Main */ = {
@@ -211,7 +211,7 @@
 			children = (
 				D3D7808018A051B500E5AB50 /* Model */,
 				D3D7807918A038E400E5AB50 /* Main */,
-				D3D7807818A038B500E5AB50 /* ImagePicker Controller */,
+				D3D7807818A038B500E5AB50 /* ImagePickerController */,
 				DBB428551880A64F00139082 /* Images.xcassets */,
 				DBB428411880A64F00139082 /* Supporting Files */,
 			);

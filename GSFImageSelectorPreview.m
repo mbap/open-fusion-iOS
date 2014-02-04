@@ -11,6 +11,7 @@
 @interface GSFImageSelectorPreview ()
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageViewPreview;
+@property (weak, nonatomic) IBOutlet UIToolbar *toolBar;
 
 @end
 
@@ -21,6 +22,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     self.imageViewPreview.image = self.image;
+    self.imageViewPreview.userInteractionEnabled = YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -36,5 +38,9 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (IBAction)hideNavAndToolbar:(UITapGestureRecognizer*)gesture {
+    [self.navigationController setNavigationBarHidden:!self.navigationController.navigationBarHidden animated:YES];
+    self.toolBar.hidden = self.navigationController.navigationBarHidden;
+}
 
 @end

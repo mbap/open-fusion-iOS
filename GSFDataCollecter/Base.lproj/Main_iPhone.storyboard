@@ -104,8 +104,12 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mLd-1a-B98">
-                                <rect key="frame" x="0.0" y="63" width="320" height="417"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="cO3-lc-eDp" appends="YES" id="HUD-tb-o5c"/>
+                                </connections>
                             </imageView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l3J-yg-KX2">
                                 <rect key="frame" x="0.0" y="436" width="320" height="44"/>
@@ -124,9 +128,15 @@
                     <navigationItem key="navigationItem" title="Image Preview" id="UvZ-hv-6lq"/>
                     <connections>
                         <outlet property="imageViewPreview" destination="mLd-1a-B98" id="5xU-Op-v9p"/>
+                        <outlet property="toolBar" destination="l3J-yg-KX2" id="NtE-4A-DIm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bF5-xe-k0l" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="cO3-lc-eDp">
+                    <connections>
+                        <action selector="hideNavAndToolbar:" destination="wg5-j6-O9O" id="Qvn-mZ-zpx"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="626" y="195"/>
         </scene>
