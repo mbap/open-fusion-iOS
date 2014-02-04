@@ -1,3 +1,4 @@
+/*
 //
 //  GSFOpenCvImageProcessor.h
 //  GSFDataCollecter
@@ -18,3 +19,5 @@
 - (NSMutableArray* )detectPeopleUsingImageArray:(NSMutableArray *)capturedImages;
 
 @end
+
+*/

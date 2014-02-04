@@ -10,4 +10,7 @@
 
 @interface GSFData : NSObject
 
+@property (nonatomic) NSMutableArray *capturedImages;
+
+
 @end

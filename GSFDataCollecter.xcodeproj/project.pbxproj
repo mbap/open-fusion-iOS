@@ -18,7 +18,6 @@
 		96C6A52E1898451A004D70F0 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96C6A52B1898451A004D70F0 /* CoreMedia.framework */; };
 		96C6A52F1898451A004D70F0 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96C6A52C1898451A004D70F0 /* CoreVideo.framework */; };
 		96C6A53118984534004D70F0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96C6A53018984534004D70F0 /* QuartzCore.framework */; };
-		96C6A536189B0C95004D70F0 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96C6A535189B0C95004D70F0 /* opencv2.framework */; };
 		96C6A538189B1F88004D70F0 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 96C6A537189B1F88004D70F0 /* libc++.dylib */; };
 		D3D78071189996FE00E5AB50 /* GSFOpenCvImageProcessor.mm in Sources */ = {isa = PBXBuildFile; fileRef = D3D78070189996FE00E5AB50 /* GSFOpenCvImageProcessor.mm */; };
 		D3D7807C18A0396900E5AB50 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3D7807B18A0396900E5AB50 /* CoreLocation.framework */; };
@@ -115,7 +114,6 @@
 				96C6A525189844F2004D70F0 /* Accelerate.framework in Frameworks */,
 				DBB4283F1880A64F00139082 /* UIKit.framework in Frameworks */,
 				DBB4283B1880A64F00139082 /* Foundation.framework in Frameworks */,
-				96C6A536189B0C95004D70F0 /* opencv2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

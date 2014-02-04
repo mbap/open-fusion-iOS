@@ -10,6 +10,8 @@
 #import "GSFTaggedVCViewController.h"
 #import "GSFViewController.h"
 
+@class GSFImageSelectorPreview;
+
 @protocol GSFImageSelectorDelegate
 
 - (void)addItemViewController:(GSFImageSelectorPreview *)controller didFinishEnteringItem:(NSIndexPath *)indexPath;
