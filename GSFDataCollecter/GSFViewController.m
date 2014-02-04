@@ -7,13 +7,13 @@
 //
 
 #import "GSFViewController.h"
-#import "GSFPhotoSelector.h"
-#import "GSFOpenCvImageProcessor.h"
+//#import "GSFOpenCvImageProcessor.h"
+#import "GSFImageCollectionViewCell.h"
 
 
-@interface GSFViewController ()
+@interface GSFViewController () <UICollectionViewDataSource, UICollectionViewDelegate, GSFImageSelectorDelegate>
 
-@property (weak, nonatomic) IBOutlet UIImageView *imagePreview;
+
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 
 @property (nonatomic) UIImagePickerController *imagePickerController;
@@ -21,6 +21,11 @@
 @property (nonatomic) NSMutableArray *capturedImages;
 @property (nonatomic) NSMutableArray *cvCapturedImages;
 @property (nonatomic) BOOL showDetectionImages;
+
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (nonatomic) UIImageView *imagePreview;
+@property (nonatomic) GSFImageCollectionViewCell *imagecell;
+@property (nonatomic) NSIndexPath *index;
 
 @end
 
@@ -111,7 +116,7 @@
 {
     [self dismissViewControllerAnimated:YES completion:NULL];
     
-    if ([self.capturedImages count] > 0)
+    /*if ([self.capturedImages count] > 0)
     {
         if (!self.showDetectionImages)
         {
@@ -143,7 +148,7 @@
                 [self.imagePreview startAnimating];
             }
         }
-    }
+    }*/
     
     self.imagePickerController = nil;
     [self.view bringSubviewToFront:self.toolbar];
@@ -157,7 +162,9 @@
 {
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
     [self.capturedImages addObject:image];
-    [self performSegueWithIdentifier:@"selectorsegue" sender:self];
+    [self.collectionView performBatchUpdates:^{
+        [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
+    } completion:nil];
     [self finishAndUpdate];
 }
 
@@ -174,15 +181,59 @@
     // Dispose of any resources that can be recreated.
 }
 
+// specifies number of collection view cells to allocate.
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return self.capturedImages.count;
+}
 
-// called before the segue happens
+// specifies which item goes in the cell the index path.
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    if ([self.capturedImages objectAtIndex:indexPath.item] != nil) {
+        UIImage *image = [self.capturedImages objectAtIndex:indexPath.item];
+        if ([cell isKindOfClass:[GSFImageCollectionViewCell class]]) {
+            UIImageView *imgview = ((GSFImageCollectionViewCell *)cell).imageView;
+            if ([[self.capturedImages objectAtIndex:indexPath.item] isKindOfClass:[UIImage class]]) {
+                imgview.image = image;
+            }
+        }
+    }
+    return cell;
+    
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"selectorsegue"]) {
-        GSFPhotoSelector *selector = (GSFPhotoSelector*)segue.destinationViewController;
-        selector.capturedImages = [[NSMutableArray alloc] initWithArray:self.capturedImages];
+    if([[segue identifier] isEqualToString:@"selectorImagePreviewSegue"]) {
+        GSFImageSelectorPreview *preview = (GSFImageSelectorPreview *)segue.destinationViewController;
+        preview.image = [[UIImage alloc] init];
+        preview.image = self.imagecell.imageView.image;
+        preview.index = [[NSIndexPath alloc] init];
+        preview.index = self.index;
+        preview.delagate = self;
     }
 }
 
+- (IBAction)viewPhotoPreview:(UITapGestureRecognizer *)gesture
+{
+    CGPoint tapLocation = [gesture locationInView:self.collectionView];
+    NSIndexPath *index = [self.collectionView indexPathForItemAtPoint:tapLocation];
+    if (index) {
+        self.imagecell = (GSFImageCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:index];
+        self.index = index;
+        [self performSegueWithIdentifier:@"selectorImagePreviewSegue" sender:self];
+    }
+    
+}
+
+// delegate method for image selector.
+- (void)addItemViewController:(id)controller didFinishEnteringItem:(NSIndexPath *)indexPath{
+    if (indexPath.item < self.capturedImages.count) {
+        [self.capturedImages removeObjectAtIndex:indexPath.item];
+        [self.collectionView deleteItemsAtIndexPaths:[NSArray arrayWithObject:indexPath]];
+    }
+}
 
 @end
