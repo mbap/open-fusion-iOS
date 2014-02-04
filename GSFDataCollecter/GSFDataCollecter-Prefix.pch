@@ -10,9 +10,11 @@
 #warning "This project uses features only available in iOS SDK 5.0 and later."
 #endif
 
+/*
 #ifndef __cplusplus
 #import <opencv2/opencv.hpp>
 #endif
+*/
 
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>

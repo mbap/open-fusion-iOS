@@ -19,7 +19,7 @@
 @property (nonatomic) UIImagePickerController *imagePickerController;
 @property (nonatomic, weak) NSTimer *cameraTimer;
 @property (nonatomic) NSMutableArray *capturedImages;
-@property (nonatomic) NSMutableArray *newImages;
+@property (nonatomic) NSMutableArray *cvCapturedImages;
 @property (nonatomic) BOOL showDetectionImages;
 
 @end
@@ -58,8 +58,8 @@
 {
     if (self.capturedImages.count) {
         self.showDetectionImages = YES;
-        GSFOpenCvImageProcessor *processor = [[GSFOpenCvImageProcessor alloc] init];
-        self.newImages = [processor detectPeopleUsingImageArray:self.capturedImages];
+        //GSFOpenCvImageProcessor *processor = [[GSFOpenCvImageProcessor alloc] init];
+        //self.cvCapturedImages = [processor detectPeopleUsingImageArray:self.capturedImages];
     }
 }
 
@@ -129,15 +129,15 @@
                 [self.imagePreview startAnimating];
             }
         } else {
-            if ([self.newImages count] == 1)
+            if ([self.cvCapturedImages count] == 1)
             {
                 // Camera took a single picture.
-                [self.imagePreview setImage:[self.newImages objectAtIndex:0]];
+                [self.imagePreview setImage:[self.cvCapturedImages objectAtIndex:0]];
             }
             else
             {
                 // Camera took multiple pictures; use the list of images for animation.
-                self.imagePreview.animationImages = self.newImages;
+                self.imagePreview.animationImages = self.cvCapturedImages;
                 self.imagePreview.animationDuration = 3.0;    // Show each captured photo for 3 seconds.
                 self.imagePreview.animationRepeatCount = 0;   // Animate forever (show all photos).
                 [self.imagePreview startAnimating];
@@ -181,21 +181,6 @@
     if ([[segue identifier] isEqualToString:@"selectorsegue"]) {
         GSFPhotoSelector *selector = (GSFPhotoSelector*)segue.destinationViewController;
         selector.capturedImages = [[NSMutableArray alloc] initWithArray:self.capturedImages];
-    }
-}
-
-
-// if remove button is pushed in the grandchild view controller remove the picture and shift everything into position.
-- (void)removeObjectFromImagePickerControllerAtIndex:(NSUInteger)index
-{
-    UIImage *clear = [self.capturedImages objectAtIndex:index];
-    clear = nil;
-}
-
-- (void)removeItemFromCapturedImageArrayAtIndex:(NSUInteger)index
-{
-    if (index < self.capturedImages.count) {
-        [self.capturedImages removeObjectAtIndex:index];
     }
 }
 

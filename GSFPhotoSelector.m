@@ -49,11 +49,13 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     UICollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
-    UIImage *image = [self.capturedImages objectAtIndex:indexPath.item];
-    if ([cell isKindOfClass:[GSFImageCollectionViewCell class]]) {
-        UIImageView *imgview = ((GSFImageCollectionViewCell *)cell).imageView;
-        if ([[self.capturedImages objectAtIndex:indexPath.item] isKindOfClass:[UIImage class]]) {
-            imgview.image = image;
+    if ([self.capturedImages objectAtIndex:indexPath.item] != nil) {
+        UIImage *image = [self.capturedImages objectAtIndex:indexPath.item];
+        if ([cell isKindOfClass:[GSFImageCollectionViewCell class]]) {
+            UIImageView *imgview = ((GSFImageCollectionViewCell *)cell).imageView;
+            if ([[self.capturedImages objectAtIndex:indexPath.item] isKindOfClass:[UIImage class]]) {
+               imgview.image = image;
+            }
         }
     }
     return cell;
@@ -66,7 +68,9 @@
         GSFImageSelectorPreview *preview = (GSFImageSelectorPreview *)segue.destinationViewController;
         preview.image = [[UIImage alloc] init];
         preview.image = self.imagecell.imageView.image;
+        preview.index = [[NSIndexPath alloc] init];
         preview.index = self.index;
+        preview.delagate = self;
     }
 }
 
@@ -87,5 +91,11 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)addItemViewController:(id)controller didFinishEnteringItem:(NSIndexPath *)indexPath{
+    if (indexPath.item < self.capturedImages.count) {
+        [self.capturedImages removeObjectAtIndex:indexPath.item];
+        [self.collectionView deleteItemsAtIndexPaths:[NSArray arrayWithObject:indexPath]];
+    }
+}
 
 @end
