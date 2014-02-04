@@ -17,7 +17,6 @@
 		96C6A52E1898451A004D70F0 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96C6A52B1898451A004D70F0 /* CoreMedia.framework */; };
 		96C6A52F1898451A004D70F0 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96C6A52C1898451A004D70F0 /* CoreVideo.framework */; };
 		96C6A53118984534004D70F0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96C6A53018984534004D70F0 /* QuartzCore.framework */; };
-		96C6A538189B1F88004D70F0 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 96C6A537189B1F88004D70F0 /* libc++.dylib */; };
 		D3D78071189996FE00E5AB50 /* GSFOpenCvImageProcessor.mm in Sources */ = {isa = PBXBuildFile; fileRef = D3D78070189996FE00E5AB50 /* GSFOpenCvImageProcessor.mm */; };
 		D3D7807C18A0396900E5AB50 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3D7807B18A0396900E5AB50 /* CoreLocation.framework */; };
 		D3D7807F18A0416400E5AB50 /* GSFTaggedVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3D7807E18A0416400E5AB50 /* GSFTaggedVCViewController.m */; };
@@ -63,8 +62,6 @@
 		96C6A52B1898451A004D70F0 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		96C6A52C1898451A004D70F0 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		96C6A53018984534004D70F0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		96C6A535189B0C95004D70F0 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
-		96C6A537189B1F88004D70F0 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		D3D7806F189996FE00E5AB50 /* GSFOpenCvImageProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFOpenCvImageProcessor.h; sourceTree = "<group>"; };
 		D3D78070189996FE00E5AB50 /* GSFOpenCvImageProcessor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GSFOpenCvImageProcessor.mm; sourceTree = "<group>"; };
 		D3D7807B18A0396900E5AB50 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -100,7 +97,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3D7807C18A0396900E5AB50 /* CoreLocation.framework in Frameworks */,
-				96C6A538189B1F88004D70F0 /* libc++.dylib in Frameworks */,
 				96C6A53118984534004D70F0 /* QuartzCore.framework in Frameworks */,
 				96C6A52D1898451A004D70F0 /* CoreImage.framework in Frameworks */,
 				96C6A52E1898451A004D70F0 /* CoreMedia.framework in Frameworks */,
@@ -189,8 +185,6 @@
 			isa = PBXGroup;
 			children = (
 				D3D7807B18A0396900E5AB50 /* CoreLocation.framework */,
-				96C6A537189B1F88004D70F0 /* libc++.dylib */,
-				96C6A535189B0C95004D70F0 /* opencv2.framework */,
 				96C6A53018984534004D70F0 /* QuartzCore.framework */,
 				96C6A52A1898451A004D70F0 /* CoreImage.framework */,
 				96C6A52B1898451A004D70F0 /* CoreMedia.framework */,

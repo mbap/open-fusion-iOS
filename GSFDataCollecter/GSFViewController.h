@@ -10,7 +10,6 @@
 #import "GSFTaggedVCViewController.h"
 #import "GSFImageSelectorPreview.h"
 
-
 @interface GSFViewController : GSFTaggedVCViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @end
