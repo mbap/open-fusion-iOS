@@ -7,16 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GSFTaggedVCViewController.h"
 #import "GSFViewController.h"
 
 @protocol GSFImageSelectorDelegate
 
-- (void)removeItemFromCapturedImageArrayAtIndex:(NSInteger*)index;
+- (void)addItemViewController:(GSFImageSelectorPreview *)controller didFinishEnteringItem:(NSIndexPath *)indexPath;
 
 @end
 
-@interface GSFImageSelectorPreview : UIViewController
+@interface GSFImageSelectorPreview : GSFTaggedVCViewController
 
 @property (nonatomic) UIImage *image;
+@property (nonatomic) NSIndexPath *index;
+@property (nonatomic, weak) id <GSFImageSelectorDelegate> delagate;
 
 @end

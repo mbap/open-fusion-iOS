@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GSFTaggedVCViewController.h"
 
-@interface GSFPhotoSelector : UIViewController
+
+@interface GSFPhotoSelector : GSFTaggedVCViewController
 
 @property (nonatomic) NSMutableArray *capturedImages; //array of user pics
 

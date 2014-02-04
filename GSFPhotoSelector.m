@@ -20,6 +20,7 @@
 
 @property (nonatomic) UIImageView *imagePreview;
 @property (nonatomic) GSFImageCollectionViewCell *imagecell;
+@property (nonatomic) NSIndexPath *index;
 
 @end
 
@@ -65,6 +66,7 @@
         GSFImageSelectorPreview *preview = (GSFImageSelectorPreview *)segue.destinationViewController;
         preview.image = [[UIImage alloc] init];
         preview.image = self.imagecell.imageView.image;
+        preview.index = self.index;
     }
 }
 
@@ -74,6 +76,7 @@
     NSIndexPath *index = [self.collectionView indexPathForItemAtPoint:tapLocation];
     if (index) {
         self.imagecell = (GSFImageCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:index];
+        self.index = index;
         [self performSegueWithIdentifier:@"selectorImagePreviewSegue" sender:self];
     }
     
