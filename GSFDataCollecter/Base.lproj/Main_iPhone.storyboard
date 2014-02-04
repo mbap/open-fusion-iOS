@@ -33,22 +33,61 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ilg-vF-43O">
-                                <rect key="frame" x="0.0" y="64" width="320" height="460"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
+                            <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="BNO-Wu-MTF">
+                                <rect key="frame" x="0.0" y="60" width="320" height="376"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <gestureRecognizers/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="W3y-4x-xcT">
+                                    <size key="itemSize" width="260" height="369"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="kcU-kX-8Wc" customClass="GSFImageCollectionViewCell">
+                                        <rect key="frame" x="30" y="0.0" width="260" height="369"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="260" height="369"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ii1-bF-ThX">
+                                                    <rect key="frame" x="0.0" y="0.0" width="260" height="369"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <gestureRecognizers/>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <size key="customSize" width="260" height="369"/>
+                                        <connections>
+                                            <outlet property="imageView" destination="ii1-bF-ThX" id="Yic-Jc-opp"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="HvR-I5-gkG" id="0UI-GY-D8K"/>
+                                    <outlet property="delegate" destination="HvR-I5-gkG" id="xwr-2j-D06"/>
+                                    <outletCollection property="gestureRecognizers" destination="zal-tZ-3uq" appends="YES" id="oIw-ve-PHK"/>
+                                </connections>
+                            </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Person Detection" id="1Lh-8o-8Sv"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
-                        <outlet property="imagePreview" destination="ilg-vF-43O" id="LPl-KJ-vIO"/>
+                        <outlet property="collectionView" destination="BNO-Wu-MTF" id="UWn-Re-H8u"/>
                         <outlet property="toolbar" destination="vCw-mH-zuq" id="03p-Qi-gfg"/>
-                        <segue destination="m8u-xS-ePy" kind="push" identifier="selectorsegue" id="mYA-56-EA2"/>
+                        <segue destination="wg5-j6-O9O" kind="push" identifier="selectorImagePreviewSegue" id="Auy-Bp-yDB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="txS-EV-dAM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="zal-tZ-3uq">
+                    <connections>
+                        <action selector="viewPhotoPreview:" destination="HvR-I5-gkG" id="IMZ-JN-kiO"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="81" y="195"/>
         </scene>
@@ -89,89 +128,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bF5-xe-k0l" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="574" y="-671"/>
-        </scene>
-        <!--Photo Selector - Photo Selector-->
-        <scene sceneID="Az6-WI-Swp">
-            <objects>
-                <viewController id="m8u-xS-ePy" customClass="GSFPhotoSelector" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="pBx-i0-szH"/>
-                        <viewControllerLayoutGuide type="bottom" id="eFI-gj-WeN"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="chw-vW-A21">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="BNO-Wu-MTF">
-                                <rect key="frame" x="0.0" y="36" width="320" height="400"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <gestureRecognizers/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="W3y-4x-xcT">
-                                    <size key="itemSize" width="200" height="300"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="kcU-kX-8Wc" customClass="GSFImageCollectionViewCell">
-                                        <rect key="frame" x="60" y="64" width="200" height="300"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="200" height="300"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ii1-bF-ThX">
-                                                    <rect key="frame" x="0.0" y="0.0" width="200" height="300"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <gestureRecognizers/>
-                                                </imageView>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <size key="customSize" width="200" height="300"/>
-                                        <connections>
-                                            <outlet property="imageView" destination="ii1-bF-ThX" id="Yic-Jc-opp"/>
-                                        </connections>
-                                    </collectionViewCell>
-                                </cells>
-                                <connections>
-                                    <outlet property="dataSource" destination="m8u-xS-ePy" id="1HE-3z-4w7"/>
-                                    <outlet property="delegate" destination="m8u-xS-ePy" id="3hE-sL-DxC"/>
-                                    <outletCollection property="gestureRecognizers" destination="Z9P-Yk-Rga" appends="YES" id="IaB-Xh-OZk"/>
-                                </connections>
-                            </collectionView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pyv-Yg-jeY">
-                                <rect key="frame" x="0.0" y="436" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <items>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="RYS-wc-IWc"/>
-                                    <barButtonItem title="Continue" id="gq6-is-9JU">
-                                        <connections>
-                                            <action selector="takeMorePictures:" destination="m8u-xS-ePy" id="EtV-UL-MWG"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                            </toolbar>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="Photo Selector" id="eTZ-Dv-qwX"/>
-                    <connections>
-                        <outlet property="bottomToolbar" destination="Pyv-Yg-jeY" id="723-gW-tlo"/>
-                        <outlet property="collectionView" destination="BNO-Wu-MTF" id="Lvs-PS-2EY"/>
-                        <outlet property="more" destination="gq6-is-9JU" id="nPG-D6-p0K"/>
-                        <segue destination="wg5-j6-O9O" kind="push" identifier="selectorImagePreviewSegue" id="Bfa-Hn-Vtx"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="0ee-at-zpF" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="Z9P-Yk-Rga">
-                    <connections>
-                        <action selector="viewPhotoPreview:" destination="m8u-xS-ePy" id="SoF-8B-2s4"/>
-                    </connections>
-                </tapGestureRecognizer>
-            </objects>
-            <point key="canvasLocation" x="574" y="195"/>
+            <point key="canvasLocation" x="626" y="195"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="k4e-SX-qqE">
