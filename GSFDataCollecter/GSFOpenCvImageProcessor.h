@@ -1,4 +1,3 @@
-/*
 //
 //  GSFOpenCvImageProcessor.h
 //  GSFDataCollecter
@@ -20,4 +19,3 @@
 
 @end
 
-*/

@@ -20,6 +20,7 @@
 
 @property (nonatomic) UIImagePickerController *imagePickerController;
 @property (nonatomic, weak) NSTimer *cameraTimer;
+
 @property (nonatomic) NSMutableArray *capturedImages;
 @property (nonatomic) NSMutableArray *cvCapturedImages;
 @property (nonatomic) BOOL showDetectionImages;
@@ -29,6 +30,8 @@
 @property (nonatomic) GSFImageCollectionViewCell *imagecell;
 @property (nonatomic) NSIndexPath *index;
 
+@property (nonatomic, weak) NSMutableArray *locationMeasurements;
+@property (nonatomic, weak) CLLocation *bestEffort;
 @end
 
 @implementation GSFViewController
@@ -49,7 +52,9 @@
         [toolbarItems removeObjectAtIndex:1];
         [self.toolbar setItems:toolbarItems animated:NO];
     }
-    
+    self.locationManager = [[CLLocationManager alloc] init];
+    self.locationManager.delegate = self;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
 }
 
 // button action for showing the camera
@@ -94,9 +99,46 @@
     [self dismissViewControllerAnimated:YES completion:NULL];
     self.imagePickerController = nil;
     [self.view bringSubviewToFront:self.toolbar];
+    if ([[self.capturedImages lastObject] isKindOfClass:[GSFData class]]){
+        GSFData *data = [self.capturedImages lastObject];
+        data.coords = [[CLLocation alloc] init];
+        [self.locationManager startUpdatingLocation];
+    }
 
 }
 
+// delegate for super class location manager
+// gets called several times while the location manager is update gps coords.
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
+    // store all of the measurements, just so we can see what kind of data we might receive
+    [self.locationMeasurements addObject:newLocation];
+    
+    // test the age of the location measurement to determine if the measurement is cached
+    // in most cases you will not want to rely on cached measurements
+    NSTimeInterval locationAge = -[newLocation.timestamp timeIntervalSinceNow];
+    
+    if (locationAge > 5.0) return;
+    // test that the horizontal accuracy does not indicate an invalid measurement
+    
+    if (newLocation.horizontalAccuracy < 0) return;
+    // test the measurement to see if it is more accurate than the previous measurement
+    
+    if (self.bestEffort == nil || self.bestEffort.horizontalAccuracy > newLocation.horizontalAccuracy) {
+        // store the location as the "best effort"
+        self.bestEffort = newLocation;
+        // test the measurement to see if it meets the desired accuracy
+        //
+        // IMPORTANT!!! kCLLocationAccuracyBest should not be used for comparison with location coordinate or altitidue
+        // accuracy because it is a negative value. Instead, compare against some predetermined "real" measure of
+        // acceptable accuracy, or depend on the timeout to stop updating. This sample depends on the timeout.
+        //
+        if (newLocation.horizontalAccuracy <= self.locationManager.desiredAccuracy) {
+            [self.locationManager stopUpdatingLocation];
+            GSFData *data = [self.capturedImages lastObject];
+            data.coords = self.bestEffort;
+        }
+    }
+}
 
 // This method is called when an image has been chosen from the library or taken from the camera.
 // we segue here to the collection view.
