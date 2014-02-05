@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		96A936B018A1A78200566331 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96A936AF18A1A78200566331 /* opencv2.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		96B5990318920061001D29CF /* GSFDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B5990218920061001D29CF /* GSFDataViewController.m */; };
 		96B599091895FB4D001D29CF /* GSFImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B599081895FB4D001D29CF /* GSFImageCollectionViewCell.m */; };
 		96B5990C18963A5A001D29CF /* GSFImageSelectorPreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B5990B18963A5A001D29CF /* GSFImageSelectorPreview.m */; };
@@ -22,6 +21,7 @@
 		D3D7807C18A0396900E5AB50 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3D7807B18A0396900E5AB50 /* CoreLocation.framework */; };
 		D3D7807F18A0416400E5AB50 /* GSFTaggedVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3D7807E18A0416400E5AB50 /* GSFTaggedVCViewController.m */; };
 		D3D7808318A051DA00E5AB50 /* GSFData.m in Sources */ = {isa = PBXBuildFile; fileRef = D3D7808218A051DA00E5AB50 /* GSFData.m */; };
+		D9F9F3AD5A024F9181F4F432 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D1EB022391E459995534E17 /* libPods.a */; };
 		DBB4283B1880A64F00139082 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB4283A1880A64F00139082 /* Foundation.framework */; };
 		DBB4283D1880A64F00139082 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB4283C1880A64F00139082 /* CoreGraphics.framework */; };
 		DBB4283F1880A64F00139082 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB4283E1880A64F00139082 /* UIKit.framework */; };
@@ -50,7 +50,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		96A936AF18A1A78200566331 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
+		0D1EB022391E459995534E17 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		96B5990118920061001D29CF /* GSFDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFDataViewController.h; sourceTree = "<group>"; };
 		96B5990218920061001D29CF /* GSFDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFDataViewController.m; sourceTree = "<group>"; };
 		96B599071895FB4D001D29CF /* GSFImageCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFImageCollectionViewCell.h; sourceTree = "<group>"; };
@@ -71,6 +71,7 @@
 		D3D7807E18A0416400E5AB50 /* GSFTaggedVCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFTaggedVCViewController.m; sourceTree = "<group>"; };
 		D3D7808118A051DA00E5AB50 /* GSFData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFData.h; sourceTree = "<group>"; };
 		D3D7808218A051DA00E5AB50 /* GSFData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFData.m; sourceTree = "<group>"; };
+		D421E72B666048D1B7300657 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		DBB428371880A64F00139082 /* GSFDataCollecter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GSFDataCollecter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBB4283A1880A64F00139082 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DBB4283C1880A64F00139082 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -104,12 +105,12 @@
 				96C6A52E1898451A004D70F0 /* CoreMedia.framework in Frameworks */,
 				96C6A52F1898451A004D70F0 /* CoreVideo.framework in Frameworks */,
 				DBB4283D1880A64F00139082 /* CoreGraphics.framework in Frameworks */,
-				96A936B018A1A78200566331 /* opencv2.framework in Frameworks */,
 				96C6A52818984501004D70F0 /* AssetsLibrary.framework in Frameworks */,
 				96C6A52918984501004D70F0 /* AVFoundation.framework in Frameworks */,
 				96C6A525189844F2004D70F0 /* Accelerate.framework in Frameworks */,
 				DBB4283F1880A64F00139082 /* UIKit.framework in Frameworks */,
 				DBB4283B1880A64F00139082 /* Foundation.framework in Frameworks */,
+				D9F9F3AD5A024F9181F4F432 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -172,6 +173,7 @@
 				DBB428621880A64F00139082 /* GSFDataCollecterTests */,
 				DBB428391880A64F00139082 /* Frameworks */,
 				DBB428381880A64F00139082 /* Products */,
+				D421E72B666048D1B7300657 /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -187,7 +189,6 @@
 		DBB428391880A64F00139082 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				96A936AF18A1A78200566331 /* opencv2.framework */,
 				D3D7807B18A0396900E5AB50 /* CoreLocation.framework */,
 				96C6A53018984534004D70F0 /* QuartzCore.framework */,
 				96C6A52A1898451A004D70F0 /* CoreImage.framework */,
@@ -200,6 +201,7 @@
 				DBB4283C1880A64F00139082 /* CoreGraphics.framework */,
 				DBB4283E1880A64F00139082 /* UIKit.framework */,
 				DBB4285C1880A64F00139082 /* XCTest.framework */,
+				0D1EB022391E459995534E17 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -252,9 +254,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DBB4286C1880A64F00139082 /* Build configuration list for PBXNativeTarget "GSFDataCollecter" */;
 			buildPhases = (
+				EF2C562301214810BCE53C4B /* Check Pods Manifest.lock */,
 				DBB428331880A64F00139082 /* Sources */,
 				DBB428341880A64F00139082 /* Frameworks */,
 				DBB428351880A64F00139082 /* Resources */,
+				1265E63F7BB04CCDBD2B58D7 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -294,7 +298,7 @@
 				ORGANIZATIONNAME = "Michael Baptist - LLNL";
 				TargetAttributes = {
 					DBB428361880A64F00139082 = {
-						DevelopmentTeam = 58K2V57UB6;
+						DevelopmentTeam = Z5SLZ6QPTL;
 					};
 					DBB4285A1880A64F00139082 = {
 						TestTargetID = DBB428361880A64F00139082;
@@ -341,6 +345,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1265E63F7BB04CCDBD2B58D7 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EF2C562301214810BCE53C4B /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		DBB428331880A64F00139082 /* Sources */ = {
@@ -489,6 +526,7 @@
 		};
 		DBB4286D1880A64F00139082 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D421E72B666048D1B7300657 /* Pods.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -498,8 +536,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"./**",
-					"/Users/mbaptist/Code/opencv/**",
-					"/Users/mbaptist/Code/open-fusion-iOS",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GSFDataCollecter/GSFDataCollecter-Prefix.pch";
@@ -511,6 +547,7 @@
 		};
 		DBB4286E1880A64F00139082 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D421E72B666048D1B7300657 /* Pods.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -520,8 +557,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"./**",
-					"/Users/mbaptist/Code/opencv/**",
-					"/Users/mbaptist/Code/open-fusion-iOS",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GSFDataCollecter/GSFDataCollecter-Prefix.pch";
