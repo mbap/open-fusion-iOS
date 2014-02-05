@@ -9,6 +9,7 @@
 #import "GSFViewController.h"
 #import "GSFOpenCvImageProcessor.h"
 #import "GSFImageCollectionViewCell.h"
+#import "GSFOpenCvImageViewController.h"
 #import "GSFData.h"
 
 
@@ -72,6 +73,7 @@
         self.showDetectionImages = YES;
         GSFOpenCvImageProcessor *processor = [[GSFOpenCvImageProcessor alloc] init];
         self.cvCapturedImages = [processor detectPeopleUsingImageArray:self.capturedImages];
+        [self performSegueWithIdentifier:@"viewOpenCvImages" sender:self];
     }
 }
 
@@ -199,6 +201,10 @@
         preview.index = [[NSIndexPath alloc] init];
         preview.index = self.index;
         preview.delagate = self;
+    } else if ([[segue identifier] isEqualToString:@"viewOpenCvImages"]) {
+        GSFOpenCvImageViewController *controller = (GSFOpenCvImageViewController*)segue.destinationViewController;
+        controller.cvCapturedImages = [[NSMutableArray alloc] init];
+        controller.cvCapturedImages = self.cvCapturedImages;
     }
 }
 
