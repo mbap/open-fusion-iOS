@@ -7,7 +7,7 @@
 //
 
 #import "GSFViewController.h"
-//#import "GSFOpenCvImageProcessor.h"
+#import "GSFOpenCvImageProcessor.h"
 #import "GSFImageCollectionViewCell.h"
 #import "GSFData.h"
 
@@ -70,8 +70,8 @@
 {
     if (self.capturedImages.count) {
         self.showDetectionImages = YES;
-        //GSFOpenCvImageProcessor *processor = [[GSFOpenCvImageProcessor alloc] init];
-        //self.cvCapturedImages = [processor detectPeopleUsingImageArray:self.capturedImages];
+        GSFOpenCvImageProcessor *processor = [[GSFOpenCvImageProcessor alloc] init];
+        self.cvCapturedImages = [processor detectPeopleUsingImageArray:self.capturedImages];
     }
 }
 
