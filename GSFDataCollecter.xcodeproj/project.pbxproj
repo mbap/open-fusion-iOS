@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		96A936B018A1A78200566331 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96A936AF18A1A78200566331 /* opencv2.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		96B5990318920061001D29CF /* GSFDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B5990218920061001D29CF /* GSFDataViewController.m */; };
 		96B599091895FB4D001D29CF /* GSFImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B599081895FB4D001D29CF /* GSFImageCollectionViewCell.m */; };
 		96B5990C18963A5A001D29CF /* GSFImageSelectorPreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B5990B18963A5A001D29CF /* GSFImageSelectorPreview.m */; };
@@ -49,6 +50,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		96A936AF18A1A78200566331 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 		96B5990118920061001D29CF /* GSFDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFDataViewController.h; sourceTree = "<group>"; };
 		96B5990218920061001D29CF /* GSFDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFDataViewController.m; sourceTree = "<group>"; };
 		96B599071895FB4D001D29CF /* GSFImageCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFImageCollectionViewCell.h; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 				96C6A52E1898451A004D70F0 /* CoreMedia.framework in Frameworks */,
 				96C6A52F1898451A004D70F0 /* CoreVideo.framework in Frameworks */,
 				DBB4283D1880A64F00139082 /* CoreGraphics.framework in Frameworks */,
+				96A936B018A1A78200566331 /* opencv2.framework in Frameworks */,
 				96C6A52818984501004D70F0 /* AssetsLibrary.framework in Frameworks */,
 				96C6A52918984501004D70F0 /* AVFoundation.framework in Frameworks */,
 				96C6A525189844F2004D70F0 /* Accelerate.framework in Frameworks */,
@@ -184,6 +187,7 @@
 		DBB428391880A64F00139082 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				96A936AF18A1A78200566331 /* opencv2.framework */,
 				D3D7807B18A0396900E5AB50 /* CoreLocation.framework */,
 				96C6A53018984534004D70F0 /* QuartzCore.framework */,
 				96C6A52A1898451A004D70F0 /* CoreImage.framework */,

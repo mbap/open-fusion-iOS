@@ -1,4 +1,3 @@
-/*
 //
 //  GSFOpenCvImageProcessor.m
 //  GSFDataCollecter
@@ -97,4 +96,4 @@
 
 
 @end
- */
+
