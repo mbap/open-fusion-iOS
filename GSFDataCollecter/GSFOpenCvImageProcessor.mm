@@ -7,40 +7,49 @@
 //
 
 #import "GSFOpenCvImageProcessor.h"
+#import "GSFData.h"
 #import <opencv2/highgui/cap_ios.h>
 #import <opencv2/objdetect/objdetect.hpp>
 
 @interface GSFOpenCvImageProcessor ()
 
 // convert image from UIImage to cvMat format to use the opencv framework.
-+ (cv::Mat)cvMatFromUIImage:(UIImage *)image;
+- (cv::Mat)cvMatFromUIImage:(UIImage *)image;
 
 // conver image from cvMat to UIImage for after the image is processed.
-+ (UIImage *)UIImageFromCvMat:(cv::Mat)cvMatImage;
+- (UIImage *)UIImageFromCvMat:(cv::Mat)cvMatImage;
 
 @end
 
 @implementation GSFOpenCvImageProcessor
 
+
 // convert image from UIImage to cvMat format to use the opencv framework.
-+ (cv::Mat)cvMatFromUIImage:(UIImage *)image
+- (cv::Mat)cvMatFromUIImage:(UIImage *)image
 {
-    CGColorSpaceRef colorref = CGImageGetColorSpace(image.CGImage); // get color space for bitmap image.
-    CGFloat row = image.size.width;
-    CGFloat col = image.size.height;
+    CGColorSpaceRef colorSpace = CGImageGetColorSpace(image.CGImage);
+    CGFloat cols = image.size.width;
+    CGFloat rows = image.size.height;
     
-    cv::Mat cvMat(row, col, CV_8UC4);  // not exactly sure how this works.
-                                       // i do know it is using CV_8UC4 format which
-                                       // specifies 8u bits per component. with 3 colors and alpha channel (colorimage)
+    cv::Mat cvMat(rows, cols, CV_8UC3); // 8 bits per component, 3 channels (color channels)
     
-    CGContextRef contextRef = CGBitmapContextCreate(cvMat.data, row, col, 8, cvMat.step[0], colorref, kCGImageAlphaNoneSkipLast | kCGBitmapByteOrderDefault);
-    CGContextDrawImage(contextRef, CGRectMake(0, 0, col, row), image.CGImage);
+    CGContextRef contextRef = CGBitmapContextCreate(cvMat.data,                 // Pointer to  data
+                                                    cols,                       // Width of bitmap
+                                                    rows,                       // Height of bitmap
+                                                    8,                          // Bits per component
+                                                    cvMat.step[0],              // Bytes per row
+                                                    colorSpace,                 // Colorspace
+                                                    kCGImageAlphaNoneSkipLast |
+                                                    kCGBitmapByteOrderDefault); // Bitmap info flags
+    
+    CGContextDrawImage(contextRef, CGRectMake(0, 0, cols, rows), image.CGImage);
     CGContextRelease(contextRef);
+    
     return cvMat;
 }
 
 // conver image from cvMat to UIImage for after the image is processed.
-+ (UIImage *)UIImageFromCvMat:(cv::Mat)cvMatImage;
+- (UIImage *)UIImageFromCvMat:(cv::Mat)cvMatImage;
 {
     NSData *data = [NSData dataWithBytes:cvMatImage.data length:cvMatImage.elemSize()*cvMatImage.total()];
     CGColorSpaceRef colorref = CGColorSpaceCreateDeviceRGB();
@@ -61,8 +70,8 @@
     cv::HOGDescriptor hog;
     hog.setSVMDetector(cv::HOGDescriptor::getDefaultPeopleDetector());
     
-    for (UIImage *img in capturedImages) {
-        cv::Mat matimg = [GSFOpenCvImageProcessor cvMatFromUIImage:img];
+    for (GSFData *data in capturedImages) {
+        cv::Mat matimg = [self cvMatFromUIImage:data.image];
         cv::vector<cv::Rect> found;
         cv::vector<cv::Rect> found_filtered;
         hog.detectMultiScale(matimg, found, 0, cv::Size(8,8), cv::Size(32,32), 1.05, 2);
@@ -87,7 +96,7 @@
 	        r.height = cvRound(r.height*0.9);
             cv::rectangle(matimg, r.tl(), r.br(), cv::Scalar(0,255,0), 2);
 	    }
-        UIImage *finalimage = [GSFOpenCvImageProcessor UIImageFromCvMat:matimg];
+        UIImage *finalimage = [self UIImageFromCvMat:matimg];
         [processed addObject:finalimage];
     }
     return processed;
