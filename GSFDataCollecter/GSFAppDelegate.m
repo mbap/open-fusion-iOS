@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Michael Baptist - LLNL. All rights reserved.
 //
 
+#import <Crashlytics/Crashlytics.h>
 #import "GSFAppDelegate.h"
 
 @implementation GSFAppDelegate
@@ -13,6 +14,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    [Crashlytics startWithAPIKey:@"5521b7e78d7367f235c79886c3322110e1348889"];
     return YES;
 }
 							

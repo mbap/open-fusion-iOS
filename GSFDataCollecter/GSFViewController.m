@@ -25,6 +25,7 @@
 @property (nonatomic) NSMutableArray *capturedImages;
 @property (nonatomic) NSMutableArray *cvCapturedImages;
 @property (nonatomic) BOOL showDetectionImages;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (nonatomic) UIImageView *imagePreview;
@@ -72,8 +73,18 @@
     if (self.capturedImages.count) {
         self.showDetectionImages = YES;
         GSFOpenCvImageProcessor *processor = [[GSFOpenCvImageProcessor alloc] init];
-        self.cvCapturedImages = [processor detectPeopleUsingImageArray:self.capturedImages];
-        [self performSegueWithIdentifier:@"viewOpenCvImages" sender:self];
+        dispatch_queue_t hogQueue = dispatch_queue_create("hogQueue", NULL);
+        [self.view bringSubviewToFront:self.spinner];
+        [self.spinner startAnimating];
+        self.navigationItem.hidesBackButton = YES;
+        dispatch_async(hogQueue, ^{
+            self.cvCapturedImages = [processor detectPeopleUsingImageArray:self.capturedImages];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.spinner stopAnimating];
+                self.navigationItem.hidesBackButton = NO;
+                [self performSegueWithIdentifier:@"viewOpenCvImages" sender:self];
+            });
+        });
     }
 }
 

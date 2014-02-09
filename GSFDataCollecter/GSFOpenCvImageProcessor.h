@@ -17,5 +17,6 @@
 // gives an array of processed images back.
 - (NSMutableArray* )detectPeopleUsingImageArray:(NSMutableArray *)capturedImages;
 
+
 @end
 
