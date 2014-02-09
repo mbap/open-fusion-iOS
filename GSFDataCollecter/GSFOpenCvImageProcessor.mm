@@ -31,9 +31,11 @@
 - (cv::Mat)cvMatFromUIImage:(UIImage *)image
 {
     CGColorSpaceRef colorSpace = CGImageGetColorSpace(image.CGImage);
-    //CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGFloat cols = image.size.width;
-    CGFloat rows = image.size.height;
+    
+    // notice that the cols and rows are swapped from the image.
+    // this will prevent the 90 degree rotation after processing.
+    CGFloat cols = image.size.height;
+    CGFloat rows = image.size.width;
 
     cv::Mat cvMat(rows, cols, CV_8UC4); // 8 bits per component, 3 channels (color channels) 1 alpha
     CGContextRef contextRef = CGBitmapContextCreate(cvMat.data,                 // Pointer to  data
@@ -60,7 +62,7 @@
     CGDataProviderRef provider = CGDataProviderCreateWithCFData((__bridge CFDataRef)data);
     CGImageRef imageref = CGImageCreate(cvMatImage.cols, cvMatImage.rows, 8, 8*cvMatImage.elemSize(), cvMatImage.step[0], colorref, kCGImageAlphaNoneSkipLast | kCGBitmapByteOrderDefault, provider, NULL, false, kCGRenderingIntentDefault);
     
-    UIImage *finalImage = [UIImage imageWithCGImage:imageref];
+    UIImage *finalImage = [UIImage imageWithCGImage:imageref scale:1 orientation:UIImageOrientationUp];
     CGImageRelease(imageref);
     CGDataProviderRelease(provider);
     CGColorSpaceRelease(colorref);
@@ -73,7 +75,6 @@
     NSMutableArray *processed = [[NSMutableArray alloc] init];
     cv::HOGDescriptor hog;
     hog.setSVMDetector(cv::HOGDescriptor::getDefaultPeopleDetector());
-    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     
     for (GSFData *data in capturedImages) {
         cv::Mat matimg = [self cvMatFromUIImage:data.image];
@@ -82,7 +83,6 @@
         cv::Mat rgbMat(matimg.rows, matimg.cols, CV_8UC3); // 8 bits per component, 3 channels
         cvtColor(matimg, rgbMat, CV_RGBA2RGB, 3);
         hog.detectMultiScale(rgbMat, found, 0, cv::Size(8,8), cv::Size(32,32), 1.05, 2);
-    
     
         size_t i, j;
         for (i = 0; i < found.size(); i++)
