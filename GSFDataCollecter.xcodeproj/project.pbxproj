@@ -18,6 +18,7 @@
 		96C6A52F1898451A004D70F0 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96C6A52C1898451A004D70F0 /* CoreVideo.framework */; };
 		96C6A53118984534004D70F0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96C6A53018984534004D70F0 /* QuartzCore.framework */; };
 		D30862D218A2F8F100407EA5 /* GSFOpenCvImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D30862D118A2F8F100407EA5 /* GSFOpenCvImageViewController.m */; };
+		96CA75BA18A7260500C553E9 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96CA75B918A7260500C553E9 /* Crashlytics.framework */; };
 		D3D78071189996FE00E5AB50 /* GSFOpenCvImageProcessor.mm in Sources */ = {isa = PBXBuildFile; fileRef = D3D78070189996FE00E5AB50 /* GSFOpenCvImageProcessor.mm */; };
 		D3D7807C18A0396900E5AB50 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3D7807B18A0396900E5AB50 /* CoreLocation.framework */; };
 		D3D7807F18A0416400E5AB50 /* GSFTaggedVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3D7807E18A0416400E5AB50 /* GSFTaggedVCViewController.m */; };
@@ -67,6 +68,7 @@
 		96C6A53018984534004D70F0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D30862D018A2F8F100407EA5 /* GSFOpenCvImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFOpenCvImageViewController.h; sourceTree = "<group>"; };
 		D30862D118A2F8F100407EA5 /* GSFOpenCvImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFOpenCvImageViewController.m; sourceTree = "<group>"; };
+		96CA75B918A7260500C553E9 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		D3D7806F189996FE00E5AB50 /* GSFOpenCvImageProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFOpenCvImageProcessor.h; sourceTree = "<group>"; };
 		D3D78070189996FE00E5AB50 /* GSFOpenCvImageProcessor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GSFOpenCvImageProcessor.mm; sourceTree = "<group>"; };
 		D3D7807B18A0396900E5AB50 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -104,6 +106,7 @@
 			files = (
 				D3D7807C18A0396900E5AB50 /* CoreLocation.framework in Frameworks */,
 				96C6A53118984534004D70F0 /* QuartzCore.framework in Frameworks */,
+				96CA75BA18A7260500C553E9 /* Crashlytics.framework in Frameworks */,
 				96C6A52D1898451A004D70F0 /* CoreImage.framework in Frameworks */,
 				96C6A52E1898451A004D70F0 /* CoreMedia.framework in Frameworks */,
 				96C6A52F1898451A004D70F0 /* CoreVideo.framework in Frameworks */,
@@ -194,6 +197,7 @@
 		DBB428391880A64F00139082 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				96CA75B918A7260500C553E9 /* Crashlytics.framework */,
 				D3D7807B18A0396900E5AB50 /* CoreLocation.framework */,
 				96C6A53018984534004D70F0 /* QuartzCore.framework */,
 				96C6A52A1898451A004D70F0 /* CoreImage.framework */,
@@ -264,6 +268,7 @@
 				DBB428341880A64F00139082 /* Frameworks */,
 				DBB428351880A64F00139082 /* Resources */,
 				1265E63F7BB04CCDBD2B58D7 /* Copy Pods Resources */,
+				96CA75B818A725D200C553E9 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -366,6 +371,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		96CA75B818A725D200C553E9 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Crashlytics.framework/run 5521b7e78d7367f235c79886c3322110e1348889 cb0b07c4a318a00e85f9c0e016899e60ff33b03edfa9c803decb195c4cef009d";
 		};
 		EF2C562301214810BCE53C4B /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -542,6 +560,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"./**",
+					"/Users/mbaptist/Code/open-fusion-iOS",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GSFDataCollecter/GSFDataCollecter-Prefix.pch";
@@ -563,6 +582,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"./**",
+					"/Users/mbaptist/Code/open-fusion-iOS",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GSFDataCollecter/GSFDataCollecter-Prefix.pch";

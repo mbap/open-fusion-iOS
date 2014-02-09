@@ -9,7 +9,10 @@
 #import "GSFOpenCvImageProcessor.h"
 #import "GSFData.h"
 #import <opencv2/highgui/cap_ios.h>
+#import <opencv2/highgui/ios.h>
+#import <opencv2/highgui/highgui_c.h>
 #import <opencv2/objdetect/objdetect.hpp>
+#import <opencv2/imgproc/imgproc.hpp>
 
 @interface GSFOpenCvImageProcessor ()
 
@@ -28,11 +31,11 @@
 - (cv::Mat)cvMatFromUIImage:(UIImage *)image
 {
     CGColorSpaceRef colorSpace = CGImageGetColorSpace(image.CGImage);
+    //CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     CGFloat cols = image.size.width;
     CGFloat rows = image.size.height;
-    
-    cv::Mat cvMat(rows, cols, CV_8UC3); // 8 bits per component, 3 channels (color channels)
-    
+
+    cv::Mat cvMat(rows, cols, CV_8UC4); // 8 bits per component, 3 channels (color channels) 1 alpha
     CGContextRef contextRef = CGBitmapContextCreate(cvMat.data,                 // Pointer to  data
                                                     cols,                       // Width of bitmap
                                                     rows,                       // Height of bitmap
@@ -44,6 +47,7 @@
     
     CGContextDrawImage(contextRef, CGRectMake(0, 0, cols, rows), image.CGImage);
     CGContextRelease(contextRef);
+    CGColorSpaceRelease(colorSpace);
     
     return cvMat;
 }
@@ -69,12 +73,15 @@
     NSMutableArray *processed = [[NSMutableArray alloc] init];
     cv::HOGDescriptor hog;
     hog.setSVMDetector(cv::HOGDescriptor::getDefaultPeopleDetector());
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     
     for (GSFData *data in capturedImages) {
         cv::Mat matimg = [self cvMatFromUIImage:data.image];
         cv::vector<cv::Rect> found;
         cv::vector<cv::Rect> found_filtered;
-        hog.detectMultiScale(matimg, found, 0, cv::Size(8,8), cv::Size(32,32), 1.05, 2);
+        cv::Mat rgbMat(matimg.rows, matimg.cols, CV_8UC3); // 8 bits per component, 3 channels
+        cvtColor(matimg, rgbMat, CV_RGBA2RGB, 3);
+        hog.detectMultiScale(rgbMat, found, 0, cv::Size(8,8), cv::Size(32,32), 1.05, 2);
     
     
         size_t i, j;
