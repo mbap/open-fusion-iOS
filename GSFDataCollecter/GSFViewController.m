@@ -78,7 +78,8 @@
         [self.spinner startAnimating];
         self.navigationItem.hidesBackButton = YES;
         dispatch_async(hogQueue, ^{
-            self.cvCapturedImages = [processor detectPeopleUsingImageArray:self.capturedImages];
+            //self.cvCapturedImages = [processor detectPeopleUsingImageArray:self.capturedImages];
+            self.cvCapturedImages = [processor detectFacesUsingImageArray:self.capturedImages];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.spinner stopAnimating];
                 self.navigationItem.hidesBackButton = NO;

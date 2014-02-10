@@ -10,7 +10,7 @@
 #import "GSFData.h"
 #import <opencv2/highgui/cap_ios.h>
 #import <opencv2/highgui/ios.h>
-#import <opencv2/highgui/highgui_c.h>
+#import <opencv2/highgui/highgui.hpp>
 #import <opencv2/objdetect/objdetect.hpp>
 #import <opencv2/imgproc/imgproc.hpp>
 
@@ -70,6 +70,7 @@
     return finalImage;
 }
 
+// detect people. currenly has mostly negative results.
 - (NSMutableArray *)detectPeopleUsingImageArray:(NSMutableArray *)capturedImages
 {
     NSMutableArray *processed = [[NSMutableArray alloc] init];
@@ -109,6 +110,32 @@
     return processed;
 }
 
+- (NSMutableArray* )detectFacesUsingImageArray:(NSMutableArray *)capturedImages
+{
+    NSMutableArray *processed = [[NSMutableArray alloc] init];
+    for (GSFData *data in capturedImages) {
+        cv::Mat matimg = [self cvMatFromUIImage:data.image];
+        cv::Mat matgrey;
+        cvtColor(matimg, matgrey, CV_BGR2GRAY);
+        equalizeHist(matgrey, matgrey);
+        cv::CascadeClassifier faceDetector;
+        int x = faceDetector.load("haarcascade_frontalface_default.xml");
+        if (!x) NSLog(@"cascade load error");
+        //faceDetector.load("haarcascade_frontalface_alt.xml");
+
+        cv::vector<cv::Rect> faces;
+        //faceDetector.detectMultiScale(matgrey, faces, 1, 1, 2, 0|CV_HAAR_SCALE_IMAGE, cv::Size(30,30)); // look into documentation more for param info.
+        
+        faceDetector.detectMultiScale(matgrey, faces);
+        
+        for(size_t i = 0; i < faces.size(); i++ ) {
+            cv::Point center(faces[i].x + faces[i].width*0.5, faces[i].y + faces[i].height*0.5);
+            cv::ellipse(matimg, center, cv::Size(faces[i].width*0.5, faces[i].height*0.5), 0, 0, 360, cv::Scalar(255, 0, 255), 4, 8, 0);
+        }
+        [processed addObject:[self UIImageFromCvMat:matimg]];
+    }
+    return processed;
+}
 
 
 @end
