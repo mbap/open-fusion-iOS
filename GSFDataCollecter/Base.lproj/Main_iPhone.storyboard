@@ -4,7 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <scenes>
-        <!--View Controller - Person Detection-->
+        <!--View Controller - Image Staging-->
         <scene sceneID="J7e-XA-WfD">
             <objects>
                 <viewController id="HvR-I5-gkG" customClass="GSFViewController" sceneMemberID="viewController">
@@ -66,7 +66,6 @@
                                         <size key="customSize" width="260" height="369"/>
                                         <connections>
                                             <outlet property="imageView" destination="ii1-bF-ThX" id="Yic-Jc-opp"/>
-                                            <segue destination="2K4-BG-KDV" kind="push" identifier="viewOpenCvImages" id="RxP-rZ-7pw"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -79,13 +78,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Person Detection" id="1Lh-8o-8Sv"/>
+                    <navigationItem key="navigationItem" title="Image Staging" id="1Lh-8o-8Sv"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="collectionView" destination="BNO-Wu-MTF" id="UWn-Re-H8u"/>
                         <outlet property="spinner" destination="5yx-eh-vUk" id="xrx-Em-nFG"/>
                         <outlet property="toolbar" destination="vCw-mH-zuq" id="03p-Qi-gfg"/>
                         <segue destination="wg5-j6-O9O" kind="push" identifier="selectorImagePreviewSegue" id="Auy-Bp-yDB"/>
+                        <segue destination="2K4-BG-KDV" kind="push" identifier="viewOpenCvImages" id="ndp-1P-jYc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="txS-EV-dAM" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -97,7 +97,7 @@
             </objects>
             <point key="canvasLocation" x="81" y="195"/>
         </scene>
-        <!--Open Cv Image View Controller-->
+        <!--Open Cv Image View Controller - Person Detection-->
         <scene sceneID="djJ-6L-veC">
             <objects>
                 <viewController id="2K4-BG-KDV" customClass="GSFOpenCvImageViewController" sceneMemberID="viewController">
@@ -116,7 +116,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="ddh-Ny-Grq"/>
+                    <navigationItem key="navigationItem" title="Person Detection" id="ddh-Ny-Grq"/>
                     <connections>
                         <outlet property="imageView" destination="32l-Wq-eXU" id="hTQ-Xu-WQ9"/>
                     </connections>
