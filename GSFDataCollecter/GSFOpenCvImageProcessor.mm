@@ -34,8 +34,8 @@
     
     // notice that the cols and rows are swapped from the image.
     // this will prevent the 90 degree rotation after processing.
-    CGFloat cols = image.size.height;
-    CGFloat rows = image.size.width;
+    CGFloat rows = image.size.height;
+    CGFloat cols = image.size.width;
 
     cv::Mat cvMat(rows, cols, CV_8UC4); // 8 bits per component, 3 channels (color channels) 1 alpha
     CGContextRef contextRef = CGBitmapContextCreate(cvMat.data,                 // Pointer to  data
@@ -119,10 +119,10 @@
         cvtColor(matimg, matgrey, CV_BGR2GRAY);
         equalizeHist(matgrey, matgrey);
         cv::CascadeClassifier faceDetector;
-        int x = faceDetector.load("haarcascade_frontalface_default.xml");
+        NSString *cascadePath = [[NSBundle mainBundle] pathForResource:@"haarcascade_frontalface_alt" ofType:@"xml"];
+        int x = faceDetector.load([cascadePath UTF8String]);
         if (!x) NSLog(@"cascade load error");
-        //faceDetector.load("haarcascade_frontalface_alt.xml");
-
+        
         cv::vector<cv::Rect> faces;
         //faceDetector.detectMultiScale(matgrey, faces, 1, 1, 2, 0|CV_HAAR_SCALE_IMAGE, cv::Size(30,30)); // look into documentation more for param info.
         
