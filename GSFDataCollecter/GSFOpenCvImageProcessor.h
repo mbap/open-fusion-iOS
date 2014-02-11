@@ -13,8 +13,10 @@
 
 @interface GSFOpenCvImageProcessor : NSObject
 
+// gives an array of processed images back. Facial Detection
+- (NSMutableArray* )detectFacesUsingImageArray:(NSMutableArray *)capturedImages;
 
-// gives an array of processed images back.
+// gives an array of processed images back. Person Detection (whole body)
 - (NSMutableArray* )detectPeopleUsingImageArray:(NSMutableArray *)capturedImages;
 
 
