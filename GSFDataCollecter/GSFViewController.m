@@ -56,7 +56,12 @@
     }
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate = self;
-    self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
+    
+    // select accuracy for the gps. we can go even higher in accuracy.
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    
+    self.collectionView.backgroundColor = [UIColor clearColor];
+    self.navigationController.delegate = self;
 }
 
 // button action for showing the camera
@@ -78,8 +83,8 @@
         [self.spinner startAnimating];
         self.navigationItem.hidesBackButton = YES;
         dispatch_async(hogQueue, ^{
-            //self.cvCapturedImages = [processor detectPeopleUsingImageArray:self.capturedImages];
-            self.cvCapturedImages = [processor detectFacesUsingImageArray:self.capturedImages];
+            self.cvCapturedImages = [processor detectPeopleUsingImageArray:self.capturedImages];
+            //self.cvCapturedImages = [processor detectFacesUsingImageArray:self.capturedImages];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.spinner stopAnimating];
                 self.navigationItem.hidesBackButton = NO;
@@ -105,6 +110,8 @@
     
     self.imagePickerController = imagePickerController;
     [self presentViewController:self.imagePickerController animated:YES completion:nil];
+    [self setNeedsStatusBarAppearanceUpdate]; // hide status bar.
+
 }
 
 // add gps location stuff in here.
@@ -112,6 +119,7 @@
 {
     [self dismissViewControllerAnimated:YES completion:NULL];
     self.imagePickerController = nil;
+    [self setNeedsStatusBarAppearanceUpdate]; // bring status bar back
     [self.view bringSubviewToFront:self.toolbar];
     if ([[self.capturedImages lastObject] isKindOfClass:[GSFData class]]){
         GSFData *data = [self.capturedImages lastObject];
@@ -237,6 +245,16 @@
     if (indexPath.item < self.capturedImages.count) {
         [self.capturedImages removeObjectAtIndex:indexPath.item];
         [self.collectionView deleteItemsAtIndexPaths:[NSArray arrayWithObject:indexPath]];
+    }
+}
+
+
+// hide status bar when image picker controller comes up. some buttons are hard to push
+- (BOOL)prefersStatusBarHidden {
+    if (self.imagePickerController) {
+        return YES;
+    } else {
+        return NO;
     }
 }
 

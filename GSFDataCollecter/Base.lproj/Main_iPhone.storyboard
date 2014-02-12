@@ -228,13 +228,23 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WkC-fn-euT">
-                                <rect key="frame" x="136" y="430" width="48" height="30"/>
+                                <rect key="frame" x="20" y="430" width="48" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Collect">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="startCollecting:" destination="KhN-c9-7dH" eventType="touchUpInside" id="e46-jw-J8u"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sHd-MA-jxS">
+                                <rect key="frame" x="254" y="430" width="31" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Map">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="startMapData:" destination="KhN-c9-7dH" eventType="touchUpInside" id="O7T-H0-hG2"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -246,11 +256,31 @@
                         <outlet property="gpsToggle" destination="3ir-4D-dVE" id="YjJ-oD-Vyi"/>
                         <outlet property="personDetectToggle" destination="eAd-Lu-MqM" id="ju7-zL-Hit"/>
                         <segue destination="HvR-I5-gkG" kind="push" identifier="imagePickerSegue" id="kEg-c3-iIB"/>
+                        <segue destination="JP9-ma-9R9" kind="push" identifier="mapSegue" id="F9A-YN-B9i"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vka-Xb-pvN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-429" y="195"/>
+        </scene>
+        <!--View Controller - Map Stuff Change me-->
+        <scene sceneID="WHb-gH-qkD">
+            <objects>
+                <viewController id="JP9-ma-9R9" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Bau-Ny-iM1"/>
+                        <viewControllerLayoutGuide type="bottom" id="Qne-iX-E9U"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="yqZ-SN-Fep">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Map Stuff Change me" id="m50-BP-a4K"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EIA-SF-AzP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="81" y="-487"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

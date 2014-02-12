@@ -35,4 +35,8 @@
     }
 }
 
+- (IBAction)startMapData:(id)sender {
+    [self performSegueWithIdentifier:@"mapSegue" sender:self];
+}
+
 @end
