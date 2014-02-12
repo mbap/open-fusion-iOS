@@ -22,17 +22,57 @@
 // conver image from cvMat to UIImage for after the image is processed.
 - (UIImage *)UIImageFromCvMat:(cv::Mat)cvMatImage;
 
+// rotate an image by degrees.
+- (UIImage *)rotateImage:(UIImage*)image byDegrees:(CGFloat)degrees;
+
 @end
 
 @implementation GSFOpenCvImageProcessor
 
+- (UIImage *)rotateImage:(UIImage*)image byDegrees:(CGFloat)degrees
+{
+    // calculate the size of the rotated view's containing box for our drawing space
+    UIView *rotatedViewBox = [[UIView alloc] initWithFrame:CGRectMake(0,0,image.size.width, image.size.height)];
+    CGAffineTransform t = CGAffineTransformMakeRotation((degrees/180)*M_PI);
+    rotatedViewBox.transform = t;
+    CGSize rotatedSize = rotatedViewBox.frame.size;
+    
+    // Create the bitmap context
+    UIGraphicsBeginImageContext(rotatedSize);
+    CGContextRef bitmap = UIGraphicsGetCurrentContext();
+    
+    // Move the origin to the middle of the image so we will rotate and scale around the center.
+    CGContextTranslateCTM(bitmap, rotatedSize.width/2, rotatedSize.height/2);
+    
+    //   // Rotate the image context
+    CGContextRotateCTM(bitmap, (degrees/180)*M_PI);
+    
+    // Now, draw the rotated/scaled image into the context
+    CGContextScaleCTM(bitmap, 1.0, -1.0);
+    CGContextDrawImage(bitmap, CGRectMake(-image.size.width / 2, -image.size.height / 2, image.size.width, image.size.height), [image CGImage]);
+    
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+    
+}
 
 // convert image from UIImage to cvMat format to use the opencv framework.
 - (cv::Mat)cvMatFromUIImage:(UIImage *)image
 {
+    if (image.imageOrientation == UIImageOrientationRight) { // requires 90 clockwise rotation
+        //NSLog(@"Regular Portrait");
+        image = [self rotateImage:image byDegrees:90];
+    } else if (image.imageOrientation == UIImageOrientationLeft) { // 90 counter clock
+        //NSLog(@"Upside Down Portrait");
+        image = [self rotateImage:image byDegrees:-90];
+    } else if (image.imageOrientation == UIImageOrientationDown) { // 180 rotation.
+        //NSLog(@"Camera Bottom Landscape");
+        image = [self rotateImage:image byDegrees:180];
+    } // the final case is in the correct orientation
+    
     CGColorSpaceRef colorSpace = CGImageGetColorSpace(image.CGImage);
     
-    // notice that the cols and rows are swapped from the image.
     // this will prevent the 90 degree rotation after processing.
     CGFloat rows = image.size.height;
     CGFloat cols = image.size.width;
@@ -50,7 +90,6 @@
     CGContextDrawImage(contextRef, CGRectMake(0, 0, cols, rows), image.CGImage);
     CGContextRelease(contextRef);
     CGColorSpaceRelease(colorSpace);
-    
     return cvMat;
 }
 
