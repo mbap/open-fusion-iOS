@@ -56,7 +56,11 @@
     }
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate = self;
-    self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
+    
+    // select accuracy for the gps. we can go even higher in accuracy.
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    
+    self.collectionView.backgroundColor = [UIColor clearColor];
 }
 
 // button action for showing the camera
