@@ -163,6 +163,8 @@
         if (!x) NSLog(@"cascade load error");
         
         cv::vector<cv::Rect> faces;
+        
+        // find a better detectMultiScale???!?@?!#
         //faceDetector.detectMultiScale(matgrey, faces, 1, 1, 2, 0|CV_HAAR_SCALE_IMAGE, cv::Size(30,30)); // look into documentation more for param info.
         
         faceDetector.detectMultiScale(matgrey, faces);
