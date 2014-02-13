@@ -14,7 +14,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    [GMSServices provideAPIKey:@"please dont commit me i am private"]; // this shouldn't show in a commit hopefully.
+    [GMSServices provideAPIKey:@"fake api key test"]; // this shouldn't show in a commit hopefully.
     return YES;
 }
 							
