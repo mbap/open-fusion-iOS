@@ -14,7 +14,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    [GMSServices provideAPIKey:@"af;jlfksa;lkjf;lasjf;aldksj"]; // this shouldn't show in a commit hopefully.
+    [GMSServices provideAPIKey:@"please dont commit me i am private"]; // this shouldn't show in a commit hopefully.
     return YES;
 }
 							
