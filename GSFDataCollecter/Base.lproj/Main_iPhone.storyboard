@@ -263,10 +263,10 @@
             </objects>
             <point key="canvasLocation" x="-429" y="195"/>
         </scene>
-        <!--View Controller - Map Stuff Change me-->
+        <!--Map View Controller - GSF Map-->
         <scene sceneID="WHb-gH-qkD">
             <objects>
-                <viewController id="JP9-ma-9R9" sceneMemberID="viewController">
+                <viewController id="JP9-ma-9R9" customClass="GSFGMapViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Bau-Ny-iM1"/>
                         <viewControllerLayoutGuide type="bottom" id="Qne-iX-E9U"/>
@@ -276,7 +276,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Map Stuff Change me" id="m50-BP-a4K"/>
+                    <navigationItem key="navigationItem" title="GSF Map" id="m50-BP-a4K"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EIA-SF-AzP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

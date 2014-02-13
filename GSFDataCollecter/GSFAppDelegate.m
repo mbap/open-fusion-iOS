@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Michael Baptist - LLNL. All rights reserved.
 //
 
+#import <GoogleMaps/GoogleMaps.h>
 #import "GSFAppDelegate.h"
 
 @implementation GSFAppDelegate
