@@ -22,6 +22,6 @@
 
 @property (nonatomic) UIImage *image;
 @property (nonatomic) NSIndexPath *index;
-@property (nonatomic, weak) id <GSFImageSelectorDelegate> delagate;
+@property (nonatomic, weak) id <GSFImageSelectorDelegate> delegate;
 
 @end
