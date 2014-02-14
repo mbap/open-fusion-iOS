@@ -82,9 +82,9 @@
         [self.spinner startAnimating];
         self.navigationItem.hidesBackButton = YES;
         dispatch_async(hogQueue, ^{
-            if (self.personDetect) {
+            if (self.personDetect && !self.faceDetect) {
                 self.cvCapturedImages = [processor detectPeopleUsingImageArray:self.capturedImages];
-            } else if (self.faceDetect) {
+            } else if (self.faceDetect && !self.personDetect) {
                 self.cvCapturedImages = [processor detectFacesUsingImageArray:self.capturedImages];
             } else if (self.personDetect && self.faceDetect) {
                 self.cvCapturedImages = [processor detectPeopleUsingImageArray:self.capturedImages];
@@ -132,7 +132,7 @@
     if ([[self.capturedImages lastObject] isKindOfClass:[GSFData class]]){
         GSFData *data = [self.capturedImages lastObject];
         data.coords = [[CLLocation alloc] init];
-        [self.locationManager startUpdatingLocation];
+        [self.locationManager startUpdatingLocation]; //this could slow down image taking when people have little service.
     }
 
 }
@@ -213,6 +213,7 @@
             UIImage *image = data.image;
             if ([cell isKindOfClass:[GSFImageCollectionViewCell class]]) {
                 UIImageView *imgview = ((GSFImageCollectionViewCell *)cell).imageView;
+                imgview.contentMode = UIViewContentModeScaleAspectFit;
                 imgview.image = image;
             }
         }
@@ -229,7 +230,7 @@
         preview.image = self.imagecell.imageView.image;
         preview.index = [[NSIndexPath alloc] init];
         preview.index = self.index;
-        preview.delagate = self;
+        preview.delegate = self;
     } else if ([[segue identifier] isEqualToString:@"viewOpenCvImages"]) {
         GSFOpenCvImageViewController *controller = (GSFOpenCvImageViewController*)segue.destinationViewController;
         controller.cvCapturedImages = [[NSMutableArray alloc] init];
