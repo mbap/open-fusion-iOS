@@ -19,6 +19,8 @@
 // gives an array of processed images back. Person Detection (whole body)
 - (NSMutableArray* )detectPeopleUsingImageArray:(NSMutableArray *)capturedImages;
 
+// rotate image by degrees.
+- (UIImage *)rotateImage:(UIImage*)image byDegrees:(CGFloat)degrees;
 
 @end
 

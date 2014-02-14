@@ -117,7 +117,7 @@
 		DBB428461880A64F00139082 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		DBB428481880A64F00139082 /* GSFDataCollecter-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GSFDataCollecter-Prefix.pch"; sourceTree = "<group>"; };
 		DBB428491880A64F00139082 /* GSFAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GSFAppDelegate.h; sourceTree = "<group>"; };
-		DBB4284A1880A64F00139082 /* GSFAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GSFAppDelegate.m; sourceTree = "<group>"; };
+		DBB4284A1880A64F00139082 /* GSFAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = GSFAppDelegate.m; path = ../../../Desktop/GSFAppDelegate.m; sourceTree = "<group>"; };
 		DBB4284D1880A64F00139082 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
 		DBB428501880A64F00139082 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		DBB428521880A64F00139082 /* GSFViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GSFViewController.h; sourceTree = "<group>"; };

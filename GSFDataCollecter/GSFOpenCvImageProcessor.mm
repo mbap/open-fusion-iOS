@@ -22,9 +22,6 @@
 // conver image from cvMat to UIImage for after the image is processed.
 - (UIImage *)UIImageFromCvMat:(cv::Mat)cvMatImage;
 
-// rotate an image by degrees.
-- (UIImage *)rotateImage:(UIImage*)image byDegrees:(CGFloat)degrees;
-
 @end
 
 @implementation GSFOpenCvImageProcessor
@@ -109,7 +106,7 @@
     return finalImage;
 }
 
-// detect people. currenly has mostly negative results.
+// detects a person in a photo.
 - (NSMutableArray *)detectPeopleUsingImageArray:(NSMutableArray *)capturedImages
 {
     NSMutableArray *processed = [[NSMutableArray alloc] init];
