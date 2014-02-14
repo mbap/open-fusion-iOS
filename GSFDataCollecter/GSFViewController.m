@@ -132,7 +132,7 @@
     if ([[self.capturedImages lastObject] isKindOfClass:[GSFData class]]){
         GSFData *data = [self.capturedImages lastObject];
         data.coords = [[CLLocation alloc] init];
-        [self.locationManager startUpdatingLocation];
+        [self.locationManager startUpdatingLocation]; //this could slow down image taking when people have little service.
     }
 
 }
@@ -213,6 +213,7 @@
             UIImage *image = data.image;
             if ([cell isKindOfClass:[GSFImageCollectionViewCell class]]) {
                 UIImageView *imgview = ((GSFImageCollectionViewCell *)cell).imageView;
+                imgview.contentMode = UIViewContentModeScaleAspectFit;
                 imgview.image = image;
             }
         }
