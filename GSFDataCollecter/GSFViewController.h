@@ -12,4 +12,7 @@
 
 @interface GSFViewController : GSFTaggedVCViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
+@property (nonatomic) BOOL faceDetect;
+@property (nonatomic) BOOL personDetect;
+
 @end

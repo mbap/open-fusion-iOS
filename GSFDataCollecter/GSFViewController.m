@@ -16,7 +16,6 @@
 
 @interface GSFViewController () <UICollectionViewDataSource, UICollectionViewDelegate, GSFImageSelectorDelegate>
 
-
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 
 @property (nonatomic) UIImagePickerController *imagePickerController;
@@ -83,8 +82,17 @@
         [self.spinner startAnimating];
         self.navigationItem.hidesBackButton = YES;
         dispatch_async(hogQueue, ^{
-            self.cvCapturedImages = [processor detectPeopleUsingImageArray:self.capturedImages];
-            //self.cvCapturedImages = [processor detectFacesUsingImageArray:self.capturedImages];
+            if (self.personDetect) {
+                self.cvCapturedImages = [processor detectPeopleUsingImageArray:self.capturedImages];
+            } else if (self.faceDetect) {
+                self.cvCapturedImages = [processor detectFacesUsingImageArray:self.capturedImages];
+            } else if (self.personDetect && self.faceDetect) {
+                self.cvCapturedImages = [processor detectPeopleUsingImageArray:self.capturedImages];
+                NSMutableArray *moreImgs = [processor detectFacesUsingImageArray:self.capturedImages];
+                for (UIImage *data in moreImgs) {
+                    [self.cvCapturedImages addObject:data];
+                }
+            }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.spinner stopAnimating];
                 self.navigationItem.hidesBackButton = NO;
@@ -158,6 +166,7 @@
             [self.locationManager stopUpdatingLocation];
             GSFData *data = [self.capturedImages lastObject];
             data.coords = self.bestEffort;
+            NSLog(@"%f, %f", data.coords.coordinate.latitude, data.coords.coordinate.longitude);
         }
     }
 }
