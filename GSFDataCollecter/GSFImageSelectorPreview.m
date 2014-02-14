@@ -43,7 +43,7 @@
 
 - (IBAction)discardImageFromSet:(id)sender
 {
-    [self.delagate addItemViewController:self didFinishEnteringItem:self.index];
+    [self.delegate addItemViewController:self didFinishEnteringItem:self.index];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
