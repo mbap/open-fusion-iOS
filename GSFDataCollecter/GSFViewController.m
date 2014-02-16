@@ -205,7 +205,7 @@
     if ([self.capturedImages objectAtIndex:indexPath.item] != nil) {
         if ([[self.capturedImages objectAtIndex:indexPath.item] isKindOfClass:[GSFData class]]) {
             GSFData *data = [self.capturedImages objectAtIndex:indexPath.item];
-            UIImage *image = data.image;
+            UIImage *image = data.gsfImage.image;
             if ([cell isKindOfClass:[GSFImageCollectionViewCell class]]) {
                 UIImageView *imgview = ((GSFImageCollectionViewCell *)cell).imageView;
                 imgview.contentMode = UIViewContentModeScaleAspectFit;

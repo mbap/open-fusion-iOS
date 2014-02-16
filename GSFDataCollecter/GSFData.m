@@ -11,7 +11,8 @@
 @implementation GSFData
 
 - (GSFData*)initWithImage:(UIImage*)image {
-    self.image = image;
+    self.gsfImage.image = [[UIImage alloc] init];
+    self.gsfImage.image = image;
     return self;
 }
 
