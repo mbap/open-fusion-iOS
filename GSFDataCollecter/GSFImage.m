@@ -10,4 +10,10 @@
 
 @implementation GSFImage
 
+- (GSFImage*)initWithImage:(UIImage*)image
+{
+    self.image = image;
+    return self;
+}
+
 @end

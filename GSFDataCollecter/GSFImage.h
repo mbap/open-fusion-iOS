@@ -10,6 +10,9 @@
 
 @interface GSFImage : NSObject
 
+// init with an image.
+- (GSFImage*)initWithImage:(UIImage*)image;
+
 // field for storing an image.
 @property (nonatomic) UIImage *image;
 
