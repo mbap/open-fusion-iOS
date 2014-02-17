@@ -228,8 +228,12 @@
         preview.delegate = self;
     } else if ([[segue identifier] isEqualToString:@"viewOpenCvImages"]) {
         GSFOpenCvImageViewController *controller = (GSFOpenCvImageViewController*)segue.destinationViewController;
-        controller.cvCapturedImages = [[NSMutableArray alloc] init];
-        controller.cvCapturedImages = self.cvCapturedImages;
+        controller.cvCapturedImages = [NSMutableArray arrayWithArray:self.cvCapturedImages];
+        NSMutableArray *orient = [[NSMutableArray alloc] init];
+        for (GSFData *data in self.capturedImages) {
+            [orient addObject:[NSNumber numberWithInt:data.gsfImage.image.imageOrientation]];
+        }
+        controller.originalOrientation = orient;
     }
 }
 
