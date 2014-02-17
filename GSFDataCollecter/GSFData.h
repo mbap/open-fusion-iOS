@@ -8,10 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
+#import "GSFImage.h"
+
 
 @interface GSFData : NSObject
 
-@property (nonatomic) UIImage *image;
+@property (nonatomic) GSFImage *gsfImage;
 @property (nonatomic) CLLocation *coords;
 @property (nonatomic) CLLocationCoordinate2D gpscoords;
 @property (nonatomic) CLLocationDistance altitude;

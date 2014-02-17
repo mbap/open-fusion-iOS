@@ -57,7 +57,7 @@
     self.locationManager.delegate = self;
     
     // select accuracy for the gps. we can go even higher in accuracy.
-    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
     
     self.collectionView.backgroundColor = [UIColor clearColor];
     self.navigationController.delegate = self;
@@ -67,8 +67,13 @@
 - (IBAction)showImagePickerForCamera:(id)sender
 {
     [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
+    [self.locationManager startUpdatingLocation];
 }
 
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [self.locationManager stopUpdatingLocation];
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
 
 // button action for done. here the images get processed by detecting number of
 // people in the image.
@@ -131,8 +136,8 @@
     [self.view bringSubviewToFront:self.toolbar];
     if ([[self.capturedImages lastObject] isKindOfClass:[GSFData class]]){
         GSFData *data = [self.capturedImages lastObject];
-        data.coords = [[CLLocation alloc] init];
-        [self.locationManager startUpdatingLocation]; //this could slow down image taking when people have little service.
+        data.coords = [[CLLocation alloc] initWithLatitude:self.bestEffort.coordinate.latitude longitude:self.bestEffort.coordinate.longitude];
+        NSLog(@"%f, %f", data.coords.coordinate.latitude, data.coords.coordinate.longitude);
     }
 
 }
@@ -163,9 +168,11 @@
         // acceptable accuracy, or depend on the timeout to stop updating. This sample depends on the timeout.
         //
         if (newLocation.horizontalAccuracy <= self.locationManager.desiredAccuracy) {
-            [self.locationManager stopUpdatingLocation];
             GSFData *data = [self.capturedImages lastObject];
-            data.coords = self.bestEffort;
+            if (data) {
+                [self.locationManager stopUpdatingLocation];
+                data.coords = [[CLLocation alloc] initWithLatitude:self.bestEffort.coordinate.latitude longitude:self.bestEffort.coordinate.longitude];
+            }
             NSLog(@"%f, %f", data.coords.coordinate.latitude, data.coords.coordinate.longitude);
         }
     }
@@ -185,18 +192,6 @@
 }
 
 
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
-{
-    [self dismissViewControllerAnimated:YES completion:NULL];
-}
-
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 // specifies number of collection view cells to allocate.
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
@@ -210,7 +205,7 @@
     if ([self.capturedImages objectAtIndex:indexPath.item] != nil) {
         if ([[self.capturedImages objectAtIndex:indexPath.item] isKindOfClass:[GSFData class]]) {
             GSFData *data = [self.capturedImages objectAtIndex:indexPath.item];
-            UIImage *image = data.image;
+            UIImage *image = data.gsfImage.image;
             if ([cell isKindOfClass:[GSFImageCollectionViewCell class]]) {
                 UIImageView *imgview = ((GSFImageCollectionViewCell *)cell).imageView;
                 imgview.contentMode = UIViewContentModeScaleAspectFit;

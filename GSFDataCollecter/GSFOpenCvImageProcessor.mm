@@ -114,7 +114,7 @@
     hog.setSVMDetector(cv::HOGDescriptor::getDefaultPeopleDetector());
     
     for (GSFData *data in capturedImages) {
-        cv::Mat matimg = [self cvMatFromUIImage:data.image];
+        cv::Mat matimg = [self cvMatFromUIImage:data.gsfImage.image];
         cv::vector<cv::Rect> found;
         cv::vector<cv::Rect> found_filtered;
         cv::Mat rgbMat(matimg.rows, matimg.cols, CV_8UC3); // 8 bits per component, 3 channels
@@ -140,7 +140,11 @@
 	    }
         
         UIImage *finalimage = [self UIImageFromCvMat:matimg];
-        [processed addObject:finalimage];
+        GSFImage *image = [[GSFImage alloc] init];
+        image.image = finalimage;
+        image.detectionNumber = [NSNumber numberWithInt:found.size()];
+        NSLog(@"%d", image.detectionNumber.intValue);
+        [processed addObject:image];
     }
     return processed;
 }
@@ -149,7 +153,7 @@
 {
     NSMutableArray *processed = [[NSMutableArray alloc] init];
     for (GSFData *data in capturedImages) {
-        cv::Mat matimg = [self cvMatFromUIImage:data.image];
+        cv::Mat matimg = [self cvMatFromUIImage:data.gsfImage.image];
         cv::Mat matgrey;
         cvtColor(matimg, matgrey, CV_BGR2GRAY);
         equalizeHist(matgrey, matgrey);
@@ -169,7 +173,12 @@
             cv::Point center(faces[i].x + faces[i].width*0.5, faces[i].y + faces[i].height*0.5);
             cv::ellipse(matimg, center, cv::Size(faces[i].width*0.5, faces[i].height*0.5), 0, 0, 360, cv::Scalar(0, 255, 0), 4, 8, 0);
         }
-        [processed addObject:[self UIImageFromCvMat:matimg]];
+        UIImage *finalimage = [self UIImageFromCvMat:matimg];
+        GSFImage *image = [[GSFImage alloc] init];
+        image.image = finalimage;
+        image.detectionNumber = [NSNumber numberWithInt:faces.size()];
+        NSLog(@"%d", image.detectionNumber.intValue);
+        [processed addObject:image];
     }
     return processed;
 }
