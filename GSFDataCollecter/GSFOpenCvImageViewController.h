@@ -11,5 +11,6 @@
 @interface GSFOpenCvImageViewController : UIViewController
 
 @property (nonatomic) NSMutableArray *cvCapturedImages;
+@property (nonatomic) NSMutableArray *originalOrientation;
 
 @end
