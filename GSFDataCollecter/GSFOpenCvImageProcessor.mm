@@ -22,9 +22,6 @@
 // conver image from cvMat to UIImage for after the image is processed.
 - (UIImage *)UIImageFromCvMat:(cv::Mat)cvMatImage;
 
-// rotate an image by degrees.
-- (UIImage *)rotateImage:(UIImage*)image byDegrees:(CGFloat)degrees;
-
 @end
 
 @implementation GSFOpenCvImageProcessor
@@ -109,7 +106,7 @@
     return finalImage;
 }
 
-// detect people. currenly has mostly negative results.
+// detects a person in a photo.
 - (NSMutableArray *)detectPeopleUsingImageArray:(NSMutableArray *)capturedImages
 {
     NSMutableArray *processed = [[NSMutableArray alloc] init];
@@ -125,8 +122,7 @@
         hog.detectMultiScale(rgbMat, found, 0, cv::Size(8,8), cv::Size(32,32), 1.05, 2);
     
         size_t i, j;
-        for (i = 0; i < found.size(); i++)
-        {
+        for (i = 0; i < found.size(); i++) {
             cv::Rect r = found[i];
             for (j = 0; j < found.size(); j++)
                 if (j != i && (r & found[j]) == r)
@@ -134,8 +130,7 @@
             if (j == found.size())
                 found_filtered.push_back(r);
         }
-        for (i = 0; i < found_filtered.size(); i++)
-        {
+        for (i = 0; i < found_filtered.size(); i++) {
             cv::Rect r = found_filtered[i];
             r.x += cvRound(r.width*0.1);
 	        r.width = cvRound(r.width*0.8);
@@ -143,6 +138,7 @@
 	        r.height = cvRound(r.height*0.9);
             cv::rectangle(matimg, r.tl(), r.br(), cv::Scalar(0,255,0), 2);
 	    }
+        
         UIImage *finalimage = [self UIImageFromCvMat:matimg];
         [processed addObject:finalimage];
     }
