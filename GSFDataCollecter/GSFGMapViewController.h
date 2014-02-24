@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "GSFTaggedVCViewController.h"
 
-@interface GSFGMapViewController : GSFTaggedVCViewController
+@interface GSFGMapViewController : GSFTaggedVCViewController 
 
 @end
