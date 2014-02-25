@@ -13,9 +13,9 @@
 
 @interface GSFData : NSObject
 
-@property (nonatomic) GSFImage *gsfImage;
-@property (nonatomic) CLLocation *coords;
-@property (nonatomic) CLLocationCoordinate2D gpscoords;
+@property (nonatomic) GSFImage *gsfImage; 
+@property (nonatomic) CLLocation *coords;               // this contains all of the below
+@property (nonatomic) CLLocationCoordinate2D gpscoords; // this contains lat, long.
 @property (nonatomic) CLLocationDistance altitude;
 @property (nonatomic) CLLocationAccuracy horizonalAccuracy;
 @property (nonatomic) CLLocationAccuracy verticalAccuracy;

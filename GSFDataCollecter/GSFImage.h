@@ -19,4 +19,6 @@
 // field for saving the number of people or faces that are detected.
 @property (nonatomic) NSNumber *detectionNumber;
 
+
 @end
+
