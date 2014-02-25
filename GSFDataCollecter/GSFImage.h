@@ -16,7 +16,11 @@
 // field for storing an image.
 @property (nonatomic) UIImage *image;
 
-// field for saving the number of people or faces that are detected.
-@property (nonatomic) NSNumber *detectionNumber;
+// field for saving the number of faces that are detected.
+@property (nonatomic) NSNumber *faceDetectionNumber;
+
+// field for saving the number of people are detected.
+@property (nonatomic) NSNumber *personDetectionNumber;
 
 @end
+

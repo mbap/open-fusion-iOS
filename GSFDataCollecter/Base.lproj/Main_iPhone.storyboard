@@ -113,6 +113,17 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qIx-rP-L0U">
+                                <rect key="frame" x="0.0" y="436" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items>
+                                    <barButtonItem title="Send Data" id="dGv-cY-rN0">
+                                        <connections>
+                                            <action selector="sendDataToDataBase:" destination="2K4-BG-KDV" id="lMd-wo-4ar"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -123,6 +134,8 @@
                     <navigationItem key="navigationItem" title="Person Detection" id="ddh-Ny-Grq"/>
                     <connections>
                         <outlet property="imageView" destination="32l-Wq-eXU" id="hTQ-Xu-WQ9"/>
+                        <outlet property="sendData" destination="dGv-cY-rN0" id="QMe-w2-qaL"/>
+                        <outlet property="toolbar" destination="qIx-rP-L0U" id="UGt-V1-3l0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ygL-fq-Icc" userLabel="First Responder" sceneMemberID="firstResponder"/>

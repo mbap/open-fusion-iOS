@@ -142,8 +142,8 @@
         UIImage *finalimage = [self UIImageFromCvMat:matimg];
         GSFImage *image = [[GSFImage alloc] init];
         image.image = finalimage;
-        image.detectionNumber = [NSNumber numberWithInt:found.size()];
-        NSLog(@"%d", image.detectionNumber.intValue);
+        image.personDetectionNumber = [NSNumber numberWithInt:found.size()];
+        NSLog(@"people: %d", image.personDetectionNumber.intValue);
         [processed addObject:image];
     }
     return processed;
@@ -176,8 +176,8 @@
         UIImage *finalimage = [self UIImageFromCvMat:matimg];
         GSFImage *image = [[GSFImage alloc] init];
         image.image = finalimage;
-        image.detectionNumber = [NSNumber numberWithInt:faces.size()];
-        NSLog(@"%d", image.detectionNumber.intValue);
+        image.faceDetectionNumber = [NSNumber numberWithInt:faces.size()];
+        NSLog(@"faces: %d", image.faceDetectionNumber.intValue);
         [processed addObject:image];
     }
     return processed;

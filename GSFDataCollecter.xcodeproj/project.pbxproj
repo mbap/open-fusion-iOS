@@ -34,6 +34,7 @@
 		96EAC4BD18AD88450084B331 /* GSFImageSelectorPreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 96EAC4BC18AD88450084B331 /* GSFImageSelectorPreview.m */; };
 		96EAC4BF18AD8E250084B331 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 96EAC4BE18AD8E250084B331 /* GoogleMaps.bundle */; };
 		96EAC4D818B18ADD0084B331 /* GSFImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 96EAC4D718B18ADD0084B331 /* GSFImage.m */; };
+		96EAC4DC18BC75A90084B331 /* GSFDataTransfer.m in Sources */ = {isa = PBXBuildFile; fileRef = 96EAC4DB18BC75A90084B331 /* GSFDataTransfer.m */; };
 		D30862D218A2F8F100407EA5 /* GSFOpenCvImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D30862D118A2F8F100407EA5 /* GSFOpenCvImageViewController.m */; };
 		D397AC4118B514D30067691D /* GSFAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D397AC4018B514D30067691D /* GSFAppDelegate.m */; };
 		D397AC4418BAC4920067691D /* GSFDirectionService.m in Sources */ = {isa = PBXBuildFile; fileRef = D397AC4318BAC4920067691D /* GSFDirectionService.m */; };
@@ -102,6 +103,8 @@
 		96EAC4BE18AD8E250084B331 /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GoogleMaps.bundle; sourceTree = "<group>"; };
 		96EAC4D618B18ADD0084B331 /* GSFImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFImage.h; sourceTree = "<group>"; };
 		96EAC4D718B18ADD0084B331 /* GSFImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFImage.m; sourceTree = "<group>"; };
+		96EAC4DA18BC75A90084B331 /* GSFDataTransfer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFDataTransfer.h; sourceTree = "<group>"; };
+		96EAC4DB18BC75A90084B331 /* GSFDataTransfer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFDataTransfer.m; sourceTree = "<group>"; };
 		D30862D018A2F8F100407EA5 /* GSFOpenCvImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFOpenCvImageViewController.h; sourceTree = "<group>"; };
 		D30862D118A2F8F100407EA5 /* GSFOpenCvImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFOpenCvImageViewController.m; sourceTree = "<group>"; };
 		D397AC4018B514D30067691D /* GSFAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFAppDelegate.m; sourceTree = "<group>"; };
@@ -202,6 +205,15 @@
 			name = GMaps;
 			sourceTree = "<group>";
 		};
+		96EAC4D918BC75870084B331 /* Data Transfer */ = {
+			isa = PBXGroup;
+			children = (
+				96EAC4DA18BC75A90084B331 /* GSFDataTransfer.h */,
+				96EAC4DB18BC75A90084B331 /* GSFDataTransfer.m */,
+			);
+			name = "Data Transfer";
+			sourceTree = "<group>";
+		};
 		D3D7807818A038B500E5AB50 /* ImagePickerController */ = {
 			isa = PBXGroup;
 			children = (
@@ -299,6 +311,7 @@
 		DBB428401880A64F00139082 /* GSFDataCollecter */ = {
 			isa = PBXGroup;
 			children = (
+				96EAC4D918BC75870084B331 /* Data Transfer */,
 				D3D7807918A038E400E5AB50 /* Main */,
 				966F6C8B18AAC10B00BE3334 /* XMLClassifiers */,
 				D3D7808018A051B500E5AB50 /* Model */,
@@ -391,7 +404,7 @@
 				ORGANIZATIONNAME = "Michael Baptist - LLNL";
 				TargetAttributes = {
 					DBB428361880A64F00139082 = {
-						DevelopmentTeam = Z5SLZ6QPTL;
+						DevelopmentTeam = 58K2V57UB6;
 					};
 					DBB4285A1880A64F00139082 = {
 						TestTargetID = DBB428361880A64F00139082;
@@ -496,6 +509,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D30862D218A2F8F100407EA5 /* GSFOpenCvImageViewController.m in Sources */,
+				96EAC4DC18BC75A90084B331 /* GSFDataTransfer.m in Sources */,
 				D3D7808318A051DA00E5AB50 /* GSFData.m in Sources */,
 				D3D7807F18A0416400E5AB50 /* GSFTaggedVCViewController.m in Sources */,
 				96EAC4BD18AD88450084B331 /* GSFImageSelectorPreview.m in Sources */,
