@@ -98,6 +98,23 @@
                     [self.cvCapturedImages addObject:data];
                 }
             }
+            NSUInteger index = 0;
+            for (GSFData *original in self.capturedImages) {
+                if (self.personDetect && !self.faceDetect) {
+                    GSFImage *data = [self.cvCapturedImages objectAtIndex:index];
+                    original.gsfImage.personDetectionNumber = data.personDetectionNumber;
+                } else if (self.faceDetect && !self.personDetect) {
+                    GSFImage *data = [self.cvCapturedImages objectAtIndex:index];
+                    original.gsfImage.faceDetectionNumber = data.faceDetectionNumber;
+                } else if (self.personDetect && self.faceDetect) {
+                    NSUInteger offset = self.cvCapturedImages.count / 2;
+                    GSFImage *data = [self.cvCapturedImages objectAtIndex:index];
+                    original.gsfImage.personDetectionNumber = data.personDetectionNumber;
+                    data = [self.cvCapturedImages objectAtIndex:(index + offset)];
+                    original.gsfImage.faceDetectionNumber = data.faceDetectionNumber;
+                }
+                index++;
+            }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.spinner stopAnimating];
                 self.navigationItem.hidesBackButton = NO;
@@ -228,10 +245,16 @@
         preview.delegate = self;
     } else if ([[segue identifier] isEqualToString:@"viewOpenCvImages"]) {
         GSFOpenCvImageViewController *controller = (GSFOpenCvImageViewController*)segue.destinationViewController;
+        
+        // pass copy of cvImagesWithDrawings for viewing.
         controller.cvCapturedImages = [NSMutableArray arrayWithArray:self.cvCapturedImages];
-        NSMutableArray *orient = [[NSMutableArray alloc] init];
+        controller.originalData = self.capturedImages; // pass images with no drawings to send.
         for (GSFData *data in self.capturedImages) {
-            [orient addObject:[NSNumber numberWithInt:data.gsfImage.image.imageOrientation]];
+            [data convertToUTC:data.coords];
+        }
+        NSMutableArray *orient = [[NSMutableArray alloc] init];
+        for (GSFImage *img in self.cvCapturedImages) {
+            [orient addObject:[NSNumber numberWithInt:img.image.imageOrientation]];
         }
         controller.originalOrientation = orient;
     }

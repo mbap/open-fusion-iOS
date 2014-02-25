@@ -15,11 +15,7 @@
 
 @property (nonatomic) GSFImage *gsfImage; 
 @property (nonatomic) CLLocation *coords;               // this contains all of the below
-@property (nonatomic) CLLocationCoordinate2D gpscoords; // this contains lat, long.
-@property (nonatomic) CLLocationDistance altitude;
-@property (nonatomic) CLLocationAccuracy horizonalAccuracy;
-@property (nonatomic) CLLocationAccuracy verticalAccuracy;
-@property (nonatomic) NSDate *date;
+@property (nonatomic) NSString *date;
 
 
 // allocate a GSFData Object before calling this
@@ -27,6 +23,9 @@
 - (GSFData*)initWithImage:(UIImage*)image;
 
 // fills all properties with data
-- (void)geoTagDataWithCoords:(CLLocation *)coords;
+- (void)convertToUTC:(CLLocation *)coords;
+
+// converts a GSFData Object into a dictionary that can be turned into json.
++ (NSDictionary *)convertGSFDataToDict:(GSFData *)gsfdata;
 
 @end

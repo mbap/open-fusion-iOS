@@ -9,10 +9,14 @@
 #import "GSFOpenCvImageViewController.h"
 #import "GSFImage.h"
 #import "GSFOpenCvImageProcessor.h"
+#import "GSFDataTransfer.h"
 
 @interface GSFOpenCvImageViewController ()
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
+
+@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *sendData;
 
 @end
 
@@ -44,11 +48,11 @@
             for (GSFImage *img in self.cvCapturedImages) {
                 NSNumber *num = [self.originalOrientation objectAtIndex:i];
                 if (num.intValue == UIImageOrientationLeft) { // requires 90 clockwise rotation
-                    img.image = [pro rotateImage:img.image byDegrees:180];
+                    //img.image = [pro rotateImage:img.image byDegrees:180];
                 } else if (num.intValue == UIImageOrientationUp) { // 90 counter clock
-                    img.image = [pro rotateImage:img.image byDegrees:-90];
+                    //img.image = [pro rotateImage:img.image byDegrees:-90];
                 } else if (num.intValue == UIImageOrientationDown) { // 180 rotation.
-                    img.image = [pro rotateImage:img.image byDegrees:90];
+                    //img.image = [pro rotateImage:img.image byDegrees:90];
                 }
                 [images addObject:img.image];
                 ++i;
@@ -59,11 +63,23 @@
             [self.imageView startAnimating];
         }
     }
+    [self.view bringSubviewToFront:self.toolbar];
 }
 
+// perform data transfer here.
+// write custom object to handle the specific data transfer here.
+- (IBAction)sendDataToDataBase:(UITapGestureRecognizer*)gesture {
+    GSFDataTransfer *driver = [[GSFDataTransfer alloc] init];
+    NSInteger jsonerr = [driver uploadDataArray:[driver formatDataAsJSON:self.originalData]];
+    if (jsonerr) {
+        // do something if failure.
+    }
+}
 
 - (IBAction)hideNavBar:(UITapGestureRecognizer*)gesture {
     [self.navigationController setNavigationBarHidden:!self.navigationController.navigationBarHidden animated:YES];
+    [self.view bringSubviewToFront:self.toolbar];
+
 }
 
 
