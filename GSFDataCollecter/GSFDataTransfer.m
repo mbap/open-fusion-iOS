@@ -17,9 +17,8 @@
     for (GSFData *data in dataArray) {
         NSDictionary *jsondict = [GSFData convertGSFDataToDict:data];
         if ([NSJSONSerialization isValidJSONObject:jsondict]) {
-            [jsonArray addObject:[NSJSONSerialization dataWithJSONObject:jsondict options:NSJSONWritingPrettyPrinted error:nil]];
-            // still needs to be converted from nsdata to nsstring...
-            // then should be in json format.
+            NSData *stringify = [NSJSONSerialization dataWithJSONObject:jsondict options:NSJSONWritingPrettyPrinted error:nil];
+            [jsonArray addObject:[[NSString alloc] initWithData:stringify encoding:NSUTF8StringEncoding]];
         }
     }
     return jsonArray;
