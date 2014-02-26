@@ -32,7 +32,7 @@
 @property (nonatomic) NSIndexPath *index;
 
 @property (nonatomic, weak) NSMutableArray *locationMeasurements;
-@property (nonatomic, weak) CLLocation *bestEffort;
+@property (nonatomic) CLLocation *bestEffort;
 @end
 
 @implementation GSFViewController
@@ -61,6 +61,9 @@
     
     self.collectionView.backgroundColor = [UIColor clearColor];
     self.navigationController.delegate = self;
+    
+    [self.locationManager startUpdatingLocation];
+
 }
 
 // button action for showing the camera
@@ -153,10 +156,10 @@
     [self.view bringSubviewToFront:self.toolbar];
     if ([[self.capturedImages lastObject] isKindOfClass:[GSFData class]]){
         GSFData *data = [self.capturedImages lastObject];
-        data.coords = [[CLLocation alloc] initWithLatitude:self.bestEffort.coordinate.latitude longitude:self.bestEffort.coordinate.longitude];
+        data.coords = self.bestEffort;
         NSLog(@"%f, %f", data.coords.coordinate.latitude, data.coords.coordinate.longitude);
+        NSLog(@"%f, %f", self.bestEffort.coordinate.latitude, self.bestEffort.coordinate.longitude);
     }
-
 }
 
 // delegate for super class location manager
@@ -178,6 +181,7 @@
     if (self.bestEffort == nil || self.bestEffort.horizontalAccuracy > newLocation.horizontalAccuracy) {
         // store the location as the "best effort"
         self.bestEffort = newLocation;
+        NSLog(@"%f, %f", self.bestEffort.coordinate.latitude, self.bestEffort.coordinate.longitude);
         // test the measurement to see if it meets the desired accuracy
         //
         // IMPORTANT!!! kCLLocationAccuracyBest should not be used for comparison with location coordinate or altitidue
@@ -188,7 +192,7 @@
             GSFData *data = [self.capturedImages lastObject];
             if (data) {
                 [self.locationManager stopUpdatingLocation];
-                data.coords = [[CLLocation alloc] initWithLatitude:self.bestEffort.coordinate.latitude longitude:self.bestEffort.coordinate.longitude];
+                data.coords = self.bestEffort;
             }
             NSLog(@"%f, %f", data.coords.coordinate.latitude, data.coords.coordinate.longitude);
         }

@@ -27,17 +27,23 @@
 {
     NSMutableDictionary *jsonData = [[NSMutableDictionary alloc] init];
     NSData *imageData = UIImagePNGRepresentation(gsfdata.gsfImage.image);
-    NSString *imageString = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
-    [jsonData setObject:imageString forKey:@"gsfimage"]; // set image in dict
-    [jsonData setObject:gsfdata.gsfImage.faceDetectionNumber forKey:@"facesDetected"];
-    [jsonData setObject:gsfdata.gsfImage.personDetectionNumber forKey:@"peopleDetected"];
-    [jsonData setObject:[NSNumber numberWithDouble:gsfdata.coords.coordinate.latitude] forKey:@"latitude"];
-    [jsonData setObject:[NSNumber numberWithDouble:gsfdata.coords.coordinate.longitude] forKey:@"longitude"];
+    NSString *imageString = [imageData base64EncodedStringWithOptions:0];
+    [jsonData setObject:imageString forKey:@"image"]; // set image in dict
+    [jsonData setObject:gsfdata.gsfImage.faceDetectionNumber forKey:@"faces_detected"];
+    [jsonData setObject:gsfdata.gsfImage.personDetectionNumber forKey:@"people_detected"];
+    NSMutableDictionary *location = [[NSMutableDictionary alloc] init];
+    [location setObject:@"Point" forKey:@"type"];
+    NSMutableArray *temp = [[NSMutableArray alloc] init];
+    [temp addObject:[NSNumber numberWithDouble:gsfdata.coords.coordinate.longitude]];
+    [temp addObject:[NSNumber numberWithDouble:gsfdata.coords.coordinate.latitude]];
+    [location setObject:[NSArray arrayWithArray:temp] forKey:@"coordinates"];
+    [jsonData setObject:location forKey:@"location"];
     [jsonData setObject:[NSNumber numberWithDouble:gsfdata.coords.altitude] forKey:@"altitude"];
-    [jsonData setObject:[NSNumber numberWithDouble:gsfdata.coords.horizontalAccuracy] forKey:@"horizontalAccuracy"];
-    [jsonData setObject:[NSNumber numberWithDouble:gsfdata.coords.verticalAccuracy] forKey:@"verticalAccuracy"];
+    [jsonData setObject:[NSNumber numberWithDouble:gsfdata.coords.horizontalAccuracy] forKey:@"h_accuracy"];
+    [jsonData setObject:[NSNumber numberWithDouble:gsfdata.coords.verticalAccuracy] forKey:@"v_accuracy"];
     [jsonData setObject:gsfdata.date forKey:@"timestamp"];
     return jsonData;
 }
 
 @end
+
