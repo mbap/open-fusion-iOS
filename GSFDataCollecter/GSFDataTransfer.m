@@ -26,7 +26,34 @@
 
 - (NSInteger)uploadDataArray:(NSMutableArray *)dataArray
 {
-    NSLog(@"%@", dataArray);
+    //NSLog(@"%@", dataArray);
+    NSError *error;
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    configuration.allowsCellularAccess = YES;
+    
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
+    NSURL *url = [NSURL URLWithString:@"https://gsf.soe.ucsc.edu/api/upload"];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                       timeoutInterval:60.0];
+    
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setHTTPMethod:@"POST"];
+    
+    NSDictionary *mapData = [[NSDictionary alloc] initWithObjectsAndKeys: @"TEST IOS", @"name",
+                             @"IOS TYPE", @"typemap",
+                             nil];
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:mapData options:0 error:&error];
+    [request setHTTPBody:postData];
+    
+    
+    NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+    }];
+    
+    [postDataTask resume];
     return 0;
 }
     
