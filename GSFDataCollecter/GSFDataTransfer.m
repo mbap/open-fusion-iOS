@@ -26,9 +26,6 @@
 
 - (NSInteger)uploadDataArray:(NSMutableArray *)dataArray
 {
-    //NSLog(@"%@", dataArray);
-    NSError *error;
-    
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     configuration.allowsCellularAccess = YES;
     
@@ -39,14 +36,11 @@
                                                        timeoutInterval:60.0];
     
     [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    //[request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setHTTPMethod:@"POST"];
     
-    NSDictionary *mapData = [[NSDictionary alloc] initWithObjectsAndKeys: @"TEST IOS", @"name",
-                             @"IOS TYPE", @"typemap",
-                             nil];
-    NSData *postData = [NSJSONSerialization dataWithJSONObject:mapData options:0 error:&error];
-    [request setHTTPBody:postData];
+    NSDictionary *mapData = [[NSDictionary alloc] initWithObjects:[NSArray arrayWithObject:dataArray] forKeys:[NSArray arrayWithObject:@"mapdata"]];
+    [request setHTTPBody:[NSKeyedArchiver archivedDataWithRootObject:mapData]];
     
     
     NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -59,3 +53,4 @@
     
     
 @end
+
