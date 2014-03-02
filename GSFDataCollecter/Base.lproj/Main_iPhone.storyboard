@@ -119,7 +119,7 @@
                                 <items>
                                     <barButtonItem title="Send Data" id="dGv-cY-rN0">
                                         <connections>
-                                            <action selector="sendDataToDataBase:" destination="2K4-BG-KDV" id="lMd-wo-4ar"/>
+                                            <action selector="sendDataToDB:" destination="2K4-BG-KDV" id="eRd-jd-SlU"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
@@ -127,9 +127,6 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="Zx4-YF-Ila" appends="YES" id="dGK-3Z-Vd0"/>
-                        </connections>
                     </view>
                     <navigationItem key="navigationItem" title="Person Detection" id="ddh-Ny-Grq"/>
                     <connections>
@@ -139,11 +136,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ygL-fq-Icc" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="Zx4-YF-Ila">
-                    <connections>
-                        <action selector="hideNavBar:" destination="2K4-BG-KDV" id="kdQ-y5-2D5"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="626" y="821"/>
         </scene>

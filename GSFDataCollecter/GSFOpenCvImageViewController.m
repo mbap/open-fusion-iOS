@@ -11,7 +11,7 @@
 #import "GSFOpenCvImageProcessor.h"
 #import "GSFDataTransfer.h"
 
-@interface GSFOpenCvImageViewController ()
+@interface GSFOpenCvImageViewController () <NSURLSessionTaskDelegate, NSURLSessionDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
@@ -66,22 +66,13 @@
     [self.view bringSubviewToFront:self.toolbar];
 }
 
-// perform data transfer here.
-// write custom object to handle the specific data transfer here.
-- (IBAction)sendDataToDataBase:(UITapGestureRecognizer*)gesture {
+- (IBAction)sendDataToDB:(id)sender {
     GSFDataTransfer *driver = [[GSFDataTransfer alloc] init];
     NSInteger jsonerr = [driver uploadDataArray:[driver formatDataAsJSON:self.originalData]];
     if (jsonerr) {
         // do something if failure.
     }
 }
-
-- (IBAction)hideNavBar:(UITapGestureRecognizer*)gesture {
-    [self.navigationController setNavigationBarHidden:!self.navigationController.navigationBarHidden animated:YES];
-    [self.view bringSubviewToFront:self.toolbar];
-
-}
-
 
 
 @end
