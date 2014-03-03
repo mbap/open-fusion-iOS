@@ -11,6 +11,10 @@
 #import "GSFOpenCvImageProcessor.h"
 #import "GSFDataTransfer.h"
 
+#define OPENCV 0
+#define ORIG   1
+#define BOTH   2
+
 @interface GSFOpenCvImageViewController () <NSURLSessionTaskDelegate, NSURLSessionDelegate, UIActionSheetDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
@@ -75,12 +79,12 @@
 {
     GSFDataTransfer *driver = [[GSFDataTransfer alloc] init];
     NSInteger jsonerr = 0;
-    if (0 == buttonIndex) {  // open cv images
+    if (OPENCV == buttonIndex) {  // open cv images
         = [driver uploadDataArray:[driver formatDataAsJSON:self.originalData]];
 
-    } else if (1 == buttonIndex) { // original images
+    } else if (ORIG == buttonIndex) { // original images
         
-    } else if (2 == buttonIndex) { // both opencv and original.
+    } else if (BOTH == buttonIndex) { // both opencv and original.
         
     }
     if (jsonerr) {
