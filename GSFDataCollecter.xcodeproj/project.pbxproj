@@ -43,6 +43,7 @@
 		D3D7807C18A0396900E5AB50 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3D7807B18A0396900E5AB50 /* CoreLocation.framework */; };
 		D3D7807F18A0416400E5AB50 /* GSFTaggedVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3D7807E18A0416400E5AB50 /* GSFTaggedVCViewController.m */; };
 		D3D7808318A051DA00E5AB50 /* GSFData.m in Sources */ = {isa = PBXBuildFile; fileRef = D3D7808218A051DA00E5AB50 /* GSFData.m */; };
+		D3D7D5BA18C40B1E00F5D540 /* Main_iPhone5s.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3D7D5B818C40B1E00F5D540 /* Main_iPhone5s.storyboard */; };
 		D9F9F3AD5A024F9181F4F432 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D1EB022391E459995534E17 /* libPods.a */; };
 		DBB4283B1880A64F00139082 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB4283A1880A64F00139082 /* Foundation.framework */; };
 		DBB4283D1880A64F00139082 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB4283C1880A64F00139082 /* CoreGraphics.framework */; };
@@ -120,6 +121,7 @@
 		D3D7807E18A0416400E5AB50 /* GSFTaggedVCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFTaggedVCViewController.m; sourceTree = "<group>"; };
 		D3D7808118A051DA00E5AB50 /* GSFData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFData.h; sourceTree = "<group>"; };
 		D3D7808218A051DA00E5AB50 /* GSFData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFData.m; sourceTree = "<group>"; };
+		D3D7D5B918C40B1E00F5D540 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone5s.storyboard; sourceTree = "<group>"; };
 		D421E72B666048D1B7300657 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		DBB428371880A64F00139082 /* GSFDataCollecter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GSFDataCollecter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBB4283A1880A64F00139082 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -239,6 +241,7 @@
 		D3D7807918A038E400E5AB50 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				D3D7D5B818C40B1E00F5D540 /* Main_iPhone5s.storyboard */,
 				D397AC4018B514D30067691D /* GSFAppDelegate.m */,
 				DBB428491880A64F00139082 /* GSFAppDelegate.h */,
 				DBB4284F1880A64F00139082 /* Main_iPad.storyboard */,
@@ -444,6 +447,7 @@
 				DBB428511880A64F00139082 /* Main_iPad.storyboard in Resources */,
 				96EAC4B918AD88280084B331 /* haarcascade_frontalface_alt2.xml in Resources */,
 				96EAC4BA18AD88280084B331 /* haarcascade_frontalface_default.xml in Resources */,
+				D3D7D5BA18C40B1E00F5D540 /* Main_iPhone5s.storyboard in Resources */,
 				DBB428561880A64F00139082 /* Images.xcassets in Resources */,
 				DBB4284E1880A64F00139082 /* Main_iPhone.storyboard in Resources */,
 				966F6C8A18AAC0A100BE3334 /* hogcascade_pedestrians.xml in Resources */,
@@ -550,6 +554,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		D3D7D5B818C40B1E00F5D540 /* Main_iPhone5s.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D3D7D5B918C40B1E00F5D540 /* Base */,
+			);
+			name = Main_iPhone5s.storyboard;
+			sourceTree = "<group>";
+		};
 		DBB428431880A64F00139082 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
