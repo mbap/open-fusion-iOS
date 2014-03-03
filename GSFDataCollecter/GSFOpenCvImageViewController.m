@@ -11,12 +11,12 @@
 #import "GSFOpenCvImageProcessor.h"
 #import "GSFDataTransfer.h"
 
-@interface GSFOpenCvImageViewController () <NSURLSessionTaskDelegate, NSURLSessionDelegate>
+@interface GSFOpenCvImageViewController () <NSURLSessionTaskDelegate, NSURLSessionDelegate, UIActionSheetDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
-
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *sendData;
+@property (nonatomic) NSNumber *sendPref;
 
 @end
 
@@ -67,12 +67,25 @@
 }
 
 - (IBAction)sendDataToDB:(id)sender {
-    GSFDataTransfer *driver = [[GSFDataTransfer alloc] init];
-    NSInteger jsonerr = [driver uploadDataArray:[driver formatDataAsJSON:self.originalData]];
-    if (jsonerr) {
-        // do something if failure.
-    }
+    UIActionSheet *menu = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"OpenCV Image(s)", @"Original Image(s)", @"Both", nil];
+    [menu showInView:self.view];
 }
 
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    GSFDataTransfer *driver = [[GSFDataTransfer alloc] init];
+    NSInteger jsonerr = 0;
+    if (0 == buttonIndex) {  // open cv images
+        = [driver uploadDataArray:[driver formatDataAsJSON:self.originalData]];
+
+    } else if (1 == buttonIndex) { // original images
+        
+    } else if (2 == buttonIndex) { // both opencv and original.
+        
+    }
+    if (jsonerr) {
+        NSLog(@"Network Connection Failed\n Check your json objects are formatted correctly\n.");
+    }
+}
 
 @end

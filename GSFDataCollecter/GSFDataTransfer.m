@@ -45,12 +45,14 @@
     [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:data];
-    
+    __block NSError *err = [[NSError alloc] init];
     NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         NSLog(@"response = %@\nerror = %@\ndata = %@", response, error, data);
+        err = error;
     }];
     
     [postDataTask resume];
+    if (err) return 1;
     return 0;
 }
 
