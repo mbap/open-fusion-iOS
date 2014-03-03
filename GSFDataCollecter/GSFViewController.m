@@ -106,9 +106,11 @@
                 if (self.personDetect && !self.faceDetect) {
                     GSFImage *data = [self.cvCapturedImages objectAtIndex:index];
                     original.gsfImage.personDetectionNumber = data.personDetectionNumber;
+                    original.gsfImage.faceDetectionNumber = [NSNumber numberWithInteger:0];
                 } else if (self.faceDetect && !self.personDetect) {
                     GSFImage *data = [self.cvCapturedImages objectAtIndex:index];
                     original.gsfImage.faceDetectionNumber = data.faceDetectionNumber;
+                    original.gsfImage.personDetectionNumber = [NSNumber numberWithInteger:0];
                 } else if (self.personDetect && self.faceDetect) {
                     NSUInteger offset = self.cvCapturedImages.count / 2;
                     GSFImage *data = [self.cvCapturedImages objectAtIndex:index];

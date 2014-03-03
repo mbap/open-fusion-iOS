@@ -14,38 +14,37 @@
 
 @implementation GSFDataTransfer
 
-- (NSMutableArray *)formatDataAsJSON:(NSMutableArray *)dataArray
+- (NSData *)formatDataAsJSON:(NSMutableArray *)dataArray
 {
     NSMutableArray *jsonArray = [[NSMutableArray alloc] init]; // mutable array to hold all json objects.
     for (GSFData *data in dataArray) {
         NSDictionary *jsondict = [GSFData convertGSFDataToDict:data]; //convert gsfdata into dictionary for json parsing
-        if ([NSJSONSerialization isValidJSONObject:jsondict]) {
-            NSData *stringify = [NSJSONSerialization dataWithJSONObject:jsondict options:NSJSONWritingPrettyPrinted error:nil];
-            [jsonArray addObject:[[NSString alloc] initWithData:stringify encoding:NSUTF8StringEncoding]];
-        }
+        [jsonArray addObject:jsondict];
     }
+    NSDictionary *mapData = [[NSDictionary alloc] initWithObjects:[NSArray arrayWithObject:jsonArray] forKeys:[NSArray arrayWithObject:@"mapdata"]]; // may want to change key to api key
     // here we return ar array of dictionarys containing json objects.
     // each entry is a utf8stringencoding json object.
-    return jsonArray;
+    NSData *jsondata;
+    if ([NSJSONSerialization isValidJSONObject:mapData]) {
+        jsondata = [NSJSONSerialization dataWithJSONObject:mapData options:NSJSONWritingPrettyPrinted error:nil];
+    }
+    return jsondata;
 }
 
-- (NSInteger)uploadDataArray:(NSMutableArray *)dataArray
+- (NSInteger)uploadDataArray:(NSData *)data
 {
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     configuration.allowsCellularAccess = YES;
     
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
-    NSURL *url = [NSURL URLWithString:@"https://gsf.soe.ucsc.edu/api/upload"];
+    NSURL *url = [NSURL URLWithString:@"https://gsf.soe.ucsc.edu/api/upload/"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
-                                                       timeoutInterval:60.0];
+                                                       timeoutInterval:30.0];
     
     [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setHTTPMethod:@"POST"];
-    
-    NSDictionary *mapData = [[NSDictionary alloc] initWithObjects:[NSArray arrayWithObject:dataArray] forKeys:[NSArray arrayWithObject:@"mapdata"]]; // may want to change key to api key
-    [request setHTTPBody:[NSKeyedArchiver archivedDataWithRootObject:mapData]];
-    
+    [request setHTTPBody:data];
     
     NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         NSLog(@"response = %@\nerror = %@\ndata = %@", response, error, data);
@@ -63,6 +62,52 @@
         }
     }
 }
-    
+
+
+/*- (NSMutableArray *)formatDataAsJSON:(NSMutableArray *)dataArray
+ {
+ NSMutableArray *jsonArray = [[NSMutableArray alloc] init]; // mutable array to hold all json objects.
+ for (GSFData *data in dataArray) {
+ NSDictionary *jsondict = [GSFData convertGSFDataToDict:data]; //convert gsfdata into dictionary for json parsing
+ if ([NSJSONSerialization isValidJSONObject:jsondict]) {
+ NSData *stringify = [NSJSONSerialization dataWithJSONObject:jsondict options:NSJSONWritingPrettyPrinted error:nil];
+ //[jsonArray addObject:[[NSString alloc] initWithData:stringify encoding:NSUTF8StringEncoding]];
+ [jsonArray addObject:stringify];
+ }
+ }
+ // here we return ar array of dictionarys containing json objects.
+ // each entry is a utf8stringencoding json object.
+ return jsonArray;
+ }*/
+
+/*- (NSInteger)uploadDataArray:(NSMutableArray *)dataArray
+ {
+ NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+ configuration.allowsCellularAccess = YES;
+ 
+ NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+ NSURL *url = [NSURL URLWithString:@"https://gsf.soe.ucsc.edu/api/upload/"];
+ NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+ cachePolicy:NSURLRequestUseProtocolCachePolicy
+ timeoutInterval:30.0];
+ 
+ [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+ [request setHTTPMethod:@"POST"];
+ 
+ NSDictionary *mapData = [[NSDictionary alloc] initWithObjects:[NSArray arrayWithObject:dataArray] forKeys:[NSArray arrayWithObject:@"mapdata"]]; // may want to change key to api key
+ 
+ //[request setHTTPBody:[NSData data]]
+ if ([NSJSONSerialization isValidJSONObject:mapData]) {
+ [request setHTTPBody:[NSJSONSerialization dataWithJSONObject:mapData options:NSJSONWritingPrettyPrinted error:nil]];
+ }
+ 
+ NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+ NSLog(@"response = %@\nerror = %@\ndata = %@", response, error, data);
+ }];
+ 
+ [postDataTask resume];
+ return 0;
+ }*/
+
 @end
 
