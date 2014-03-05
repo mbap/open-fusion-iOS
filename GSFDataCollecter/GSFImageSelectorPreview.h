@@ -18,6 +18,7 @@
 
 @end
 
+
 @interface GSFImageSelectorPreview : GSFTaggedVCViewController
 
 @property (nonatomic) UIImage *image;

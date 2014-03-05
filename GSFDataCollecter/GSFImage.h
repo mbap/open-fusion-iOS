@@ -14,7 +14,9 @@
 - (GSFImage*)initWithImage:(UIImage*)image;
 
 // field for storing an image.
-@property (nonatomic) UIImage *image;
+@property (nonatomic) UIImage *oimage;  //original
+@property (nonatomic) UIImage *fimage;  //face detect
+@property (nonatomic) UIImage *pimage;  //person detect
 
 // field for saving the number of faces that are detected.
 @property (nonatomic) NSNumber *faceDetectionNumber;

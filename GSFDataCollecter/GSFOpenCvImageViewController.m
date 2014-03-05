@@ -32,41 +32,53 @@
 	// Do any additional setup after loading the view.
     
     GSFOpenCvImageProcessor *pro = [[GSFOpenCvImageProcessor alloc] init];
-    if (self.cvCapturedImages.count == 1) {
-        if ([[self.cvCapturedImages objectAtIndex:0] isKindOfClass:[GSFImage class]]) {
-            GSFImage *img = [self.cvCapturedImages objectAtIndex:0];
-            NSNumber *num = [self.originalOrientation objectAtIndex:0];
-            if (num.intValue == UIImageOrientationLeft) { // requires 90 clockwise rotation
-                img.image = [pro rotateImage:img.image byDegrees:180];
-            } else if (num.intValue == UIImageOrientationUp) { // 90 counter clock
-                img.image = [pro rotateImage:img.image byDegrees:-90];
-            } else if (num.intValue == UIImageOrientationDown) { // 180 rotation.
-                img.image = [pro rotateImage:img.image byDegrees:90];
+    NSMutableArray *cycler = [[NSMutableArray alloc] init];
+    int i = 0;
+    for (GSFData *data in self.originalData) {
+        NSNumber *num = [self.originalOrientation objectAtIndex:i];
+        if (num.intValue == UIImageOrientationLeft) { // requires 90 clockwise rotation
+            if (data.gsfImage.fimage) {
+                data.gsfImage.fimage = [pro rotateImage:data.gsfImage.fimage byDegrees:180];
+                [cycler addObject:data.gsfImage.fimage];
             }
-            self.imageView.image = img.image;
-        }
-    } else if (self.cvCapturedImages.count > 1) {
-        if ([[self.cvCapturedImages objectAtIndex:0] isKindOfClass:[GSFImage class]]) {
-            NSMutableArray *images = [[NSMutableArray alloc] init];
-            int i = 0;
-            for (GSFImage *img in self.cvCapturedImages) {
-                NSNumber *num = [self.originalOrientation objectAtIndex:i];
-                if (num.intValue == UIImageOrientationLeft) { // requires 90 clockwise rotation
-                    //img.image = [pro rotateImage:img.image byDegrees:180];
-                } else if (num.intValue == UIImageOrientationUp) { // 90 counter clock
-                    //img.image = [pro rotateImage:img.image byDegrees:-90];
-                } else if (num.intValue == UIImageOrientationDown) { // 180 rotation.
-                    //img.image = [pro rotateImage:img.image byDegrees:90];
-                }
-                [images addObject:img.image];
-                ++i;
+            if (data.gsfImage.pimage) {
+                data.gsfImage.pimage = [pro rotateImage:data.gsfImage.pimage byDegrees:180];
+                [cycler addObject:data.gsfImage.pimage];
             }
-            self.imageView.animationImages = images;
-            self.imageView.animationDuration = 5;
-            self.imageView.animationRepeatCount = 0;
-            [self.imageView startAnimating];
+        } else if (num.intValue == UIImageOrientationUp) { // 90 counter clock
+            if (data.gsfImage.fimage) {
+                data.gsfImage.fimage = [pro rotateImage:data.gsfImage.fimage byDegrees:-90];
+                [cycler addObject:data.gsfImage.fimage];
+            }
+            if (data.gsfImage.pimage) {
+                data.gsfImage.pimage = [pro rotateImage:data.gsfImage.pimage byDegrees:-90];
+                [cycler addObject:data.gsfImage.pimage];
+            }
+        } else if (num.intValue == UIImageOrientationDown) { // 180 rotation.
+            if (data.gsfImage.fimage) {
+                data.gsfImage.fimage = [pro rotateImage:data.gsfImage.fimage byDegrees:90];
+                [cycler addObject:data.gsfImage.fimage];
+            }
+            if (data.gsfImage.pimage) {
+                data.gsfImage.pimage = [pro rotateImage:data.gsfImage.pimage byDegrees:90];
+                [cycler addObject:data.gsfImage.pimage];
+            }
+        } else {
+            if (data.gsfImage.fimage) {
+                [cycler addObject:data.gsfImage.fimage];
+            }
+            if (data.gsfImage.pimage) {
+                [cycler addObject:data.gsfImage.pimage];
+            }
         }
+        ++i;
     }
+    
+    
+    self.imageView.animationImages = cycler;
+    self.imageView.animationDuration = 4;
+    self.imageView.animationRepeatCount = 0;
+    [self.imageView startAnimating];
     [self.view bringSubviewToFront:self.toolbar];
 }
 
@@ -80,7 +92,7 @@
     GSFDataTransfer *driver = [[GSFDataTransfer alloc] init];
     NSInteger jsonerr = 0;
     if (OPENCV == buttonIndex) {  // open cv images
-        = [driver uploadDataArray:[driver formatDataAsJSON:self.originalData]];
+        //= [driver uploadDataArray:[driver formatDataAsJSON:self.originalData]];
 
     } else if (ORIG == buttonIndex) { // original images
         
