@@ -12,7 +12,7 @@
 
 - (GSFImage*)initWithImage:(UIImage*)image
 {
-    self.image = image;
+    self.oimage = image;
     return self;
 }
 

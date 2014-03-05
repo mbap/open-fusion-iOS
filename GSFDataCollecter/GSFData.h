@@ -13,10 +13,9 @@
 
 @interface GSFData : NSObject
 
-@property (nonatomic) GSFImage *gsfImage; 
+@property (nonatomic) GSFImage *gsfImage;               // original images
 @property (nonatomic) CLLocation *coords;               // this contains all of the below
 @property (nonatomic) NSString *date;
-
 
 // allocate a GSFData Object before calling this
 // sets the image property of an GSFData Object

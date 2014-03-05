@@ -90,7 +90,7 @@
     return cvMat;
 }
 
-// conver image from cvMat to UIImage for after the image is processed.
+// convert image from cvMat to UIImage for after the image is processed.
 - (UIImage *)UIImageFromCvMat:(cv::Mat)cvMatImage;
 {
     NSData *data = [NSData dataWithBytes:cvMatImage.data length:cvMatImage.elemSize()*cvMatImage.total()];
@@ -107,14 +107,13 @@
 }
 
 // detects a person in a photo.
-- (NSMutableArray *)detectPeopleUsingImageArray:(NSMutableArray *)capturedImages
+- (void)detectPeopleUsingImageArray:(NSMutableArray *)capturedImages
 {
-    NSMutableArray *processed = [[NSMutableArray alloc] init];
     cv::HOGDescriptor hog;
     hog.setSVMDetector(cv::HOGDescriptor::getDefaultPeopleDetector());
     
     for (GSFData *data in capturedImages) {
-        cv::Mat matimg = [self cvMatFromUIImage:data.gsfImage.image];
+        cv::Mat matimg = [self cvMatFromUIImage:data.gsfImage.oimage];
         cv::vector<cv::Rect> found;
         cv::vector<cv::Rect> found_filtered;
         cv::Mat rgbMat(matimg.rows, matimg.cols, CV_8UC3); // 8 bits per component, 3 channels
@@ -139,21 +138,16 @@
             cv::rectangle(matimg, r.tl(), r.br(), cv::Scalar(0,255,0), 2);
 	    }
         
-        UIImage *finalimage = [self UIImageFromCvMat:matimg];
-        GSFImage *image = [[GSFImage alloc] init];
-        image.image = finalimage;
-        image.personDetectionNumber = [NSNumber numberWithInt:found.size()];
-        NSLog(@"people: %d", image.personDetectionNumber.intValue);
-        [processed addObject:image];
+        data.gsfImage.pimage = [self UIImageFromCvMat:matimg];
+        data.gsfImage.personDetectionNumber = [NSNumber numberWithInt:found.size()];
+        NSLog(@"people: %d, %@", data.gsfImage.personDetectionNumber.intValue, data);
     }
-    return processed;
 }
 
-- (NSMutableArray* )detectFacesUsingImageArray:(NSMutableArray *)capturedImages
+- (void)detectFacesUsingImageArray:(NSMutableArray *)capturedImages
 {
-    NSMutableArray *processed = [[NSMutableArray alloc] init];
     for (GSFData *data in capturedImages) {
-        cv::Mat matimg = [self cvMatFromUIImage:data.gsfImage.image];
+        cv::Mat matimg = [self cvMatFromUIImage:data.gsfImage.oimage];
         cv::Mat matgrey;
         cvtColor(matimg, matgrey, CV_BGR2GRAY);
         equalizeHist(matgrey, matgrey);
@@ -173,14 +167,10 @@
             cv::Point center(faces[i].x + faces[i].width*0.5, faces[i].y + faces[i].height*0.5);
             cv::ellipse(matimg, center, cv::Size(faces[i].width*0.5, faces[i].height*0.5), 0, 0, 360, cv::Scalar(0, 255, 0), 4, 8, 0);
         }
-        UIImage *finalimage = [self UIImageFromCvMat:matimg];
-        GSFImage *image = [[GSFImage alloc] init];
-        image.image = finalimage;
-        image.faceDetectionNumber = [NSNumber numberWithInt:faces.size()];
-        NSLog(@"faces: %d", image.faceDetectionNumber.intValue);
-        [processed addObject:image];
+        data.gsfImage.fimage = [self UIImageFromCvMat:matimg];
+        data.gsfImage.faceDetectionNumber = [NSNumber numberWithInt:faces.size()];
+        NSLog(@"faces: %d, %@", data.gsfImage.faceDetectionNumber.intValue, data);
     }
-    return processed;
 }
 
 

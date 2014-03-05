@@ -26,11 +26,25 @@
 + (NSDictionary *)convertGSFDataToDict:(GSFData *)gsfdata
 {
     NSMutableDictionary *jsonData = [[NSMutableDictionary alloc] init];
-    NSData *imageData = UIImagePNGRepresentation(gsfdata.gsfImage.image);
+    NSData *imageData = UIImagePNGRepresentation(gsfdata.gsfImage.oimage);
     NSString *imageString = [imageData base64EncodedStringWithOptions:0];
-    [jsonData setObject:imageString forKey:@"image"]; // set image in dict
-    [jsonData setObject:gsfdata.gsfImage.faceDetectionNumber forKey:@"faces_detected"];
-    [jsonData setObject:gsfdata.gsfImage.personDetectionNumber forKey:@"people_detected"];
+    [jsonData setObject:imageString forKey:@"oimage"]; // set image in dict
+    if (gsfdata.gsfImage.pimage) {
+        NSData *imageData = UIImagePNGRepresentation(gsfdata.gsfImage.pimage);
+        NSString *imageString = [imageData base64EncodedStringWithOptions:0];
+        [jsonData setObject:imageString forKey:@"pimage"]; // set image in dict
+    }
+    if (gsfdata.gsfImage.fimage) {
+        NSData *imageData = UIImagePNGRepresentation(gsfdata.gsfImage.fimage);
+        NSString *imageString = [imageData base64EncodedStringWithOptions:0];
+        [jsonData setObject:imageString forKey:@"fimage"]; // set image in dict
+    }
+    if (gsfdata.gsfImage.faceDetectionNumber) {
+        [jsonData setObject:gsfdata.gsfImage.faceDetectionNumber forKey:@"faces_detected"];
+    }
+    if (gsfdata.gsfImage.faceDetectionNumber) {
+        [jsonData setObject:gsfdata.gsfImage.personDetectionNumber forKey:@"people_detected"];
+    }
     NSMutableDictionary *location = [[NSMutableDictionary alloc] init];
     [location setObject:@"Point" forKey:@"type"];
     NSMutableArray *temp = [[NSMutableArray alloc] init];

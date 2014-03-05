@@ -22,7 +22,6 @@
 @property (nonatomic, weak) NSTimer *cameraTimer;
 
 @property (nonatomic) NSMutableArray *capturedImages;
-@property (nonatomic) NSMutableArray *cvCapturedImages;
 @property (nonatomic) BOOL showDetectionImages;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 
@@ -91,34 +90,12 @@
         self.navigationItem.hidesBackButton = YES;
         dispatch_async(hogQueue, ^{
             if (self.personDetect && !self.faceDetect) {
-                self.cvCapturedImages = [processor detectPeopleUsingImageArray:self.capturedImages];
+                [processor detectPeopleUsingImageArray:self.capturedImages];
             } else if (self.faceDetect && !self.personDetect) {
-                self.cvCapturedImages = [processor detectFacesUsingImageArray:self.capturedImages];
+                [processor detectFacesUsingImageArray:self.capturedImages];
             } else if (self.personDetect && self.faceDetect) {
-                self.cvCapturedImages = [processor detectPeopleUsingImageArray:self.capturedImages];
-                NSMutableArray *moreImgs = [processor detectFacesUsingImageArray:self.capturedImages];
-                for (UIImage *data in moreImgs) {
-                    [self.cvCapturedImages addObject:data];
-                }
-            }
-            NSUInteger index = 0;
-            for (GSFData *original in self.capturedImages) {
-                if (self.personDetect && !self.faceDetect) {
-                    GSFImage *data = [self.cvCapturedImages objectAtIndex:index];
-                    original.gsfImage.personDetectionNumber = data.personDetectionNumber;
-                    original.gsfImage.faceDetectionNumber = [NSNumber numberWithInteger:0];
-                } else if (self.faceDetect && !self.personDetect) {
-                    GSFImage *data = [self.cvCapturedImages objectAtIndex:index];
-                    original.gsfImage.faceDetectionNumber = data.faceDetectionNumber;
-                    original.gsfImage.personDetectionNumber = [NSNumber numberWithInteger:0];
-                } else if (self.personDetect && self.faceDetect) {
-                    NSUInteger offset = self.cvCapturedImages.count / 2;
-                    GSFImage *data = [self.cvCapturedImages objectAtIndex:index];
-                    original.gsfImage.personDetectionNumber = data.personDetectionNumber;
-                    data = [self.cvCapturedImages objectAtIndex:(index + offset)];
-                    original.gsfImage.faceDetectionNumber = data.faceDetectionNumber;
-                }
-                index++;
+                [processor detectPeopleUsingImageArray:self.capturedImages];
+                [processor detectFacesUsingImageArray:self.capturedImages];
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.spinner stopAnimating];
@@ -159,8 +136,6 @@
     if ([[self.capturedImages lastObject] isKindOfClass:[GSFData class]]){
         GSFData *data = [self.capturedImages lastObject];
         data.coords = self.bestEffort;
-        NSLog(@"%f, %f", data.coords.coordinate.latitude, data.coords.coordinate.longitude);
-        NSLog(@"%f, %f", self.bestEffort.coordinate.latitude, self.bestEffort.coordinate.longitude);
     }
 }
 
@@ -183,7 +158,6 @@
     if (self.bestEffort == nil || self.bestEffort.horizontalAccuracy > newLocation.horizontalAccuracy) {
         // store the location as the "best effort"
         self.bestEffort = newLocation;
-        NSLog(@"%f, %f", self.bestEffort.coordinate.latitude, self.bestEffort.coordinate.longitude);
         // test the measurement to see if it meets the desired accuracy
         //
         // IMPORTANT!!! kCLLocationAccuracyBest should not be used for comparison with location coordinate or altitidue
@@ -196,7 +170,6 @@
                 [self.locationManager stopUpdatingLocation];
                 data.coords = self.bestEffort;
             }
-            NSLog(@"%f, %f", data.coords.coordinate.latitude, data.coords.coordinate.longitude);
         }
     }
 }
@@ -228,7 +201,7 @@
     if ([self.capturedImages objectAtIndex:indexPath.item] != nil) {
         if ([[self.capturedImages objectAtIndex:indexPath.item] isKindOfClass:[GSFData class]]) {
             GSFData *data = [self.capturedImages objectAtIndex:indexPath.item];
-            UIImage *image = data.gsfImage.image;
+            UIImage *image = data.gsfImage.oimage;
             if ([cell isKindOfClass:[GSFImageCollectionViewCell class]]) {
                 UIImageView *imgview = ((GSFImageCollectionViewCell *)cell).imageView;
                 imgview.contentMode = UIViewContentModeScaleAspectFit;
@@ -253,14 +226,14 @@
         GSFOpenCvImageViewController *controller = (GSFOpenCvImageViewController*)segue.destinationViewController;
         
         // pass copy of cvImagesWithDrawings for viewing.
-        controller.cvCapturedImages = [NSMutableArray arrayWithArray:self.cvCapturedImages];
-        controller.originalData = self.capturedImages; // pass images with no drawings to send.
+        // pass images with no drawings aswell.
+        controller.originalData = self.capturedImages;
         for (GSFData *data in self.capturedImages) {
             [data convertToUTC:data.coords];
         }
         NSMutableArray *orient = [[NSMutableArray alloc] init];
-        for (GSFImage *img in self.cvCapturedImages) {
-            [orient addObject:[NSNumber numberWithInt:img.image.imageOrientation]];
+        for (GSFData *data in self.capturedImages) {
+            [orient addObject:[NSNumber numberWithInt:data.gsfImage.oimage.imageOrientation]];
         }
         controller.originalOrientation = orient;
     }

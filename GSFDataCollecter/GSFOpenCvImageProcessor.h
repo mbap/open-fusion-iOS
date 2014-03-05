@@ -13,11 +13,11 @@
 
 @interface GSFOpenCvImageProcessor : NSObject
 
-// gives an array of processed images back. Facial Detection
-- (NSMutableArray* )detectFacesUsingImageArray:(NSMutableArray *)capturedImages;
+//  Facial Detection. pass an array of gsfdata objects and gsfimage params will be filled.
+- (void)detectFacesUsingImageArray:(NSMutableArray *)capturedImages;
 
-// gives an array of processed images back. Person Detection (whole body)
-- (NSMutableArray* )detectPeopleUsingImageArray:(NSMutableArray *)capturedImages;
+// Person Detection (whole body) pass an array of gsfdata objects and gsfimage params will be filled.
+- (void)detectPeopleUsingImageArray:(NSMutableArray *)capturedImages;
 
 // rotate image by degrees.
 - (UIImage *)rotateImage:(UIImage*)image byDegrees:(CGFloat)degrees;
