@@ -38,11 +38,9 @@
         NSNumber *num = [self.originalOrientation objectAtIndex:i];
         if (num.intValue == UIImageOrientationLeft) { // requires 90 clockwise rotation
             if (data.gsfImage.fimage) {
-                data.gsfImage.fimage = [pro rotateImage:data.gsfImage.fimage byDegrees:180];
                 [cycler addObject:data.gsfImage.fimage];
             }
             if (data.gsfImage.pimage) {
-                data.gsfImage.pimage = [pro rotateImage:data.gsfImage.pimage byDegrees:180];
                 [cycler addObject:data.gsfImage.pimage];
             }
         } else if (num.intValue == UIImageOrientationUp) { // 90 counter clock
@@ -56,11 +54,11 @@
             }
         } else if (num.intValue == UIImageOrientationDown) { // 180 rotation.
             if (data.gsfImage.fimage) {
-                data.gsfImage.fimage = [pro rotateImage:data.gsfImage.fimage byDegrees:90];
+                data.gsfImage.fimage = [pro rotateImage:data.gsfImage.fimage byDegrees:-90];
                 [cycler addObject:data.gsfImage.fimage];
             }
             if (data.gsfImage.pimage) {
-                data.gsfImage.pimage = [pro rotateImage:data.gsfImage.pimage byDegrees:90];
+                data.gsfImage.pimage = [pro rotateImage:data.gsfImage.pimage byDegrees:-90];
                 [cycler addObject:data.gsfImage.pimage];
             }
         } else {
