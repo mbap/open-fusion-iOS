@@ -56,10 +56,11 @@
 
 - (UIImage *)resizedImage:(UIImage *)image {
     CGRect newRect;
+    UIImageOrientation orig = image.imageOrientation;
     if (image.imageOrientation == UIImageOrientationLeft || image.imageOrientation == UIImageOrientationRight) {
         newRect = CGRectIntegral(CGRectMake(0, 0, 480, 640));
     } else if (image.imageOrientation == UIImageOrientationUp || image.imageOrientation == UIImageOrientationDown) {
-        newRect = CGRectIntegral(CGRectMake(0, 0, 648, 480));
+        newRect = CGRectIntegral(CGRectMake(0, 0, 640, 480));
     }
     CGImageRef imageRef = image.CGImage;
 
@@ -87,8 +88,9 @@
     CGContextRelease(bitmap);
     CGImageRelease(newImageRef);
 
+    //return [self rotateImage:newImage byDegrees:180];
+    newImage.imageOrientation = orig;
     return newImage;
-
 }
 
 // convert image from UIImage to cvMat format to use the opencv framework.

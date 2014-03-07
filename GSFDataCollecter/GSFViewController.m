@@ -179,8 +179,9 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
-    if (image.size.width > 1000) { // 1000 is magic number and means it has to be main camera
-        GSFOpenCvImageProcessor pro = [[GSFOpenCvImageProcessor alloc] init];
+    if (image.size.width > 2000) { // 2000 is magic number and means it has to be main camera
+        GSFOpenCvImageProcessor *pro = [[GSFOpenCvImageProcessor alloc] init];
+        image = [pro resizedImage:image];
         // resize large images.
     }
     NSLog(@"%f, %f", image.size.width, image.size.height);
