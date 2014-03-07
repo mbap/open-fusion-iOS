@@ -8,6 +8,10 @@
 
 #import "GSFData.h"
 
+#define OPENCV 0
+#define ORIG   1
+#define BOTH   2
+
 @implementation GSFData
 
 - (GSFData*)initWithImage:(UIImage*)image {
@@ -23,21 +27,25 @@
 
 // dictionary can only contain  NSString, NSNumber, NSArray, NSDictionary, or NSNull.
 // all keys must be NSStrings.
-+ (NSDictionary *)convertGSFDataToDict:(GSFData *)gsfdata
++ (NSDictionary *)convertGSFDataToDict:(GSFData *)gsfdata withFlag:(NSNumber *)option
 {
     NSMutableDictionary *jsonData = [[NSMutableDictionary alloc] init];
-    NSData *imageData = UIImagePNGRepresentation(gsfdata.gsfImage.oimage);
-    NSString *imageString = [imageData base64EncodedStringWithOptions:0];
-    [jsonData setObject:imageString forKey:@"oimage"]; // set image in dict
-    if (gsfdata.gsfImage.pimage) {
-        NSData *imageData = UIImagePNGRepresentation(gsfdata.gsfImage.pimage);
+    if ((option.intValue == ORIG || option.intValue == BOTH) && gsfdata.gsfImage.oimage) {
+        NSData *imageData = UIImagePNGRepresentation(gsfdata.gsfImage.oimage);
         NSString *imageString = [imageData base64EncodedStringWithOptions:0];
-        [jsonData setObject:imageString forKey:@"pimage"]; // set image in dict
+        [jsonData setObject:imageString forKey:@"oimage"]; // set image in dict
     }
-    if (gsfdata.gsfImage.fimage) {
-        NSData *imageData = UIImagePNGRepresentation(gsfdata.gsfImage.fimage);
-        NSString *imageString = [imageData base64EncodedStringWithOptions:0];
-        [jsonData setObject:imageString forKey:@"fimage"]; // set image in dict
+    if ((option.intValue == OPENCV || option.intValue == BOTH)) {
+        if (gsfdata.gsfImage.fimage) {
+            NSData *imageData = UIImagePNGRepresentation(gsfdata.gsfImage.fimage);
+            NSString *imageString = [imageData base64EncodedStringWithOptions:0];
+            [jsonData setObject:imageString forKey:@"fimage"]; // set image in dict
+        }
+        if (gsfdata.gsfImage.pimage) {
+            NSData *imageData = UIImagePNGRepresentation(gsfdata.gsfImage.pimage);
+            NSString *imageString = [imageData base64EncodedStringWithOptions:0];
+            [jsonData setObject:imageString forKey:@"pimage"]; // set image in dict
+        }
     }
     if (gsfdata.gsfImage.faceDetectionNumber) {
         [jsonData setObject:gsfdata.gsfImage.faceDetectionNumber forKey:@"faces_detected"];

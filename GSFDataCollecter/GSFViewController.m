@@ -179,6 +179,11 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
+    if (image.size.width > 1000) { // 1000 is magic number and means it has to be main camera
+        GSFOpenCvImageProcessor pro = [[GSFOpenCvImageProcessor alloc] init];
+        // resize large images.
+    }
+    NSLog(@"%f, %f", image.size.width, image.size.height);
     GSFData *newdata = [[GSFData alloc] initWithImage:image];
     [self.capturedImages addObject:newdata];
     [self.collectionView performBatchUpdates:^{

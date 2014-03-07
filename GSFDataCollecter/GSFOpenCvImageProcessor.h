@@ -22,5 +22,9 @@
 // rotate image by degrees.
 - (UIImage *)rotateImage:(UIImage*)image byDegrees:(CGFloat)degrees;
 
+// scales an image to 480x640 or 640x480 depending on its orientaiton
+- (UIImage *)resizedImage:(UIImage *)image;
+
 @end
+
 

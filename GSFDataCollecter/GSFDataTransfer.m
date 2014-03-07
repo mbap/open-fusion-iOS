@@ -14,11 +14,11 @@
 
 @implementation GSFDataTransfer
 
-- (NSData *)formatDataAsJSON:(NSMutableArray *)dataArray
+- (NSData *)formatDataAsJSON:(NSMutableArray *)dataArray withFlag:(NSNumber *)option
 {
     NSMutableArray *jsonArray = [[NSMutableArray alloc] init]; // mutable array to hold all json objects.
     for (GSFData *data in dataArray) {
-        NSDictionary *jsondict = [GSFData convertGSFDataToDict:data]; //convert gsfdata into dictionary for json parsing
+        NSDictionary *jsondict = [GSFData convertGSFDataToDict:data withFlag:option]; //convert gsfdata into dictionary for json parsing
         [jsonArray addObject:jsondict];
     }
     NSDictionary *mapData = [[NSDictionary alloc] initWithObjects:[NSArray arrayWithObject:jsonArray] forKeys:[NSArray arrayWithObject:@"mapdata"]]; // may want to change key to api key
@@ -31,7 +31,7 @@
     return jsondata;
 }
 
-- (NSInteger)uploadDataArray:(NSData *)data
+- (void)uploadDataArray:(NSData *)data
 {
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     configuration.allowsCellularAccess = YES;
@@ -45,15 +45,13 @@
     [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:data];
-    __block NSError *err = [[NSError alloc] init];
     NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         NSLog(@"response = %@\nerror = %@\ndata = %@", response, error, data);
-        err = error;
+        if (error) {
+            NSLog(@"Network Connection Failed\n Check your json objects are formatted correctly\n.");
+        }
     }];
-    
     [postDataTask resume];
-    if (err) return 1;
-    return 0;
 }
 
 - (void)URLSession:(NSURLSession *)session didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential *))completionHandler{
@@ -66,50 +64,6 @@
 }
 
 
-/*- (NSMutableArray *)formatDataAsJSON:(NSMutableArray *)dataArray
- {
- NSMutableArray *jsonArray = [[NSMutableArray alloc] init]; // mutable array to hold all json objects.
- for (GSFData *data in dataArray) {
- NSDictionary *jsondict = [GSFData convertGSFDataToDict:data]; //convert gsfdata into dictionary for json parsing
- if ([NSJSONSerialization isValidJSONObject:jsondict]) {
- NSData *stringify = [NSJSONSerialization dataWithJSONObject:jsondict options:NSJSONWritingPrettyPrinted error:nil];
- //[jsonArray addObject:[[NSString alloc] initWithData:stringify encoding:NSUTF8StringEncoding]];
- [jsonArray addObject:stringify];
- }
- }
- // here we return ar array of dictionarys containing json objects.
- // each entry is a utf8stringencoding json object.
- return jsonArray;
- }*/
-
-/*- (NSInteger)uploadDataArray:(NSMutableArray *)dataArray
- {
- NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
- configuration.allowsCellularAccess = YES;
- 
- NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
- NSURL *url = [NSURL URLWithString:@"https://gsf.soe.ucsc.edu/api/upload/"];
- NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
- cachePolicy:NSURLRequestUseProtocolCachePolicy
- timeoutInterval:30.0];
- 
- [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
- [request setHTTPMethod:@"POST"];
- 
- NSDictionary *mapData = [[NSDictionary alloc] initWithObjects:[NSArray arrayWithObject:dataArray] forKeys:[NSArray arrayWithObject:@"mapdata"]]; // may want to change key to api key
- 
- //[request setHTTPBody:[NSData data]]
- if ([NSJSONSerialization isValidJSONObject:mapData]) {
- [request setHTTPBody:[NSJSONSerialization dataWithJSONObject:mapData options:NSJSONWritingPrettyPrinted error:nil]];
- }
- 
- NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
- NSLog(@"response = %@\nerror = %@\ndata = %@", response, error, data);
- }];
- 
- [postDataTask resume];
- return 0;
- }*/
 
 @end
 

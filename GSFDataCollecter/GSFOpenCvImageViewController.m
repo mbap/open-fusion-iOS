@@ -38,11 +38,9 @@
         NSNumber *num = [self.originalOrientation objectAtIndex:i];
         if (num.intValue == UIImageOrientationLeft) { // requires 90 clockwise rotation
             if (data.gsfImage.fimage) {
-                data.gsfImage.fimage = [pro rotateImage:data.gsfImage.fimage byDegrees:180];
                 [cycler addObject:data.gsfImage.fimage];
             }
             if (data.gsfImage.pimage) {
-                data.gsfImage.pimage = [pro rotateImage:data.gsfImage.pimage byDegrees:180];
                 [cycler addObject:data.gsfImage.pimage];
             }
         } else if (num.intValue == UIImageOrientationUp) { // 90 counter clock
@@ -56,11 +54,11 @@
             }
         } else if (num.intValue == UIImageOrientationDown) { // 180 rotation.
             if (data.gsfImage.fimage) {
-                data.gsfImage.fimage = [pro rotateImage:data.gsfImage.fimage byDegrees:90];
+                data.gsfImage.fimage = [pro rotateImage:data.gsfImage.fimage byDegrees:-90];
                 [cycler addObject:data.gsfImage.fimage];
             }
             if (data.gsfImage.pimage) {
-                data.gsfImage.pimage = [pro rotateImage:data.gsfImage.pimage byDegrees:90];
+                data.gsfImage.pimage = [pro rotateImage:data.gsfImage.pimage byDegrees:-90];
                 [cycler addObject:data.gsfImage.pimage];
             }
         } else {
@@ -73,7 +71,6 @@
         }
         ++i;
     }
-    
     
     self.imageView.animationImages = cycler;
     self.imageView.animationDuration = 4;
@@ -89,19 +86,11 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    GSFDataTransfer *driver = [[GSFDataTransfer alloc] init];
-    NSInteger jsonerr = 0;
-    if (OPENCV == buttonIndex) {  // open cv images
-        //= [driver uploadDataArray:[driver formatDataAsJSON:self.originalData]];
-
-    } else if (ORIG == buttonIndex) { // original images
-        
-    } else if (BOTH == buttonIndex) { // both opencv and original.
-        
-    }
-    if (jsonerr) {
-        NSLog(@"Network Connection Failed\n Check your json objects are formatted correctly\n.");
-    }
+    dispatch_queue_t networkQueue = dispatch_queue_create("networkQueue", NULL);
+    dispatch_async(networkQueue, ^{
+        GSFDataTransfer *driver = [[GSFDataTransfer alloc] init];
+        [driver uploadDataArray:[driver formatDataAsJSON:self.originalData withFlag:[NSNumber numberWithLong:buttonIndex]]];
+    });
 }
 
 @end
