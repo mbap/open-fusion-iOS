@@ -54,6 +54,43 @@
     
 }
 
+- (UIImage *)resizedImage:(UIImage *)image {
+    CGRect newRect;
+    if (image.imageOrientation == UIImageOrientationLeft || image.imageOrientation == UIImageOrientationRight) {
+        newRect = CGRectIntegral(CGRectMake(0, 0, 480, 640));
+    } else if (image.imageOrientation == UIImageOrientationUp || image.imageOrientation == UIImageOrientationDown) {
+        newRect = CGRectIntegral(CGRectMake(0, 0, 648, 480));
+    }
+    CGImageRef imageRef = image.CGImage;
+
+    // Build a context that's the same dimensions as the new size
+    CGContextRef bitmap = CGBitmapContextCreate(NULL,
+                                                newRect.size.width,
+                                                newRect.size.height,
+                                                CGImageGetBitsPerComponent(imageRef),
+                                                0,
+                                                CGImageGetColorSpace(imageRef),
+                                                CGImageGetBitmapInfo(imageRef));
+
+
+    // Set the quality level to use when rescaling
+    CGContextSetInterpolationQuality(bitmap, kCGInterpolationHigh);
+
+    // Draw into the context; this scales the image
+    CGContextDrawImage(bitmap, newRect, imageRef);
+
+    // Get the resized image from the context and a UIImage
+    CGImageRef newImageRef = CGBitmapContextCreateImage(bitmap);
+    UIImage *newImage = [UIImage imageWithCGImage:newImageRef];
+
+    // Clean up
+    CGContextRelease(bitmap);
+    CGImageRelease(newImageRef);
+
+    return newImage;
+
+}
+
 // convert image from UIImage to cvMat format to use the opencv framework.
 - (cv::Mat)cvMatFromUIImage:(UIImage *)image
 {

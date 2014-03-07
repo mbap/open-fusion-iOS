@@ -16,21 +16,10 @@
 // into its JSON representation. Each JSON string will be inserted
 // into the array, which is then inserted into a dictionary,
 // which is then turned into json NSData, which will then be returned.
-- (NSData *)formatDataAsJSON:(NSMutableArray *)dataArray;
+- (NSData *)formatDataAsJSON:(NSMutableArray *)dataArray withFlag:(NSNumber *)option;
 
 // sends the NSData from above to gsf server.
-- (NSInteger)uploadDataArray:(NSData *)data;
+- (void)uploadDataArray:(NSData *)data;
 
 
-/*****************************************************
-// OLD DECLARATIONS
-// takes an array of dictionarys and converts it
-// into its JSON representation. Each JSON string will be inserted
-// into the array which will then be returned.
-//- (NSMutableArray *)formatDataAsJSON:(NSMutableArray *)dataArray;
-
-// uses NSURLSession object to upload data to a database.
-// returns 0 if success nonzero if failure
-//- (NSInteger)uploadDataArray:(NSMutableArray *)dataArray;
-*/
 @end

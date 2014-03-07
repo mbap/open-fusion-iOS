@@ -72,7 +72,6 @@
         ++i;
     }
     
-    
     self.imageView.animationImages = cycler;
     self.imageView.animationDuration = 4;
     self.imageView.animationRepeatCount = 0;
@@ -87,19 +86,11 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    GSFDataTransfer *driver = [[GSFDataTransfer alloc] init];
-    NSInteger jsonerr = 0;
-    if (OPENCV == buttonIndex) {  // open cv images
-        //= [driver uploadDataArray:[driver formatDataAsJSON:self.originalData]];
-
-    } else if (ORIG == buttonIndex) { // original images
-        
-    } else if (BOTH == buttonIndex) { // both opencv and original.
-        
-    }
-    if (jsonerr) {
-        NSLog(@"Network Connection Failed\n Check your json objects are formatted correctly\n.");
-    }
+    dispatch_queue_t networkQueue = dispatch_queue_create("networkQueue", NULL);
+    dispatch_async(networkQueue, ^{
+        GSFDataTransfer *driver = [[GSFDataTransfer alloc] init];
+        [driver uploadDataArray:[driver formatDataAsJSON:self.originalData withFlag:[NSNumber numberWithLong:buttonIndex]]];
+    });
 }
 
 @end

@@ -25,6 +25,6 @@
 - (void)convertToUTC:(CLLocation *)coords;
 
 // converts a GSFData Object into a dictionary that can be turned into json.
-+ (NSDictionary *)convertGSFDataToDict:(GSFData *)gsfdata;
++ (NSDictionary *)convertGSFDataToDict:(GSFData *)gsfdata withFlag:(NSNumber *)option;
 
 @end
