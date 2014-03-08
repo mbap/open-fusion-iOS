@@ -56,7 +56,6 @@
 
 - (UIImage *)resizedImage:(UIImage *)image {
     CGRect newRect;
-    UIImageOrientation orig = image.imageOrientation;
     if (image.imageOrientation == UIImageOrientationLeft || image.imageOrientation == UIImageOrientationRight) {
         newRect = CGRectIntegral(CGRectMake(0, 0, 480, 640));
     } else if (image.imageOrientation == UIImageOrientationUp || image.imageOrientation == UIImageOrientationDown) {
@@ -89,7 +88,6 @@
     CGImageRelease(newImageRef);
 
     //return [self rotateImage:newImage byDegrees:180];
-    newImage.imageOrientation = orig;
     return newImage;
 }
 

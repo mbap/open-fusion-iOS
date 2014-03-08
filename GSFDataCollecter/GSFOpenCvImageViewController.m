@@ -11,9 +11,9 @@
 #import "GSFOpenCvImageProcessor.h"
 #import "GSFDataTransfer.h"
 
-#define OPENCV 0
-#define ORIG   1
-#define BOTH   2
+#define OPENCV 1
+#define ORIG   2
+#define BOTH   3
 
 @interface GSFOpenCvImageViewController () <NSURLSessionTaskDelegate, NSURLSessionDelegate, UIActionSheetDelegate>
 
@@ -81,21 +81,32 @@
 }
 
 - (IBAction)sendDataToDB:(id)sender {
-    UIActionSheet *menu = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"OpenCV Image(s)", @"Original Image(s)", @"Both", nil];
+    UIActionSheet *menu = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Discard and Send Old Data", @"OpenCV Image(s)", @"Original Image(s)", @"Both", nil];
     [menu showInView:self.view];
 }
 
 - (IBAction)saveDataToFile:(id)sender {
-    // add save data code here.
+    GSFDataTransfer *driver = [[GSFDataTransfer alloc] init];
+    NSData *saveMe = [driver formatDataAsJSON:self.originalData withFlag:[NSNumber numberWithInteger:BOTH]];
+#warning NSSearchPathForDirectories should be replaced with the equivalent NSFileManager call from the api docs when time permits.
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
+    NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:@"/GSFSaveData"];
+    NSLog(@"%@", [dataPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]]]);
+    [saveMe writeToFile:[dataPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]]] atomically:YES];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    dispatch_queue_t networkQueue = dispatch_queue_create("networkQueue", NULL);
-    dispatch_async(networkQueue, ^{
-        GSFDataTransfer *driver = [[GSFDataTransfer alloc] init];
-        [driver uploadDataArray:[driver formatDataAsJSON:self.originalData withFlag:[NSNumber numberWithLong:buttonIndex]]];
-    });
+    GSFDataTransfer *driver = [[GSFDataTransfer alloc] init];
+    if (0 == buttonIndex) {
+        [self performSegueWithIdentifier:@"savedData" sender:self];
+    } else {
+        dispatch_queue_t networkQueue = dispatch_queue_create("networkQueue", NULL);
+        dispatch_async(networkQueue, ^{
+            [driver uploadDataArray:[driver formatDataAsJSON:self.originalData withFlag:[NSNumber numberWithInteger:buttonIndex]]];
+        });
+    }
 }
 
 @end

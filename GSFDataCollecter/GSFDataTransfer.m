@@ -49,6 +49,13 @@
         NSLog(@"response = %@\nerror = %@\ndata = %@", response, error, data);
         if (error) {
             NSLog(@"Network Connection Failed\n Check your json objects are formatted correctly\n.");
+            /*
+             NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+             NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
+             NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:@"/GSFSaveData"];
+             NSLog(@"%@", [dataPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]]]);
+             [data writeToFile:[dataPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]]] atomically:YES];
+             */
         }
     }];
     [postDataTask resume];
