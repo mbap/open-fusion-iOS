@@ -16,19 +16,19 @@
 
 - (NSData *)formatDataAsJSON:(NSMutableArray *)dataArray withFlag:(NSNumber *)option
 {
-    NSMutableArray *jsonArray = [[NSMutableArray alloc] init]; // mutable array to hold all json objects.
+    NSMutableDictionary *featureCollection = [[NSMutableDictionary alloc] init];
+    [featureCollection setObject:@"FeatureCollection" forKey:@"type"];
+    NSMutableArray *features = [[NSMutableArray alloc] init]; // mutable array to hold all json objects.
     for (GSFData *data in dataArray) {
-        NSDictionary *jsondict = [GSFData convertGSFDataToDict:data withFlag:option]; //convert gsfdata into dictionary for json parsing
-        [jsonArray addObject:jsondict];
+        NSDictionary *feature = [GSFData convertGSFDataToDict:data withFlag:option]; //convert gsfdata into dictionary for json parsing
+        [features addObject:feature];
     }
-    NSDictionary *mapData = [[NSDictionary alloc] initWithObjects:[NSArray arrayWithObject:jsonArray] forKeys:[NSArray arrayWithObject:@"mapdata"]]; // may want to change key to api key
-    // here we return ar array of dictionarys containing json objects.
-    // each entry is a utf8stringencoding json object.
-    NSData *jsondata;
-    if ([NSJSONSerialization isValidJSONObject:mapData]) {
-        jsondata = [NSJSONSerialization dataWithJSONObject:mapData options:NSJSONWritingPrettyPrinted error:nil];
+    [featureCollection setObject:features forKey:@"features"];
+    NSData *JSONPacket;
+    if ([NSJSONSerialization isValidJSONObject:featureCollection]) {
+        JSONPacket = [NSJSONSerialization dataWithJSONObject:featureCollection options:NSJSONWritingPrettyPrinted error:nil];
     }
-    return jsondata;
+    return JSONPacket;
 }
 
 - (void)uploadDataArray:(NSData *)data
