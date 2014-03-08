@@ -12,10 +12,8 @@
 @interface GSFDataTransfer : NSObject
 
 
-// takes an array of dictionarys and converts it
-// into its JSON representation. Each JSON string will be inserted
-// into the array, which is then inserted into a dictionary,
-// which is then turned into json NSData, which will then be returned.
+// takes each gsfdata object and converts it into its json format specified by
+// the JSON Format for Upload API found on the google docs documentation section.
 - (NSData *)formatDataAsJSON:(NSMutableArray *)dataArray withFlag:(NSNumber *)option;
 
 // sends the NSData from above to gsf server.

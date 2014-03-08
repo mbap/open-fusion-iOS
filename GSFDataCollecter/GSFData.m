@@ -8,9 +8,9 @@
 
 #import "GSFData.h"
 
-#define OPENCV 0
-#define ORIG   1
-#define BOTH   2
+#define OPENCV 1
+#define ORIG   2
+#define BOTH   3
 
 @implementation GSFData
 

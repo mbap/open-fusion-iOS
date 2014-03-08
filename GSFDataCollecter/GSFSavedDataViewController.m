@@ -33,7 +33,7 @@
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    //self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     // add custom image behind table view.
     //self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"vizit" ofType:@"png"]]];
@@ -45,32 +45,26 @@
     // build array
     NSString *festivalListPath = [[NSBundle mainBundle] pathForResource:@"festivalList" ofType:@""];
     NSMutableArray *list = [[NSMutableArray alloc] initWithContentsOfFile:festivalListPath];
-    NSMutableArray *datasource = [[NSMutableArray alloc] init];
-    
-    for (int x = 0; x < list.count; ++x) {
-        FestivalInfo *fest = [[FestivalInfo alloc] init];
-        fest.name = [list objectAtIndex:x];
-        [self.datasource addObject:fest];
-    }
     
     // sort festival objects by name.
     NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
     NSArray *sorter = [NSArray arrayWithObject:descriptor];
-    self.datasource = [NSMutableArray arrayWithArray:[self.datasource sortedArrayUsingDescriptors:sorter]];;
-    [self.festivalList reloadData];
+    //self.datasource = [NSMutableArray arrayWithArray:[self.datasource sortedArrayUsingDescriptors:sorter]];;
+    [self.tableView reloadData];
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+#warning Potentially incomplete method implementation.
+    // Return the number of sections.
+    return 0;
 }
 
 // method to specify number of rows in the table
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (tableView == self.searchDisplayController.searchResultsTableView) {
-        if (self.searchResults.count) {
-            return [self.searchResults count];
-        } else {
-            return 1;
-        }
-    } else {
-        return self.datasource.count;
-    }
+    return 1; //self.datasource.count;
 }
 
 // fills the rows with data.
@@ -92,7 +86,7 @@
     cell.backgroundView = cellImageView;
     [[cell textLabel] setBackgroundColor:[UIColor clearColor]];
     [[cell detailTextLabel] setBackgroundColor:[UIColor clearColor]];
-    
+    /*
     if (tableView == self.searchDisplayController.searchResultsTableView){
         if (self.searchResults.count) {
             FestivalInfo *festival = [self.searchResults objectAtIndex:indexPath.row];
@@ -111,10 +105,11 @@
         } else if (_x%4 == 2) {
             cell.detailTextLabel.text = @"Reggee"; //subtitle property
         } else if (_x%4 == 3) {
-            cell.detailTextLabel.text = @"Hip Hop";
+            //cell.detailTextLabel.text = @"Hip Hop";
         }
         _x++;
     }
+     */
     return cell;
 }
 
@@ -124,31 +119,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
-    return cell;
-}
 
 /*
 // Override to support conditional editing of the table view.

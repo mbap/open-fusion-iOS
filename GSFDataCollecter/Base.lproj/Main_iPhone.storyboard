@@ -140,7 +140,7 @@
                         <outlet property="saveData" destination="d1W-PZ-6y0" id="dMZ-g8-QAW"/>
                         <outlet property="sendData" destination="dGv-cY-rN0" id="QMe-w2-qaL"/>
                         <outlet property="toolbar" destination="qIx-rP-L0U" id="UGt-V1-3l0"/>
-                        <segue destination="MgZ-ry-aGy" kind="push" identifier="saveData" id="U1r-Pi-Dpp"/>
+                        <segue destination="MgZ-ry-aGy" kind="push" identifier="savedData" id="U1r-Pi-Dpp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ygL-fq-Icc" userLabel="First Responder" sceneMemberID="firstResponder"/>
