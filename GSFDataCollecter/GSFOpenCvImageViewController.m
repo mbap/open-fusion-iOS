@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *sendData;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *saveData;
 @property (nonatomic) NSNumber *sendPref;
 
 @end
@@ -82,6 +83,10 @@
 - (IBAction)sendDataToDB:(id)sender {
     UIActionSheet *menu = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"OpenCV Image(s)", @"Original Image(s)", @"Both", nil];
     [menu showInView:self.view];
+}
+
+- (IBAction)saveDataToFile:(id)sender {
+    // add save data code here.
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex

@@ -17,6 +17,8 @@
 @property (nonatomic) CLLocation *coords;               // this contains all of the below
 @property (nonatomic) NSString *date;
 
+// add properties for noise level, temperature, humidity here.
+
 // allocate a GSFData Object before calling this
 // sets the image property of an GSFData Object
 - (GSFData*)initWithImage:(UIImage*)image;
