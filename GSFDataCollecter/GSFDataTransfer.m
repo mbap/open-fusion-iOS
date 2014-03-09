@@ -53,10 +53,9 @@
              NSFileManager *man = [[NSFileManager alloc] init];
              NSArray *urls = [man URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
              NSURL *url = [urls objectAtIndex:0];
-             url = [url URLByAppendingPathComponent:@"/GSFSaveData"];
-             NSString *dataPath = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
-             NSLog(@"%@", [dataPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]]]);
-             [saveMe writeToFile:[dataPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]]] atomically:YES];
+             url = [url URLByAppendingPathComponent:@"GSFSaveData"];
+             NSLog(@"%@", [url URLByAppendingPathComponent:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]]]);
+             [saveMe writeToURL:[url URLByAppendingPathComponent:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]]] atomically:YES];
              */
         }
     }];
