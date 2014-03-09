@@ -10,7 +10,11 @@
 
 @interface GSFSavedDataViewController ()
 
-- (void)buildSavedDataList; // helper function for building the list.
+// takes paths of files saved in GSF Directory.
+- (void)buildSavedDataListWithContents:(NSArray *)paths; // helper function for building the list.
+
+// array for the data in file system.
+@property (nonatomic) NSArray *datasource;
 
 @end
 
@@ -28,7 +32,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
+    // set datasource and delegate to self.
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -36,20 +44,35 @@
     //self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     // add custom image behind table view.
-    //self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"vizit" ofType:@"png"]]];
-    [self buildSavedDataList];
+    self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"transparent" ofType:@"png"]]];
+    
+    NSFileManager *man = [[NSFileManager alloc] init];
+    NSArray *urls = [man URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
+    NSURL *url = [urls objectAtIndex:0];
+    url = [url URLByAppendingPathComponent:@"/GSFSaveData"];
+    NSString *dataPath = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
+    [self buildSavedDataListWithContents:[man contentsOfDirectoryAtPath:dataPath error:nil]];
 }
 
 //build the festival arrays
-- (void)buildSavedDataList {
-    // build array
-    NSString *festivalListPath = [[NSBundle mainBundle] pathForResource:@"festivalList" ofType:@""];
-    NSMutableArray *list = [[NSMutableArray alloc] initWithContentsOfFile:festivalListPath];
-    
+- (void)buildSavedDataListWithContents:(NSArray *)paths
+{
+    NSMutableArray *list = [[NSMutableArray alloc] init];
+    for (NSURL *path in paths) {
+        NSError *error = nil;
+        id json = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfURL:path] options:NSJSONReadingMutableContainers error:&error];
+        if (json != nil && error == nil) {
+            if ([json isKindOfClass:[NSDictionary class]]) {
+                [list addObject:(NSDictionary*)json];
+            }
+        }
+
+    }
+    self.datasource = [NSArray arrayWithArray:list];
     // sort festival objects by name.
-    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
-    NSArray *sorter = [NSArray arrayWithObject:descriptor];
-    //self.datasource = [NSMutableArray arrayWithArray:[self.datasource sortedArrayUsingDescriptors:sorter]];;
+    //NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+    //NSArray *sorter = [NSArray arrayWithObject:descriptor];
+    //self.da = [NSMutableArray arrayWithArray:[self.datasource sortedArrayUsingDescriptors:sorter]];;
     [self.tableView reloadData];
 }
 
@@ -59,12 +82,12 @@
 {
 #warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return self.datasource.count;
 }
 
 // method to specify number of rows in the table
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1; //self.datasource.count;
+    return 2;
 }
 
 // fills the rows with data.
@@ -73,11 +96,6 @@
     if (cell == nil) { //create a new cell (only gets called for searchResultsTableView)
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
     }
-    
-    //create a side image for the cells -- modify this for image for each show later
-    // imagenamed caches the image for faster reuseage.
-    //cell.imageView.image = [UIImage imageNamed:@"Default.png"];
-    
     
     //create a cell background image
     UIImageView *cellImageView = [[UIImageView alloc] initWithFrame:cell.frame];

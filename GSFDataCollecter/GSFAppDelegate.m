@@ -46,14 +46,15 @@
     }
     
     [GMSServices provideAPIKey:@"AIzaSyCvpcWcgTa-dq2BB06g9Wnh-jG9k-_Ngfo"];
-    
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
-    NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:@"/GSFSaveData"];
-    if (![[NSFileManager defaultManager] fileExistsAtPath:dataPath]) {
-        [[NSFileManager defaultManager] createDirectoryAtPath:dataPath withIntermediateDirectories:NO attributes:nil error:nil];
+ 
+    // create directory in documents for storing GEOJSON feature collection objects as NSData.
+    NSFileManager *man = [[NSFileManager alloc] init];
+    NSArray *urls = [man URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
+    NSURL *url = [urls objectAtIndex:0];
+    url = [url URLByAppendingPathComponent:@"GSFSaveData"];
+    if (![man fileExistsAtPath:[url absoluteString]]) {
+        [man createDirectoryAtPath:[url absoluteString] withIntermediateDirectories:NO attributes:nil error:nil];
     }
-    
     return YES;
 }
 

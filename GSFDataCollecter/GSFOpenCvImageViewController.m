@@ -88,12 +88,20 @@
 - (IBAction)saveDataToFile:(id)sender {
     GSFDataTransfer *driver = [[GSFDataTransfer alloc] init];
     NSData *saveMe = [driver formatDataAsJSON:self.originalData withFlag:[NSNumber numberWithInteger:BOTH]];
-#warning NSSearchPathForDirectories should be replaced with the equivalent NSFileManager call from the api docs when time permits.
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
-    NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:@"/GSFSaveData"];
-    NSLog(@"%@", [dataPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]]]);
-    [saveMe writeToFile:[dataPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]]] atomically:YES];
+    NSFileManager *man = [[NSFileManager alloc] init];
+    NSArray *urls = [man URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
+    NSURL *url = [urls objectAtIndex:0];
+    url = [url URLByAppendingPathComponent:@"GSFSaveData"];
+    NSLog(@"%@", [url URLByAppendingPathComponent:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]]]);
+    NSError *error = nil;
+    [saveMe writeToURL:[url URLByAppendingPathComponent:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]]] options:NSDataWritingAtomic error:&error];
+    if (error) {
+        NSLog(@"Problem writing to filesystem.\n");
+    } else {
+        NSLog(@"Write to filesystem succeeded.\n");
+    }
+    NSArray *viewControllers = [self.navigationController viewControllers];
+    [self.navigationController popToViewController:[viewControllers objectAtIndex:1] animated:YES];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -106,6 +114,7 @@
         dispatch_async(networkQueue, ^{
             [driver uploadDataArray:[driver formatDataAsJSON:self.originalData withFlag:[NSNumber numberWithInteger:buttonIndex]]];
         });
+        [self.navigationController popToViewController:[[self.navigationController viewControllers] objectAtIndex:1] animated:YES];
     }
 }
 
