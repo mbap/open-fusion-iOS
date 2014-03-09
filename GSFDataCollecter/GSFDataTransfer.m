@@ -49,12 +49,14 @@
         NSLog(@"response = %@\nerror = %@\ndata = %@", response, error, data);
         if (error) {
             NSLog(@"Network Connection Failed\n Check your json objects are formatted correctly\n.");
-            /*
-             NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-             NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
-             NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:@"/GSFSaveData"];
+            /* save data that gets an error. can be opened in iTunes to be modified.
+             NSFileManager *man = [[NSFileManager alloc] init];
+             NSArray *urls = [man URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
+             NSURL *url = [urls objectAtIndex:0];
+             url = [url URLByAppendingPathComponent:@"/GSFSaveData"];
+             NSString *dataPath = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
              NSLog(@"%@", [dataPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]]]);
-             [data writeToFile:[dataPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]]] atomically:YES];
+             [saveMe writeToFile:[dataPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]]] atomically:YES];
              */
         }
     }];
