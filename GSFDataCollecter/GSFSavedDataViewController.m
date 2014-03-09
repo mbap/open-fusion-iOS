@@ -49,18 +49,22 @@
     NSFileManager *man = [[NSFileManager alloc] init];
     NSArray *urls = [man URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
     NSURL *url = [urls objectAtIndex:0];
-    url = [url URLByAppendingPathComponent:@"/GSFSaveData"];
-    NSString *dataPath = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
-    [self buildSavedDataListWithContents:[man contentsOfDirectoryAtPath:dataPath error:nil]];
+    url = [url URLByAppendingPathComponent:@"GSFSaveData"];
+    [self buildSavedDataListWithContents:[man contentsOfDirectoryAtPath:[url path] error:nil]];
 }
 
-//build the festival arrays
+//build the festival arrays using an array PATHS of NSStrings.
 - (void)buildSavedDataListWithContents:(NSArray *)paths
 {
     NSMutableArray *list = [[NSMutableArray alloc] init];
-    for (NSURL *path in paths) {
+    for (NSString *path in paths) {
+        NSFileManager *man = [[NSFileManager alloc] init];
+        NSArray *urls = [man URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
+        NSURL *url = [urls objectAtIndex:0];
+        url = [url URLByAppendingPathComponent:@"GSFSaveData"];
+        url = [url URLByAppendingPathComponent:path];
         NSError *error = nil;
-        id json = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfURL:path] options:NSJSONReadingMutableContainers error:&error];
+        id json = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfURL:url] options:NSJSONReadingMutableContainers error:&error];
         if (json != nil && error == nil) {
             if ([json isKindOfClass:[NSDictionary class]]) {
                 [list addObject:(NSDictionary*)json];
@@ -68,11 +72,13 @@
         }
 
     }
+    // load the list of GEOJSON Feature Collection Items into the datasource array
     self.datasource = [NSArray arrayWithArray:list];
+    
     // sort festival objects by name.
-    //NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
-    //NSArray *sorter = [NSArray arrayWithObject:descriptor];
-    //self.da = [NSMutableArray arrayWithArray:[self.datasource sortedArrayUsingDescriptors:sorter]];;
+    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+    NSArray *sorter = [NSArray arrayWithObject:descriptor];
+    self.datasource = [NSMutableArray arrayWithArray:[self.datasource sortedArrayUsingDescriptors:sorter]];;
     [self.tableView reloadData];
 }
 
@@ -80,14 +86,17 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return self.datasource.count;
 }
 
 // method to specify number of rows in the table
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+    NSMutableDictionary *dict = nil;
+    if ([[self.datasource objectAtIndex:section] isKindOfClass:[NSMutableDictionary class]]) {
+        dict = [self.datasource objectAtIndex:section];
+    }
+    return dict.count;
 }
 
 // fills the rows with data.
@@ -97,37 +106,8 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
     }
     
-    //create a cell background image
-    UIImageView *cellImageView = [[UIImageView alloc] initWithFrame:cell.frame];
-    UIImage *cellImage = [UIImage imageNamed:@"LightGrey.png"];
-    cellImageView.image = cellImage;
-    cell.backgroundView = cellImageView;
-    [[cell textLabel] setBackgroundColor:[UIColor clearColor]];
-    [[cell detailTextLabel] setBackgroundColor:[UIColor clearColor]];
-    /*
-    if (tableView == self.searchDisplayController.searchResultsTableView){
-        if (self.searchResults.count) {
-            FestivalInfo *festival = [self.searchResults objectAtIndex:indexPath.row];
-            cell.textLabel.text = festival.name;
-            cell.detailTextLabel.text = @"testing poop Here"; //subtitle property
-        } else {
-            cell.textLabel.text = @"Submit a Festival?";
-        }
-    } else {
-        FestivalInfo *festival = [self.datasource objectAtIndex:indexPath.row];
-        cell.textLabel.text = festival.name;
-        if (_x%4 == 0) {
-            cell.detailTextLabel.text = @"Electric"; //subtitle property
-        } else if (_x%4 == 1) {
-            cell.detailTextLabel.text = @"Rock"; //subtitle property
-        } else if (_x%4 == 2) {
-            cell.detailTextLabel.text = @"Reggee"; //subtitle property
-        } else if (_x%4 == 3) {
-            //cell.detailTextLabel.text = @"Hip Hop";
-        }
-        _x++;
-    }
-     */
+    
+    cell.detailTextLabel.text = @"test";
     return cell;
 }
 
