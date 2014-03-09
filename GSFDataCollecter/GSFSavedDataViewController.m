@@ -113,7 +113,7 @@
     
     NSMutableDictionary *dict = nil;
     NSArray *features = nil;
-    if ([[self.datasource objectAtIndex:[indexPath item]] isKindOfClass:[NSMutableDictionary class]]) {
+    if ([[self.datasource objectAtIndex:[indexPath section]] isKindOfClass:[NSMutableDictionary class]]) {
         dict = [self.datasource objectAtIndex:[indexPath item]];
         if ([[dict objectForKey:@"features"] isKindOfClass:[NSArray class]]) {
             features = [dict objectForKey:@"features"];
