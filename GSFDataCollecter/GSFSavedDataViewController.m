@@ -128,7 +128,7 @@
             NSDictionary *geometry = [feature objectForKey:@"geometry"];
             if ([[geometry objectForKey:@"coordinates"] isKindOfClass:[NSArray class]]) {
                 coords = [geometry objectForKey:@"coordinates"];
-                cell.textLabel.text = [NSString stringWithFormat:@"%@, %@", [coords objectAtIndex:0], [coords objectAtIndex:1]];
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %@", [coords objectAtIndex:0], [coords objectAtIndex:1]];
             }
         }
         
@@ -137,10 +137,18 @@
             NSDictionary *properties = [feature objectForKey:@"properties"];
             NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[properties objectForKey:@"timestamp"] doubleValue]];
             NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-            cell.detailTextLabel.text = @"test";//[formatter stringFromDate:date];
+            NSString *dateString = [formatter stringFromDate:date];
+            cell.textLabel.text = dateString;
         }
         
         // set image below here
+        if ([[feature objectForKey:@"properties"] isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *properties = [feature objectForKey:@"properties"];
+            NSString *oimage = [properties objectForKey:@"oimage"];
+            NSData *image =  [[NSData alloc] initWithBase64EncodedString:oimage options:0];
+            UIImage *cellImage = [[UIImage alloc] initWithData:image];
+            cell.imageView.image = cellImage;
+        }
     }
     
     return cell;
