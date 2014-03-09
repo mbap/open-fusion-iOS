@@ -257,6 +257,10 @@
     
 }
 
+- (IBAction)goToSavedImagesFromStaging:(id)sender {
+    [self performSegueWithIdentifier:@"savedFromStager" sender:self];
+}
+
 // delegate method for image selector.
 - (void)addItemViewController:(id)controller didFinishEnteringItem:(NSIndexPath *)indexPath{
     if (indexPath.item < self.capturedImages.count) {

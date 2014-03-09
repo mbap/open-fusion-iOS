@@ -83,7 +83,7 @@
 }
 
 #pragma mark - Table view data source
-
+// return numbef of GEOJSON featureCollection object in the datasource array
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
@@ -91,23 +91,58 @@
 }
 
 // method to specify number of rows in the table
+// return number of features in a single GEOJSON featureCollection
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSMutableDictionary *dict = nil;
+    NSArray *features = nil;
     if ([[self.datasource objectAtIndex:section] isKindOfClass:[NSMutableDictionary class]]) {
         dict = [self.datasource objectAtIndex:section];
+        if ([[dict objectForKey:@"features"] isKindOfClass:[NSArray class]]) {
+            features = [dict objectForKey:@"features"];
+        }
     }
-    return dict.count;
+    return features.count;
 }
 
-// fills the rows with data.
+// fills the rows with data from each feature.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"]; // dequeue cell
     if (cell == nil) { //create a new cell (only gets called for searchResultsTableView)
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
     }
     
+    NSMutableDictionary *dict = nil;
+    NSArray *features = nil;
+    if ([[self.datasource objectAtIndex:[indexPath item]] isKindOfClass:[NSMutableDictionary class]]) {
+        dict = [self.datasource objectAtIndex:[indexPath item]];
+        if ([[dict objectForKey:@"features"] isKindOfClass:[NSArray class]]) {
+            features = [dict objectForKey:@"features"];
+        }
+    }
     
-    cell.detailTextLabel.text = @"test";
+    for (NSDictionary *feature in features) {
+        
+        // set the textLabel with coordinates of the feature
+        NSArray *coords = nil;
+        if ([[feature objectForKey:@"geometry"] isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *geometry = [feature objectForKey:@"geometry"];
+            if ([[geometry objectForKey:@"coordinates"] isKindOfClass:[NSArray class]]) {
+                coords = [geometry objectForKey:@"coordinates"];
+                cell.textLabel.text = [NSString stringWithFormat:@"%@, %@", [coords objectAtIndex:0], [coords objectAtIndex:1]];
+            }
+        }
+        
+        // set detail view with the timestamp of the textlabel
+        if ([[feature objectForKey:@"properties"] isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *properties = [feature objectForKey:@"properties"];
+            NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[properties objectForKey:@"timestamp"] doubleValue]];
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            cell.detailTextLabel.text = @"test";//[formatter stringFromDate:date];
+        }
+        
+        // set image below here
+    }
+    
     return cell;
 }
 
