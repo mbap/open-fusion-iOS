@@ -53,7 +53,6 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning this is wrong at the moment.
     // Return the number of rows in the section.
     // this should be the number of properties
     // -2 from the images due to the fact that we want a row for all 3 images to segue from
@@ -75,9 +74,45 @@
     if (0 == [indexPath row]) {
         cell.textLabel.text = @"View Images";
     } else {
-        if ([[self.feature objectForKey:@"properties"] isKindOfClass:[NSDictionary class]]) {
-            NSDictionary *properties = [self.feature objectForKey:@"properties"];
-            cell.textLabel.text = @"fill with data";
+        if (1 == indexPath.row) {
+            if ([[self.feature objectForKey:@"geometry"] isKindOfClass:[NSDictionary class]]) {
+                NSDictionary *geometry = [self.feature objectForKey:@"geometry"];
+                if ([[geometry objectForKey:@"coordinates"] isKindOfClass:[NSArray class]]) {
+                    NSArray *coords = [geometry objectForKey:@"coordinates"];
+                    NSString *coord = [[NSString alloc] initWithFormat:@"GPS: %.4f, %.4f", [[coords objectAtIndex:0] doubleValue], [[coords objectAtIndex:1] doubleValue]];
+                    cell.textLabel.text = coord;
+                }
+            }
+        } else {
+            NSDictionary *properties = nil;
+            if ([[self.feature objectForKey:@"properties"] isKindOfClass:[NSDictionary class]]) {
+                properties = [self.feature objectForKey:@"properties"];
+            }
+            if(2 == indexPath.row) {
+                NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[properties objectForKey:@"timestamp"] doubleValue]];
+                NSString *datestring = @"Date: ";
+                cell.textLabel.text = [datestring stringByAppendingString:[date description]];
+            } else if (3 == indexPath.row) {
+                if ([properties objectForKey:@"altitude"]) {
+                    cell.textLabel.text = [[NSString alloc] initWithFormat:@"Altitude: %.2fm", [[properties objectForKey:@"altitude"] doubleValue]];
+                }
+            } else if (4 == indexPath.row) {
+                if ([properties objectForKey:@"h_accuracy"]) {
+                    cell.textLabel.text = [[NSString alloc] initWithFormat:@"H_Acc: %.1f", [[properties objectForKey:@"h_accuracy"] doubleValue]];
+                }
+            } else if (5 == indexPath.row) {
+                if ([properties objectForKey:@"v_accuracy"]) {
+                    cell.textLabel.text = [[NSString alloc] initWithFormat:@"V_Acc: %.1f", [[properties objectForKey:@"v_accuracy"] doubleValue]];
+                }
+            } else if (6 == indexPath.row) {
+                if ([properties objectForKey:@"faces_detected"]) {
+                    cell.textLabel.text = [[NSString alloc] initWithFormat:@"Faces: %d detected.", [[properties objectForKey:@"faces_detected"] intValue]];
+                }
+            } else if (7 == indexPath.row) {
+                if ([properties objectForKey:@"people_detected"]) {
+                    cell.textLabel.text = [[NSString alloc] initWithFormat:@"People: %d detected.", [[properties objectForKey:@"people_detected"] intValue]];
+                }
+            }
         }
     }
     return cell;

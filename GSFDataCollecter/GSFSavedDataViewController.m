@@ -8,6 +8,7 @@
 
 #import "GSFSavedDataViewController.h"
 #import "GSFSavedDataDetailViewController.h"
+#import <GSFOpenCvImageProcessor.h>
 
 @interface GSFSavedDataViewController ()
 
@@ -55,6 +56,7 @@
     NSArray *urls = [man URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
     NSURL *url = [urls objectAtIndex:0];
     url = [url URLByAppendingPathComponent:@"GSFSaveData"];
+#warning THIS MUST BE MULTITHREADED
     [self buildSavedDataListWithContents:[man contentsOfDirectoryAtPath:[url path] error:nil]];
 }
 
@@ -153,7 +155,8 @@
             NSDictionary *properties = [feature objectForKey:@"properties"];
             NSString *oimage = [properties objectForKey:@"oimage"];
             NSData *image =  [[NSData alloc] initWithBase64EncodedString:oimage options:0];
-            cellImage = [[UIImage alloc] initWithData:image];
+            GSFOpenCvImageProcessor *pro = [[GSFOpenCvImageProcessor alloc] init];
+            cellImage = [pro rotateImage:[[UIImage alloc] initWithData:image] byDegrees:90];
         }
         dispatch_async(dispatch_get_main_queue(), ^{
             cell.imageView.image = cellImage;

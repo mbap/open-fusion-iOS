@@ -46,6 +46,9 @@
 		D3BF4D1C18CE5E35003CB52B /* black.png in Resources */ = {isa = PBXBuildFile; fileRef = D3BF4D1918CE5E35003CB52B /* black.png */; };
 		D3BF4D1D18CE5E35003CB52B /* transparent.png in Resources */ = {isa = PBXBuildFile; fileRef = D3BF4D1A18CE5E35003CB52B /* transparent.png */; };
 		D3BF4D1E18CE5E35003CB52B /* white.png in Resources */ = {isa = PBXBuildFile; fileRef = D3BF4D1B18CE5E35003CB52B /* white.png */; };
+		D3BF4D2218CE62C4003CB52B /* black1.png in Resources */ = {isa = PBXBuildFile; fileRef = D3BF4D1F18CE62C4003CB52B /* black1.png */; };
+		D3BF4D2318CE62C4003CB52B /* transparent1.png in Resources */ = {isa = PBXBuildFile; fileRef = D3BF4D2018CE62C4003CB52B /* transparent1.png */; };
+		D3BF4D2418CE62C4003CB52B /* white1.png in Resources */ = {isa = PBXBuildFile; fileRef = D3BF4D2118CE62C4003CB52B /* white1.png */; };
 		D3D78071189996FE00E5AB50 /* GSFOpenCvImageProcessor.mm in Sources */ = {isa = PBXBuildFile; fileRef = D3D78070189996FE00E5AB50 /* GSFOpenCvImageProcessor.mm */; };
 		D3D7807C18A0396900E5AB50 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3D7807B18A0396900E5AB50 /* CoreLocation.framework */; };
 		D3D7807F18A0416400E5AB50 /* GSFTaggedVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3D7807E18A0416400E5AB50 /* GSFTaggedVCViewController.m */; };
@@ -132,6 +135,9 @@
 		D3BF4D1918CE5E35003CB52B /* black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = black.png; sourceTree = "<group>"; };
 		D3BF4D1A18CE5E35003CB52B /* transparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = transparent.png; sourceTree = "<group>"; };
 		D3BF4D1B18CE5E35003CB52B /* white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = white.png; sourceTree = "<group>"; };
+		D3BF4D1F18CE62C4003CB52B /* black1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = black1.png; sourceTree = "<group>"; };
+		D3BF4D2018CE62C4003CB52B /* transparent1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = transparent1.png; sourceTree = "<group>"; };
+		D3BF4D2118CE62C4003CB52B /* white1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = white1.png; sourceTree = "<group>"; };
 		D3D7806F189996FE00E5AB50 /* GSFOpenCvImageProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFOpenCvImageProcessor.h; sourceTree = "<group>"; };
 		D3D78070189996FE00E5AB50 /* GSFOpenCvImageProcessor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GSFOpenCvImageProcessor.mm; sourceTree = "<group>"; };
 		D3D7807B18A0396900E5AB50 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -360,6 +366,9 @@
 		DBB428411880A64F00139082 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D3BF4D1F18CE62C4003CB52B /* black1.png */,
+				D3BF4D2018CE62C4003CB52B /* transparent1.png */,
+				D3BF4D2118CE62C4003CB52B /* white1.png */,
 				D3BF4D1918CE5E35003CB52B /* black.png */,
 				D3BF4D1A18CE5E35003CB52B /* transparent.png */,
 				D3BF4D1B18CE5E35003CB52B /* white.png */,
@@ -473,6 +482,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3BF4D1D18CE5E35003CB52B /* transparent.png in Resources */,
+				D3BF4D2318CE62C4003CB52B /* transparent1.png in Resources */,
 				96EAC4BF18AD8E250084B331 /* GoogleMaps.bundle in Resources */,
 				DBB428511880A64F00139082 /* Main_iPad.storyboard in Resources */,
 				96EAC4B918AD88280084B331 /* haarcascade_frontalface_alt2.xml in Resources */,
@@ -483,8 +493,10 @@
 				DBB4284E1880A64F00139082 /* Main_iPhone.storyboard in Resources */,
 				966F6C8A18AAC0A100BE3334 /* hogcascade_pedestrians.xml in Resources */,
 				D3BF4D1C18CE5E35003CB52B /* black.png in Resources */,
+				D3BF4D2218CE62C4003CB52B /* black1.png in Resources */,
 				96EAC4B818AD88280084B331 /* haarcascade_frontalface_alt.xml in Resources */,
 				DBB428451880A64F00139082 /* InfoPlist.strings in Resources */,
+				D3BF4D2418CE62C4003CB52B /* white1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
