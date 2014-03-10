@@ -122,7 +122,7 @@
     
     NSDictionary *feature = [features objectAtIndex:[indexPath row]]; // get the feature for this row.
     
-    // set the textLabel with coordinates of the feature
+    // set the detailtextLabel with coordinates of the feature
     NSArray *coords = nil;
     if ([[feature objectForKey:@"geometry"] isKindOfClass:[NSDictionary class]]) {
         NSDictionary *geometry = [feature objectForKey:@"geometry"];
@@ -132,16 +132,15 @@
         }
     }
     
-    // set detail view with the timestamp of the textlabel
+    // set main text view with the timestamp of the feature
     if ([[feature objectForKey:@"properties"] isKindOfClass:[NSDictionary class]]) {
         NSDictionary *properties = [feature objectForKey:@"properties"];
         NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[properties objectForKey:@"timestamp"] doubleValue]];
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        NSString *dateString = [formatter stringFromDate:date];
-        cell.textLabel.text = dateString;
+        cell.textLabel.text = [date description];
     }
     
-    // set image below here
+    // does reload image for new cells
+        // set image below here
     if ([[feature objectForKey:@"properties"] isKindOfClass:[NSDictionary class]]) {
         NSDictionary *properties = [feature objectForKey:@"properties"];
         NSString *oimage = [properties objectForKey:@"oimage"];
