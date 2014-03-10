@@ -52,7 +52,7 @@
     NSArray *urls = [man URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
     NSURL *url = [urls objectAtIndex:0];
     url = [url URLByAppendingPathComponent:@"GSFSaveData"];
-    if (![man fileExistsAtPath:[url absoluteString]]) {
+    if (![man fileExistsAtPath:[url path]]) {
         [man createDirectoryAtPath:[url absoluteString] withIntermediateDirectories:NO attributes:nil error:nil];
     }
     return YES;
