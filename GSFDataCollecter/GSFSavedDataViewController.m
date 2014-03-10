@@ -141,13 +141,19 @@
     
     // does reload image for new cells
         // set image below here
-    if ([[feature objectForKey:@"properties"] isKindOfClass:[NSDictionary class]]) {
-        NSDictionary *properties = [feature objectForKey:@"properties"];
-        NSString *oimage = [properties objectForKey:@"oimage"];
-        NSData *image =  [[NSData alloc] initWithBase64EncodedString:oimage options:0];
-        UIImage *cellImage = [[UIImage alloc] initWithData:image];
-        cell.imageView.image = cellImage;
-    }
+    dispatch_queue_t imageQueue = dispatch_queue_create("imageQueue", NULL);
+    dispatch_async(imageQueue, ^{
+        UIImage *cellImage = nil;
+        if ([[feature objectForKey:@"properties"] isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *properties = [feature objectForKey:@"properties"];
+            NSString *oimage = [properties objectForKey:@"oimage"];
+            NSData *image =  [[NSData alloc] initWithBase64EncodedString:oimage options:0];
+            cellImage = [[UIImage alloc] initWithData:image];
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            cell.imageView.image = cellImage;
+        });
+    });
     
     return cell;
 }
