@@ -76,9 +76,9 @@
     self.datasource = [NSArray arrayWithArray:list];
     
     // sort festival objects by name.
-    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
-    NSArray *sorter = [NSArray arrayWithObject:descriptor];
-    self.datasource = [NSMutableArray arrayWithArray:[self.datasource sortedArrayUsingDescriptors:sorter]];;
+    //NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+    //NSArray *sorter = [NSArray arrayWithObject:descriptor];
+    //self.datasource = [NSMutableArray arrayWithArray:[self.datasource sortedArrayUsingDescriptors:sorter]];;
     [self.tableView reloadData];
 }
 
@@ -114,41 +114,40 @@
     NSMutableDictionary *dict = nil;
     NSArray *features = nil;
     if ([[self.datasource objectAtIndex:[indexPath section]] isKindOfClass:[NSMutableDictionary class]]) {
-        dict = [self.datasource objectAtIndex:[indexPath item]];
+        dict = [self.datasource objectAtIndex:[indexPath section]];
         if ([[dict objectForKey:@"features"] isKindOfClass:[NSArray class]]) {
             features = [dict objectForKey:@"features"];
         }
     }
     
-    for (NSDictionary *feature in features) {
-        
-        // set the textLabel with coordinates of the feature
-        NSArray *coords = nil;
-        if ([[feature objectForKey:@"geometry"] isKindOfClass:[NSDictionary class]]) {
-            NSDictionary *geometry = [feature objectForKey:@"geometry"];
-            if ([[geometry objectForKey:@"coordinates"] isKindOfClass:[NSArray class]]) {
-                coords = [geometry objectForKey:@"coordinates"];
-                cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %@", [coords objectAtIndex:0], [coords objectAtIndex:1]];
-            }
+    NSDictionary *feature = [features objectAtIndex:[indexPath row]]; // get the feature for this row.
+    
+    // set the textLabel with coordinates of the feature
+    NSArray *coords = nil;
+    if ([[feature objectForKey:@"geometry"] isKindOfClass:[NSDictionary class]]) {
+        NSDictionary *geometry = [feature objectForKey:@"geometry"];
+        if ([[geometry objectForKey:@"coordinates"] isKindOfClass:[NSArray class]]) {
+            coords = [geometry objectForKey:@"coordinates"];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %@", [coords objectAtIndex:0], [coords objectAtIndex:1]];
         }
-        
-        // set detail view with the timestamp of the textlabel
-        if ([[feature objectForKey:@"properties"] isKindOfClass:[NSDictionary class]]) {
-            NSDictionary *properties = [feature objectForKey:@"properties"];
-            NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[properties objectForKey:@"timestamp"] doubleValue]];
-            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-            NSString *dateString = [formatter stringFromDate:date];
-            cell.textLabel.text = dateString;
-        }
-        
-        // set image below here
-        if ([[feature objectForKey:@"properties"] isKindOfClass:[NSDictionary class]]) {
-            NSDictionary *properties = [feature objectForKey:@"properties"];
-            NSString *oimage = [properties objectForKey:@"oimage"];
-            NSData *image =  [[NSData alloc] initWithBase64EncodedString:oimage options:0];
-            UIImage *cellImage = [[UIImage alloc] initWithData:image];
-            cell.imageView.image = cellImage;
-        }
+    }
+    
+    // set detail view with the timestamp of the textlabel
+    if ([[feature objectForKey:@"properties"] isKindOfClass:[NSDictionary class]]) {
+        NSDictionary *properties = [feature objectForKey:@"properties"];
+        NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[properties objectForKey:@"timestamp"] doubleValue]];
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        NSString *dateString = [formatter stringFromDate:date];
+        cell.textLabel.text = dateString;
+    }
+    
+    // set image below here
+    if ([[feature objectForKey:@"properties"] isKindOfClass:[NSDictionary class]]) {
+        NSDictionary *properties = [feature objectForKey:@"properties"];
+        NSString *oimage = [properties objectForKey:@"oimage"];
+        NSData *image =  [[NSData alloc] initWithBase64EncodedString:oimage options:0];
+        UIImage *cellImage = [[UIImage alloc] initWithData:image];
+        cell.imageView.image = cellImage;
     }
     
     return cell;
