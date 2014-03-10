@@ -7,6 +7,7 @@
 //
 
 #import "GSFSavedDataViewController.h"
+#import "GSFSavedDataDetailViewController.h"
 
 @interface GSFSavedDataViewController ()
 
@@ -15,6 +16,9 @@
 
 // array for the data in file system.
 @property (nonatomic) NSArray *datasource;
+
+// dictionary that will get passed to the segued view Controller.
+@property (nonatomic) NSDictionary *selectedFeature;
 
 @end
 
@@ -158,6 +162,33 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+#warning make this conditional to support multiselection.
+    NSMutableDictionary *dict = nil;
+    NSArray *features = nil;
+    if ([[self.datasource objectAtIndex:[indexPath section]] isKindOfClass:[NSMutableDictionary class]]) {
+        dict = [self.datasource objectAtIndex:[indexPath section]];
+        if ([[dict objectForKey:@"features"] isKindOfClass:[NSArray class]]) {
+            features = [dict objectForKey:@"features"];
+        }
+    }
+    
+    self.selectedFeature = [features objectAtIndex:[indexPath row]]; // get the feature for this row.
+    [self performSegueWithIdentifier:@"viewSavedFileDetails" sender:self];
+}
+
+// In a story board-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"viewSavedFileDetails"]) {
+        // get selected content and pass it to the next controller
+        GSFSavedDataDetailViewController *controller = (GSFSavedDataDetailViewController*)segue.destinationViewController;
+        controller.feature = self.selectedFeature;
+    }
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -203,17 +234,5 @@
     return YES;
 }
 */
-
-/*
-#pragma mark - Navigation
-
-// In a story board-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-
- */
 
 @end
