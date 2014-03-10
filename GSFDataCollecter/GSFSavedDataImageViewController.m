@@ -7,38 +7,83 @@
 //
 
 #import "GSFSavedDataImageViewController.h"
+#import "GSFPageControllerContentViewController.h"
+#import "GSFOpenCvImageProcessor.h"
 
-@interface GSFSavedDataImageViewController ()
+@interface GSFSavedDataImageViewController () <UIPageViewControllerDataSource, UIPageViewControllerDelegate>
+
+@property (nonatomic) NSUInteger index;
+@property (nonatomic) NSArray *vcs;
 
 @end
 
 @implementation GSFSavedDataImageViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
     
-    UIViewController *vc1 = [[UIViewController alloc] init];
-    UIViewController *vc2 = [[UIViewController alloc] init];
-    UIViewController *vc3 = [[UIViewController alloc] init];
-    [vc1.view addSubview:[[UIImageView alloc] initWithImage:[self.images objectAtIndex:0]]];
-    [vc2.view addSubview:[[UIImageView alloc] initWithImage:[self.images objectAtIndex:1]]];
-    [vc3.view addSubview:[[UIImageView alloc] initWithImage:[self.images objectAtIndex:2]]];
-    NSArray *vcs = [[NSArray alloc] initWithObjects:vc1, vc2, vc3, nil];
+    self.dataSource = self;
+    self.delegate = self;
     
-    [self setViewControllers:vcs direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:^(BOOL finished){
-        // do nothing.
-    }];
+    GSFPageControllerContentViewController *startingViewController = [self viewControllerAtIndex:0];
+    NSArray *viewControllers = @[startingViewController];
+    [self setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+}
+
+- (GSFPageControllerContentViewController *)viewControllerAtIndex:(NSUInteger)index
+{
+    // Create a new view controller and pass suitable data.
+    GSFPageControllerContentViewController *pageContentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"GSFPageContent"];
+    GSFOpenCvImageProcessor *pro = [[GSFOpenCvImageProcessor alloc] init];
+    pageContentViewController.imageView = [[UIImageView alloc] init];
+    if (index == 0) {
+        pageContentViewController.image = [pro rotateImage:[self.images objectAtIndex:index] byDegrees:90];
+    } else {
+        pageContentViewController.image = [self.images objectAtIndex:index];
+    }
+    pageContentViewController.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    pageContentViewController.index = index;
+    
+    return pageContentViewController;
+}
+
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
+{
+    NSUInteger index = ((GSFPageControllerContentViewController*) viewController).index;
+    
+    if ((index == 0) || (index == NSNotFound)) {
+        return nil;
+    }
+    
+    index--;
+    return [self viewControllerAtIndex:index];
+}
+
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
+{
+    NSUInteger index = ((GSFPageControllerContentViewController*) viewController).index;
+    
+    if (index == NSNotFound) {
+        return nil;
+    }
+    
+    index++;
+    if (index == [self.images count]) {
+        return nil;
+    }
+    return [self viewControllerAtIndex:index];
+}
+
+- (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController
+{
+    return self.images.count;
+}
+
+- (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController
+{
+    return 0;
 }
 
 - (void)didReceiveMemoryWarning

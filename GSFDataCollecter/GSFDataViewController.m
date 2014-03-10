@@ -13,6 +13,7 @@
 
 @property (weak, nonatomic) IBOutlet UISwitch *personDetectToggle;
 @property (weak, nonatomic) IBOutlet UISwitch *faceDetectionToggle;
+@property (nonatomic) IBOutlet UIImageView *imageView;
 
 @end
 
@@ -23,6 +24,10 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+
+    // add background image here.
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"white.png"]];
+
 }
 
 - (void)didReceiveMemoryWarning
