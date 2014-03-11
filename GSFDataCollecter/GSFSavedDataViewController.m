@@ -56,8 +56,14 @@
     NSArray *urls = [man URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
     NSURL *url = [urls objectAtIndex:0];
     url = [url URLByAppendingPathComponent:@"GSFSaveData"];
-#warning THIS MUST BE MULTITHREADED
-    [self buildSavedDataListWithContents:[man contentsOfDirectoryAtPath:[url path] error:nil]];
+    dispatch_queue_t fileQueue = dispatch_queue_create("fileQueue", NULL);
+    dispatch_async(fileQueue, ^{
+#warning add spinner here
+        [self buildSavedDataListWithContents:[man contentsOfDirectoryAtPath:[url path] error:nil]];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+        });
+    });
 }
 
 //build the festival arrays using an array PATHS of NSStrings.
@@ -86,7 +92,6 @@
     //NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
     //NSArray *sorter = [NSArray arrayWithObject:descriptor];
     //self.datasource = [NSMutableArray arrayWithArray:[self.datasource sortedArrayUsingDescriptors:sorter]];;
-    [self.tableView reloadData];
 }
 
 #pragma mark - Table view data source
