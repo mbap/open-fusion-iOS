@@ -41,16 +41,16 @@
     // set datasource and delegate to self.
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    self.tableView.allowsMultipleSelection = YES;
     
     // add image for background
     //self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"transparent.png"]];
 
-    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    //self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.navigationItem.rightBarButtonItem = self.editButtonItem;
         
     NSFileManager *man = [[NSFileManager alloc] init];
     NSArray *urls = [man URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
@@ -58,9 +58,15 @@
     url = [url URLByAppendingPathComponent:@"GSFSaveData"];
     dispatch_queue_t fileQueue = dispatch_queue_create("fileQueue", NULL);
     dispatch_async(fileQueue, ^{
-#warning add spinner here
+        __block UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] init];
+        spinner.color = [UIColor blackColor];
+        spinner.center = self.tableView.center;
+        [spinner startAnimating];
+        [self.tableView addSubview:spinner];
         [self buildSavedDataListWithContents:[man contentsOfDirectoryAtPath:[url path] error:nil]];
         dispatch_async(dispatch_get_main_queue(), ^{
+            [spinner removeFromSuperview];
+            spinner = nil;
             [self.tableView reloadData];
         });
     });
@@ -88,7 +94,7 @@
     // load the list of GEOJSON Feature Collection Items into the datasource array
     self.datasource = [NSArray arrayWithArray:list];
     
-    // sort festival objects by name.
+    // sort objects by name. **change this to sort by what ever we want if we want to sort.
     //NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
     //NSArray *sorter = [NSArray arrayWithObject:descriptor];
     //self.datasource = [NSMutableArray arrayWithArray:[self.datasource sortedArrayUsingDescriptors:sorter]];;
@@ -205,16 +211,24 @@
 }
 
 
-/*
+
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the specified item to be editable.
-    return YES;
+    if (indexPath.row != 0) {
+        return NO;
+    } else {
+        return YES;
+    }
 }
-*/
 
-/*
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return UITableViewCellEditingStyleInsert;
+}
+
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -226,22 +240,6 @@
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 @end
