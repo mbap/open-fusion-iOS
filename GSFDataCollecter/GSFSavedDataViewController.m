@@ -10,6 +10,9 @@
 #import "GSFSavedDataDetailViewController.h"
 #import <GSFOpenCvImageProcessor.h>
 
+#define headHeight 25
+
+
 @interface GSFSavedDataViewController ()
 
 // takes paths of files saved in GSF Directory.
@@ -41,23 +44,32 @@
     // set datasource and delegate to self.
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    self.tableView.allowsMultipleSelection = YES;
     
     // add image for background
     //self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"transparent.png"]];
-
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    //self.navigationItem.rightBarButtonItem = self.editButtonItem;
         
     NSFileManager *man = [[NSFileManager alloc] init];
     NSArray *urls = [man URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
     NSURL *url = [urls objectAtIndex:0];
     url = [url URLByAppendingPathComponent:@"GSFSaveData"];
-#warning THIS MUST BE MULTITHREADED
-    [self buildSavedDataListWithContents:[man contentsOfDirectoryAtPath:[url path] error:nil]];
+    dispatch_queue_t fileQueue = dispatch_queue_create("fileQueue", NULL);
+    dispatch_async(fileQueue, ^{
+        __block UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] init];
+        spinner.color = [UIColor blackColor];
+        spinner.center = self.tableView.center;
+        [spinner startAnimating];
+        [self.tableView addSubview:spinner];
+        [self buildSavedDataListWithContents:[man contentsOfDirectoryAtPath:[url path] error:nil]];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [spinner removeFromSuperview];
+            spinner = nil;
+            [self.tableView reloadData];
+        });
+    });
+    
+    [self.tableView setContentInset:UIEdgeInsetsMake(headHeight, 0, 0, 0)];
+
 }
 
 //build the festival arrays using an array PATHS of NSStrings.
@@ -82,11 +94,10 @@
     // load the list of GEOJSON Feature Collection Items into the datasource array
     self.datasource = [NSArray arrayWithArray:list];
     
-    // sort festival objects by name.
+    // sort objects by name. **change this to sort by what ever we want if we want to sort.
     //NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
     //NSArray *sorter = [NSArray arrayWithObject:descriptor];
     //self.datasource = [NSMutableArray arrayWithArray:[self.datasource sortedArrayUsingDescriptors:sorter]];;
-    [self.tableView reloadData];
 }
 
 #pragma mark - Table view data source
@@ -109,6 +120,12 @@
         }
     }
     return features.count;
+}
+
+- (void)headerTapped:(UIButton*)sender
+{
+    // do custom stuff. send data and delete record reload tableview after.
+    NSLog(@"button pressed");
 }
 
 // fills the rows with data from each feature.
@@ -168,8 +185,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-#warning make this conditional to support multiselection.
     NSMutableDictionary *dict = nil;
     NSArray *features = nil;
     if ([[self.datasource objectAtIndex:[indexPath section]] isKindOfClass:[NSMutableDictionary class]]) {
@@ -193,50 +208,42 @@
     }
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return headHeight;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return headHeight;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, headHeight)];
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(tableView.bounds.size.width - 2*headHeight, 0, headHeight, headHeight)];
+    [button setImage:[UIImage imageNamed:@"images.jpeg"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(headerTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:button];
+    NSString * string = [NSString stringWithFormat:@"Feature Collection %d", section + 1];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(headHeight, 0, tableView.bounds.size.width - (headHeight * 3), headHeight)];
+    label.text = string;
+    label.font = [UIFont systemFontOfSize:14.0];
+    label.textColor = [UIColor grayColor];
+    [view addSubview:label];
+    return view;
+}
+
+//- (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+//{
+//    return @"this is a test";
+//}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 @end
