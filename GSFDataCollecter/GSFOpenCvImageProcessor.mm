@@ -176,7 +176,7 @@
 	    }
         
         data.gsfImage.pimage = [self UIImageFromCvMat:matimg];
-        data.gsfImage.personDetectionNumber = [NSNumber numberWithInt:found.size()];
+        data.gsfImage.personDetectionNumber = [NSNumber numberWithUnsignedLong:found.size()];
         NSLog(@"people: %d, %@", data.gsfImage.personDetectionNumber.intValue, data);
     }
 }
@@ -205,7 +205,7 @@
             cv::ellipse(matimg, center, cv::Size(faces[i].width*0.5, faces[i].height*0.5), 0, 0, 360, cv::Scalar(0, 255, 0), 4, 8, 0);
         }
         data.gsfImage.fimage = [self UIImageFromCvMat:matimg];
-        data.gsfImage.faceDetectionNumber = [NSNumber numberWithInt:faces.size()];
+        data.gsfImage.faceDetectionNumber = [NSNumber numberWithUnsignedLong:faces.size()];
         NSLog(@"faces: %d, %@", data.gsfImage.faceDetectionNumber.intValue, data);
     }
 }

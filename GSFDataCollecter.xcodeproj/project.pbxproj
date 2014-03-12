@@ -37,10 +37,10 @@
 		96EAC4DC18BC75A90084B331 /* GSFDataTransfer.m in Sources */ = {isa = PBXBuildFile; fileRef = 96EAC4DB18BC75A90084B331 /* GSFDataTransfer.m */; };
 		96EAF06618CD89940041A265 /* GSFSavedDataDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96EAF06518CD89940041A265 /* GSFSavedDataDetailViewController.m */; };
 		96EAF06918CD89B90041A265 /* GSFSavedDataImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96EAF06818CD89B90041A265 /* GSFSavedDataImageViewController.m */; };
-		96F52DAD18CFBBEA00684E64 /* images.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 96F52DAC18CFBBEA00684E64 /* images.jpeg */; };
 		96F52DB018CFE08500684E64 /* GSFTableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 96F52DAF18CFE08500684E64 /* GSFTableButton.m */; };
 		96FCA62418CAD0B000BC01A1 /* GSFSavedDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96FCA62318CAD0B000BC01A1 /* GSFSavedDataViewController.m */; };
 		D30862D218A2F8F100407EA5 /* GSFOpenCvImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D30862D118A2F8F100407EA5 /* GSFOpenCvImageViewController.m */; };
+		D312C5C918CFEC9C00B8641A /* upload.png in Resources */ = {isa = PBXBuildFile; fileRef = D312C5C818CFEC9C00B8641A /* upload.png */; };
 		D397AC4118B514D30067691D /* GSFAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D397AC4018B514D30067691D /* GSFAppDelegate.m */; };
 		D397AC4418BAC4920067691D /* GSFDirectionService.m in Sources */ = {isa = PBXBuildFile; fileRef = D397AC4318BAC4920067691D /* GSFDirectionService.m */; };
 		D397AC4918BE80C40067691D /* GSFTrackerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D397AC4818BE80C40067691D /* GSFTrackerHelper.m */; };
@@ -123,13 +123,13 @@
 		96EAF06518CD89940041A265 /* GSFSavedDataDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFSavedDataDetailViewController.m; sourceTree = "<group>"; };
 		96EAF06718CD89B90041A265 /* GSFSavedDataImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFSavedDataImageViewController.h; sourceTree = "<group>"; };
 		96EAF06818CD89B90041A265 /* GSFSavedDataImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFSavedDataImageViewController.m; sourceTree = "<group>"; };
-		96F52DAC18CFBBEA00684E64 /* images.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = images.jpeg; sourceTree = "<group>"; };
 		96F52DAE18CFE08500684E64 /* GSFTableButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFTableButton.h; sourceTree = "<group>"; };
 		96F52DAF18CFE08500684E64 /* GSFTableButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFTableButton.m; sourceTree = "<group>"; };
 		96FCA62218CAD0B000BC01A1 /* GSFSavedDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFSavedDataViewController.h; sourceTree = "<group>"; };
 		96FCA62318CAD0B000BC01A1 /* GSFSavedDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFSavedDataViewController.m; sourceTree = "<group>"; };
 		D30862D018A2F8F100407EA5 /* GSFOpenCvImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFOpenCvImageViewController.h; sourceTree = "<group>"; };
 		D30862D118A2F8F100407EA5 /* GSFOpenCvImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFOpenCvImageViewController.m; sourceTree = "<group>"; };
+		D312C5C818CFEC9C00B8641A /* upload.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upload.png; sourceTree = "<group>"; };
 		D397AC4018B514D30067691D /* GSFAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFAppDelegate.m; sourceTree = "<group>"; };
 		D397AC4218BAC4920067691D /* GSFDirectionService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFDirectionService.h; sourceTree = "<group>"; };
 		D397AC4318BAC4920067691D /* GSFDirectionService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFDirectionService.m; sourceTree = "<group>"; };
@@ -373,7 +373,7 @@
 		DBB428411880A64F00139082 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				96F52DAC18CFBBEA00684E64 /* images.jpeg */,
+				D312C5C818CFEC9C00B8641A /* upload.png */,
 				D3BF4D1F18CE62C4003CB52B /* black1.png */,
 				D3BF4D2018CE62C4003CB52B /* transparent1.png */,
 				D3BF4D2118CE62C4003CB52B /* white1.png */,
@@ -458,7 +458,7 @@
 				ORGANIZATIONNAME = "Michael Baptist - LLNL";
 				TargetAttributes = {
 					DBB428361880A64F00139082 = {
-						DevelopmentTeam = 58K2V57UB6;
+						DevelopmentTeam = Z5SLZ6QPTL;
 					};
 					DBB4285A1880A64F00139082 = {
 						TestTargetID = DBB428361880A64F00139082;
@@ -493,9 +493,9 @@
 				D3BF4D2318CE62C4003CB52B /* transparent1.png in Resources */,
 				96EAC4BF18AD8E250084B331 /* GoogleMaps.bundle in Resources */,
 				DBB428511880A64F00139082 /* Main_iPad.storyboard in Resources */,
+				D312C5C918CFEC9C00B8641A /* upload.png in Resources */,
 				96EAC4B918AD88280084B331 /* haarcascade_frontalface_alt2.xml in Resources */,
 				96EAC4BA18AD88280084B331 /* haarcascade_frontalface_default.xml in Resources */,
-				96F52DAD18CFBBEA00684E64 /* images.jpeg in Resources */,
 				D3D7D5BA18C40B1E00F5D540 /* Main_iPhone5s.storyboard in Resources */,
 				DBB428561880A64F00139082 /* Images.xcassets in Resources */,
 				D3BF4D1E18CE5E35003CB52B /* white.png in Resources */,
