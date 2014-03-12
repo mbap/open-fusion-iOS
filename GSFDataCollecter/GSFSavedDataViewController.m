@@ -223,14 +223,18 @@
 {
     // send data to the server. deletion of file on success handled by GSFDataTransfer object
     GSFDataTransfer *uploader = [[GSFDataTransfer alloc] initWithURL:[self.fileList objectAtIndex:button.section]];
-    [uploader uploadDataArray:[NSData dataWithContentsOfFile:[self.fileList objectAtIndex:button.section]]];
+    dispatch_queue_t networkQueue = dispatch_queue_create("networkQueue", NULL);
+    dispatch_async(networkQueue, ^{
+        [uploader uploadDataArray:[NSData dataWithContentsOfFile:[self.fileList objectAtIndex:button.section]]];
+    });
+    [self.tableView reloadData];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, headHeight)];
-    GSFTableButton *button = [[GSFTableButton alloc] initWithFrame:CGRectMake(tableView.bounds.size.width - 2*headHeight, 0, headHeight, headHeight) forSection:section];
-    [button setImage:[UIImage imageNamed:@"images.jpeg"] forState:UIControlStateNormal];
+    GSFTableButton *button = [[GSFTableButton alloc] initWithFrame:CGRectMake(tableView.bounds.size.width - 6*headHeight, 0, headHeight*6, headHeight) forSection:section];
+    [button setImage:[UIImage imageNamed:@"upload.png"] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(headerTapped:)  forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:button];
     NSString * string = [NSString stringWithFormat:@"Feature Collection %ld", (long)section + 1];

@@ -60,15 +60,35 @@
     NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         NSLog(@"response = %@\nerror = %@\ndata = %@", response, error, data);
         if (error) {
-            NSLog(@"Network Connection Failed\n Check your json objects are formatted correctly\n.");
-            /* save data that gets an error. can be opened in iTunes to be modified.
-             NSFileManager *man = [[NSFileManager alloc] init];
-             NSArray *urls = [man URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
-             NSURL *url = [urls objectAtIndex:0];
-             url = [url URLByAppendingPathComponent:@"GSFSaveData"];
-             NSLog(@"%@", [url URLByAppendingPathComponent:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]]]);
-             [saveMe writeToURL:[url URLByAppendingPathComponent:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]]] atomically:YES];
-             */
+            NSLog(@"There was a network error saving the file.\n.");
+            NSFileManager *man = [[NSFileManager alloc] init];
+            NSArray *urls = [man URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
+            NSURL *url = [urls objectAtIndex:0];
+            url = [url URLByAppendingPathComponent:@"GSFSaveData"];
+            NSLog(@"%@", [url URLByAppendingPathComponent:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]]]);
+            NSError *error = nil;
+            [data writeToURL:[url URLByAppendingPathComponent:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]]] options:NSDataWritingAtomic error:&error];
+            if (error) {
+                NSLog(@"Problem writing to filesystem.\n");
+            } else {
+                NSLog(@"Write to filesystem succeeded.\n");
+            }
+        } else {
+#warning this is priviative. wee need to check status codes if we really want to delete data.
+            if (self.url) {
+                NSFileManager *man = [[NSFileManager alloc] init];
+                NSArray *urls = [man URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
+                NSURL *url = [urls objectAtIndex:0];
+                url = [url URLByAppendingPathComponent:@"GSFSaveData"];
+                NSLog(@"%@", [url URLByAppendingPathComponent:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]]]);
+                NSError *error = nil;
+                [man removeItemAtURL:self.url error:&error];
+                if (error) {
+                    NSLog(@"Problem removing file at url:%@.\n", self.url);
+                } else {
+                    NSLog(@"File at URL: %@ removed.\n", self.url);
+                }
+            }
         }
     }];
     [postDataTask resume];
