@@ -11,13 +11,13 @@
 
 @interface GSFDataTransfer() <NSURLSessionDelegate, NSURLSessionTaskDelegate>
 
-@property (nonatomic) NSURL *url;
+@property (nonatomic) NSString *url;
 
 @end
 
 @implementation GSFDataTransfer
 
-- (GSFDataTransfer *)initWithURL:(NSURL*)url
+- (GSFDataTransfer *)initWithURL:(NSString *)url
 {
     self = [super init];
     if (self) {
@@ -123,15 +123,19 @@
     }
 }
 
-- (void)deleteFile:(NSURL*)url
+- (void)deleteFile:(NSString*)url
 {
     NSFileManager *man = [[NSFileManager alloc] init];
     NSError *error = nil;
-    [man removeItemAtURL:self.url error:&error];
+    NSArray *urls = [man URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
+    NSURL *mainUrl = [urls objectAtIndex:0];
+    mainUrl = [mainUrl URLByAppendingPathComponent:@"GSFSaveData"];
+    mainUrl = [mainUrl URLByAppendingPathComponent:self.url];
+    [man removeItemAtURL:mainUrl error:&error];
     if (error) {
-        NSLog(@"Problem removing file at url:%@.\n", self.url);
+        NSLog(@"Problem removing file at url:%@.\n", mainUrl);
     } else {
-        NSLog(@"File at URL: %@ removed.\n", self.url);
+        NSLog(@"File at URL: %@ removed.\n", mainUrl);
     }
 }
 

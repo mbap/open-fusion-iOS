@@ -26,7 +26,7 @@
 
 // array for the data in file system.
 // index into this for data is same as fileList index for url
-@property (nonatomic) NSArray *datasource;
+@property (nonatomic) NSMutableArray *datasource;
 
 // dictionary that will get passed to the segued view Controller.
 @property (nonatomic) NSDictionary *selectedFeature;
@@ -100,7 +100,7 @@
         }
     }
     // load the list of GEOJSON Feature Collection Items into the datasource array
-    self.datasource = [NSArray arrayWithArray:list];
+    self.datasource = [NSMutableArray arrayWithArray:list];
     
     // sort objects by name. **change this to sort by what ever we want if we want to sort.
     //NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
@@ -176,17 +176,22 @@
             if ([properties objectForKey:@"oimage"]) {
                 NSString *oimage = [properties objectForKey:@"oimage"];
                 image =  [[NSData alloc] initWithBase64EncodedString:oimage options:0];
-                GSFOpenCvImageProcessor *pro = [[GSFOpenCvImageProcessor alloc] init];
-                cellImage = [pro rotateImage:[[UIImage alloc] initWithData:image] byDegrees:90];
+                if (image) {
+                    GSFOpenCvImageProcessor *pro = [[GSFOpenCvImageProcessor alloc] init];
+                    cellImage = [pro rotateImage:[[UIImage alloc] initWithData:image] byDegrees:90];
+                }
             } else if ([properties objectForKey:@"fimage"]) {
                 NSString *fimage = [properties objectForKey:@"fimage"];
                 image =  [[NSData alloc] initWithBase64EncodedString:fimage options:0];
+                if (image) {
+                    cellImage = [UIImage imageWithData:image];
+                }
             } else if ([properties objectForKey:@"pimage"]) {
                 NSString *pimage = [properties objectForKey:@"pimage"];
                 image =  [[NSData alloc] initWithBase64EncodedString:pimage options:0];
-            }
-            if (image) {
-                cellImage = [pro rotateImage:[[UIImage alloc] initWithData:image] byDegrees:0];;
+                if (image) {
+                    cellImage = [UIImage imageWithData:image];
+                }
             }
         }
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -232,6 +237,8 @@
     return headHeight;
 }
 
+
+// if the header button gets touched we upload the data to the server.
 - (void)headerTapped:(GSFTableButton*)button
 {
     // send data to the server. deletion of file on success handled by GSFDataTransfer object
@@ -245,10 +252,15 @@
     [self.view bringSubviewToFront:spinner];
     [spinner startAnimating];
     dispatch_async(networkQueue, ^{
-        [uploader uploadDataArray:[NSData dataWithContentsOfFile:[self.fileList objectAtIndex:button.section]]];
+        NSDictionary *featureCollection = [self.datasource objectAtIndex:button.section];
+        if ([NSJSONSerialization isValidJSONObject:featureCollection]) {
+            [uploader uploadDataArray:[NSJSONSerialization dataWithJSONObject:featureCollection options:NSJSONWritingPrettyPrinted error:nil]];
+        }
         dispatch_async(dispatch_get_main_queue(), ^{
             [spinner stopAnimating];
             spinner = nil;
+#warning sometimes we dont want to delete the featureCollection from the datasource due to network failure.
+            [self.datasource removeObjectAtIndex:button.section];
             [self.tableView reloadData];
         });
     });
