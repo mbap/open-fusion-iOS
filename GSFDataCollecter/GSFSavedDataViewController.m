@@ -13,6 +13,7 @@
 #import "GSFDataTransfer.h"
 
 #define headHeight 25
+#define imageWidth 150
 
 
 @interface GSFSavedDataViewController ()
@@ -25,7 +26,7 @@
 
 // array for the data in file system.
 // index into this for data is same as fileList index for url
-@property (nonatomic) NSArray *datasource;
+@property (nonatomic) NSMutableArray *datasource;
 
 // dictionary that will get passed to the segued view Controller.
 @property (nonatomic) NSDictionary *selectedFeature;
@@ -59,13 +60,14 @@
     NSArray *urls = [man URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
     NSURL *url = [urls objectAtIndex:0];
     url = [url URLByAppendingPathComponent:@"GSFSaveData"];
+    __block UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] init];
+    spinner.color = [UIColor blackColor];
+    spinner.center = self.tableView.center;
+    spinner.hidesWhenStopped = YES;
+    [self.tableView addSubview:spinner];
+    [spinner startAnimating];
     dispatch_queue_t fileQueue = dispatch_queue_create("fileQueue", NULL);
     dispatch_async(fileQueue, ^{
-        __block UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] init];
-        spinner.color = [UIColor blackColor];
-        spinner.center = self.tableView.center;
-        [spinner startAnimating];
-        [self.tableView addSubview:spinner];
         self.fileList = [man contentsOfDirectoryAtPath:[url path] error:nil];
         [self buildSavedDataListWithContents:self.fileList];
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -96,10 +98,9 @@
                 [list addObject:(NSDictionary*)json];
             }
         }
-
     }
     // load the list of GEOJSON Feature Collection Items into the datasource array
-    self.datasource = [NSArray arrayWithArray:list];
+    self.datasource = [NSMutableArray arrayWithArray:list];
     
     // sort objects by name. **change this to sort by what ever we want if we want to sort.
     //NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
@@ -171,10 +172,27 @@
         UIImage *cellImage = nil;
         if ([[feature objectForKey:@"properties"] isKindOfClass:[NSDictionary class]]) {
             NSDictionary *properties = [feature objectForKey:@"properties"];
-            NSString *oimage = [properties objectForKey:@"oimage"];
-            NSData *image =  [[NSData alloc] initWithBase64EncodedString:oimage options:0];
-            GSFOpenCvImageProcessor *pro = [[GSFOpenCvImageProcessor alloc] init];
-            cellImage = [pro rotateImage:[[UIImage alloc] initWithData:image] byDegrees:90];
+            NSData *image = nil;
+            if ([properties objectForKey:@"oimage"]) {
+                NSString *oimage = [properties objectForKey:@"oimage"];
+                image =  [[NSData alloc] initWithBase64EncodedString:oimage options:0];
+                if (image) {
+                    GSFOpenCvImageProcessor *pro = [[GSFOpenCvImageProcessor alloc] init];
+                    cellImage = [pro rotateImage:[[UIImage alloc] initWithData:image] byDegrees:90];
+                }
+            } else if ([properties objectForKey:@"fimage"]) {
+                NSString *fimage = [properties objectForKey:@"fimage"];
+                image =  [[NSData alloc] initWithBase64EncodedString:fimage options:0];
+                if (image) {
+                    cellImage = [UIImage imageWithData:image];
+                }
+            } else if ([properties objectForKey:@"pimage"]) {
+                NSString *pimage = [properties objectForKey:@"pimage"];
+                image =  [[NSData alloc] initWithBase64EncodedString:pimage options:0];
+                if (image) {
+                    cellImage = [UIImage imageWithData:image];
+                }
+            }
         }
         dispatch_async(dispatch_get_main_queue(), ^{
             cell.imageView.image = cellImage;
@@ -219,21 +237,39 @@
     return headHeight;
 }
 
+
+// if the header button gets touched we upload the data to the server.
 - (void)headerTapped:(GSFTableButton*)button
 {
     // send data to the server. deletion of file on success handled by GSFDataTransfer object
     GSFDataTransfer *uploader = [[GSFDataTransfer alloc] initWithURL:[self.fileList objectAtIndex:button.section]];
     dispatch_queue_t networkQueue = dispatch_queue_create("networkQueue", NULL);
+    __block UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    spinner.center = self.view.center;
+    spinner.hidesWhenStopped = YES;
+    spinner.color = [UIColor blackColor];
+    [self.view addSubview:spinner];
+    [self.view bringSubviewToFront:spinner];
+    [spinner startAnimating];
     dispatch_async(networkQueue, ^{
-        [uploader uploadDataArray:[NSData dataWithContentsOfFile:[self.fileList objectAtIndex:button.section]]];
+        NSDictionary *featureCollection = [self.datasource objectAtIndex:button.section];
+        if ([NSJSONSerialization isValidJSONObject:featureCollection]) {
+            [uploader uploadDataArray:[NSJSONSerialization dataWithJSONObject:featureCollection options:NSJSONWritingPrettyPrinted error:nil]];
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [spinner stopAnimating];
+            spinner = nil;
+#warning sometimes we dont want to delete the featureCollection from the datasource due to network failure.
+            [self.datasource removeObjectAtIndex:button.section];
+            [self.tableView reloadData];
+        });
     });
-    [self.tableView reloadData];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, headHeight)];
-    GSFTableButton *button = [[GSFTableButton alloc] initWithFrame:CGRectMake(tableView.bounds.size.width - 6*headHeight, 0, headHeight*6, headHeight) forSection:section];
+    GSFTableButton *button = [[GSFTableButton alloc] initWithFrame:CGRectMake(tableView.bounds.size.width - imageWidth, 0, imageWidth, headHeight) forSection:section];
     [button setImage:[UIImage imageNamed:@"upload.png"] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(headerTapped:)  forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:button];
