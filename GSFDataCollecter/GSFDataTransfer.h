@@ -9,6 +9,14 @@
 #import <Foundation/Foundation.h>
 #import "GSFData.h"
 
+@protocol GSFDataTransferDelegate
+
+@optional
+
+- (void)checkHttpStatus:(NSInteger)statusCode;
+
+@end
+
 @interface GSFDataTransfer : NSObject
 
 // use this when you want to transfer data from the file system
@@ -21,5 +29,8 @@
 
 // sends the NSData from above to gsf server.
 - (void)uploadDataArray:(NSData *)data;
+
+// delegate property
+@property (nonatomic, weak) id <GSFDataTransferDelegate> delegate;
 
 @end

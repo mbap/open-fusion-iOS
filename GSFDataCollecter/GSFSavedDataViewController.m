@@ -16,7 +16,7 @@
 #define imageWidth 150
 
 
-@interface GSFSavedDataViewController ()
+@interface GSFSavedDataViewController () <GSFDataTransferDelegate>
 
 // takes paths of files saved in GSF Directory.
 - (void)buildSavedDataListWithContents:(NSArray *)paths; // helper function for building the list.
@@ -30,6 +30,8 @@
 
 // dictionary that will get passed to the segued view Controller.
 @property (nonatomic) NSDictionary *selectedFeature;
+
+@property(nonatomic) NSInteger selectedFeatureSection;
 
 @end
 
@@ -196,6 +198,7 @@
         }
         dispatch_async(dispatch_get_main_queue(), ^{
             cell.imageView.image = cellImage;
+            [self.tableView reloadData];
         });
     });
     
@@ -243,6 +246,7 @@
 {
     // send data to the server. deletion of file on success handled by GSFDataTransfer object
     GSFDataTransfer *uploader = [[GSFDataTransfer alloc] initWithURL:[self.fileList objectAtIndex:button.section]];
+    uploader.delegate = self;
     dispatch_queue_t networkQueue = dispatch_queue_create("networkQueue", NULL);
     __block UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     spinner.center = self.view.center;
@@ -253,15 +257,13 @@
     [spinner startAnimating];
     dispatch_async(networkQueue, ^{
         NSDictionary *featureCollection = [self.datasource objectAtIndex:button.section];
+        self.selectedFeatureSection = button.section;
         if ([NSJSONSerialization isValidJSONObject:featureCollection]) {
             [uploader uploadDataArray:[NSJSONSerialization dataWithJSONObject:featureCollection options:NSJSONWritingPrettyPrinted error:nil]];
         }
         dispatch_async(dispatch_get_main_queue(), ^{
             [spinner stopAnimating];
             spinner = nil;
-#warning sometimes we dont want to delete the featureCollection from the datasource due to network failure.
-            [self.datasource removeObjectAtIndex:button.section];
-            [self.tableView reloadData];
         });
     });
 }
@@ -280,6 +282,17 @@
     label.textColor = [UIColor grayColor];
     [view addSubview:label];
     return view;
+}
+
+// delegate method that sends message reguarding the status
+- (void)checkHttpStatus:(NSInteger)statusCode
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (statusCode == 200 || statusCode == 201) {
+            [self.datasource removeObjectAtIndex:self.selectedFeatureSection];
+        }
+        [self.tableView reloadData];
+    });
 }
 
 - (void)didReceiveMemoryWarning
