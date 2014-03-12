@@ -60,13 +60,14 @@
     NSArray *urls = [man URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
     NSURL *url = [urls objectAtIndex:0];
     url = [url URLByAppendingPathComponent:@"GSFSaveData"];
+    __block UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] init];
+    spinner.color = [UIColor blackColor];
+    spinner.center = self.tableView.center;
+    spinner.hidesWhenStopped = YES;
+    [self.tableView addSubview:spinner];
+    [spinner startAnimating];
     dispatch_queue_t fileQueue = dispatch_queue_create("fileQueue", NULL);
     dispatch_async(fileQueue, ^{
-        __block UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] init];
-        spinner.color = [UIColor blackColor];
-        spinner.center = self.tableView.center;
-        [spinner startAnimating];
-        [self.tableView addSubview:spinner];
         self.fileList = [man contentsOfDirectoryAtPath:[url path] error:nil];
         [self buildSavedDataListWithContents:self.fileList];
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -97,7 +98,6 @@
                 [list addObject:(NSDictionary*)json];
             }
         }
-
     }
     // load the list of GEOJSON Feature Collection Items into the datasource array
     self.datasource = [NSArray arrayWithArray:list];
@@ -172,10 +172,22 @@
         UIImage *cellImage = nil;
         if ([[feature objectForKey:@"properties"] isKindOfClass:[NSDictionary class]]) {
             NSDictionary *properties = [feature objectForKey:@"properties"];
-            NSString *oimage = [properties objectForKey:@"oimage"];
-            NSData *image =  [[NSData alloc] initWithBase64EncodedString:oimage options:0];
-            GSFOpenCvImageProcessor *pro = [[GSFOpenCvImageProcessor alloc] init];
-            cellImage = [pro rotateImage:[[UIImage alloc] initWithData:image] byDegrees:90];
+            NSData *image = nil;
+            if ([properties objectForKey:@"oimage"]) {
+                NSString *oimage = [properties objectForKey:@"oimage"];
+                image =  [[NSData alloc] initWithBase64EncodedString:oimage options:0];
+                GSFOpenCvImageProcessor *pro = [[GSFOpenCvImageProcessor alloc] init];
+                cellImage = [pro rotateImage:[[UIImage alloc] initWithData:image] byDegrees:90];
+            } else if ([properties objectForKey:@"fimage"]) {
+                NSString *fimage = [properties objectForKey:@"fimage"];
+                image =  [[NSData alloc] initWithBase64EncodedString:fimage options:0];
+            } else if ([properties objectForKey:@"pimage"]) {
+                NSString *pimage = [properties objectForKey:@"pimage"];
+                image =  [[NSData alloc] initWithBase64EncodedString:pimage options:0];
+            }
+            if (image) {
+                cellImage = [pro rotateImage:[[UIImage alloc] initWithData:image] byDegrees:0];;
+            }
         }
         dispatch_async(dispatch_get_main_queue(), ^{
             cell.imageView.image = cellImage;
@@ -225,10 +237,21 @@
     // send data to the server. deletion of file on success handled by GSFDataTransfer object
     GSFDataTransfer *uploader = [[GSFDataTransfer alloc] initWithURL:[self.fileList objectAtIndex:button.section]];
     dispatch_queue_t networkQueue = dispatch_queue_create("networkQueue", NULL);
+    __block UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    spinner.center = self.view.center;
+    spinner.hidesWhenStopped = YES;
+    spinner.color = [UIColor blackColor];
+    [self.view addSubview:spinner];
+    [self.view bringSubviewToFront:spinner];
+    [spinner startAnimating];
     dispatch_async(networkQueue, ^{
         [uploader uploadDataArray:[NSData dataWithContentsOfFile:[self.fileList objectAtIndex:button.section]]];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [spinner stopAnimating];
+            spinner = nil;
+            [self.tableView reloadData];
+        });
     });
-    [self.tableView reloadData];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section

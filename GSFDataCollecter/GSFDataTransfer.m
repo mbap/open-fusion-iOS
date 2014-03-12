@@ -57,55 +57,33 @@
     [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:data];
-    NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        NSLog(@"response = %@\nerror = %@\ndata = %@", response, error, data);
+    NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *reqeustData, NSURLResponse *response, NSError *error) {
+        NSLog(@"response = %@\nerror = %@\ndata = %@", response, error, reqeustData);
         if (error) {
-            NSLog(@"There was a network error saving the file.\n.");
-            if (self.url == nil) {
-                NSFileManager *man = [[NSFileManager alloc] init];
-                NSArray *urls = [man URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
-                NSURL *url = [urls objectAtIndex:0];
-                url = [url URLByAppendingPathComponent:@"GSFSaveData"];
-                url = [url URLByAppendingPathComponent:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]]];
-                NSLog(@"%@", url);
-                NSError *error = nil;
-                if (![man fileExistsAtPath:[url path]]) {
-                    [data writeToURL:[url URLByAppendingPathComponent:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]]] options:NSDataWritingAtomic error:&error];
-                    if (error) {
-                        NSLog(@"Problem writing to filesystem.\n");
-                    } else {
-                        NSLog(@"Write to filesystem succeeded.\n");
-                    }
-                } else {
-                    NSLog(@"File Already Exists With Path: %@", url.path);
-                }
-            }
+            [self saveData:data];
         } else {
             NSHTTPURLResponse *resp = (NSHTTPURLResponse*)response; // according to the apple documentation this is a safe cast.
             if ([resp statusCode] == 200) { // OK: request has succeeded
                 NSLog(@"Response: 200 Success.\n");
+                if (self.url) {
+                    [self deleteFile:self.url];
+                }
             } else if ([resp statusCode] == 201){ // Created: Request Fulfilled resource created.
                 NSLog(@"Response: 201 Resouce Created.\n");
+                if (self.url) {
+                    [self deleteFile:self.url];
+                }
             } else if ([resp statusCode] == 400) { // bad request, syntax incorrect
                 NSLog(@"Response: 400 Bad Request.\n");
-            } else if ([resp statusCode] == 403) { // forbidden: server understood request but denyed anyway
-                NSLog(@"Response: 403 Forbidden.\n");
-            } else if ([resp statusCode] == 500) { // server error: something bad happened on the server
-                NSLog(@"Response: 500 Server Error.\n");
-            }
-            if (self.url) {
-                NSFileManager *man = [[NSFileManager alloc] init];
-                NSArray *urls = [man URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
-                NSURL *url = [urls objectAtIndex:0];
-                url = [url URLByAppendingPathComponent:@"GSFSaveData"];
-                NSLog(@"%@", [url URLByAppendingPathComponent:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]]]);
-                NSError *error = nil;
-                [man removeItemAtURL:self.url error:&error];
-                if (error) {
-                    NSLog(@"Problem removing file at url:%@.\n", self.url);
+            } else if ([resp statusCode] == 403 || [resp statusCode] == 500) { // forbidden: server understood request but denyed anyway
+                if ([resp statusCode] == 500) {                                // server error: something bad happened on the server
+                    NSLog(@"Response: 500 Server Error.\n");
                 } else {
-                    NSLog(@"File at URL: %@ removed.\n", self.url);
+                    NSLog(@"Response: 403 Forbidden.\n");
                 }
+                [self saveData:data];
+            } else {
+                NSLog(@"Response: %ld Not Yet Supported.\n", (long)[resp statusCode]);
             }
         }
     }];
@@ -121,7 +99,41 @@
     }
 }
 
+- (void)saveData:(NSData *)data
+{
+    if (nil == self.url) { // already saved if url was passed in.
+        NSLog(@"There was a network error. Saving the data to disk.\n.");
+        NSFileManager *man = [[NSFileManager alloc] init];
+        NSArray *urls = [man URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
+        NSURL *url = [urls objectAtIndex:0];
+        url = [url URLByAppendingPathComponent:@"GSFSaveData"];
+        url = [url URLByAppendingPathComponent:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]]];
+        NSLog(@"%@", url);
+        NSError *error = nil;
+        if (![man fileExistsAtPath:[url path]]) {
+            [data writeToURL:url options:NSDataWritingAtomic error:&error];
+            if (error) {
+                NSLog(@"Problem writing to filesystem.\nError:%@.\n", error);
+            } else {
+                NSLog(@"Write to filesystem succeeded.\n");
+            }
+        } else {
+            NSLog(@"File Already Exists With Path: %@", url.path); // should never occur
+        }
+    }
+}
 
+- (void)deleteFile:(NSURL*)url
+{
+    NSFileManager *man = [[NSFileManager alloc] init];
+    NSError *error = nil;
+    [man removeItemAtURL:self.url error:&error];
+    if (error) {
+        NSLog(@"Problem removing file at url:%@.\n", self.url);
+    } else {
+        NSLog(@"File at URL: %@ removed.\n", self.url);
+    }
+}
 
 @end
 
