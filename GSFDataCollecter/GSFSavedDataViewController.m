@@ -13,6 +13,7 @@
 #import "GSFDataTransfer.h"
 
 #define headHeight 25
+#define imageWidth 150
 
 
 @interface GSFSavedDataViewController ()
@@ -233,7 +234,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, headHeight)];
-    GSFTableButton *button = [[GSFTableButton alloc] initWithFrame:CGRectMake(tableView.bounds.size.width - 6*headHeight, 0, headHeight*6, headHeight) forSection:section];
+    GSFTableButton *button = [[GSFTableButton alloc] initWithFrame:CGRectMake(tableView.bounds.size.width - imageWidth, 0, imageWidth, headHeight) forSection:section];
     [button setImage:[UIImage imageNamed:@"upload.png"] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(headerTapped:)  forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:button];
