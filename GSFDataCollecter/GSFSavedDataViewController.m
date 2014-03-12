@@ -8,7 +8,9 @@
 
 #import "GSFSavedDataViewController.h"
 #import "GSFSavedDataDetailViewController.h"
-#import <GSFOpenCvImageProcessor.h>
+#import "GSFOpenCvImageProcessor.h"
+#import "GSFTableButton.h"
+#import "GSFDataTransfer.h"
 
 #define headHeight 25
 
@@ -18,7 +20,11 @@
 // takes paths of files saved in GSF Directory.
 - (void)buildSavedDataListWithContents:(NSArray *)paths; // helper function for building the list.
 
+// array filled with files from the GSFSavedData Directory
+@property (nonatomic) NSArray *fileList;
+
 // array for the data in file system.
+// index into this for data is same as fileList index for url
 @property (nonatomic) NSArray *datasource;
 
 // dictionary that will get passed to the segued view Controller.
@@ -60,7 +66,8 @@
         spinner.center = self.tableView.center;
         [spinner startAnimating];
         [self.tableView addSubview:spinner];
-        [self buildSavedDataListWithContents:[man contentsOfDirectoryAtPath:[url path] error:nil]];
+        self.fileList = [man contentsOfDirectoryAtPath:[url path] error:nil];
+        [self buildSavedDataListWithContents:self.fileList];
         dispatch_async(dispatch_get_main_queue(), ^{
             [spinner removeFromSuperview];
             spinner = nil;
@@ -120,12 +127,6 @@
         }
     }
     return features.count;
-}
-
-- (void)headerTapped:(UIButton*)sender
-{
-    // do custom stuff. send data and delete record reload tableview after.
-    NSLog(@"button pressed");
 }
 
 // fills the rows with data from each feature.
@@ -218,14 +219,21 @@
     return headHeight;
 }
 
+- (void)headerTapped:(GSFTableButton*)button
+{
+    // send data to the server. deletion of file on success handled by GSFDataTransfer object
+    GSFDataTransfer *uploader = [[GSFDataTransfer alloc] initWithURL:[self.fileList objectAtIndex:button.section]];
+    [uploader uploadDataArray:[NSData dataWithContentsOfFile:[self.fileList objectAtIndex:button.section]]];
+}
+
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, headHeight)];
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(tableView.bounds.size.width - 2*headHeight, 0, headHeight, headHeight)];
+    GSFTableButton *button = [[GSFTableButton alloc] initWithFrame:CGRectMake(tableView.bounds.size.width - 2*headHeight, 0, headHeight, headHeight) forSection:section];
     [button setImage:[UIImage imageNamed:@"images.jpeg"] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(headerTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(headerTapped:)  forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:button];
-    NSString * string = [NSString stringWithFormat:@"Feature Collection %d", section + 1];
+    NSString * string = [NSString stringWithFormat:@"Feature Collection %ld", (long)section + 1];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(headHeight, 0, tableView.bounds.size.width - (headHeight * 3), headHeight)];
     label.text = string;
     label.font = [UIFont systemFontOfSize:14.0];
@@ -233,11 +241,6 @@
     [view addSubview:label];
     return view;
 }
-
-//- (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-//{
-//    return @"this is a test";
-//}
 
 - (void)didReceiveMemoryWarning
 {

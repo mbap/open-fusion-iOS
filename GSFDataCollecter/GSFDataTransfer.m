@@ -10,9 +10,21 @@
 #import "GSFData.h"
 
 @interface GSFDataTransfer() <NSURLSessionDelegate, NSURLSessionTaskDelegate>
+
+@property (nonatomic) NSURL *url;
+
 @end
 
 @implementation GSFDataTransfer
+
+- (GSFDataTransfer *)initWithURL:(NSURL*)url
+{
+    self = [super init];
+    if (self) {
+        self.url = url;
+    }
+    return self;
+}
 
 - (NSData *)formatDataAsJSON:(NSMutableArray *)dataArray withFlag:(NSNumber *)option
 {
