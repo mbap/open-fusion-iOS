@@ -11,6 +11,7 @@
 #import "GSFOpenCvImageProcessor.h"
 #import "GSFTableButton.h"
 #import "GSFDataTransfer.h"
+#import "GSFSpinner.h"
 
 #define headHeight 25
 #define imageWidth 150
@@ -44,7 +45,7 @@
 - (void)cacheImagesWithCompletionHandler:(void(^)(void))handler;
 
 // spinner for network transactions.
-@property (nonatomic) UIActivityIndicatorView *uploadSpinner;
+@property (nonatomic) GSFSpinner *uploadSpinner;
 
 @end
 
@@ -75,12 +76,10 @@
     NSArray *urls = [man URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
     NSURL *url = [urls objectAtIndex:0];
     url = [url URLByAppendingPathComponent:@"GSFSaveData"];
-    __block UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] init];
-    spinner.color = [UIColor blackColor];
-    spinner.center = self.tableView.center;
-    spinner.hidesWhenStopped = YES;
-    [self.tableView addSubview:spinner];
-    [spinner startAnimating];
+    CGSize screen = [[UIScreen mainScreen] bounds].size;
+    __block GSFSpinner *spinner = [[GSFSpinner alloc] initWithFrame:CGRectMake(screen.width/2, screen.height/2, 75, 75)];
+    [self.view addSubview:spinner];
+    [spinner.spinner startAnimating];
     dispatch_queue_t fileQueue = dispatch_queue_create("fileQueue", NULL);
     dispatch_async(fileQueue, ^{
         self.fileList = [man contentsOfDirectoryAtPath:[url path] error:nil];
@@ -90,6 +89,7 @@
             [self.tableView reloadData];
         }];
         dispatch_async(dispatch_get_main_queue(), ^{
+            [spinner.spinner stopAnimating];
             [spinner removeFromSuperview];
             spinner = nil;
             [self.tableView reloadData];
@@ -282,13 +282,12 @@
     GSFDataTransfer *uploader = [[GSFDataTransfer alloc] initWithURL:[self.fileList objectAtIndex:button.section]];
     uploader.delegate = self;
     dispatch_queue_t networkQueue = dispatch_queue_create("networkQueue", NULL);
-    self.uploadSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    self.uploadSpinner.center = self.view.center;
-    self.uploadSpinner.hidesWhenStopped = YES;
-    self.uploadSpinner.color = [UIColor blackColor];
+    CGSize screen = [[UIScreen mainScreen] bounds].size;
+    self.uploadSpinner = [[GSFSpinner alloc] initWithFrame:CGRectMake(screen.width/2, screen.height/2, 75, 75)];
+    //self.uploadSpinner.center = self.view.center;
     [self.view addSubview:self.uploadSpinner];
     [self.view bringSubviewToFront:self.uploadSpinner];
-    [self.uploadSpinner startAnimating];
+    [self.uploadSpinner.spinner startAnimating];
     dispatch_async(networkQueue, ^{
         NSDictionary *featureCollection = [self.datasource objectAtIndex:button.section];
         self.selectedFeatureSection = button.section;
@@ -322,7 +321,8 @@
             [self.datasource removeObjectAtIndex:self.selectedFeatureSection];
         }
         [self.tableView reloadData];
-        [self.uploadSpinner stopAnimating];
+        [self.uploadSpinner.spinner stopAnimating];
+        [self.uploadSpinner removeFromSuperview];
         self.uploadSpinner = nil;
     });
 }

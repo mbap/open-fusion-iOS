@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "GSFData.h"
 
-@protocol GSFDataTransferDelegate
+@protocol GSFDataTransferDelegate <NSObject>
 
 @optional
 
