@@ -13,6 +13,8 @@
 
 @property (nonatomic) NSString *url;
 
+@property (nonatomic) NSInteger httpResponse;
+
 @end
 
 @implementation GSFDataTransfer
@@ -68,11 +70,13 @@
                 if (self.url) {
                     [self deleteFile:self.url];
                 }
+                [self.delegate checkHttpStatus:[resp statusCode]];
             } else if ([resp statusCode] == 201){ // Created: Request Fulfilled resource created.
                 NSLog(@"Response: 201 Resouce Created.\n");
                 if (self.url) {
                     [self deleteFile:self.url];
                 }
+                [self.delegate checkHttpStatus:[resp statusCode]];
             } else if ([resp statusCode] == 400) { // bad request, syntax incorrect
                 NSLog(@"Response: 400 Bad Request.\n");
             } else if ([resp statusCode] == 403 || [resp statusCode] == 500) { // forbidden: server understood request but denyed anyway

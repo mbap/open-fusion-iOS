@@ -76,7 +76,7 @@
     if (gsfdata.gsfImage.faceDetectionNumber) {
         [properties setObject:gsfdata.gsfImage.faceDetectionNumber forKey:@"faces_detected"];
     }
-    if (gsfdata.gsfImage.faceDetectionNumber) {
+    if (gsfdata.gsfImage.personDetectionNumber) {
         [properties setObject:gsfdata.gsfImage.personDetectionNumber forKey:@"people_detected"];
     }
     
