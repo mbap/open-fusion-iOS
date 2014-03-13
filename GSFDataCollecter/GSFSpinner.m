@@ -29,20 +29,4 @@
     return self;
 }
 
-
-//// Only override drawRect: if you perform custom drawing.
-//// An empty implementation adversely affects performance during animation.
-//- (void)drawRect:(CGRect)rect
-//{
-//    // Drawing code
-//    CGSize screen = [[UIScreen mainScreen] bounds].size;
-//    CGRect rectangle = CGRectMake(((screen.width / 2) - WIDTH/2), ((screen.height / 2) - HEIGHT/2), WIDTH, HEIGHT);
-//    CGContextRef context = UIGraphicsGetCurrentContext();
-//    CGContextSetRGBFillColor(context, 0, 0, 0, .6);
-//    CGContextSetRGBStrokeColor(context, 0, 0, 0, .6);
-//    CGContextFillRect(context, rectangle);
-//    CGContextStrokeRect(context, rectangle);
-//}
-
-
 @end
