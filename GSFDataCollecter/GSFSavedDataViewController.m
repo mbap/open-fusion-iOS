@@ -17,6 +17,9 @@
 
 
 @interface GSFSavedDataViewController () <GSFDataTransferDelegate>
+{
+    void (^_completionHandler)(int someParameter);
+}
 
 // takes paths of files saved in GSF Directory.
 - (void)buildSavedDataListWithContents:(NSArray *)paths; // helper function for building the list.
@@ -28,10 +31,20 @@
 // index into this for data is same as fileList index for url
 @property (nonatomic) NSMutableArray *datasource;
 
+// property for caching the images in the file system.
+@property (nonatomic) NSMutableDictionary *imageCache;
+
 // dictionary that will get passed to the segued view Controller.
 @property (nonatomic) NSDictionary *selectedFeature;
 
-@property(nonatomic) NSInteger selectedFeatureSection;
+// property for the selected section in the custom header view
+@property (nonatomic) NSInteger selectedFeatureSection;
+
+// load images into a cache to remove the thread bombing i was doing haha.
+- (void)cacheImagesWithCompletionHandler:(void(^)(void))handler;
+
+// spinner for network transactions.
+@property (nonatomic) UIActivityIndicatorView *uploadSpinner;
 
 @end
 
@@ -72,6 +85,10 @@
     dispatch_async(fileQueue, ^{
         self.fileList = [man contentsOfDirectoryAtPath:[url path] error:nil];
         [self buildSavedDataListWithContents:self.fileList];
+        self.imageCache = [[NSMutableDictionary alloc] init];
+        [self cacheImagesWithCompletionHandler:^{
+            [self.tableView reloadData];
+        }];
         dispatch_async(dispatch_get_main_queue(), ^{
             [spinner removeFromSuperview];
             spinner = nil;
@@ -103,12 +120,60 @@
     }
     // load the list of GEOJSON Feature Collection Items into the datasource array
     self.datasource = [NSMutableArray arrayWithArray:list];
-    
-    // sort objects by name. **change this to sort by what ever we want if we want to sort.
-    //NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
-    //NSArray *sorter = [NSArray arrayWithObject:descriptor];
-    //self.datasource = [NSMutableArray arrayWithArray:[self.datasource sortedArrayUsingDescriptors:sorter]];;
 }
+
+// build an image cache and reload the table when complete.
+// cache one of the images in the background for the cell image view
+// refresh the table with a call back after ward?
+// n^2 algorithm for caching an image a bit slow but good for now.
+- (void)cacheImagesWithCompletionHandler:(void(^)(void))handler
+{
+    NSArray *features = nil;
+    for (NSDictionary *data in self.datasource) {
+        if ([data isKindOfClass:[NSMutableDictionary class]]) {
+            if ([[data objectForKey:@"features"] isKindOfClass:[NSArray class]]) {
+                features = [data objectForKey:@"features"];
+                NSUInteger iter = 0;
+                NSMutableArray *images = [[NSMutableArray alloc] init];
+                NSString *key = nil;
+                if ([[features objectAtIndex:iter] isKindOfClass:[NSDictionary class]]) {
+                    for (NSDictionary *feature in features) {
+                        if ([[feature objectForKey:@"properties"] isKindOfClass:[NSDictionary class]]) {
+                            NSDictionary *properties = [feature objectForKey:@"properties"];
+                            key = [NSString stringWithFormat:@"Section%lu", (unsigned long)iter++];
+                            UIImage *image = nil;
+                            if ([properties objectForKey:@"oimage"]) {
+                                NSString *oimage = [properties objectForKey:@"oimage"];
+                                NSData *imageData =  [[NSData alloc] initWithBase64EncodedString:oimage options:0];
+                                if (imageData) {
+                                    GSFOpenCvImageProcessor *pro = [[GSFOpenCvImageProcessor alloc] init];
+                                    image = [pro rotateImage:[[UIImage alloc] initWithData:imageData] byDegrees:90];
+                                }
+                            } else if ([properties objectForKey:@"fimage"]) {
+                                NSString *fimage = [properties objectForKey:@"fimage"];
+                                NSData *imageData =  [[NSData alloc] initWithBase64EncodedString:fimage options:0];
+                                if (imageData) {
+                                    image = [UIImage imageWithData:imageData];
+                                }
+                            } else if ([properties objectForKey:@"pimage"]) {
+                                NSString *pimage = [properties objectForKey:@"pimage"];
+                                NSData *imageData =  [[NSData alloc] initWithBase64EncodedString:pimage options:0];
+                                if (imageData) {
+                                    image = [UIImage imageWithData:imageData];
+                                }
+                            }
+                            [images addObject:image];
+                        }
+                    }
+                    [self.imageCache setObject:images forKey:key];
+                }
+            }
+        }
+    }
+    if (handler) handler();
+}
+
+
 
 #pragma mark - Table view data source
 // return numbef of GEOJSON featureCollection object in the datasource array
@@ -167,43 +232,12 @@
         cell.textLabel.text = [date description];
     }
     
-    // does reload image for new cells
-        // set image below here
-    dispatch_queue_t imageQueue = dispatch_queue_create("imageQueue", NULL);
-    dispatch_async(imageQueue, ^{
-        UIImage *cellImage = nil;
-        if ([[feature objectForKey:@"properties"] isKindOfClass:[NSDictionary class]]) {
-            NSDictionary *properties = [feature objectForKey:@"properties"];
-            NSData *image = nil;
-            if ([properties objectForKey:@"oimage"]) {
-                NSString *oimage = [properties objectForKey:@"oimage"];
-                image =  [[NSData alloc] initWithBase64EncodedString:oimage options:0];
-                if (image) {
-                    GSFOpenCvImageProcessor *pro = [[GSFOpenCvImageProcessor alloc] init];
-                    cellImage = [pro rotateImage:[[UIImage alloc] initWithData:image] byDegrees:90];
-                }
-            } else if ([properties objectForKey:@"fimage"]) {
-                NSString *fimage = [properties objectForKey:@"fimage"];
-                image =  [[NSData alloc] initWithBase64EncodedString:fimage options:0];
-                if (image) {
-                    cellImage = [UIImage imageWithData:image];
-                }
-            } else if ([properties objectForKey:@"pimage"]) {
-                NSString *pimage = [properties objectForKey:@"pimage"];
-                image =  [[NSData alloc] initWithBase64EncodedString:pimage options:0];
-                if (image) {
-                    cellImage = [UIImage imageWithData:image];
-                }
-            }
-        }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            cell.imageView.image = cellImage;
-            [self.tableView reloadData];
-        });
-    });
+    NSArray *images = [self.imageCache objectForKey:[NSString stringWithFormat:@"Section%ld", (long)indexPath.section]];
+    cell.imageView.image = [images objectAtIndex:indexPath.row];
     
     return cell;
 }
+
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -248,23 +282,19 @@
     GSFDataTransfer *uploader = [[GSFDataTransfer alloc] initWithURL:[self.fileList objectAtIndex:button.section]];
     uploader.delegate = self;
     dispatch_queue_t networkQueue = dispatch_queue_create("networkQueue", NULL);
-    __block UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    spinner.center = self.view.center;
-    spinner.hidesWhenStopped = YES;
-    spinner.color = [UIColor blackColor];
-    [self.view addSubview:spinner];
-    [self.view bringSubviewToFront:spinner];
-    [spinner startAnimating];
+    self.uploadSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.uploadSpinner.center = self.view.center;
+    self.uploadSpinner.hidesWhenStopped = YES;
+    self.uploadSpinner.color = [UIColor blackColor];
+    [self.view addSubview:self.uploadSpinner];
+    [self.view bringSubviewToFront:self.uploadSpinner];
+    [self.uploadSpinner startAnimating];
     dispatch_async(networkQueue, ^{
         NSDictionary *featureCollection = [self.datasource objectAtIndex:button.section];
         self.selectedFeatureSection = button.section;
         if ([NSJSONSerialization isValidJSONObject:featureCollection]) {
             [uploader uploadDataArray:[NSJSONSerialization dataWithJSONObject:featureCollection options:NSJSONWritingPrettyPrinted error:nil]];
         }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [spinner stopAnimating];
-            spinner = nil;
-        });
     });
 }
 
@@ -292,6 +322,8 @@
             [self.datasource removeObjectAtIndex:self.selectedFeatureSection];
         }
         [self.tableView reloadData];
+        [self.uploadSpinner stopAnimating];
+        self.uploadSpinner = nil;
     });
 }
 
