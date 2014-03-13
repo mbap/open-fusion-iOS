@@ -11,6 +11,7 @@
 #import "GSFImageCollectionViewCell.h"
 #import "GSFOpenCvImageViewController.h"
 #import "GSFData.h"
+#import "GSFSpinner.h"
 
 
 
@@ -23,7 +24,8 @@
 
 @property (nonatomic) NSMutableArray *capturedImages;
 @property (nonatomic) BOOL showDetectionImages;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
+
+@property (nonatomic) GSFSpinner *spinner;
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (nonatomic) UIImageView *imagePreview;
@@ -85,8 +87,12 @@
         self.showDetectionImages = YES;
         GSFOpenCvImageProcessor *processor = [[GSFOpenCvImageProcessor alloc] init];
         dispatch_queue_t hogQueue = dispatch_queue_create("hogQueue", NULL);
+        CGSize screen = [[UIScreen mainScreen] bounds].size;
+        self.spinner = [[GSFSpinner alloc] initWithFrame:CGRectMake(screen.width/2, screen.height/2, 75, 75)];
+        //self.uploadSpinner.center = self.view.center;
+        [self.view addSubview:self.spinner];
         [self.view bringSubviewToFront:self.spinner];
-        [self.spinner startAnimating];
+        [self.spinner.spinner startAnimating];
         self.navigationItem.hidesBackButton = YES;
         dispatch_async(hogQueue, ^{
             if (self.personDetect && !self.faceDetect) {
@@ -98,7 +104,9 @@
                 [processor detectFacesUsingImageArray:self.capturedImages];
             }
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.spinner stopAnimating];
+                [self.spinner.spinner stopAnimating];
+                [self.spinner removeFromSuperview];
+                self.spinner = nil;
                 self.navigationItem.hidesBackButton = NO;
                 [self performSegueWithIdentifier:@"viewOpenCvImages" sender:self];
             });

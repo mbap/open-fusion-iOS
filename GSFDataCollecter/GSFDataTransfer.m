@@ -64,19 +64,20 @@
         if (error) {
             [self saveData:data];
         } else {
+            
+            // we may want to add alerts for the user so they can see why it worked or didnt work.
+            
             NSHTTPURLResponse *resp = (NSHTTPURLResponse*)response; // according to the apple documentation this is a safe cast.
             if ([resp statusCode] == 200) { // OK: request has succeeded
                 NSLog(@"Response: 200 Success.\n");
                 if (self.url) {
                     [self deleteFile:self.url];
                 }
-                [self.delegate checkHttpStatus:[resp statusCode]];
             } else if ([resp statusCode] == 201){ // Created: Request Fulfilled resource created.
                 NSLog(@"Response: 201 Resouce Created.\n");
                 if (self.url) {
                     [self deleteFile:self.url];
                 }
-                [self.delegate checkHttpStatus:[resp statusCode]];
             } else if ([resp statusCode] == 400) { // bad request, syntax incorrect
                 NSLog(@"Response: 400 Bad Request.\n");
             } else if ([resp statusCode] == 403 || [resp statusCode] == 500) { // forbidden: server understood request but denyed anyway
@@ -88,6 +89,9 @@
                 [self saveData:data];
             } else {
                 NSLog(@"Response: %ld Not Yet Supported.\n", (long)[resp statusCode]);
+            }
+            if ([self.delegate respondsToSelector:@selector(checkHttpStatus:)]) {
+                [self.delegate checkHttpStatus:[resp statusCode]];
             }
         }
     }];
