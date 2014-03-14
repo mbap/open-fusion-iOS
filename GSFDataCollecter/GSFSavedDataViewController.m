@@ -76,8 +76,8 @@
     NSArray *urls = [man URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
     NSURL *url = [urls objectAtIndex:0];
     url = [url URLByAppendingPathComponent:@"GSFSaveData"];
-    CGSize screen = [[UIScreen mainScreen] bounds].size;
-    __block GSFSpinner *spinner = [[GSFSpinner alloc] initWithFrame:CGRectMake(screen.width/2, screen.height/2, 75, 75)];
+    __block GSFSpinner *spinner = [[GSFSpinner alloc] init];
+    [spinner setLabelText:@"Loading..."];
     [self.view addSubview:spinner];
     [spinner.spinner startAnimating];
     dispatch_queue_t fileQueue = dispatch_queue_create("fileQueue", NULL);
@@ -282,9 +282,8 @@
     GSFDataTransfer *uploader = [[GSFDataTransfer alloc] initWithURL:[self.fileList objectAtIndex:button.section]];
     uploader.delegate = self;
     dispatch_queue_t networkQueue = dispatch_queue_create("networkQueue", NULL);
-    CGSize screen = [[UIScreen mainScreen] bounds].size;
-    self.uploadSpinner = [[GSFSpinner alloc] initWithFrame:CGRectMake(screen.width/2, screen.height/2, 75, 75)];
-    //self.uploadSpinner.center = self.view.center;
+    self.uploadSpinner = [[GSFSpinner alloc] init];
+    [self.uploadSpinner setLabelText:@"Sending..."];
     [self.view addSubview:self.uploadSpinner];
     [self.view bringSubviewToFront:self.uploadSpinner];
     [self.uploadSpinner.spinner startAnimating];
