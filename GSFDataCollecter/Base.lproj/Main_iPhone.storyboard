@@ -434,6 +434,25 @@
             </objects>
             <point key="canvasLocation" x="81" y="-487"/>
         </scene>
+        <!--Login View Controller-->
+        <scene sceneID="038-0i-p3D">
+            <objects>
+                <viewController storyboardIdentifier="@&quot;loginView&quot;" id="cYD-EP-ab3" customClass="GSFLoginViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="IoG-Jq-nJz"/>
+                        <viewControllerLayoutGuide type="bottom" id="Xay-9s-Bua"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="vcl-fY-wYU">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EaD-1r-mH0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="626" y="-487"/>
+        </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
