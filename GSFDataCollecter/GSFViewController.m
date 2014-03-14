@@ -13,7 +13,8 @@
 #import "GSFData.h"
 #import "GSFSpinner.h"
 
-
+#define SPINNERWIDTH  150
+#define SPINNERHEIGHT 100
 
 @interface GSFViewController () <UICollectionViewDataSource, UICollectionViewDelegate, GSFImageSelectorDelegate>
 
@@ -87,9 +88,8 @@
         self.showDetectionImages = YES;
         GSFOpenCvImageProcessor *processor = [[GSFOpenCvImageProcessor alloc] init];
         dispatch_queue_t hogQueue = dispatch_queue_create("hogQueue", NULL);
-        CGSize screen = [[UIScreen mainScreen] bounds].size;
-        self.spinner = [[GSFSpinner alloc] initWithFrame:CGRectMake(screen.width/2, screen.height/2, 75, 75)];
-        //self.uploadSpinner.center = self.view.center;
+        self.spinner = [[GSFSpinner alloc] init];
+        [self.spinner setLabelText:@"Processing..."];
         [self.view addSubview:self.spinner];
         [self.view bringSubviewToFront:self.spinner];
         [self.spinner.spinner startAnimating];
