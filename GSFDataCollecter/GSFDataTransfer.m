@@ -85,6 +85,7 @@
                     NSLog(@"Response: 500 Server Error.\n");
                 } else {
                     NSLog(@"Response: 403 Forbidden.\n");
+                    // insert the code to push a login vc and get the api key.
                 }
                 [self saveData:data];
             } else {

@@ -27,7 +27,9 @@
 
     // add background image here.
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"white.png"]];
-
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunch"]) {
+        // push view controller.
+    }
 }
 
 - (void)didReceiveMemoryWarning

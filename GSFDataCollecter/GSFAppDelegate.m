@@ -56,6 +56,9 @@
         [man createDirectoryAtPath:[url absoluteString] withIntermediateDirectories:NO attributes:nil error:nil];
     }
     
+    // create dict with bool to check for first ever launch
+    [[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES],@"firstLaunch",nil]];
+    
     return YES;
 }
 
@@ -83,6 +86,7 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"firstLaunch"];
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
