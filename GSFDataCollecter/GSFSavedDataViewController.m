@@ -12,6 +12,7 @@
 #import "GSFTableButton.h"
 #import "GSFDataTransfer.h"
 #import "GSFSpinner.h"
+#import "GSFLoginViewController.h"
 
 #define headHeight 25
 #define imageWidth 150
@@ -228,8 +229,7 @@
     // set main text view with the timestamp of the feature
     if ([[feature objectForKey:@"properties"] isKindOfClass:[NSDictionary class]]) {
         NSDictionary *properties = [feature objectForKey:@"properties"];
-        NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[properties objectForKey:@"timestamp"] doubleValue]];
-        cell.textLabel.text = [date description];
+        cell.textLabel.text = [properties objectForKey:@"timestamp"];
     }
     
     NSArray *images = [self.imageCache objectForKey:[NSString stringWithFormat:@"Section%ld", (long)indexPath.section]];
@@ -318,8 +318,10 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         if (statusCode == 200 || statusCode == 201) {
             [self.datasource removeObjectAtIndex:self.selectedFeatureSection];
+            [self.tableView reloadData];
+        } else if (statusCode == 403){
+            [self.navigationController pushViewController:[[GSFLoginViewController alloc] init] animated:YES];
         }
-        [self.tableView reloadData];
         [self.uploadSpinner.spinner stopAnimating];
         [self.uploadSpinner removeFromSuperview];
         self.uploadSpinner = nil;

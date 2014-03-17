@@ -109,6 +109,8 @@
     GSFDataTransfer *driver = [[GSFDataTransfer alloc] init];
     if (0 == buttonIndex) {
         [self performSegueWithIdentifier:@"savedData" sender:self];
+    } else if (4 == buttonIndex) {
+        // do nothing
     } else {
         dispatch_queue_t networkQueue = dispatch_queue_create("networkQueue", NULL);
         dispatch_async(networkQueue, ^{

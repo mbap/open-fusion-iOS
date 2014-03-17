@@ -53,12 +53,15 @@
     NSURL *url = [urls objectAtIndex:0];
     url = [url URLByAppendingPathComponent:@"GSFSaveData"];
     if (![man fileExistsAtPath:[url path]]) {
-        [man createDirectoryAtPath:[url absoluteString] withIntermediateDirectories:NO attributes:nil error:nil];
+        NSError *error = nil;
+        BOOL success = [man createDirectoryAtPath:[url path] withIntermediateDirectories:YES attributes:nil error:&error];
+        if (success) {
+            NSLog(@"Dir Created at %@", [url path]);
+        } else {
+            NSLog(@"Dir Creation Error: %@", error);
+        }
     }
-    
-    // create dict with bool to check for first ever launch
-    [[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES],@"firstLaunch",nil]];
-    
+        
     return YES;
 }
 
@@ -86,7 +89,6 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"firstLaunch"];
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 

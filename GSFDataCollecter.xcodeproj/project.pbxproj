@@ -43,6 +43,22 @@
 		96FE0E0B18D2B838002C40A5 /* GSFLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96FE0E0A18D2B838002C40A5 /* GSFLoginViewController.m */; };
 		D30862D218A2F8F100407EA5 /* GSFOpenCvImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D30862D118A2F8F100407EA5 /* GSFOpenCvImageViewController.m */; };
 		D312C5C918CFEC9C00B8641A /* upload.png in Resources */ = {isa = PBXBuildFile; fileRef = D312C5C818CFEC9C00B8641A /* upload.png */; };
+		D312C5CB18D6830B00B8641A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D312C5CA18D6830B00B8641A /* Security.framework */; };
+		D312C5CE18D6870300B8641A /* UYLPasswordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D312C5CD18D6870300B8641A /* UYLPasswordManager.m */; };
+		D312C5D618D6919800B8641A /* globe-black.png in Resources */ = {isa = PBXBuildFile; fileRef = D312C5CF18D6919800B8641A /* globe-black.png */; };
+		D312C5D718D6919800B8641A /* globe-transparent.png in Resources */ = {isa = PBXBuildFile; fileRef = D312C5D018D6919800B8641A /* globe-transparent.png */; };
+		D312C5D818D6919800B8641A /* globe-white.png in Resources */ = {isa = PBXBuildFile; fileRef = D312C5D118D6919800B8641A /* globe-white.png */; };
+		D312C5D918D6919800B8641A /* icon-black.png in Resources */ = {isa = PBXBuildFile; fileRef = D312C5D218D6919800B8641A /* icon-black.png */; };
+		D312C5DA18D6919800B8641A /* icon-transparent-black.png in Resources */ = {isa = PBXBuildFile; fileRef = D312C5D318D6919800B8641A /* icon-transparent-black.png */; };
+		D312C5DB18D6919800B8641A /* icon-transparent-white.png in Resources */ = {isa = PBXBuildFile; fileRef = D312C5D418D6919800B8641A /* icon-transparent-white.png */; };
+		D312C5DC18D6919800B8641A /* icon-white.png in Resources */ = {isa = PBXBuildFile; fileRef = D312C5D518D6919800B8641A /* icon-white.png */; };
+		D312C5E418D691C900B8641A /* globe-black5.png in Resources */ = {isa = PBXBuildFile; fileRef = D312C5DD18D691C900B8641A /* globe-black5.png */; };
+		D312C5E518D691C900B8641A /* globe-transparent5.png in Resources */ = {isa = PBXBuildFile; fileRef = D312C5DE18D691C900B8641A /* globe-transparent5.png */; };
+		D312C5E618D691C900B8641A /* globe-white5.png in Resources */ = {isa = PBXBuildFile; fileRef = D312C5DF18D691C900B8641A /* globe-white5.png */; };
+		D312C5E718D691C900B8641A /* icon-black5.png in Resources */ = {isa = PBXBuildFile; fileRef = D312C5E018D691C900B8641A /* icon-black5.png */; };
+		D312C5E818D691C900B8641A /* icon-transparent-black5.png in Resources */ = {isa = PBXBuildFile; fileRef = D312C5E118D691C900B8641A /* icon-transparent-black5.png */; };
+		D312C5E918D691C900B8641A /* icon-transparent-white5.png in Resources */ = {isa = PBXBuildFile; fileRef = D312C5E218D691C900B8641A /* icon-transparent-white5.png */; };
+		D312C5EA18D691C900B8641A /* icon-white5.png in Resources */ = {isa = PBXBuildFile; fileRef = D312C5E318D691C900B8641A /* icon-white5.png */; };
 		D397AC4118B514D30067691D /* GSFAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D397AC4018B514D30067691D /* GSFAppDelegate.m */; };
 		D397AC4418BAC4920067691D /* GSFDirectionService.m in Sources */ = {isa = PBXBuildFile; fileRef = D397AC4318BAC4920067691D /* GSFDirectionService.m */; };
 		D397AC4918BE80C40067691D /* GSFTrackerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D397AC4818BE80C40067691D /* GSFTrackerHelper.m */; };
@@ -136,6 +152,23 @@
 		D30862D018A2F8F100407EA5 /* GSFOpenCvImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFOpenCvImageViewController.h; sourceTree = "<group>"; };
 		D30862D118A2F8F100407EA5 /* GSFOpenCvImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFOpenCvImageViewController.m; sourceTree = "<group>"; };
 		D312C5C818CFEC9C00B8641A /* upload.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upload.png; sourceTree = "<group>"; };
+		D312C5CA18D6830B00B8641A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		D312C5CC18D6870300B8641A /* UYLPasswordManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UYLPasswordManager.h; sourceTree = "<group>"; };
+		D312C5CD18D6870300B8641A /* UYLPasswordManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UYLPasswordManager.m; sourceTree = "<group>"; };
+		D312C5CF18D6919800B8641A /* globe-black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "globe-black.png"; sourceTree = "<group>"; };
+		D312C5D018D6919800B8641A /* globe-transparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "globe-transparent.png"; sourceTree = "<group>"; };
+		D312C5D118D6919800B8641A /* globe-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "globe-white.png"; sourceTree = "<group>"; };
+		D312C5D218D6919800B8641A /* icon-black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-black.png"; sourceTree = "<group>"; };
+		D312C5D318D6919800B8641A /* icon-transparent-black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-transparent-black.png"; sourceTree = "<group>"; };
+		D312C5D418D6919800B8641A /* icon-transparent-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-transparent-white.png"; sourceTree = "<group>"; };
+		D312C5D518D6919800B8641A /* icon-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-white.png"; sourceTree = "<group>"; };
+		D312C5DD18D691C900B8641A /* globe-black5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "globe-black5.png"; sourceTree = "<group>"; };
+		D312C5DE18D691C900B8641A /* globe-transparent5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "globe-transparent5.png"; sourceTree = "<group>"; };
+		D312C5DF18D691C900B8641A /* globe-white5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "globe-white5.png"; sourceTree = "<group>"; };
+		D312C5E018D691C900B8641A /* icon-black5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-black5.png"; sourceTree = "<group>"; };
+		D312C5E118D691C900B8641A /* icon-transparent-black5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-transparent-black5.png"; sourceTree = "<group>"; };
+		D312C5E218D691C900B8641A /* icon-transparent-white5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-transparent-white5.png"; sourceTree = "<group>"; };
+		D312C5E318D691C900B8641A /* icon-white5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-white5.png"; sourceTree = "<group>"; };
 		D397AC4018B514D30067691D /* GSFAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFAppDelegate.m; sourceTree = "<group>"; };
 		D397AC4218BAC4920067691D /* GSFDirectionService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFDirectionService.h; sourceTree = "<group>"; };
 		D397AC4318BAC4920067691D /* GSFDirectionService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFDirectionService.m; sourceTree = "<group>"; };
@@ -184,6 +217,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D312C5CB18D6830B00B8641A /* Security.framework in Frameworks */,
 				966F6CA318AB587500BE3334 /* SystemConfiguration.framework in Frameworks */,
 				966F6CA118AB584000BE3334 /* OpenGLES.framework in Frameworks */,
 				966F6C9F18AB583900BE3334 /* libz.dylib in Frameworks */,
@@ -286,6 +320,10 @@
 		D3D7807918A038E400E5AB50 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				D312C5CC18D6870300B8641A /* UYLPasswordManager.h */,
+				D312C5CD18D6870300B8641A /* UYLPasswordManager.m */,
+				96FE0E0918D2B838002C40A5 /* GSFLoginViewController.h */,
+				96FE0E0A18D2B838002C40A5 /* GSFLoginViewController.m */,
 				D3D7D5B818C40B1E00F5D540 /* Main_iPhone5s.storyboard */,
 				D397AC4018B514D30067691D /* GSFAppDelegate.m */,
 				DBB428491880A64F00139082 /* GSFAppDelegate.h */,
@@ -297,8 +335,7 @@
 				96B5990218920061001D29CF /* GSFDataViewController.m */,
 				96FE0E0618D24B37002C40A5 /* GSFSpinner.h */,
 				96FE0E0718D24B37002C40A5 /* GSFSpinner.m */,
-				96FE0E0918D2B838002C40A5 /* GSFLoginViewController.h */,
-				96FE0E0A18D2B838002C40A5 /* GSFLoginViewController.m */,
+				966F6C8B18AAC10B00BE3334 /* XMLClassifiers */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -337,6 +374,7 @@
 		DBB428391880A64F00139082 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D312C5CA18D6830B00B8641A /* Security.framework */,
 				96EAC4BE18AD8E250084B331 /* GoogleMaps.bundle */,
 				966F6CA218AB587500BE3334 /* SystemConfiguration.framework */,
 				966F6CA018AB584000BE3334 /* OpenGLES.framework */,
@@ -371,7 +409,6 @@
 				DBB428551880A64F00139082 /* Images.xcassets */,
 				96EAC4D918BC75870084B331 /* Data Transfer */,
 				D3D7807918A038E400E5AB50 /* Main */,
-				966F6C8B18AAC10B00BE3334 /* XMLClassifiers */,
 				D3D7808018A051B500E5AB50 /* Model */,
 				966F6CA418AC847000BE3334 /* GMaps */,
 				D3D7807818A038B500E5AB50 /* ImagePickerController */,
@@ -383,6 +420,20 @@
 		DBB428411880A64F00139082 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D312C5DD18D691C900B8641A /* globe-black5.png */,
+				D312C5DE18D691C900B8641A /* globe-transparent5.png */,
+				D312C5DF18D691C900B8641A /* globe-white5.png */,
+				D312C5E018D691C900B8641A /* icon-black5.png */,
+				D312C5E118D691C900B8641A /* icon-transparent-black5.png */,
+				D312C5E218D691C900B8641A /* icon-transparent-white5.png */,
+				D312C5E318D691C900B8641A /* icon-white5.png */,
+				D312C5CF18D6919800B8641A /* globe-black.png */,
+				D312C5D018D6919800B8641A /* globe-transparent.png */,
+				D312C5D118D6919800B8641A /* globe-white.png */,
+				D312C5D218D6919800B8641A /* icon-black.png */,
+				D312C5D318D6919800B8641A /* icon-transparent-black.png */,
+				D312C5D418D6919800B8641A /* icon-transparent-white.png */,
+				D312C5D518D6919800B8641A /* icon-white.png */,
 				D312C5C818CFEC9C00B8641A /* upload.png */,
 				D3BF4D1F18CE62C4003CB52B /* black1.png */,
 				D3BF4D2018CE62C4003CB52B /* transparent1.png */,
@@ -468,7 +519,7 @@
 				ORGANIZATIONNAME = "Michael Baptist - LLNL";
 				TargetAttributes = {
 					DBB428361880A64F00139082 = {
-						DevelopmentTeam = 58K2V57UB6;
+						DevelopmentTeam = Z5SLZ6QPTL;
 					};
 					DBB4285A1880A64F00139082 = {
 						TestTargetID = DBB428361880A64F00139082;
@@ -499,9 +550,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D312C5E518D691C900B8641A /* globe-transparent5.png in Resources */,
+				D312C5E918D691C900B8641A /* icon-transparent-white5.png in Resources */,
+				D312C5DC18D6919800B8641A /* icon-white.png in Resources */,
+				D312C5D718D6919800B8641A /* globe-transparent.png in Resources */,
+				D312C5EA18D691C900B8641A /* icon-white5.png in Resources */,
+				D312C5D818D6919800B8641A /* globe-white.png in Resources */,
 				D3BF4D1D18CE5E35003CB52B /* transparent.png in Resources */,
+				D312C5D918D6919800B8641A /* icon-black.png in Resources */,
 				D3BF4D2318CE62C4003CB52B /* transparent1.png in Resources */,
 				96EAC4BF18AD8E250084B331 /* GoogleMaps.bundle in Resources */,
+				D312C5D618D6919800B8641A /* globe-black.png in Resources */,
 				DBB428511880A64F00139082 /* Main_iPad.storyboard in Resources */,
 				D312C5C918CFEC9C00B8641A /* upload.png in Resources */,
 				96EAC4B918AD88280084B331 /* haarcascade_frontalface_alt2.xml in Resources */,
@@ -510,12 +569,18 @@
 				DBB428561880A64F00139082 /* Images.xcassets in Resources */,
 				D3BF4D1E18CE5E35003CB52B /* white.png in Resources */,
 				DBB4284E1880A64F00139082 /* Main_iPhone.storyboard in Resources */,
+				D312C5DA18D6919800B8641A /* icon-transparent-black.png in Resources */,
+				D312C5E718D691C900B8641A /* icon-black5.png in Resources */,
+				D312C5E818D691C900B8641A /* icon-transparent-black5.png in Resources */,
 				966F6C8A18AAC0A100BE3334 /* hogcascade_pedestrians.xml in Resources */,
 				D3BF4D1C18CE5E35003CB52B /* black.png in Resources */,
 				D3BF4D2218CE62C4003CB52B /* black1.png in Resources */,
 				96EAC4B818AD88280084B331 /* haarcascade_frontalface_alt.xml in Resources */,
 				DBB428451880A64F00139082 /* InfoPlist.strings in Resources */,
+				D312C5E418D691C900B8641A /* globe-black5.png in Resources */,
 				D3BF4D2418CE62C4003CB52B /* white1.png in Resources */,
+				D312C5E618D691C900B8641A /* globe-white5.png in Resources */,
+				D312C5DB18D6919800B8641A /* icon-transparent-white.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -584,6 +649,7 @@
 				96EAC4DC18BC75A90084B331 /* GSFDataTransfer.m in Sources */,
 				D3D7808318A051DA00E5AB50 /* GSFData.m in Sources */,
 				96F52DB018CFE08500684E64 /* GSFTableButton.m in Sources */,
+				D312C5CE18D6870300B8641A /* UYLPasswordManager.m in Sources */,
 				96FCA62418CAD0B000BC01A1 /* GSFSavedDataViewController.m in Sources */,
 				D3D7807F18A0416400E5AB50 /* GSFTaggedVCViewController.m in Sources */,
 				96EAF06918CD89B90041A265 /* GSFSavedDataImageViewController.m in Sources */,

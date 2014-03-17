@@ -8,6 +8,8 @@
 
 #import "GSFDataViewController.h"
 #import "GSFViewController.h"
+#import "GSFLoginViewController.h"
+#import "UYLPasswordManager.h"
 
 @interface GSFDataViewController ()
 
@@ -27,8 +29,12 @@
 
     // add background image here.
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"white.png"]];
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunch"]) {
-        // push view controller.
+    
+    // see if user has an api key.
+    UYLPasswordManager *pman = [UYLPasswordManager sharedInstance];
+    if (![pman validKey:nil forIdentifier:@"apikey"]) {
+        // push view controller to get the api key.
+        [self.navigationController pushViewController:[[GSFLoginViewController alloc] init] animated:YES];
     }
 }
 
