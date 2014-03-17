@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B63B45B18D78F6C00CAAD7D /* GSF_Insert_sensor_alert-v2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B63B45A18D78F6C00CAAD7D /* GSF_Insert_sensor_alert-v2.png */; };
+		5B63B45F18D7900800CAAD7D /* GSF_Logo-29pt.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B63B45C18D7900800CAAD7D /* GSF_Logo-29pt.png */; };
+		5B63B46018D7900800CAAD7D /* GSF_Logo-40pt.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B63B45D18D7900800CAAD7D /* GSF_Logo-40pt.png */; };
+		5B63B46118D7900800CAAD7D /* GSF_Logo-60pt.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B63B45E18D7900800CAAD7D /* GSF_Logo-60pt.png */; };
 		966F6C8A18AAC0A100BE3334 /* hogcascade_pedestrians.xml in Resources */ = {isa = PBXBuildFile; fileRef = 966F6C8818AAC0A100BE3334 /* hogcascade_pedestrians.xml */; };
 		966F6C9118AB579200BE3334 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 966F6C9018AB579200BE3334 /* GoogleMaps.framework */; };
 		966F6C9318AB57CF00BE3334 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 966F6C9218AB57CF00BE3334 /* CoreData.framework */; };
@@ -104,6 +108,10 @@
 
 /* Begin PBXFileReference section */
 		0D1EB022391E459995534E17 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B63B45A18D78F6C00CAAD7D /* GSF_Insert_sensor_alert-v2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GSF_Insert_sensor_alert-v2.png"; sourceTree = "<group>"; };
+		5B63B45C18D7900800CAAD7D /* GSF_Logo-29pt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GSF_Logo-29pt.png"; sourceTree = "<group>"; };
+		5B63B45D18D7900800CAAD7D /* GSF_Logo-40pt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GSF_Logo-40pt.png"; sourceTree = "<group>"; };
+		5B63B45E18D7900800CAAD7D /* GSF_Logo-60pt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GSF_Logo-60pt.png"; sourceTree = "<group>"; };
 		966F6C8818AAC0A100BE3334 /* hogcascade_pedestrians.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = hogcascade_pedestrians.xml; path = GSFDataCollecter/hogcascade_pedestrians.xml; sourceTree = "<group>"; };
 		966F6C9018AB579200BE3334 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
 		966F6C9218AB57CF00BE3334 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -436,9 +444,13 @@
 				D312C5DD18D691C900B8641A /* globe-black5.png */,
 				D312C5DE18D691C900B8641A /* globe-transparent5.png */,
 				D312C5DF18D691C900B8641A /* globe-white5.png */,
+				5B63B45A18D78F6C00CAAD7D /* GSF_Insert_sensor_alert-v2.png */,
 				D312C5E018D691C900B8641A /* icon-black5.png */,
 				D312C5E118D691C900B8641A /* icon-transparent-black5.png */,
 				D312C5E218D691C900B8641A /* icon-transparent-white5.png */,
+				5B63B45C18D7900800CAAD7D /* GSF_Logo-29pt.png */,
+				5B63B45D18D7900800CAAD7D /* GSF_Logo-40pt.png */,
+				5B63B45E18D7900800CAAD7D /* GSF_Logo-60pt.png */,
 				D312C5E318D691C900B8641A /* icon-white5.png */,
 				D312C5CF18D6919800B8641A /* globe-black.png */,
 				D312C5D018D6919800B8641A /* globe-transparent.png */,
@@ -572,7 +584,9 @@
 				D3BF4D1D18CE5E35003CB52B /* transparent.png in Resources */,
 				D312C5D918D6919800B8641A /* icon-black.png in Resources */,
 				D3BF4D2318CE62C4003CB52B /* transparent1.png in Resources */,
+				5B63B46018D7900800CAAD7D /* GSF_Logo-40pt.png in Resources */,
 				96EAC4BF18AD8E250084B331 /* GoogleMaps.bundle in Resources */,
+				5B63B45B18D78F6C00CAAD7D /* GSF_Insert_sensor_alert-v2.png in Resources */,
 				D312C5D618D6919800B8641A /* globe-black.png in Resources */,
 				DBB428511880A64F00139082 /* Main_iPad.storyboard in Resources */,
 				D312C5C918CFEC9C00B8641A /* upload.png in Resources */,
@@ -587,8 +601,10 @@
 				D312C5E818D691C900B8641A /* icon-transparent-black5.png in Resources */,
 				966F6C8A18AAC0A100BE3334 /* hogcascade_pedestrians.xml in Resources */,
 				D3BF4D1C18CE5E35003CB52B /* black.png in Resources */,
+				5B63B45F18D7900800CAAD7D /* GSF_Logo-29pt.png in Resources */,
 				D3BF4D2218CE62C4003CB52B /* black1.png in Resources */,
 				96EAC4B818AD88280084B331 /* haarcascade_frontalface_alt.xml in Resources */,
+				5B63B46118D7900800CAAD7D /* GSF_Logo-60pt.png in Resources */,
 				DBB428451880A64F00139082 /* InfoPlist.strings in Resources */,
 				D312C5E418D691C900B8641A /* globe-black5.png in Resources */,
 				D3BF4D2418CE62C4003CB52B /* white1.png in Resources */,

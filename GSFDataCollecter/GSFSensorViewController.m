@@ -280,7 +280,7 @@ void ToneInterruptionListener(void *inClientData, UInt32 inInterruptionState) {
          message:@"Please insert the GSF sensor to collect this data."
          delegate:self
          cancelButtonTitle:nil
-         otherButtonTitles:@"Cancel", @"Use Mic", nil];
+         otherButtonTitles:@"Cancel", nil]; // Removed mic button
         
         [alertImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
         [self.sensorAlert.contentView addSubview:alertImageView];
@@ -436,7 +436,7 @@ void ToneInterruptionListener(void *inClientData, UInt32 inInterruptionState) {
          message:@"Please insert the GSF sensor to collect this data."
          delegate:self
          cancelButtonTitle:nil
-         otherButtonTitles:@"Cancel", @"Use Mic", nil];
+         otherButtonTitles:@"Cancel", nil]; // Removed use Mic button
         
         [alertImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
         [self.sensorAlert.contentView addSubview:alertImageView];
