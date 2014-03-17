@@ -15,6 +15,7 @@
 
 @property (weak, nonatomic) IBOutlet UISwitch *personDetectToggle;
 @property (weak, nonatomic) IBOutlet UISwitch *faceDetectionToggle;
+@property (weak, nonatomic) IBOutlet UISwitch *sensorSwitch;
 @property (nonatomic) IBOutlet UIImageView *imageView;
 
 @end
@@ -45,6 +46,9 @@
 }
 
 - (IBAction)startCollecting:(id)sender {
+    if (self.sensorSwitch.on) {
+        [self performSegueWithIdentifier:@"sensorGate" sender:self];
+    }
     if (self.personDetectToggle.on || self.faceDetectionToggle.on) {
         [self performSegueWithIdentifier:@"imagePickerSegue" sender:self];
     }
