@@ -8,6 +8,7 @@
 
 #import "GSFDataTransfer.h"
 #import "GSFData.h"
+#import "UYLPasswordManager.h"
 
 @interface GSFDataTransfer() <NSURLSessionDelegate, NSURLSessionTaskDelegate>
 
@@ -52,6 +53,13 @@
     
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
     NSURL *url = [NSURL URLWithString:@"https://gsf.soe.ucsc.edu/api/upload/"];
+    UYLPasswordManager *pman = [UYLPasswordManager sharedInstance];
+    if ([pman validKey:nil forIdentifier:@"apikey"]) {
+        NSString *key = [pman keyForIdentifier:@"apikey"];
+        NSString *path = @"?key=";
+        path = [path stringByAppendingString:key];
+        url = [NSURL URLWithString:[[url absoluteString] stringByAppendingString:path]];
+    }
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
                                                        timeoutInterval:30.0];
@@ -85,7 +93,6 @@
                     NSLog(@"Response: 500 Server Error.\n");
                 } else {
                     NSLog(@"Response: 403 Forbidden.\n");
-                    // insert the code to push a login vc and get the api key.
                 }
                 [self saveData:data];
             } else {

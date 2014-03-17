@@ -12,6 +12,7 @@
 #import "GSFTableButton.h"
 #import "GSFDataTransfer.h"
 #import "GSFSpinner.h"
+#import "GSFLoginViewController.h"
 
 #define headHeight 25
 #define imageWidth 150
@@ -318,8 +319,10 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         if (statusCode == 200 || statusCode == 201) {
             [self.datasource removeObjectAtIndex:self.selectedFeatureSection];
+            [self.tableView reloadData];
+        } else if (statusCode == 403){
+            [self.navigationController pushViewController:[[GSFLoginViewController alloc] init] animated:YES];
         }
-        [self.tableView reloadData];
         [self.uploadSpinner.spinner stopAnimating];
         [self.uploadSpinner removeFromSuperview];
         self.uploadSpinner = nil;
