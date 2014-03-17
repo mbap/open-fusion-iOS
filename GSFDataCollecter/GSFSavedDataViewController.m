@@ -229,8 +229,7 @@
     // set main text view with the timestamp of the feature
     if ([[feature objectForKey:@"properties"] isKindOfClass:[NSDictionary class]]) {
         NSDictionary *properties = [feature objectForKey:@"properties"];
-        NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[properties objectForKey:@"timestamp"] doubleValue]];
-        cell.textLabel.text = [date description];
+        cell.textLabel.text = [properties objectForKey:@"timestamp"];
     }
     
     NSArray *images = [self.imageCache objectForKey:[NSString stringWithFormat:@"Section%ld", (long)indexPath.section]];

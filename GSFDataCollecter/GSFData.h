@@ -23,8 +23,11 @@
 // sets the image property of an GSFData Object
 - (GSFData*)initWithImage:(UIImage*)image;
 
-// fills all properties with data
+// convert to UTC time.
 - (void)convertToUTC:(CLLocation *)coords;
+
+// convert to ISO8601 timestamp
+- (void)convertToISO8601:(CLLocation *)coords;
 
 // converts a GSFData Object into a dictionary that can be turned into json.
 + (NSDictionary *)convertGSFDataToDict:(GSFData *)gsfdata withFlag:(NSNumber *)option;

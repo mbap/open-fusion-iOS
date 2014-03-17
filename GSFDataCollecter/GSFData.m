@@ -19,6 +19,15 @@
     return self;
 }
 
+- (void)convertToISO8601:(CLLocation *)coords
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    NSLocale *enUSPOSIXLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+    [dateFormatter setLocale:enUSPOSIXLocale];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZ"];
+    self.date = [dateFormatter stringFromDate:self.coords.timestamp];
+}
+
 - (void)convertToUTC:(CLLocation *)coords;
 {
     // convert date to a string.

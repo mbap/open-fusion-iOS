@@ -243,7 +243,8 @@
         // pass images with no drawings aswell.
         controller.originalData = self.capturedImages;
         for (GSFData *data in self.capturedImages) {
-            [data convertToUTC:data.coords];
+            //[data convertToUTC:data.coords];
+            [data convertToISO8601:data.coords];
         }
         NSMutableArray *orient = [[NSMutableArray alloc] init];
         for (GSFData *data in self.capturedImages) {

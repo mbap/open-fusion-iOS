@@ -54,16 +54,13 @@
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
     NSURL *url = [NSURL URLWithString:@"https://gsf.soe.ucsc.edu/api/upload/"];
     UYLPasswordManager *pman = [UYLPasswordManager sharedInstance];
-    if ([pman validKey:nil forIdentifier:@"apikey"]) {
-        NSString *key = [pman keyForIdentifier:@"apikey"];
-        NSString *path = @"?key=";
-        path = [path stringByAppendingString:key];
-        url = [NSURL URLWithString:[[url absoluteString] stringByAppendingString:path]];
-    }
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
                                                        timeoutInterval:30.0];
-    
+    if ([pman validKey:nil forIdentifier:@"apikey"]) {
+        NSString *key = [pman keyForIdentifier:@"apikey"];
+        [request setValue:key forHTTPHeaderField:@"Authorization"];
+    }
     [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:data];
