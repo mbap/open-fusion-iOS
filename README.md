@@ -13,10 +13,10 @@ After cloning this project, you will need to install opencv 2.4.8 for ios into t
 
 3. In the file Podfile add the following lines.  
    platform :ios, "7.0"  
-   pod 'OpenCV', '~> 2.4.8' 
-   pod "RBBAnimation", '~> 0.3' 
-   pod "SDCAutoLayout", '~> 2.0' 
-   pod "SDCAlertView", '~> 1.0'
+   pod 'OpenCV', '~> 2.4.8'<br> 
+   pod "RBBAnimation", '~> 0.3'<br> 
+   pod "SDCAutoLayout", '~> 2.0' <br>
+   pod "SDCAlertView", '~> 1.0'<br>
 
 4. Run this command and your finished.  
    pod install
