@@ -49,7 +49,7 @@
     if (self.sensorSwitch.on) {
         [self performSegueWithIdentifier:@"sensorGate" sender:self];
     }
-    else if (self.personDetectToggle.on || self.faceDetectionToggle.on) {
+    if (self.personDetectToggle.on || self.faceDetectionToggle.on) {
         [self performSegueWithIdentifier:@"imagePickerSegue" sender:self];
     }
 }
