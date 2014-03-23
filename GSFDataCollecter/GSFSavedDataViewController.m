@@ -130,18 +130,19 @@
 - (void)cacheImagesWithCompletionHandler:(void(^)(void))handler
 {
     NSArray *features = nil;
+    NSUInteger sectioniter = 0;
     for (NSDictionary *data in self.datasource) {
         if ([data isKindOfClass:[NSMutableDictionary class]]) {
             if ([[data objectForKey:@"features"] isKindOfClass:[NSArray class]]) {
                 features = [data objectForKey:@"features"];
-                NSUInteger iter = 0;
                 NSMutableArray *images = [[NSMutableArray alloc] init];
                 NSString *key = nil;
+                NSUInteger iter = 0;
                 if ([[features objectAtIndex:iter] isKindOfClass:[NSDictionary class]]) {
                     for (NSDictionary *feature in features) {
                         if ([[feature objectForKey:@"properties"] isKindOfClass:[NSDictionary class]]) {
                             NSDictionary *properties = [feature objectForKey:@"properties"];
-                            key = [NSString stringWithFormat:@"Section%lu", (unsigned long)iter++];
+                            key = [NSString stringWithFormat:@"Section%lu", (unsigned long)sectioniter++];
                             UIImage *image = nil;
                             if ([properties objectForKey:@"oimage"]) {
                                 NSString *oimage = [properties objectForKey:@"oimage"];
