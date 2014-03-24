@@ -61,6 +61,7 @@
 - (IBAction)cutOffSliderChange:(id)sender;
 
 - (void)togglePower:(BOOL)powerOn;
+- (void) ioInterruptionListener :(id) inClientData :(NSUInteger) inInterruptionState;
 
 @end
 
