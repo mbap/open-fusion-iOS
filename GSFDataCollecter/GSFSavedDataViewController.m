@@ -45,12 +45,16 @@
 // load images into a cache to remove the thread bombing i was doing haha.
 - (void)cacheImagesWithCompletionHandler:(void(^)(void))handler;
 
+//button that uploads all the files.
+@property (weak, nonatomic) IBOutlet UIButton *uploadAllButton;
+
 // spinner for network transactions.
 @property (nonatomic) GSFSpinner *uploadSpinner;
 
 @end
 
 @implementation GSFSavedDataViewController
+
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -98,6 +102,9 @@
     });
     
     [self.tableView setContentInset:UIEdgeInsetsMake(headHeight, 0, 0, 0)];
+    
+    // customize the upload all button
+    //[self.uploadAllButton backgroundColor] = [UIColor colorWithPatternImage:IMAGEHERE.];
 
 }
 
@@ -275,6 +282,21 @@
     return headHeight;
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, headHeight)];
+    GSFTableButton *button = [[GSFTableButton alloc] initWithFrame:CGRectMake(tableView.bounds.size.width - imageWidth, 0, imageWidth, headHeight) forSection:section];
+    [button setImage:[UIImage imageNamed:@"upload.png"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(headerTapped:)  forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:button];
+    NSString * string = [NSString stringWithFormat:@"Feature Collection %ld", (long)section + 1];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(headHeight, 0, tableView.bounds.size.width - (headHeight * 3), headHeight)];
+    label.text = string;
+    label.font = [UIFont systemFontOfSize:14.0];
+    label.textColor = [UIColor grayColor];
+    [view addSubview:label];
+    return view;
+}
 
 // if the header button gets touched we upload the data to the server.
 - (void)headerTapped:(GSFTableButton*)button
@@ -297,20 +319,24 @@
     });
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+- (IBAction)uploadAll:(UIButton *)button
 {
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, headHeight)];
-    GSFTableButton *button = [[GSFTableButton alloc] initWithFrame:CGRectMake(tableView.bounds.size.width - imageWidth, 0, imageWidth, headHeight) forSection:section];
-    [button setImage:[UIImage imageNamed:@"upload.png"] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(headerTapped:)  forControlEvents:UIControlEventTouchUpInside];
-    [view addSubview:button];
-    NSString * string = [NSString stringWithFormat:@"Feature Collection %ld", (long)section + 1];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(headHeight, 0, tableView.bounds.size.width - (headHeight * 3), headHeight)];
-    label.text = string;
-    label.font = [UIFont systemFontOfSize:14.0];
-    label.textColor = [UIColor grayColor];
-    [view addSubview:label];
-    return view;
+    // create a feature collection that has all the feautures of every file in one feature collection.
+    // send data to the server. deletion of file on success handled by GSFDataTransfer object
+    if (self.fileList.count) { // if there are more than zero files we send them
+        GSFDataTransfer *uploader = [[GSFDataTransfer alloc] initWithURLs:self.fileList];
+        uploader.delegate = self;
+        dispatch_queue_t networkQueue = dispatch_queue_create("networkQueue", NULL);
+        self.uploadSpinner = [[GSFSpinner alloc] init];
+        [self.uploadSpinner setLabelText:@"Sending All..."];
+        [self.view addSubview:self.uploadSpinner];
+        [self.view bringSubviewToFront:self.uploadSpinner];
+        [self.uploadSpinner.spinner startAnimating];
+        dispatch_async(networkQueue, ^{
+            self.selectedFeatureSection = -1;
+            [uploader uploadDataArray:[uploader createFeatureCollectionFromFreatureCollections:self.datasource]];
+        });
+    }
 }
 
 // delegate method that sends message reguarding the status
@@ -318,8 +344,13 @@
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         if (statusCode == 200 || statusCode == 201) {
-            [self.datasource removeObjectAtIndex:self.selectedFeatureSection];
-            [self.tableView reloadData];
+            if (self.selectedFeatureSection == -1) { // upload all was hit
+                self.datasource = nil;
+                [self.tableView reloadData];
+            } else {
+                [self.datasource removeObjectAtIndex:self.selectedFeatureSection];
+                [self.tableView reloadData];
+            }
         } else if (statusCode == 403){
             [self.navigationController pushViewController:[[GSFLoginViewController alloc] init] animated:YES];
         }
