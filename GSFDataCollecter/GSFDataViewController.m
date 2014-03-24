@@ -37,6 +37,7 @@
         // push view controller to get the api key.
         [self.navigationController pushViewController:[[GSFLoginViewController alloc] init] animated:YES];
     }
+    self.sensorSwitch.on = NO;
 }
 
 - (void)didReceiveMemoryWarning

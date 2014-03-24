@@ -14,6 +14,8 @@
 
 @property (nonatomic) NSString *url;
 
+@property (nonatomic) NSArray *urls;
+
 @property (nonatomic) NSInteger httpResponse;
 
 @end
@@ -29,6 +31,15 @@
     return self;
 }
 
+- (GSFDataTransfer *)initWithURLs:(NSArray *)urls
+{
+    self = [super init];
+    if (self) {
+        self.urls = urls;
+    }
+    return self;
+}
+
 - (NSData *)formatDataAsJSON:(NSMutableArray *)dataArray withFlag:(NSNumber *)option
 {
     NSMutableDictionary *featureCollection = [[NSMutableDictionary alloc] init];
@@ -37,6 +48,27 @@
     for (GSFData *data in dataArray) {
         NSDictionary *feature = [GSFData convertGSFDataToDict:data withFlag:option]; //convert gsfdata into dictionary for json parsing
         [features addObject:feature];
+    }
+    [featureCollection setObject:features forKey:@"features"];
+    NSData *JSONPacket;
+    if ([NSJSONSerialization isValidJSONObject:featureCollection]) {
+        JSONPacket = [NSJSONSerialization dataWithJSONObject:featureCollection options:NSJSONWritingPrettyPrinted error:nil];
+    }
+    return JSONPacket;
+}
+
+- (NSData *)createFeatureCollectionFromFreatureCollections:(NSArray *)collectionlist
+{
+    NSMutableDictionary *featureCollection = [[NSMutableDictionary alloc] init];
+    [featureCollection setObject:@"FeatureCollection" forKey:@"type"];
+    NSMutableArray *features = [[NSMutableArray alloc] init]; // mutable array to hold all json objects.
+    for (NSDictionary *collection in collectionlist) {
+        if ([[collection objectForKey:@"features"] isKindOfClass:[NSArray class]]) {
+            NSArray *flist = [collection objectForKey:@"features"];
+            for (NSDictionary *dict in flist) {
+                [features addObject:dict];
+            }
+        }
     }
     [featureCollection setObject:features forKey:@"features"];
     NSData *JSONPacket;
@@ -77,11 +109,15 @@
                 NSLog(@"Response: 200 Success.\n");
                 if (self.url) {
                     [self deleteFile:self.url];
+                } else if (self.urls) {
+                    [self deleteFiles:self.urls];
                 }
             } else if ([resp statusCode] == 201){ // Created: Request Fulfilled resource created.
                 NSLog(@"Response: 201 Resouce Created.\n");
                 if (self.url) {
                     [self deleteFile:self.url];
+                } else if (self.urls) {
+                    [self deleteFiles:self.urls];
                 }
             } else if ([resp statusCode] == 400) { // bad request, syntax incorrect
                 NSLog(@"Response: 400 Bad Request.\n");
@@ -149,6 +185,25 @@
         NSLog(@"Problem removing file at url:%@.\n", mainUrl);
     } else {
         NSLog(@"File at URL: %@ removed.\n", mainUrl);
+    }
+}
+
+- (void)deleteFiles:(NSArray *)urls
+{
+    NSFileManager *man = [[NSFileManager alloc] init];
+    NSError *error = nil;
+    NSArray *urllist = [man URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
+    NSURL *mainUrl = [urllist objectAtIndex:0];
+    for (NSString *urlstring in urls) {
+        NSURL *filePath = nil;
+        filePath = [mainUrl URLByAppendingPathComponent:@"GSFSaveData"];
+        filePath = [filePath URLByAppendingPathComponent:urlstring];
+        [man removeItemAtURL:filePath error:&error];
+        if (error) {
+            NSLog(@"Problem removing file at url:%@.\n", filePath);
+        } else {
+            NSLog(@"File at URL: %@ removed.\n", filePath);
+        }
     }
 }
 

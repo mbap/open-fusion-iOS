@@ -188,8 +188,23 @@
                             <outlet property="delegate" destination="MgZ-ry-aGy" id="MqC-le-dv6"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Saved Data" id="hxm-t7-Nws"/>
+                    <navigationItem key="navigationItem" title="Saved Data" id="hxm-t7-Nws">
+                        <barButtonItem key="rightBarButtonItem" id="7lA-GL-uQx">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="jSX-6a-PhX">
+                                <rect key="frame" x="233" y="5" width="71" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="Upload All">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="uploadAll:" destination="MgZ-ry-aGy" eventType="touchUpInside" id="njN-Jx-CK8"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="uploadAllButton" destination="jSX-6a-PhX" id="Zua-T7-p7Y"/>
                         <segue destination="RPC-Nm-6Ot" kind="push" identifier="viewSavedFileDetails" id="BWL-Wu-FC6"/>
                     </connections>
                 </tableViewController>
