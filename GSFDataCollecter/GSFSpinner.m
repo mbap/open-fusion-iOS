@@ -21,7 +21,7 @@
         // Initialization code
         self.height = HEIGHT;
         self.width = WIDTH;
-        self.label = [[UILabel alloc] initWithFrame:CGRectMake(self.bounds.size.width/4, (self.bounds.size.height*3 / 4), self.bounds.size.width/2, self.bounds.size.height/4)];
+        self.label = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width/4, (self.frame.size.height*3 / 4), self.frame.size.width/2, self.frame.size.height/4)];
         self.backgroundColor = [UIColor blackColor];
         self.alpha = .7; // semi transparent
         [self.layer setCornerRadius:5.0];
@@ -42,7 +42,7 @@
         // Initialization code
         self.height = frame.size.height;
         self.width = frame.size.width;
-        self.label = [[UILabel alloc] initWithFrame:CGRectMake(self.bounds.size.width/4, (self.bounds.size.height*3 / 4), self.bounds.size.width/2, self.bounds.size.height/4)];
+        self.label = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width/4, (self.frame.size.height*3 / 4), self.frame.size.width/2, self.frame.size.height/4)];
         self.backgroundColor = [UIColor blackColor];
         self.alpha = .7; // semi transparent
         [self.layer setCornerRadius:5.0];
