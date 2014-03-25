@@ -28,6 +28,13 @@
  */
 - (GSFDataTransfer *)initWithURL:(NSString *)url;
 
+/**
+ *  <#Description#>
+ *
+ *  @param  <# description#>
+ *
+ *  @return <#return value description#>
+ */
 // use this when you want to transfer data from the file system
 // this is different from initWithURL:(NSString*)url
 // because this should only be used in an upload all case.
