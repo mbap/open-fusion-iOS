@@ -149,7 +149,7 @@
                     for (NSDictionary *feature in features) {
                         if ([[feature objectForKey:@"properties"] isKindOfClass:[NSDictionary class]]) {
                             NSDictionary *properties = [feature objectForKey:@"properties"];
-                            key = [NSString stringWithFormat:@"Section%lu", (unsigned long)sectioniter++];
+                            key = [NSString stringWithFormat:@"Section%lu", (unsigned long)sectioniter];
                             UIImage *image = nil;
                             if ([properties objectForKey:@"oimage"]) {
                                 NSString *oimage = [properties objectForKey:@"oimage"];
@@ -174,6 +174,7 @@
                             [images addObject:image];
                         }
                     }
+                    sectioniter++;
                     [self.imageCache setObject:images forKey:key];
                 }
             }
@@ -240,7 +241,7 @@
         cell.textLabel.text = [properties objectForKey:@"timestamp"];
     }
     
-    NSArray *images = [self.imageCache objectForKey:[NSString stringWithFormat:@"Section%ld", (long)indexPath.section + 1]];
+    NSArray *images = [self.imageCache objectForKey:[NSString stringWithFormat:@"Section%ld", (long)indexPath.section]];
     cell.imageView.image = [images objectAtIndex:indexPath.row];
     
     return cell;

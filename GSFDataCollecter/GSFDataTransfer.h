@@ -19,9 +19,13 @@
 
 @interface GSFDataTransfer : NSObject
 
-
-// use this when you want to transfer data from the file system
-// so it can delete the file when transfered
+/**
+ *  Creates a new GSFDataTransfer object with the url provided.
+ *
+ *  @param url Url of the file to be transfered.
+ *
+ *  @return The new GSFDataTransfer object ready for use.
+ */
 - (GSFDataTransfer *)initWithURL:(NSString *)url;
 
 // use this when you want to transfer data from the file system
