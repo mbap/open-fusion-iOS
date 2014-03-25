@@ -60,6 +60,7 @@
 		D312C5E918D691C900B8641A /* icon-transparent-white5.png in Resources */ = {isa = PBXBuildFile; fileRef = D312C5E218D691C900B8641A /* icon-transparent-white5.png */; };
 		D312C5EA18D691C900B8641A /* icon-white5.png in Resources */ = {isa = PBXBuildFile; fileRef = D312C5E318D691C900B8641A /* icon-white5.png */; };
 		D312C5EE18D782CE00B8641A /* GSFSensorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D312C5ED18D782CE00B8641A /* GSFSensorViewController.m */; };
+		D3641AFC18E10A7C00DBB5E7 /* Delete-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D3641AFB18E10A7C00DBB5E7 /* Delete-icon.png */; };
 		D397AC4118B514D30067691D /* GSFAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D397AC4018B514D30067691D /* GSFAppDelegate.m */; };
 		D397AC4418BAC4920067691D /* GSFDirectionService.m in Sources */ = {isa = PBXBuildFile; fileRef = D397AC4318BAC4920067691D /* GSFDirectionService.m */; };
 		D397AC4918BE80C40067691D /* GSFTrackerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D397AC4818BE80C40067691D /* GSFTrackerHelper.m */; };
@@ -74,7 +75,6 @@
 		D3D7807C18A0396900E5AB50 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3D7807B18A0396900E5AB50 /* CoreLocation.framework */; };
 		D3D7807F18A0416400E5AB50 /* GSFTaggedVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3D7807E18A0416400E5AB50 /* GSFTaggedVCViewController.m */; };
 		D3D7808318A051DA00E5AB50 /* GSFData.m in Sources */ = {isa = PBXBuildFile; fileRef = D3D7808218A051DA00E5AB50 /* GSFData.m */; };
-		D3D7D5BA18C40B1E00F5D540 /* Main_iPhone5s.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3D7D5B818C40B1E00F5D540 /* Main_iPhone5s.storyboard */; };
 		D9F9F3AD5A024F9181F4F432 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D1EB022391E459995534E17 /* libPods.a */; };
 		DBB4283B1880A64F00139082 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB4283A1880A64F00139082 /* Foundation.framework */; };
 		DBB4283D1880A64F00139082 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB4283C1880A64F00139082 /* CoreGraphics.framework */; };
@@ -172,6 +172,7 @@
 		D312C5E318D691C900B8641A /* icon-white5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-white5.png"; sourceTree = "<group>"; };
 		D312C5EC18D782CE00B8641A /* GSFSensorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFSensorViewController.h; sourceTree = "<group>"; };
 		D312C5ED18D782CE00B8641A /* GSFSensorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFSensorViewController.m; sourceTree = "<group>"; };
+		D3641AFB18E10A7C00DBB5E7 /* Delete-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Delete-icon.png"; sourceTree = "<group>"; };
 		D397AC4018B514D30067691D /* GSFAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFAppDelegate.m; sourceTree = "<group>"; };
 		D397AC4218BAC4920067691D /* GSFDirectionService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFDirectionService.h; sourceTree = "<group>"; };
 		D397AC4318BAC4920067691D /* GSFDirectionService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFDirectionService.m; sourceTree = "<group>"; };
@@ -192,7 +193,6 @@
 		D3D7807E18A0416400E5AB50 /* GSFTaggedVCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFTaggedVCViewController.m; sourceTree = "<group>"; };
 		D3D7808118A051DA00E5AB50 /* GSFData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFData.h; sourceTree = "<group>"; };
 		D3D7808218A051DA00E5AB50 /* GSFData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFData.m; sourceTree = "<group>"; };
-		D3D7D5B918C40B1E00F5D540 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone5s.storyboard; sourceTree = "<group>"; };
 		D421E72B666048D1B7300657 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		DBB428371880A64F00139082 /* GSFDataCollecter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GSFDataCollecter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBB4283A1880A64F00139082 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -336,7 +336,6 @@
 				D312C5CD18D6870300B8641A /* UYLPasswordManager.m */,
 				96FE0E0918D2B838002C40A5 /* GSFLoginViewController.h */,
 				96FE0E0A18D2B838002C40A5 /* GSFLoginViewController.m */,
-				D3D7D5B818C40B1E00F5D540 /* Main_iPhone5s.storyboard */,
 				D397AC4018B514D30067691D /* GSFAppDelegate.m */,
 				DBB428491880A64F00139082 /* GSFAppDelegate.h */,
 				DBB4284F1880A64F00139082 /* Main_iPad.storyboard */,
@@ -433,6 +432,7 @@
 		DBB428411880A64F00139082 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D3641AFB18E10A7C00DBB5E7 /* Delete-icon.png */,
 				D312C5DD18D691C900B8641A /* globe-black5.png */,
 				D312C5DE18D691C900B8641A /* globe-transparent5.png */,
 				D312C5DF18D691C900B8641A /* globe-white5.png */,
@@ -532,7 +532,7 @@
 				ORGANIZATIONNAME = "Michael Baptist - LLNL";
 				TargetAttributes = {
 					DBB428361880A64F00139082 = {
-						DevelopmentTeam = 58K2V57UB6;
+						DevelopmentTeam = Z5SLZ6QPTL;
 					};
 					DBB4285A1880A64F00139082 = {
 						TestTargetID = DBB428361880A64F00139082;
@@ -563,6 +563,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3641AFC18E10A7C00DBB5E7 /* Delete-icon.png in Resources */,
 				D312C5E518D691C900B8641A /* globe-transparent5.png in Resources */,
 				D312C5E918D691C900B8641A /* icon-transparent-white5.png in Resources */,
 				D312C5DC18D6919800B8641A /* icon-white.png in Resources */,
@@ -578,7 +579,6 @@
 				D312C5C918CFEC9C00B8641A /* upload.png in Resources */,
 				96EAC4B918AD88280084B331 /* haarcascade_frontalface_alt2.xml in Resources */,
 				96EAC4BA18AD88280084B331 /* haarcascade_frontalface_default.xml in Resources */,
-				D3D7D5BA18C40B1E00F5D540 /* Main_iPhone5s.storyboard in Resources */,
 				DBB428561880A64F00139082 /* Images.xcassets in Resources */,
 				D3BF4D1E18CE5E35003CB52B /* white.png in Resources */,
 				DBB4284E1880A64F00139082 /* Main_iPhone.storyboard in Resources */,
@@ -634,7 +634,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "";
+			shellScript = "#if [ ${CONFIGURATION} == \"Release\" ]; then\nAPPLEDOC_PATH=`which appledoc`\nif [ $APPLEDOC_PATH ]; then\n$APPLEDOC_PATH \\\n--project-name ${PRODUCT_NAME} \\\n--project-company \"Your Name\" \\\n--company-id \"com.yourcompany\" \\\n--output ${PRODUCT_NAME}Docs \\\n--keep-undocumented-objects \\\n--keep-undocumented-members \\\n--keep-intermediate-files \\\n--no-repeat-first-par \\\n--no-warn-invalid-crossref \\\n--exit-threshold 2 \\\n${PROJECT_DIR}/${PRODUCT_NAME}\nfi;\n#fi;";
 		};
 		EF2C562301214810BCE53C4B /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -704,14 +704,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		D3D7D5B818C40B1E00F5D540 /* Main_iPhone5s.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D3D7D5B918C40B1E00F5D540 /* Base */,
-			);
-			name = Main_iPhone5s.storyboard;
-			sourceTree = "<group>";
-		};
 		DBB428431880A64F00139082 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (

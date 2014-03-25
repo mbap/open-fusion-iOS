@@ -19,6 +19,7 @@
 
 @interface GSFDataTransfer : NSObject
 
+
 // use this when you want to transfer data from the file system
 // so it can delete the file when transfered
 - (GSFDataTransfer *)initWithURL:(NSString *)url;
@@ -40,6 +41,11 @@
 
 // sends the NSData from above to gsf server.
 - (void)uploadDataArray:(NSData *)data;
+
+// deletes the file at a given url
+// mainly in here so other classes done have to copy the code all over the place.
+- (void)deleteFile:(NSString*)url;
+
 
 // delegate property
 @property (nonatomic, weak) id <GSFDataTransferDelegate> delegate;

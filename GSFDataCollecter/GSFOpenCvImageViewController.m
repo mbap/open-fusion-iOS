@@ -81,7 +81,7 @@
 }
 
 - (IBAction)sendDataToDB:(id)sender {
-    UIActionSheet *menu = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Discard and Send Old Data", @"OpenCV Image(s)", @"Original Image(s)", @"Both", nil];
+    UIActionSheet *menu = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Discard", @"OpenCV Image(s)", @"Original Image(s)", @"Both", nil];
     [menu showInView:self.view];
 }
 
@@ -108,7 +108,7 @@
 {
     GSFDataTransfer *driver = [[GSFDataTransfer alloc] init];
     if (0 == buttonIndex) {
-        [self performSegueWithIdentifier:@"savedData" sender:self];
+        [self.navigationController popViewControllerAnimated:YES];
     } else if (4 == buttonIndex) {
         // do nothing
     } else {

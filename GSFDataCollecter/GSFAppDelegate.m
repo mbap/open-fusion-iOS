@@ -14,37 +14,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
-    CGSize iOSDeviceScreenSize = [[UIScreen mainScreen] bounds].size;
-    
-    if (iOSDeviceScreenSize.height == 480)
-    {
-        // Instantiate a new storyboard object using the storyboard file named Storyboard_iPhone35
-        UIStoryboard *iPhone4Storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
-        
-        // Instantiate the initial view controller object from the storyboard
-        UIViewController *initialViewController = [iPhone4Storyboard instantiateInitialViewController];
-        
-        // Instantiate a UIWindow object and initialize it with the screen size of the iOS device
-        self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-        
-        // Set the initial view controller to be the root view controller of the window object
-        self.window.rootViewController  = initialViewController;
-        
-        // Set the window object to be the key window and show it
-        [self.window makeKeyAndVisible];
-    }
-    
-    if (iOSDeviceScreenSize.height == 568)
-    {   // iPhone 5 and iPod Touch 5th generation: 4 inch screen
-        // Instantiate a new storyboard object using the storyboard file named Storyboard_iPhone4
-        UIStoryboard *iPhone5Storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone5s" bundle:nil];
-        UIViewController *initialViewController = [iPhone5Storyboard instantiateInitialViewController];
-        self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-        self.window.rootViewController  = initialViewController;
-        [self.window makeKeyAndVisible];
-    }
-    
     [GMSServices provideAPIKey:@"AIzaSyCvpcWcgTa-dq2BB06g9Wnh-jG9k-_Ngfo"];
  
     // create directory in documents for storing GEOJSON feature collection objects as NSData.

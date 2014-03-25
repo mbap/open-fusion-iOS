@@ -240,7 +240,7 @@
         cell.textLabel.text = [properties objectForKey:@"timestamp"];
     }
     
-    NSArray *images = [self.imageCache objectForKey:[NSString stringWithFormat:@"Section%ld", (long)indexPath.section]];
+    NSArray *images = [self.imageCache objectForKey:[NSString stringWithFormat:@"Section%ld", (long)indexPath.section + 1]];
     cell.imageView.image = [images objectAtIndex:indexPath.row];
     
     return cell;
@@ -285,12 +285,16 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, headHeight)];
-    GSFTableButton *button = [[GSFTableButton alloc] initWithFrame:CGRectMake(tableView.bounds.size.width - imageWidth, 0, imageWidth, headHeight) forSection:section];
+    GSFTableButton *button = [[GSFTableButton alloc] initWithFrame:CGRectMake(tableView.bounds.size.width - imageWidth*1.5, 0, imageWidth, headHeight) forSection:section];
     [button setImage:[UIImage imageNamed:@"upload.png"] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(headerTapped:)  forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:button];
-    NSString * string = [NSString stringWithFormat:@"Feature Collection %ld", (long)section + 1];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(headHeight, 0, tableView.bounds.size.width - (headHeight * 3), headHeight)];
+    GSFTableButton *deleteButton = [[GSFTableButton alloc] initWithFrame:CGRectMake(tableView.bounds.size.width - headHeight*2, 0, headHeight, headHeight) forSection:section];
+    [deleteButton setImage:[UIImage imageNamed:@"Delete-icon.png"] forState:UIControlStateNormal];
+    [deleteButton addTarget:self action:@selector(deleteFeatureCollection:)  forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:deleteButton];
+    NSString * string = [NSString stringWithFormat:@"Collection %ld", (long)section + 1];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(headHeight/2, 0, tableView.bounds.size.width - (headHeight * 4), headHeight)];
     label.text = string;
     label.font = [UIFont systemFontOfSize:14.0];
     label.textColor = [UIColor grayColor];
@@ -316,6 +320,21 @@
         if ([NSJSONSerialization isValidJSONObject:featureCollection]) {
             [uploader uploadDataArray:[NSJSONSerialization dataWithJSONObject:featureCollection options:NSJSONWritingPrettyPrinted error:nil]];
         }
+    });
+}
+
+// deletes a feature collection list and its container file
+- (void)deleteFeatureCollection:(GSFTableButton *)deleteButton
+{
+    GSFDataTransfer *cleaner = [[GSFDataTransfer alloc] initWithURL:[self.fileList objectAtIndex:deleteButton.section]];
+    cleaner.delegate = self;
+    dispatch_queue_t cleaningQueue = dispatch_queue_create("cleaningQueue", NULL);
+    dispatch_async(cleaningQueue, ^{
+        [cleaner deleteFile:[self.fileList objectAtIndex:deleteButton.section]];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.datasource removeObjectAtIndex:self.selectedFeatureSection];
+            [self.tableView reloadData];
+        });
     });
 }
 
