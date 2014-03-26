@@ -23,9 +23,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     GSFOpenCvImageProcessor *pro = [[GSFOpenCvImageProcessor alloc] init];
-    if (self.image.imageOrientation == UIImageOrientationLeft) { // requires 90 clockwise rotation
-        self.image = [pro rotateImage:self.image byDegrees:180];
-    } else if (self.image.imageOrientation == UIImageOrientationUp) { // 90 counter clock
+    if (self.image.imageOrientation == UIImageOrientationUp) { // 90 counter clock
         self.image = [pro rotateImage:self.image byDegrees:-90];
     } else if (self.image.imageOrientation == UIImageOrientationDown) { // 180 rotation.
         self.image = [pro rotateImage:self.image byDegrees:90];

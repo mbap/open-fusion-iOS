@@ -54,14 +54,8 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    // this should be the number of properties
-    // -2 from the images due to the fact that we want a row for all 3 images to segue from
-    // +1 due to gps coordinates in separate dict
-    NSDictionary *properties = nil;
-    if ([[self.feature objectForKey:@"properties"] isKindOfClass:[NSDictionary class]]) {
-        properties = [self.feature objectForKey:@"properties"];
-    }
-    return properties.count - 1;
+    // this should be the number of properties in a GSF Geojson object.
+    return 8;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -89,9 +83,8 @@
                 properties = [self.feature objectForKey:@"properties"];
             }
             if(2 == indexPath.row) {
-                NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[properties objectForKey:@"timestamp"] doubleValue]];
                 NSString *datestring = @"Date: ";
-                cell.textLabel.text = [datestring stringByAppendingString:[date description]];
+                cell.textLabel.text = [datestring stringByAppendingString:[properties objectForKey:@"timestamp"]];
             } else if (3 == indexPath.row) {
                 if ([properties objectForKey:@"altitude"]) {
                     cell.textLabel.text = [[NSString alloc] initWithFormat:@"Altitude: %.2fm", [[properties objectForKey:@"altitude"] doubleValue]];
@@ -107,10 +100,14 @@
             } else if (6 == indexPath.row) {
                 if ([properties objectForKey:@"faces_detected"]) {
                     cell.textLabel.text = [[NSString alloc] initWithFormat:@"Faces: %d detected.", [[properties objectForKey:@"faces_detected"] intValue]];
+                } else {
+                    cell.textLabel.text = [[NSString alloc] initWithFormat:@"Faces: 0."];
                 }
             } else if (7 == indexPath.row) {
                 if ([properties objectForKey:@"people_detected"]) {
                     cell.textLabel.text = [[NSString alloc] initWithFormat:@"People: %d detected.", [[properties objectForKey:@"people_detected"] intValue]];
+                } else {
+                    cell.textLabel.text = [[NSString alloc] initWithFormat:@"People: 0."];
                 }
             }
         }
@@ -133,9 +130,18 @@
         GSFSavedDataImageViewController *controller = (GSFSavedDataImageViewController*)segue.destinationViewController;
         if ([[self.feature objectForKey:@"properties"] isKindOfClass:[NSDictionary class]]) {
             NSDictionary *properties = [self.feature objectForKey:@"properties"];
-            UIImage *oimage = [[UIImage alloc] initWithData:[[NSData alloc] initWithBase64EncodedString:[properties objectForKey:@"oimage"] options:0]];
-            UIImage *pimage = [[UIImage alloc] initWithData:[[NSData alloc] initWithBase64EncodedString:[properties objectForKey:@"pimage"] options:0]];
-            UIImage *fimage = [[UIImage alloc] initWithData:[[NSData alloc] initWithBase64EncodedString:[properties objectForKey:@"fimage"] options:0]];
+            UIImage *oimage = nil;
+            UIImage *fimage = nil;
+            UIImage *pimage = nil;
+            if ([properties objectForKey:@"oimage"]) {
+                oimage = [[UIImage alloc] initWithData:[[NSData alloc] initWithBase64EncodedString:[properties objectForKey:@"oimage"] options:0]];
+            }
+            if ([properties objectForKey:@"pimage"]) {
+                pimage = [[UIImage alloc] initWithData:[[NSData alloc] initWithBase64EncodedString:[properties objectForKey:@"pimage"] options:0]];
+            }
+            if ([properties objectForKey:@"fimage"]) {
+                fimage = [[UIImage alloc] initWithData:[[NSData alloc] initWithBase64EncodedString:[properties objectForKey:@"fimage"] options:0]];
+            }
             NSArray *images = [[NSArray alloc] initWithObjects:oimage, pimage, fimage, nil];
             controller.images = images;
         }

@@ -333,7 +333,10 @@
     dispatch_async(cleaningQueue, ^{
         [cleaner deleteFile:[self.fileList objectAtIndex:deleteButton.section]];
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self.datasource removeObjectAtIndex:self.selectedFeatureSection];
+            [self.datasource exchangeObjectAtIndex:deleteButton.section withObjectAtIndex:(self.datasource.count - 1)];
+            [self.datasource removeObjectAtIndex:(self.datasource.count - 1)];
+            [self.imageCache setObject:[self.imageCache objectForKey:[NSString stringWithFormat:@"Section%ld", (long)(self.imageCache.count - 1)]] forKey:[NSString stringWithFormat:@"Section%ld", (long)deleteButton.section]];
+            [self.imageCache removeObjectForKey:[NSString stringWithFormat:@"Section%ld", (long)(self.imageCache.count - 1)]];
             [self.tableView reloadData];
         });
     });
