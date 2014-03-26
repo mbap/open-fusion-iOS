@@ -16,16 +16,36 @@
 
 @interface GSFOpenCvImageProcessor ()
 
-// convert image from UIImage to cvMat format to use the opencv framework.
+/**
+ *  Converts an image taken from the iPhone into the cv::cvMat format so that the OpenCV framework can perform image processing on the cv::cvMat.
+ *
+ *  @param image The image to be converted into cv::cvMat.
+ *
+ *  @return The cv::cvMat data type from the UIImage passed in.
+ */
 - (cv::Mat)cvMatFromUIImage:(UIImage *)image;
 
-// conver image from cvMat to UIImage for after the image is processed.
+/**
+ *  Converts an OpenCV cv::cvMat formatted image into an Apple UIImage to be used for iOS or OSX applications.
+ *
+ *  @param cvMatImage The cv::cvMat data type to be converted into an Apple UIImage.
+ *
+ *  @return A UIImage.
+ */
 - (UIImage *)UIImageFromCvMat:(cv::Mat)cvMatImage;
 
 @end
 
 @implementation GSFOpenCvImageProcessor
 
+/**
+ *  Rotates an image by a certain number of degrees. This has an effect on the bits of the image.
+ *
+ *  @param image   The image to be rotated.
+ *  @param degrees The number in degrees that the image will be rotated by.
+ *
+ *  @return The image passed in rotated by the specified number of degrees.
+ */
 - (UIImage *)rotateImage:(UIImage*)image byDegrees:(CGFloat)degrees
 {
     // calculate the size of the rotated view's containing box for our drawing space
@@ -54,12 +74,28 @@
     
 }
 
+/**
+ *  Takes an image and resizes it to the scale of the front facing camera. This is to speed up any processing on the image, lower disk consumption. For iPhone4/4s this is 480x640 or 640x480 and for iPhone5/5s it is (fill in).
+ *
+ *  @param image The image to be resized.
+ *
+ *  @return The resized image.
+ */
 - (UIImage *)resizedImage:(UIImage *)image {
     CGRect newRect;
+    CGRect screenBound = [[UIScreen mainScreen] bounds];
     if (image.imageOrientation == UIImageOrientationLeft || image.imageOrientation == UIImageOrientationRight) {
-        newRect = CGRectIntegral(CGRectMake(0, 0, 480, 640));
+        if (screenBound.size.height > 480) { // iphone 5 image
+            //newRect = CGRectIntegral(CGRectMake(0, 0, , ));
+        } else { // iphone 4 image
+            newRect = CGRectIntegral(CGRectMake(0, 0, 480, 640));
+        }
     } else if (image.imageOrientation == UIImageOrientationUp || image.imageOrientation == UIImageOrientationDown) {
-        newRect = CGRectIntegral(CGRectMake(0, 0, 640, 480));
+        if (screenBound.size.height > 480) { // iphone 5 image
+            //newRect = CGRectIntegral(CGRectMake(0, 0, , ));
+        } else { // iphone 4 image
+            newRect = CGRectIntegral(CGRectMake(0, 0, 640, 480));
+        }
     }
     CGImageRef imageRef = image.CGImage;
 
@@ -91,7 +127,13 @@
     return newImage;
 }
 
-// convert image from UIImage to cvMat format to use the opencv framework.
+/**
+ *  Converts an image taken from the iPhone into the cv::cvMat format so that the OpenCV framework can perform image processing on the cv::cvMat.
+ *
+ *  @param image The image to be converted into cv::cvMat.
+ *
+ *  @return The cv::cvMat data type from the UIImage passed in.
+ */
 - (cv::Mat)cvMatFromUIImage:(UIImage *)image
 {
     if (image.imageOrientation == UIImageOrientationRight) { // requires 90 clockwise rotation
@@ -128,6 +170,13 @@
 }
 
 // convert image from cvMat to UIImage for after the image is processed.
+/**
+ *  Converts an OpenCV cv::cvMat formatted image into an Apple UIImage to be used for iOS or OSX applications.
+ *
+ *  @param cvMatImage The cv::cvMat data type to be converted into an Apple UIImage.
+ *
+ *  @return A UIImage.
+ */
 - (UIImage *)UIImageFromCvMat:(cv::Mat)cvMatImage;
 {
     NSData *data = [NSData dataWithBytes:cvMatImage.data length:cvMatImage.elemSize()*cvMatImage.total()];
@@ -143,8 +192,11 @@
     return finalImage;
 }
 
-// detects a person in a photo.
-- (void)detectPeopleUsingImageArray:(NSMutableArray *)capturedImages
+/**
+ *  Uses OpenCV to detect human bodies in the images contained with in the array of data that is passed in. GSFData objects should be passed in and the GSFImage params will be filled. GSFImages lie within these GSFData objects and they are the images that will be used during the detection algorithm. Note: Detects Full Bodies such as a pedestrian.
+ *
+ *  @param capturedImages An Array of GSFData objects.
+ */- (void)detectPeopleUsingImageArray:(NSMutableArray *)capturedImages
 {
     cv::HOGDescriptor hog;
     hog.setSVMDetector(cv::HOGDescriptor::getDefaultPeopleDetector());
@@ -181,6 +233,11 @@
     }
 }
 
+/**
+ *  Uses OpenCV to detect human faces in the images contained with in the array of data that is passed in. GSFData objects should be passed in and the GSFImage params will be filled. GSFImages lie within these GSFData objects and they are the images that will be used during the detection algorithm.
+ *
+ *  @param capturedImages An array of GSFData objects.
+ */
 - (void)detectFacesUsingImageArray:(NSMutableArray *)capturedImages
 {
     for (GSFData *data in capturedImages) {
