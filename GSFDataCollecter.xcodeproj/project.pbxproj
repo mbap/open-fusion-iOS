@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B67ACEA18E4B6EF008CC092 /* GSF_Insert_sensor_alert-v2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B67ACE918E4B6EF008CC092 /* GSF_Insert_sensor_alert-v2.png */; };
 		966F6C8A18AAC0A100BE3334 /* hogcascade_pedestrians.xml in Resources */ = {isa = PBXBuildFile; fileRef = 966F6C8818AAC0A100BE3334 /* hogcascade_pedestrians.xml */; };
 		966F6C9118AB579200BE3334 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 966F6C9018AB579200BE3334 /* GoogleMaps.framework */; };
 		966F6C9318AB57CF00BE3334 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 966F6C9218AB57CF00BE3334 /* CoreData.framework */; };
@@ -104,6 +105,7 @@
 
 /* Begin PBXFileReference section */
 		0D1EB022391E459995534E17 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B67ACE918E4B6EF008CC092 /* GSF_Insert_sensor_alert-v2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GSF_Insert_sensor_alert-v2.png"; sourceTree = "<group>"; };
 		966F6C8818AAC0A100BE3334 /* hogcascade_pedestrians.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = hogcascade_pedestrians.xml; path = GSFDataCollecter/hogcascade_pedestrians.xml; sourceTree = "<group>"; };
 		966F6C9018AB579200BE3334 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
 		966F6C9218AB57CF00BE3334 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -433,6 +435,7 @@
 			isa = PBXGroup;
 			children = (
 				D3641AFB18E10A7C00DBB5E7 /* Delete-icon.png */,
+				5B67ACE918E4B6EF008CC092 /* GSF_Insert_sensor_alert-v2.png */,
 				D312C5DD18D691C900B8641A /* globe-black5.png */,
 				D312C5DE18D691C900B8641A /* globe-transparent5.png */,
 				D312C5DF18D691C900B8641A /* globe-white5.png */,
@@ -532,7 +535,7 @@
 				ORGANIZATIONNAME = "Michael Baptist - LLNL";
 				TargetAttributes = {
 					DBB428361880A64F00139082 = {
-						DevelopmentTeam = 58K2V57UB6;
+						DevelopmentTeam = Z5SLZ6QPTL;
 					};
 					DBB4285A1880A64F00139082 = {
 						TestTargetID = DBB428361880A64F00139082;
@@ -573,6 +576,7 @@
 				D3BF4D1D18CE5E35003CB52B /* transparent.png in Resources */,
 				D312C5D918D6919800B8641A /* icon-black.png in Resources */,
 				D3BF4D2318CE62C4003CB52B /* transparent1.png in Resources */,
+				5B67ACEA18E4B6EF008CC092 /* GSF_Insert_sensor_alert-v2.png in Resources */,
 				96EAC4BF18AD8E250084B331 /* GoogleMaps.bundle in Resources */,
 				D312C5D618D6919800B8641A /* globe-black.png in Resources */,
 				DBB428511880A64F00139082 /* Main_iPad.storyboard in Resources */,
