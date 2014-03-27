@@ -189,8 +189,15 @@
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
     if (image.size.width > 2000) { // 2000 is magic number and means it has to be main camera
         GSFOpenCvImageProcessor *pro = [[GSFOpenCvImageProcessor alloc] init];
-        image = [pro resizedImage:image];
-        // resize large images.
+        UIImageOrientation orient = image.imageOrientation;
+        image = [pro resizedImage:image];         // resize large images.
+        if (orient == UIImageOrientationDown) {
+            image = [pro rotateImage:image byDegrees:180];
+        } else if (orient == UIImageOrientationLeft) {
+            image = [pro rotateImage:image byDegrees:-90];
+        } else if (orient == UIImageOrientationRight) {
+            image = [pro rotateImage:image byDegrees:90];
+        }
     }
     NSLog(@"%f, %f", image.size.width, image.size.height);
     GSFData *newdata = [[GSFData alloc] initWithImage:image];
