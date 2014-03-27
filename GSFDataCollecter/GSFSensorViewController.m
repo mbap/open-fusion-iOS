@@ -134,7 +134,7 @@ void ToneInterruptionListener(void *inClientData, UInt32 inInterruptionState) {
     // Power tone setup
     _sampleRate = 44100;
     _frequency = 20000;
-    _amplitude = 0.75;
+    _amplitude = 0.5f;
     
     // Setup master volume controller
     MPVolumeView *volumeView = [MPVolumeView new];
