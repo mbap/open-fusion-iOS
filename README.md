@@ -9,7 +9,7 @@ After cloning this project, you will need to install the Podfile into the projec
 1. Install cocoapods using this command  
    $ sudo gem install cocoapods
 
-2. Run this command and your finished.  
+2. Run this command in the projects directory and your finished.  
    $ pod install
 
 From now on open the GSFDataCollecter.xcworkspace file instead of the xcproject file.
