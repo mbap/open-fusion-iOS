@@ -86,13 +86,13 @@
     CGRect screenBound = [[UIScreen mainScreen] bounds];
     if (image.imageOrientation == UIImageOrientationLeft || image.imageOrientation == UIImageOrientationRight) {
         if (screenBound.size.height > 480) { // iphone 5 image
-            //newRect = CGRectIntegral(CGRectMake(0, 0, , ));
+            newRect = CGRectIntegral(CGRectMake(0, 0, 960, 1280));
         } else { // iphone 4 image
             newRect = CGRectIntegral(CGRectMake(0, 0, 480, 640));
         }
     } else if (image.imageOrientation == UIImageOrientationUp || image.imageOrientation == UIImageOrientationDown) {
         if (screenBound.size.height > 480) { // iphone 5 image
-            //newRect = CGRectIntegral(CGRectMake(0, 0, , ));
+            newRect = CGRectIntegral(CGRectMake(0, 0, 1280, 960));
         } else { // iphone 4 image
             newRect = CGRectIntegral(CGRectMake(0, 0, 640, 480));
         }
