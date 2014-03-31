@@ -10,12 +10,15 @@
 #import "GSFViewController.h"
 #import "GSFLoginViewController.h"
 #import "UYLPasswordManager.h"
+#import "GSFSensorViewController.h"
 
 @interface GSFDataViewController ()
 
 @property (weak, nonatomic) IBOutlet UISwitch *personDetectToggle;
 @property (weak, nonatomic) IBOutlet UISwitch *faceDetectionToggle;
-@property (weak, nonatomic) IBOutlet UISwitch *sensorSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *noiseDetectionToggle;
+@property (weak, nonatomic) IBOutlet UISwitch *sensorToggle;
+
 @property (nonatomic) IBOutlet UIImageView *imageView;
 
 @end
@@ -37,7 +40,6 @@
         // push view controller to get the api key.
         [self.navigationController pushViewController:[[GSFLoginViewController alloc] init] animated:YES];
     }
-    self.sensorSwitch.on = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -46,10 +48,28 @@
     // Dispose of any resources that can be recreated.
 }
 
+// Turn off noise monitoring switch if sensor monitor is on
+- (IBAction)sensorToggleFlipped:(id)sender {
+    if (self.sensorToggle.on) {
+        self.noiseDetectionToggle.on = NO;
+    }
+}
+
+// Turn off sensor monitoring switch if noise monitoring is on
+- (IBAction)noiseToggleFlipped:(id)sender {
+    if (self.noiseDetectionToggle.on) {
+        self.sensorToggle.on = NO;
+    }
+}
+
 - (IBAction)startCollecting:(id)sender {
-    if (self.sensorSwitch.on) {
-        [self performSegueWithIdentifier:@"sensorGate" sender:self];
-    } else if (self.personDetectToggle.on || self.faceDetectionToggle.on) {
+    if (self.noiseDetectionToggle.on) {
+        NSLog(@"Start audio session recorder and add to collection.");
+    }
+    if (self.sensorToggle) {
+        NSLog(@"Start collecting sensor data and add to collection.");
+    }
+    if (self.personDetectToggle.on || self.faceDetectionToggle.on) {
         [self performSegueWithIdentifier:@"imagePickerSegue" sender:self];
     }
 }
