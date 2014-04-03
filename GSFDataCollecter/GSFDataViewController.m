@@ -10,15 +10,16 @@
 #import "GSFViewController.h"
 #import "GSFLoginViewController.h"
 #import "UYLPasswordManager.h"
-#import "GSFSensorViewController.h"
+
+#import "GSFNoiseLevelController.h"
 
 @interface GSFDataViewController ()
 
+@property GSFNoiseLevelController *noiseMonitor;
 @property (weak, nonatomic) IBOutlet UISwitch *personDetectToggle;
 @property (weak, nonatomic) IBOutlet UISwitch *faceDetectionToggle;
 @property (weak, nonatomic) IBOutlet UISwitch *noiseDetectionToggle;
 @property (weak, nonatomic) IBOutlet UISwitch *sensorToggle;
-
 @property (nonatomic) IBOutlet UIImageView *imageView;
 
 @end
@@ -65,9 +66,11 @@
 - (IBAction)startCollecting:(id)sender {
     if (self.noiseDetectionToggle.on) {
         NSLog(@"Start audio session recorder and add to collection.");
+        [self.noiseMonitor mointorNoise:YES];
     }
     if (self.sensorToggle) {
         NSLog(@"Start collecting sensor data and add to collection.");
+        [self.noiseMonitor mointorNoise:NO];
     }
     if (self.personDetectToggle.on || self.faceDetectionToggle.on) {
         [self performSegueWithIdentifier:@"imagePickerSegue" sender:self];

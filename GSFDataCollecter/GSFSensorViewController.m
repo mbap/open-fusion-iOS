@@ -332,7 +332,7 @@ static OSStatus renderToneCallback(void *inRefCon,
 }
 
 // OLD way of detecting sensor connection
-- (BOOL)isHeadsetPluggedIn {
+- (BOOL) isHeadsetPluggedIn {
     NSArray *outputs = [[AVAudioSession sharedInstance] currentRoute].outputs;
     NSString *portNameOut = [[outputs objectAtIndex:0] portName];
     NSArray *inputs = [[AVAudioSession sharedInstance] currentRoute].inputs;
@@ -395,7 +395,7 @@ static OSStatus renderToneCallback(void *inRefCon,
          message:@"Please insert the GSF sensor to collect this data."
          delegate:self
          cancelButtonTitle:nil
-         otherButtonTitles:@"Cancel", nil]; // removed , @"Use Mic"
+         otherButtonTitles:@"Cancel", nil];
         
         [alertImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
         [self.sensorAlert.contentView addSubview:alertImageView];
