@@ -10,10 +10,19 @@
 
 @interface GSFTableButton : UIButton
 
-// init with frame for section button should be placed in.
+/**
+ *  Creates a new button with a frame to be used in a section of a tableview.
+ *
+ *  @param frame   The frame that contains the button.
+ *  @param section The section of the tableview.
+ *
+ *  @return A new GSFTableButton object.
+ */
 - (id)initWithFrame:(CGRect)frame forSection:(NSInteger)section;
 
-// should be set to the section for which the button is created for.
+/**
+ *  Seciton Property. Should be set to the section for which the button is created for.
+ */
 @property (nonatomic) NSInteger section;
 
 @end

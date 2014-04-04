@@ -10,21 +10,48 @@
 
 @interface GSFSpinner : UIView
 
-// creates default spinner in the middle of the screen.
+/**
+ *  Creates a default spinner in the middle of the screen.
+ *
+ *  @return A new GSFSpinner.
+ */
 - (id)init;
 
-// creates a spinner with custom size and custom location.
+/**
+ *  Creates a spinner with custom size and custom location.
+ *
+ *  @param frame The frame for the new GSFSpinner to be used.
+ *
+ *  @return A new GSFSpinner with custom frame.
+ */
 - (id)initWithFrame:(CGRect)frame;
 
-//  since this is a regular uiactivity spinner.
-//  you can customize it how ever you want
+/**
+ *  The actual spinner itself that is inside the custom view. Since this is a regular UIActivity spinner. The developer can customize it how ever they want.
+ */
 @property (nonatomic) UIActivityIndicatorView *spinner;
 
+/**
+ *  Label that says why the spinner is spinning.
+ */
 @property (nonatomic) UILabel *label;
+
+/**
+ *  Width of the view containing the spinner.
+ */
 @property (nonatomic) NSUInteger width;
+
+/**
+ *  Height of the view containing the spinner.
+ */
 @property (nonatomic) NSUInteger height;
 
 // sets the label text to white system font of size 14
+/**
+ *  Sets the label tetx to white system font of size 14.
+ *
+ *  @param text The text to be inserted into the label.
+ */
 - (void)setLabelText:(NSString*)text;
 
 @end

@@ -8,20 +8,44 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ *  Image class used with GSFData objects.
+ */
 @interface GSFImage : NSObject
 
 // init with an image.
+/**
+ *  Creates a GSFImage object using the image provided.
+ *
+ *  @param image The image used to initialize the GSFImage.
+ *
+ *  @return The GSFImage that was freshly allocated.
+ */
 - (GSFImage*)initWithImage:(UIImage*)image;
 
-// field for storing an image.
-@property (nonatomic) UIImage *oimage;  //original
-@property (nonatomic) UIImage *fimage;  //face detect
-@property (nonatomic) UIImage *pimage;  //person detect
+/**
+ *  Stores the original image.
+ */
+@property (nonatomic) UIImage *oimage;
 
-// field for saving the number of faces that are detected.
+/**
+ *  Stores the facial detection image.
+ */
+@property (nonatomic) UIImage *fimage;
+
+/**
+ *  Store the pedestrian detection image.
+ */
+@property (nonatomic) UIImage *pimage;
+
+/**
+ *  Field for saving the number of faces that are detected after OpenCV algorithms are used.
+ */
 @property (nonatomic) NSNumber *faceDetectionNumber;
 
-// field for saving the number of people are detected.
+/**
+ *  Field for saving the number of pedestrians that are detected after OpenCV algorithms are used.
+ */
 @property (nonatomic) NSNumber *personDetectionNumber;
 
 @end

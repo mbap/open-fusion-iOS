@@ -10,26 +10,59 @@
 #import <CoreLocation/CoreLocation.h>
 #import "GSFImage.h"
 
-
+/**
+ *  The model for the GSFDataCollector application.
+ */
 @interface GSFData : NSObject
 
-@property (nonatomic) GSFImage *gsfImage;               // original images
-@property (nonatomic) CLLocation *coords;               // this contains all of the below
+/**
+ *  A GSFImage object used to store picture data.
+ */
+@property (nonatomic) GSFImage *gsfImage;
+
+/**
+ *  A GPS object used to GEO-Tag a GSFData object.
+ */
+@property (nonatomic) CLLocation *coords;
+
+/**
+ *  String used to store the timestamp in a particular format.
+ */
 @property (nonatomic) NSString *date;
 
-// add properties for noise level, temperature, humidity here.
+// add properties for noise level, temperature, humidity and other data here.
 
-// allocate a GSFData Object before calling this
-// sets the image property of an GSFData Object
+/**
+ *  Creates a GSFData obejct and sets the gsfimage property using the image passed in.
+ *
+ *  @param image The image used to initialize the gsfImage property.
+ *
+ *  @return The newly created GSFData object.
+ */
 - (GSFData*)initWithImage:(UIImage*)image;
 
-// convert to UTC time.
+/**
+ *  Converts a timestamp to UTC time.
+ *
+ *  @param coords The GPS object containing the timestamp. Often times this is the coords property.
+ */
 - (void)convertToUTC:(CLLocation *)coords;
 
-// convert to ISO8601 timestamp
+/**
+ *  Converts a timestamp to ISO8601 timestamp to be GSOJSON conformant.
+ *
+ *  @param coords The GPS object containing the timestamp. Often times this is the coords property.
+ */
 - (void)convertToISO8601:(CLLocation *)coords;
 
-// converts a GSFData Object into a dictionary that can be turned into json.
+/**
+ *  Converts a GSFData Object into a dictionary that is Apple JSON conformant.
+ *
+ *  @param gsfdata The GSFData object to be converted into a dictionary.
+ *  @param option  The option used to package the GSFData into dictionaries. Passing 1 will package only the OpenCV images. Passing 2 will package only the Original images. Passing 3 will package both option 1 and 2.
+ *
+ *  @return A Apple JSON conformant dictionary containing a GSFData object.
+ */
 + (NSDictionary *)convertGSFDataToDict:(GSFData *)gsfdata withFlag:(NSNumber *)option;
 
 @end

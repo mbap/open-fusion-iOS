@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
+/**
+ *  Class used to present the saved data from the file system.
+ */
 @interface GSFSavedDataViewController : UITableViewController
 
 @end

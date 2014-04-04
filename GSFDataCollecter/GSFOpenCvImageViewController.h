@@ -9,11 +9,24 @@
 #import <UIKit/UIKit.h>
 #import "GSFData.h"
 
+/**
+ *  The view controller for the post processing view. After OpenCV has processed the images taken by the user the images are shown in this view.
+ */
 @interface GSFOpenCvImageViewController : UIViewController
 
-@property (nonatomic) NSMutableArray *dataArray; // this is the data to send.
+/**
+ *  Containts the data to be send to the GSF Server using the GSFDataTransfer object.
+ */
+@property (nonatomic) NSMutableArray *dataArray;
 
+/**
+ *  Contains the original data or the images taken by the user.
+ */
 @property (nonatomic) NSMutableArray *originalData;
+
+/**
+ *  Contains the original orientations of all images.
+ */
 @property (nonatomic) NSMutableArray *originalOrientation;
 
 @end

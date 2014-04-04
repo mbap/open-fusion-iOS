@@ -9,18 +9,29 @@
 #import <Foundation/Foundation.h>
 #import "GSFData.h"
 
+/**
+ *  Protocol for returning the HTTP status code to objects that conform.
+ */
 @protocol GSFDataTransferDelegate <NSObject>
 
 @optional
 
+/**
+ *  If implmented this will be the easiest way to check the status code of an HTTP request from a class that uses a GSFDataTransfer object.
+ *
+ *  @param statusCode The status code the the HTTP request returns.
+ */
 - (void)checkHttpStatus:(NSInteger)statusCode;
 
 @end
 
+/**
+ *  Class to be used for data transfer throughout the GSFDataCollector app.
+ */
 @interface GSFDataTransfer : NSObject
 
 /**
- *  Creates a new GSFDataTransfer object with the url provided.
+ *  Creates a new GSFDataTransfer object with the url provided. Use this when you want to transfer one collection to the server.
  *
  *  @param url Url of the file to be transfered.
  *
@@ -29,36 +40,51 @@
 - (GSFDataTransfer *)initWithURL:(NSString *)url;
 
 /**
- *  <#Description#>
+ *  Creates a new GSFDataTransfer object with the urls provided. Use this when you want to transfer more than one collection to the server.
  *
- *  @param  <# description#>
+ *  @param urls Urls of the files to be transfered.
  *
- *  @return <#return value description#>
+ *  @return The new GSFDataTransfer object ready for use.
  */
-// use this when you want to transfer data from the file system
-// this is different from initWithURL:(NSString*)url
-// because this should only be used in an upload all case.
-// this will set the url array to a list of urls
-// if transfer is complete all files in the urls array will be deleted.
 - (GSFDataTransfer *)initWithURLs:(NSArray *)urls;
 
-// takes each gsfdata object and converts it into its json format specified by
-// the JSON Format for Upload API found on the google docs documentation section.
+/**
+ *  Takes each GSFData object and converts it into a JSON object in GEOJSON fomat.
+ *
+ *  @param dataArray An array of GSFData objects in Apple JSON conformant dictionaries.
+ *  @param option    The option used to package the array of dictionaries into JSON. Passing 1 will package only the OpenCV images. Passing 2 will package only the Original images. Passing 3 will package both option 1 and 2.
+ *
+ *  @return The GEOJSON data as an NSData object.
+ */
 - (NSData *)formatDataAsJSON:(NSMutableArray *)dataArray withFlag:(NSNumber *)option;
 
-// this is a data concatenation function: runs at O(n^2)
-// takes a list of feature collections and turns them into one feature collection to send.
+/**
+ *  A data concatenation function that runs at O(n^2) speed. Takes a list of feature collections and turns them into one feature collection.
+ *
+ *  @param collectionlist The list of feature collections to be concatenated.
+ *
+ *  @return One feature collection containing all features from the collectionlist.
+ */
 - (NSData *)createFeatureCollectionFromFreatureCollections:(NSArray *)collectionlist;
 
-// sends the NSData from above to gsf server.
+/**
+ *  Uploads the GEOJSON objects containing the collected data to the GSF Team Server.
+ *
+ *  @param data The data to be sent. Must be in GEOJSON format for the returned HTTP status to be successful.
+ */
 - (void)uploadDataArray:(NSData *)data;
 
-// deletes the file at a given url
-// mainly in here so other classes done have to copy the code all over the place.
+/**
+ *  Deletes the file at a given file path or url.
+ *
+ *  @param url The url to the file to be deleted from the file system.
+ */
 - (void)deleteFile:(NSString*)url;
 
 
-// delegate property
+/**
+ *  The delegate object.
+ */
 @property (nonatomic, weak) id <GSFDataTransferDelegate> delegate;
 
 @end
