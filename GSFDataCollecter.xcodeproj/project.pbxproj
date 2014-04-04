@@ -107,7 +107,6 @@
 
 /* Begin PBXFileReference section */
 		0D1EB022391E459995534E17 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		5B27182718E89D61005BF15E /* GSFDataCollecter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = GSFDataCollecter.entitlements; sourceTree = "<group>"; };
 		5B27182818E89D61005BF15E /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		5B67ACE918E4B6EF008CC092 /* GSF_Insert_sensor_alert-v2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GSF_Insert_sensor_alert-v2.png"; sourceTree = "<group>"; };
 		5BFF04F718E907AE00A86354 /* GSFSensorIOController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFSensorIOController.h; sourceTree = "<group>"; };
@@ -305,7 +304,6 @@
 		D312C5EB18D782A800B8641A /* Sensors */ = {
 			isa = PBXGroup;
 			children = (
-				5B27182718E89D61005BF15E /* GSFDataCollecter.entitlements */,
 				D312C5EC18D782CE00B8641A /* GSFSensorViewController.h */,
 				D312C5ED18D782CE00B8641A /* GSFSensorViewController.m */,
 				5BFF04F718E907AE00A86354 /* GSFSensorIOController.h */,
@@ -506,8 +504,6 @@
 				DBB428341880A64F00139082 /* Frameworks */,
 				DBB428351880A64F00139082 /* Resources */,
 				1265E63F7BB04CCDBD2B58D7 /* Copy Pods Resources */,
-				96CA75B818A725D200C553E9 /* ShellScript */,
-				5B27182A18E89DA1005BF15E /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -547,7 +543,7 @@
 				ORGANIZATIONNAME = "Michael Baptist - LLNL";
 				TargetAttributes = {
 					DBB428361880A64F00139082 = {
-						DevelopmentTeam = Z5SLZ6QPTL;
+						DevelopmentTeam = 58K2V57UB6;
 					};
 					DBB4285A1880A64F00139082 = {
 						TestTargetID = DBB428361880A64F00139082;
@@ -638,32 +634,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		5B27182A18E89DA1005BF15E /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "#if [ ${CONFIGURATION} == \"Release\" ]; then\nAPPLEDOC_PATH=`which appledoc`\nif [ $APPLEDOC_PATH ]; then\n$APPLEDOC_PATH \\\n--project-name ${PRODUCT_NAME} \\\n--project-company \"Your Name\" \\\n--company-id \"com.yourcompany\" \\\n--output ${PRODUCT_NAME}Docs \\\n--keep-undocumented-objects \\\n--keep-undocumented-members \\\n--keep-intermediate-files \\\n--no-repeat-first-par \\\n--no-warn-invalid-crossref \\\n--exit-threshold 2 \\\n${PROJECT_DIR}/${PRODUCT_NAME}\nfi;\n#fi;";
-		};
-		96CA75B818A725D200C553E9 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "#if [ ${CONFIGURATION} == \"Release\" ]; then\nAPPLEDOC_PATH=`which appledoc`\nif [ $APPLEDOC_PATH ]; then\n$APPLEDOC_PATH \\\n--project-name ${PRODUCT_NAME} \\\n--project-company \"Your Name\" \\\n--company-id \"com.yourcompany\" \\\n--output ${PRODUCT_NAME}Docs \\\n--keep-undocumented-objects \\\n--keep-undocumented-members \\\n--keep-intermediate-files \\\n--no-repeat-first-par \\\n--no-warn-invalid-crossref \\\n--exit-threshold 2 \\\n${PROJECT_DIR}/${PRODUCT_NAME}\nfi;\n#fi;";
 		};
 		EF2C562301214810BCE53C4B /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -849,7 +819,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LIBRARY = "libc++";
-				CODE_SIGN_ENTITLEMENTS = GSFDataCollecter/GSFDataCollecter.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -874,7 +843,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LIBRARY = "libc++";
-				CODE_SIGN_ENTITLEMENTS = GSFDataCollecter/GSFDataCollecter.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (

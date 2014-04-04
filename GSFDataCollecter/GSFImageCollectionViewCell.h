@@ -8,8 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ *  Subclass of UICollectionViewCell used for the GSFViewController collection view.
+ */
 @interface GSFImageCollectionViewCell : UICollectionViewCell
 
+/**
+ *  Imageview for the collection view cells.
+ */
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
 @end

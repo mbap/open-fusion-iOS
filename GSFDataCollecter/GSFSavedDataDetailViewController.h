@@ -8,9 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ *  Class used to present one collected GSFData object.
+ */
 @interface GSFSavedDataDetailViewController : UITableViewController
 
-// contains one feature from GEOJSON featureCollection parentViewController
+/**
+ *  Contains one feature from GEOJSON featureCollection parentViewController.
+ */
 @property (nonatomic) NSDictionary *feature;
 
 @end

@@ -8,9 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ *  Class used to present the images from a single GSFData object.
+ */
 @interface GSFSavedDataImageViewController : UIPageViewController
 
-// array of images to be displayed
+/**
+ *  Array of images to be displayed.
+ */
 @property (nonatomic) NSArray *images;
 
 @end
