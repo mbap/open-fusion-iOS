@@ -96,7 +96,7 @@
     [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:data];
-    NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *reqeustData, NSURLResponse *response, NSError *error) {
+    NSURLSessionUploadTask *postDataTask = [session uploadTaskWithRequest:request fromData:data completionHandler:^(NSData *reqeustData, NSURLResponse *response, NSError *error) {
         NSLog(@"response = %@\nerror = %@\ndata = %@", response, error, reqeustData);
         if (error) {
             [self saveData:data];
@@ -205,6 +205,12 @@
             NSLog(@"File at URL: %@ removed.\n", filePath);
         }
     }
+}
+
+// delegate method that provides data for the upload progres view indicator.
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didSendBodyData:(int64_t)bytesSent totalBytesSent:(int64_t)totalBytesSent totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
+{
+    [self.delegate uploadSession:(NSURLSession *)session task:(NSURLSessionTask *)task didSendData:(int64_t)bytesSent totalBytesSent:(int64_t)totalBytesSent totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend];
 }
 
 @end
