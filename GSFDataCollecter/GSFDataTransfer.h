@@ -12,7 +12,7 @@
 /**
  *  Protocol for returning the HTTP status code to objects that conform.
  */
-@protocol GSFDataTransferDelegate <NSObject>
+@protocol GSFDataTransferDelegate <NSObject, NSURLSessionTaskDelegate>
 
 @optional
 
@@ -22,6 +22,18 @@
  *  @param statusCode The status code the the HTTP request returns.
  */
 - (void)checkHttpStatus:(NSInteger)statusCode;
+
+/**
+ *  Periodically informs the delegate of the progress of sending body content to the server.
+ *
+ *  @param session                  The session containing the data task.
+ *  @param task                     The data task.
+ *  @param bytesSent                The number of bytes sent since the last time this delegate method was called.
+ *  @param totalBytesSent           The total number of bytes sent so far.
+ *  @param totalBytesExpectedToSend The expected length of the body data.
+ */
+- (void)uploadSession:(NSURLSession *)session task:(NSURLSessionTask *)task didSendData:(int64_t)bytesSent totalBytesSent:(int64_t)totalBytesSent totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend;
+
 
 @end
 
