@@ -7,15 +7,18 @@
 //
 
 #import <GoogleMaps/GoogleMaps.h>
+#import <Crashlytics/Crashlytics.h>
 #import "GSFAppDelegate.h"
-
+#import "GSFCreds.h"
 @implementation GSFAppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [GMSServices provideAPIKey:@"AIzaSyCvpcWcgTa-dq2BB06g9Wnh-jG9k-_Ngfo"];
- 
+    // add api keys for services (google maps and crashlytics)
+    [GMSServices provideAPIKey:[GSFCreds GoogleMapsApiKey]];
+    [Crashlytics startWithAPIKey:[GSFCreds crashlyticsApiKey]];
+    
     // create directory in documents for storing GEOJSON feature collection objects as NSData.
     NSFileManager *man = [[NSFileManager alloc] init];
     NSArray *urls = [man URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];

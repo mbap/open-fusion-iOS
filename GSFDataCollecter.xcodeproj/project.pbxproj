@@ -64,6 +64,8 @@
 		D312C5EA18D691C900B8641A /* icon-white5.png in Resources */ = {isa = PBXBuildFile; fileRef = D312C5E318D691C900B8641A /* icon-white5.png */; };
 		D312C5EE18D782CE00B8641A /* GSFSensorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D312C5ED18D782CE00B8641A /* GSFSensorViewController.m */; };
 		D3641AFC18E10A7C00DBB5E7 /* Delete-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D3641AFB18E10A7C00DBB5E7 /* Delete-icon.png */; };
+		D36F5D7118F0E8EF00C9C8B6 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D36F5D7018F0E8EF00C9C8B6 /* Crashlytics.framework */; };
+		D36F5D7418F0F39C00C9C8B6 /* GSFCreds.m in Sources */ = {isa = PBXBuildFile; fileRef = D36F5D7318F0F39C00C9C8B6 /* GSFCreds.m */; };
 		D397AC4118B514D30067691D /* GSFAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D397AC4018B514D30067691D /* GSFAppDelegate.m */; };
 		D397AC4418BAC4920067691D /* GSFDirectionService.m in Sources */ = {isa = PBXBuildFile; fileRef = D397AC4318BAC4920067691D /* GSFDirectionService.m */; };
 		D397AC4918BE80C40067691D /* GSFTrackerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D397AC4818BE80C40067691D /* GSFTrackerHelper.m */; };
@@ -180,6 +182,9 @@
 		D312C5EC18D782CE00B8641A /* GSFSensorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFSensorViewController.h; sourceTree = "<group>"; };
 		D312C5ED18D782CE00B8641A /* GSFSensorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFSensorViewController.m; sourceTree = "<group>"; };
 		D3641AFB18E10A7C00DBB5E7 /* Delete-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Delete-icon.png"; sourceTree = "<group>"; };
+		D36F5D7018F0E8EF00C9C8B6 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		D36F5D7218F0F39C00C9C8B6 /* GSFCreds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFCreds.h; sourceTree = "<group>"; };
+		D36F5D7318F0F39C00C9C8B6 /* GSFCreds.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFCreds.m; sourceTree = "<group>"; };
 		D397AC4018B514D30067691D /* GSFAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFAppDelegate.m; sourceTree = "<group>"; };
 		D397AC4218BAC4920067691D /* GSFDirectionService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFDirectionService.h; sourceTree = "<group>"; };
 		D397AC4318BAC4920067691D /* GSFDirectionService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFDirectionService.m; sourceTree = "<group>"; };
@@ -248,6 +253,7 @@
 				96C6A52918984501004D70F0 /* AVFoundation.framework in Frameworks */,
 				96C6A525189844F2004D70F0 /* Accelerate.framework in Frameworks */,
 				966F6C9118AB579200BE3334 /* GoogleMaps.framework in Frameworks */,
+				D36F5D7118F0E8EF00C9C8B6 /* Crashlytics.framework in Frameworks */,
 				DBB4283F1880A64F00139082 /* UIKit.framework in Frameworks */,
 				DBB4283B1880A64F00139082 /* Foundation.framework in Frameworks */,
 				D9F9F3AD5A024F9181F4F432 /* libPods.a in Frameworks */,
@@ -342,6 +348,8 @@
 		D3D7807918A038E400E5AB50 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				D36F5D7218F0F39C00C9C8B6 /* GSFCreds.h */,
+				D36F5D7318F0F39C00C9C8B6 /* GSFCreds.m */,
 				D312C5CC18D6870300B8641A /* UYLPasswordManager.h */,
 				D312C5CD18D6870300B8641A /* UYLPasswordManager.m */,
 				96FE0E0918D2B838002C40A5 /* GSFLoginViewController.h */,
@@ -395,6 +403,7 @@
 		DBB428391880A64F00139082 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D36F5D7018F0E8EF00C9C8B6 /* Crashlytics.framework */,
 				5B27182818E89D61005BF15E /* AudioToolbox.framework */,
 				D312C5CA18D6830B00B8641A /* Security.framework */,
 				96EAC4BE18AD8E250084B331 /* GoogleMaps.bundle */,
@@ -504,6 +513,7 @@
 				DBB428341880A64F00139082 /* Frameworks */,
 				DBB428351880A64F00139082 /* Resources */,
 				1265E63F7BB04CCDBD2B58D7 /* Copy Pods Resources */,
+				D3DC777B18F0E55000D4E22B /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -543,7 +553,7 @@
 				ORGANIZATIONNAME = "Michael Baptist - LLNL";
 				TargetAttributes = {
 					DBB428361880A64F00139082 = {
-						DevelopmentTeam = 58K2V57UB6;
+						DevelopmentTeam = Z5SLZ6QPTL;
 					};
 					DBB4285A1880A64F00139082 = {
 						TestTargetID = DBB428361880A64F00139082;
@@ -635,6 +645,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		D3DC777B18F0E55000D4E22B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "[ -f .gsf_app_credentials ] && source .gsf_app_credentials\n if [ \"$CRASHLYTICS_API_KEY\" != \"x\" ]; then\n     ./Crashlytics.framework/run $CRASHLYTICS_API_KEY\n else\n     echo \"warning: Crashytics API Key not found\"\n fi";
+		};
 		EF2C562301214810BCE53C4B /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -665,6 +688,7 @@
 				D312C5EE18D782CE00B8641A /* GSFSensorViewController.m in Sources */,
 				96FCA62418CAD0B000BC01A1 /* GSFSavedDataViewController.m in Sources */,
 				D3D7807F18A0416400E5AB50 /* GSFTaggedVCViewController.m in Sources */,
+				D36F5D7418F0F39C00C9C8B6 /* GSFCreds.m in Sources */,
 				96EAF06918CD89B90041A265 /* GSFSavedDataImageViewController.m in Sources */,
 				D3BF4D1418CE4746003CB52B /* GSFPageControllerContentViewController.m in Sources */,
 				96EAC4BD18AD88450084B331 /* GSFImageSelectorPreview.m in Sources */,
@@ -825,12 +849,14 @@
 					"$(inherited)",
 					"./**",
 					"/Users/mbaptist/Code/open-fusion-iOS",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GSFDataCollecter/GSFDataCollecter-Prefix.pch";
 				INFOPLIST_FILE = "GSFDataCollecter/GSFDataCollecter-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				VALIDATE_PRODUCT = NO;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -850,12 +876,14 @@
 					"$(inherited)",
 					"./**",
 					"/Users/mbaptist/Code/open-fusion-iOS",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GSFDataCollecter/GSFDataCollecter-Prefix.pch";
 				INFOPLIST_FILE = "GSFDataCollecter/GSFDataCollecter-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
