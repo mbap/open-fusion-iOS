@@ -15,6 +15,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    // add api keys for services (google maps and crashlytics)
     [GMSServices provideAPIKey:[GSFCreds GoogleMapsApiKey]];
     [Crashlytics startWithAPIKey:[GSFCreds crashlyticsApiKey]];
     
