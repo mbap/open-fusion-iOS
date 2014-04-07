@@ -18,6 +18,8 @@
 
 @property (nonatomic) NSInteger httpResponse;
 
+@property (nonatomic) NSURLSessionUploadTask *postDataTask;
+
 @end
 
 @implementation GSFDataTransfer
@@ -96,7 +98,7 @@
     [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:data];
-    NSURLSessionUploadTask *postDataTask = [session uploadTaskWithRequest:request fromData:data completionHandler:^(NSData *reqeustData, NSURLResponse *response, NSError *error) {
+    self.postDataTask = [session uploadTaskWithRequest:request fromData:data completionHandler:^(NSData *reqeustData, NSURLResponse *response, NSError *error) {
         NSLog(@"response = %@\nerror = %@\ndata = %@", response, error, reqeustData);
         if (error) {
             [self saveData:data];
@@ -136,7 +138,7 @@
             }
         }
     }];
-    [postDataTask resume];
+    [self.postDataTask resume];
 }
 
 - (void)URLSession:(NSURLSession *)session didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential *))completionHandler{
@@ -207,10 +209,17 @@
     }
 }
 
+- (void)cancelUpload
+{
+    if (self.postDataTask.state == NSURLSessionTaskStateRunning) {
+        [self.postDataTask cancel];
+    }
+}
+
 // delegate method that provides data for the upload progres view indicator.
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didSendBodyData:(int64_t)bytesSent totalBytesSent:(int64_t)totalBytesSent totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
 {
-    [self.delegate uploadSession:(NSURLSession *)session task:(NSURLSessionTask *)task didSendData:(int64_t)bytesSent totalBytesSent:(int64_t)totalBytesSent totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend];
+    [self.delegate uploadPercentage:((float)totalBytesSent / (float)totalBytesExpectedToSend)];
 }
 
 @end

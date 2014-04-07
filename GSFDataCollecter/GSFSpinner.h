@@ -46,9 +46,8 @@
  */
 @property (nonatomic) NSUInteger height;
 
-// sets the label text to white system font of size 14
 /**
- *  Sets the label tetx to white system font of size 14.
+ *  Sets the label text to white system font of size 14.
  *
  *  @param text The text to be inserted into the label.
  */
