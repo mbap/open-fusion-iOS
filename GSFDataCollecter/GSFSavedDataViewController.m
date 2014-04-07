@@ -12,13 +12,14 @@
 #import "GSFTableButton.h"
 #import "GSFDataTransfer.h"
 #import "GSFSpinner.h"
+#import "GSFProgressView.h"
 #import "GSFLoginViewController.h"
 
 #define headHeight 25
 #define imageWidth 150
 
 
-@interface GSFSavedDataViewController () <GSFDataTransferDelegate>
+@interface GSFSavedDataViewController () <GSFDataTransferDelegate, UINavigationBarDelegate>
 {
     void (^_completionHandler)(int someParameter);
 }
@@ -49,10 +50,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *uploadAllButton;
 
 // progress bar for network transactions.
-@property (nonatomic) UIProgressView *uploadBar;
+@property (nonatomic) GSFProgressView *uploadBar;
 
-// spinner for network transactions.
-//@property (nonatomic) GSFSpinner *uploadSpinner;
+// data transfer object.
+@property (nonatomic) GSFDataTransfer *uploader;
 
 @end
 
@@ -324,105 +325,41 @@
     });
 }
 
-//// if the header button gets touched we upload the data to the server.
-//- (void)headerTapped:(GSFTableButton*)button
-//{
-//    // send data to the server. deletion of file on success handled by GSFDataTransfer object
-//    GSFDataTransfer *uploader = [[GSFDataTransfer alloc] initWithURL:[self.fileList objectAtIndex:button.section]];
-//    uploader.delegate = self;
-//    dispatch_queue_t networkQueue = dispatch_queue_create("networkQueue", NULL);
-//    self.uploadSpinner = [[GSFSpinner alloc] init];
-//    [self.uploadSpinner setLabelText:@"Sending..."];
-//    [self.view addSubview:self.uploadSpinner];
-//    [self.view bringSubviewToFront:self.uploadSpinner];
-//    [self.uploadSpinner.spinner startAnimating];
-//    dispatch_async(networkQueue, ^{
-//        NSDictionary *featureCollection = [self.datasource objectAtIndex:button.section];
-//        self.selectedFeatureSection = button.section;
-//        if ([NSJSONSerialization isValidJSONObject:featureCollection]) {
-//            [uploader uploadDataArray:[NSJSONSerialization dataWithJSONObject:featureCollection options:NSJSONWritingPrettyPrinted error:nil]];
-//        }
-//    });
-//}
-
 // if the header button gets touched we upload the data to the server.
 - (void)headerTapped:(GSFTableButton*)button
 {
     // send data to the server. deletion of file on success handled by GSFDataTransfer object
-    GSFDataTransfer *uploader = [[GSFDataTransfer alloc] initWithURL:[self.fileList objectAtIndex:button.section]];
-    uploader.delegate = self;
+    self.uploader = [[GSFDataTransfer alloc] initWithURL:[self.fileList objectAtIndex:button.section]];
+    self.uploader.delegate = self;
     dispatch_queue_t networkQueue = dispatch_queue_create("networkQueue", NULL);
-    self.uploadBar = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
-    [self.uploadBar setFrame:CGRectMake(30.0, 75.0, 200.0, 80.0)];
+    self.uploadBar = [[GSFProgressView alloc] init];
+    [self.uploadBar setLabelText:@"Uploading..."];
     [self.view addSubview:self.uploadBar];
     [self.view bringSubviewToFront:self.uploadBar];
     dispatch_async(networkQueue, ^{
         NSDictionary *featureCollection = [self.datasource objectAtIndex:button.section];
         self.selectedFeatureSection = button.section;
         if ([NSJSONSerialization isValidJSONObject:featureCollection]) {
-            [uploader uploadDataArray:[NSJSONSerialization dataWithJSONObject:featureCollection options:NSJSONWritingPrettyPrinted error:nil]];
+            [self.uploader uploadDataArray:[NSJSONSerialization dataWithJSONObject:featureCollection options:NSJSONWritingPrettyPrinted error:nil]];
         }
     });
 }
-
-
-//- (IBAction)uploadAll:(UIButton *)button
-//{
-//    // create a feature collection that has all the feautures of every file in one feature collection.
-//    // send data to the server. deletion of file on success handled by GSFDataTransfer object
-//    if (self.fileList.count) { // if there are more than zero files we send them
-//        GSFDataTransfer *uploader = [[GSFDataTransfer alloc] initWithURLs:self.fileList];
-//        uploader.delegate = self;
-//        dispatch_queue_t networkQueue = dispatch_queue_create("networkQueue", NULL);
-//        self.uploadSpinner = [[GSFSpinner alloc] init];
-//        [self.uploadSpinner setLabelText:@"Sending All..."];
-//        [self.view addSubview:self.uploadSpinner];
-//        [self.view bringSubviewToFront:self.uploadSpinner];
-//        [self.uploadSpinner.spinner startAnimating];
-//        dispatch_async(networkQueue, ^{
-//            self.selectedFeatureSection = -1;
-//            [uploader uploadDataArray:[uploader createFeatureCollectionFromFreatureCollections:self.datasource]];
-//        });
-//    }
-//}
-//
-//// delegate method that sends message reguarding the status
-//- (void)checkHttpStatus:(NSInteger)statusCode
-//{
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        if (statusCode == 200 || statusCode == 201) {
-//            if (self.selectedFeatureSection == -1) { // upload all was hit
-//                self.datasource = nil;
-//                [self.tableView reloadData];
-//            } else {
-//                [self.datasource removeObjectAtIndex:self.selectedFeatureSection];
-//                [self.tableView reloadData];
-//            }
-//        } else if (statusCode == 403){
-//            [self.navigationController pushViewController:[[GSFLoginViewController alloc] init] animated:YES];
-//        }
-//        [self.uploadSpinner.spinner stopAnimating];
-//        [self.uploadSpinner removeFromSuperview];
-//        self.uploadSpinner = nil;
-//    });
-//}
-
 
 - (IBAction)uploadAll:(UIButton *)button
 {
     // create a feature collection that has all the feautures of every file in one feature collection.
     // send data to the server. deletion of file on success handled by GSFDataTransfer object
     if (self.fileList.count) { // if there are more than zero files we send them
-        GSFDataTransfer *uploader = [[GSFDataTransfer alloc] initWithURLs:self.fileList];
-        uploader.delegate = self;
+        self.uploader = [[GSFDataTransfer alloc] initWithURLs:self.fileList];
+        self.uploader.delegate = self;
         dispatch_queue_t networkQueue = dispatch_queue_create("networkQueue", NULL);
-        self.uploadBar = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
-        [self.uploadBar setFrame:CGRectMake(30.0, 75.0, 200.0, 80.0)];
+        self.uploadBar = [[GSFProgressView alloc] init];
+        [self.uploadBar setLabelText:@"Uploading All..."];
         [self.view addSubview:self.uploadBar];
         [self.view bringSubviewToFront:self.uploadBar];
         dispatch_async(networkQueue, ^{
             self.selectedFeatureSection = -1;
-            [uploader uploadDataArray:[uploader createFeatureCollectionFromFreatureCollections:self.datasource]];
+            [self.uploader uploadDataArray:[self.uploader createFeatureCollectionFromFreatureCollections:self.datasource]];
         });
     }
 }
@@ -448,12 +385,17 @@
 }
 
 // delegate method that provides data for the upload progres view indicator.
-- (void)uploadSession:(NSURLSession *)session task:(NSURLSessionTask *)task didSendData:(int64_t)bytesSent totalBytesSent:(int64_t)totalBytesSent totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
+- (void)uploadPercentage:(float)percent
 {
-    NSNumber *totalSent = [[NSNumber alloc] initWithLongLong:totalBytesSent];
-    NSNumber *expected = [[NSNumber alloc] initWithLongLong:totalBytesExpectedToSend];
-    float status = ([totalSent floatValue] / [expected floatValue]);
-    [self.uploadBar setProgress:status animated:YES];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.uploadBar.progressBar setProgress:percent animated:YES];
+    });
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self.uploader cancelUpload];
+    self.uploader = nil;
 }
 
 - (void)didReceiveMemoryWarning

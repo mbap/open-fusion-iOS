@@ -10,6 +10,7 @@
 		5B27182918E89D61005BF15E /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B27182818E89D61005BF15E /* AudioToolbox.framework */; };
 		5B67ACEA18E4B6EF008CC092 /* GSF_Insert_sensor_alert-v2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B67ACE918E4B6EF008CC092 /* GSF_Insert_sensor_alert-v2.png */; };
 		5BFF04F918E907AE00A86354 /* GSFSensorIOController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFF04F818E907AE00A86354 /* GSFSensorIOController.m */; };
+		96546A2018F2327A003F8BBB /* GSFProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96546A1F18F2327A003F8BBB /* GSFProgressView.m */; };
 		966F6C8A18AAC0A100BE3334 /* hogcascade_pedestrians.xml in Resources */ = {isa = PBXBuildFile; fileRef = 966F6C8818AAC0A100BE3334 /* hogcascade_pedestrians.xml */; };
 		966F6C9118AB579200BE3334 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 966F6C9018AB579200BE3334 /* GoogleMaps.framework */; };
 		966F6C9318AB57CF00BE3334 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 966F6C9218AB57CF00BE3334 /* CoreData.framework */; };
@@ -113,6 +114,8 @@
 		5B67ACE918E4B6EF008CC092 /* GSF_Insert_sensor_alert-v2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GSF_Insert_sensor_alert-v2.png"; sourceTree = "<group>"; };
 		5BFF04F718E907AE00A86354 /* GSFSensorIOController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFSensorIOController.h; sourceTree = "<group>"; };
 		5BFF04F818E907AE00A86354 /* GSFSensorIOController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFSensorIOController.m; sourceTree = "<group>"; };
+		96546A1E18F2327A003F8BBB /* GSFProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFProgressView.h; sourceTree = "<group>"; };
+		96546A1F18F2327A003F8BBB /* GSFProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFProgressView.m; sourceTree = "<group>"; };
 		966F6C8818AAC0A100BE3334 /* hogcascade_pedestrians.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = hogcascade_pedestrians.xml; path = GSFDataCollecter/hogcascade_pedestrians.xml; sourceTree = "<group>"; };
 		966F6C9018AB579200BE3334 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
 		966F6C9218AB57CF00BE3334 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -348,6 +351,8 @@
 		D3D7807918A038E400E5AB50 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				96546A1E18F2327A003F8BBB /* GSFProgressView.h */,
+				96546A1F18F2327A003F8BBB /* GSFProgressView.m */,
 				D36F5D7218F0F39C00C9C8B6 /* GSFCreds.h */,
 				D36F5D7318F0F39C00C9C8B6 /* GSFCreds.m */,
 				D312C5CC18D6870300B8641A /* UYLPasswordManager.h */,
@@ -686,6 +691,7 @@
 				96F52DB018CFE08500684E64 /* GSFTableButton.m in Sources */,
 				D312C5CE18D6870300B8641A /* UYLPasswordManager.m in Sources */,
 				D312C5EE18D782CE00B8641A /* GSFSensorViewController.m in Sources */,
+				96546A2018F2327A003F8BBB /* GSFProgressView.m in Sources */,
 				96FCA62418CAD0B000BC01A1 /* GSFSavedDataViewController.m in Sources */,
 				D3D7807F18A0416400E5AB50 /* GSFTaggedVCViewController.m in Sources */,
 				D36F5D7418F0F39C00C9C8B6 /* GSFCreds.m in Sources */,

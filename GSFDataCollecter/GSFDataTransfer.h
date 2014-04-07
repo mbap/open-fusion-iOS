@@ -26,13 +26,9 @@
 /**
  *  Periodically informs the delegate of the progress of sending body content to the server.
  *
- *  @param session                  The session containing the data task.
- *  @param task                     The data task.
- *  @param bytesSent                The number of bytes sent since the last time this delegate method was called.
- *  @param totalBytesSent           The total number of bytes sent so far.
- *  @param totalBytesExpectedToSend The expected length of the body data.
+ *  @param percent A float between 0.0 and 1.0 that specifies the upload progress.
  */
-- (void)uploadSession:(NSURLSession *)session task:(NSURLSessionTask *)task didSendData:(int64_t)bytesSent totalBytesSent:(int64_t)totalBytesSent totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend;
+- (void)uploadPercentage:(float)percent;
 
 
 @end
@@ -93,6 +89,12 @@
  */
 - (void)deleteFile:(NSString*)url;
 
+/**
+ *  If an upload is in progres, this will cancel the upload.
+ *
+ *  @param task The session upload task that is uploading content.
+ */
+- (void)cancelUpload;
 
 /**
  *  The delegate object.
