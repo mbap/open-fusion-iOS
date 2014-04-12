@@ -10,6 +10,15 @@
 
 @implementation GSFNoiseLevelController
 
+- (id) init {
+    self = [super init];
+    if (!self) return nil;
+    
+    [self initNoiseRecorder];
+    
+    return self;
+}
+
 - (void) initNoiseRecorder {
     // MIC Input Setup
     NSURL *url = [NSURL fileURLWithPath:@"dev/null"];
@@ -45,7 +54,7 @@
     if (!success) NSLog(@"ERROR initNoiseRecorder: AVAudioSession failed activating- %@", error);
     
     // Add audio route change listner
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(audioRouteChangeListener:) name:AVAudioSessionRouteChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(audioRouteChangeListener::) name:AVAudioSessionRouteChangeNotification object:nil];
 }
 
 /**
@@ -53,49 +62,22 @@
  *
  *  @param notification A notification containing audio change reason
  */
-- (void)audioRouteChangeListener: (NSNotification*)notification {
+- (void) audioRouteChangeListener: (NSNotification*)notification : (UIView*) view {
     // Initiallize dictionary with notification and grab route change reason
     NSDictionary *interuptionDict = notification.userInfo;
     NSInteger routeChangeReason = [[interuptionDict valueForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
     
-    /**** UPDATE IMAGE WITH ARROW FACING AWAY FROM iPHONE ****/
-    // Setup image for Alert View
-    UIImageView *alertImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"GSF_Insert_sensor_alert-v2.png"]];
-    
     switch (routeChangeReason) {
         // Sensor inserted
         case AVAudioSessionRouteChangeReasonNewDeviceAvailable:
-            // Dismiss any existing alert
-            if (self.removeSensorAlert) {
-                [self.removeSensorAlert dismissWithClickedButtonIndex:0 animated:NO];
-            }
             
-            // Set up Alert View
-            self.removeSensorAlert =
-            [[SDCAlertView alloc]
-             initWithTitle:@"Sensor/Headset Found"
-             message:@"Please remove the GSF sensor or headset to collect noise data. Pressing \"Cancel\" will end noise level data collection."
-             delegate:self
-             cancelButtonTitle:nil
-             otherButtonTitles:@"Cancel", nil];
-            
-            [alertImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
-            [self.removeSensorAlert.contentView addSubview:alertImageView];
-            [alertImageView sdc_horizontallyCenterInSuperview];
-            [self.removeSensorAlert.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[alertImageView]|"
-                                                                                                       options:0
-                                                                                                       metrics:nil
-                                                                                                         views:NSDictionaryOfVariableBindings(alertImageView)]];
-            
-            // Show Alert
-            [self.removeSensorAlert show];
             break;
             
         // Sensor removed
         case AVAudioSessionRouteChangeReasonOldDeviceUnavailable:
             // Dismiss any existing alert
             if (self.removeSensorAlert) {
-                [self.removeSensorAlert dismissWithClickedButtonIndex:0 animated:NO];
+                [self.removeSensorAlert dismissWithClickedButtonIndex:0 animated:YES];
             }
             // Initialize recorder
             [self initNoiseRecorder];
@@ -103,22 +85,7 @@
             
         // Category changed from Record
         case AVAudioSessionRouteChangeReasonCategoryChange:
-            // Dismiss any existing alert
-            if (self.removeSensorAlert) {
-                [self.removeSensorAlert dismissWithClickedButtonIndex:0 animated:NO];
-            }
             
-            // Set up Alert View
-            self.removeSensorAlert =
-            [[SDCAlertView alloc]
-             initWithTitle:@"Audio Source Changed"
-             message:@"The audio input has changed from the GSF App. To continue collecting noise level data press \"Continue\". Pressing \"Cancel\" will end noise level data collection."
-             delegate:self
-             cancelButtonTitle:nil
-             otherButtonTitles:@"Cancel", @"Continue", nil];
-            
-            // Show Alert
-            [self.removeSensorAlert show];
             break;
             
         default:
@@ -209,6 +176,61 @@
     
     /**** ADD COLLECTION PACKAGE ****/
     // Add levels to collection suit
+}
+
+- (void) addAlertViewToView:(UIView*) view :(NSInteger) changeReason {
+    // Dismiss any existing alert
+    if (self.removeSensorAlert) {
+        [self.removeSensorAlert dismissWithClickedButtonIndex:0 animated:NO];
+    }
+    
+    /**** UPDATE IMAGE WITH ARROW FACING AWAY FROM iPHONE ****/
+    // Setup image for Alert View
+    UIImageView *alertImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"GSF_Insert_sensor_alert-v2.png"]];
+    
+    switch (changeReason) {
+        case 0:
+            // Set up Alert View
+            self.removeSensorAlert =
+            [[SDCAlertView alloc]
+             initWithTitle:@"Sensor/Headset Found"
+             message:@"Please remove the GSF sensor or headset to collect noise data. Pressing \"Cancel\" will end noise level data collection."
+             delegate:self
+             cancelButtonTitle:nil
+             otherButtonTitles:@"Cancel", nil];
+            
+            [alertImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
+            [self.removeSensorAlert.contentView addSubview:alertImageView];
+            [alertImageView sdc_horizontallyCenterInSuperview];
+            [self.removeSensorAlert.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[alertImageView]|"
+                                                                                                       options:0
+                                                                                                       metrics:nil
+                                                                                                         views:NSDictionaryOfVariableBindings(alertImageView)]];
+            
+            // Add alertView to current view
+            [view addSubview:self.removeSensorAlert];
+            
+            // Show Alert
+            [self.removeSensorAlert show];            break;
+        case 1:
+            // Set up Alert View
+            self.removeSensorAlert =
+            [[SDCAlertView alloc]
+             initWithTitle:@"Audio Source Changed"
+             message:@"The audio input has changed from the GSF App. To continue collecting noise level data press \"Continue\". Pressing \"Cancel\" will end noise level data collection."
+             delegate:self
+             cancelButtonTitle:nil
+             otherButtonTitles:@"Cancel", @"Continue", nil];
+            break;
+        default:
+            NSLog(@"Blowing It In- addAlertViewToView");
+    }
+    
+    // Add alertView to current view
+    [view addSubview:self.removeSensorAlert];
+    
+    // Show Alert
+    [self.removeSensorAlert show];
 }
 
 @end

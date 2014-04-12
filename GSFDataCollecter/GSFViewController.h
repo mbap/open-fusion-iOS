@@ -14,5 +14,7 @@
 
 @property (nonatomic) BOOL faceDetect;
 @property (nonatomic) BOOL personDetect;
+@property (nonatomic) BOOL noiseDetect;
+@property (nonatomic) BOOL sensorCollect;
 
 @end

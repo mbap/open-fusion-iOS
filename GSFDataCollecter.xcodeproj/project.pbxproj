@@ -63,7 +63,6 @@
 		D312C5E818D691C900B8641A /* icon-transparent-black5.png in Resources */ = {isa = PBXBuildFile; fileRef = D312C5E118D691C900B8641A /* icon-transparent-black5.png */; };
 		D312C5E918D691C900B8641A /* icon-transparent-white5.png in Resources */ = {isa = PBXBuildFile; fileRef = D312C5E218D691C900B8641A /* icon-transparent-white5.png */; };
 		D312C5EA18D691C900B8641A /* icon-white5.png in Resources */ = {isa = PBXBuildFile; fileRef = D312C5E318D691C900B8641A /* icon-white5.png */; };
-		D312C5EE18D782CE00B8641A /* GSFSensorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D312C5ED18D782CE00B8641A /* GSFSensorViewController.m */; };
 		D3641AFC18E10A7C00DBB5E7 /* Delete-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D3641AFB18E10A7C00DBB5E7 /* Delete-icon.png */; };
 		D397AC4118B514D30067691D /* GSFAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D397AC4018B514D30067691D /* GSFAppDelegate.m */; };
 		D397AC4418BAC4920067691D /* GSFDirectionService.m in Sources */ = {isa = PBXBuildFile; fileRef = D397AC4318BAC4920067691D /* GSFDirectionService.m */; };
@@ -181,8 +180,6 @@
 		D312C5E118D691C900B8641A /* icon-transparent-black5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-transparent-black5.png"; sourceTree = "<group>"; };
 		D312C5E218D691C900B8641A /* icon-transparent-white5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-transparent-white5.png"; sourceTree = "<group>"; };
 		D312C5E318D691C900B8641A /* icon-white5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-white5.png"; sourceTree = "<group>"; };
-		D312C5EC18D782CE00B8641A /* GSFSensorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFSensorViewController.h; sourceTree = "<group>"; };
-		D312C5ED18D782CE00B8641A /* GSFSensorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFSensorViewController.m; sourceTree = "<group>"; };
 		D3641AFB18E10A7C00DBB5E7 /* Delete-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Delete-icon.png"; sourceTree = "<group>"; };
 		D397AC4018B514D30067691D /* GSFAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFAppDelegate.m; sourceTree = "<group>"; };
 		D397AC4218BAC4920067691D /* GSFDirectionService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFDirectionService.h; sourceTree = "<group>"; };
@@ -318,8 +315,6 @@
 			isa = PBXGroup;
 			children = (
 				5B27182718E89D61005BF15E /* GSFDataCollecter.entitlements */,
-				D312C5EC18D782CE00B8641A /* GSFSensorViewController.h */,
-				D312C5ED18D782CE00B8641A /* GSFSensorViewController.m */,
 				5BFF04F718E907AE00A86354 /* GSFSensorIOController.h */,
 				5BFF04F818E907AE00A86354 /* GSFSensorIOController.m */,
 			);
@@ -705,7 +700,6 @@
 				D3D7808318A051DA00E5AB50 /* GSFData.m in Sources */,
 				96F52DB018CFE08500684E64 /* GSFTableButton.m in Sources */,
 				D312C5CE18D6870300B8641A /* UYLPasswordManager.m in Sources */,
-				D312C5EE18D782CE00B8641A /* GSFSensorViewController.m in Sources */,
 				96FCA62418CAD0B000BC01A1 /* GSFSavedDataViewController.m in Sources */,
 				D3D7807F18A0416400E5AB50 /* GSFTaggedVCViewController.m in Sources */,
 				96EAF06918CD89B90041A265 /* GSFSavedDataImageViewController.m in Sources */,

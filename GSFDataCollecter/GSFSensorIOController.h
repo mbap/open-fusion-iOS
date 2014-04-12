@@ -16,6 +16,10 @@
 #import <SDCAlertView.h>                            // Custom alert view
 #import <UIView+SDCAutoLayout.h>                    // Layout Control for custom alert view
 
+// Defined
+#ifndef min
+#define min( a, b ) ( ((a) < (b)) ? (a) : (b) )
+#endif
 
 @interface GSFSensorIOController : NSObject {
     // Private variables
@@ -30,6 +34,8 @@
 @property (readonly) AudioBuffer inBuffer;
 @property AudioBuffer outBuffer;
 @property AudioBuffer powerTone;
+@property double sinPhase;
+@property BOOL newDataOut;
 
 // Public control properties
 @property SDCAlertView *sensorAlert;
@@ -38,5 +44,6 @@
 // Function prototypes
 - (void) monitorSensors: (BOOL) enable;
 - (void) processIO: (AudioBufferList*) bufferList;
-
+- (BOOL) isSensorConnected;
+- (void) addAlertViewToView:(UIView*)view :(NSInteger) changeReason;
 @end

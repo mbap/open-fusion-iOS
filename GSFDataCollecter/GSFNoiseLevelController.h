@@ -27,5 +27,7 @@
 // Public fuction prototypes
 - (void) mointorNoise: (BOOL) enable;
 - (void) collectNoise;
+- (BOOL) isSensorConnected;
+- (void) addAlertViewToView:(UIView*) view :(NSInteger) changeReason;
 
 @end

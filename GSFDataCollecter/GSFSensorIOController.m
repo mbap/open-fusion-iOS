@@ -21,6 +21,34 @@ static OSStatus inputCallback(void *inRefCon,
                                    UInt32 						inBusNumber,
                                    UInt32 						inNumberFrames,
                                    AudioBufferList              *ioData) {
+    // Scope reference to GSFSensorIOController class
+    GSFSensorIOController *THIS = (__bridge GSFSensorIOController *) inRefCon;
+    
+    // Set up buffer to hold input data
+    AudioBuffer buffer;
+    buffer.mNumberChannels = 1;
+    buffer.mDataByteSize = inNumberFrames * 2;
+    buffer.mData = malloc( inNumberFrames * 2 );
+    
+    // Place buffer in an AudioBufferList
+    AudioBufferList bufferList;
+    bufferList.mNumberBuffers = 1;
+    bufferList.mBuffers[0] = buffer;
+    
+    // Grab the samples and place them in the buffer list
+    AudioUnitRender(THIS.ioUnit,
+                    ioActionFlags,
+                    inTimeStamp,
+                    inBusNumber,
+                    inNumberFrames,
+                    &bufferList);
+    
+    // Process data
+    [THIS processIO:&bufferList];
+    
+    // Free allocated buffer
+    free(bufferList.mBuffers[0].mData);
+    
     return noErr;
 }
 
@@ -30,6 +58,43 @@ static OSStatus outputCallback(void *inRefCon,
                               UInt32 						inBusNumber,
                               UInt32 						inNumberFrames,
                               AudioBufferList               *ioData) {
+    // Scope reference to GSFSensorIOController class
+    GSFSensorIOController *THIS = (__bridge GSFSensorIOController *) inRefCon;
+    
+    
+    // Communication out on left and right channel if new communication out
+    AudioSampleType *outLeftSamples;
+    outLeftSamples = (AudioSampleType *) ioData->mBuffers[0].mData;
+    AudioBuffer outRightSamples = ioData->mBuffers[1];
+    
+    // Set up power tone attributes
+    float freq = 20000.00f;
+    float phase = THIS.sinPhase;
+    float sinSignal;
+    
+    double phaseInc = 2 * M_PI * freq / 44100.00f;
+    
+    for (UInt32 curFrame = 0; curFrame < inNumberFrames; ++curFrame) {
+        // Generate power tone on left channel
+        sinSignal = sin(phase);
+        outLeftSamples[curFrame] =(SInt16) ((sinSignal * 32767.0f) /2);
+        phase += phaseInc;
+        if (phase >= 2 * M_PI * freq) {
+            phase = phase - (2 * M_PI * freq);
+        }
+        
+        // Check if new output flag is set and fill output buffer accordingly
+        if (THIS.newDataOut) {
+            UInt32 size = min(outRightSamples.mDataByteSize, THIS.outBuffer.mDataByteSize);
+            memcpy(outRightSamples.mData, THIS.outBuffer.mData, size);
+            outRightSamples.mDataByteSize = size;
+        }
+        
+    }
+    
+    // Save sine wave phase wave for next callback
+    THIS.sinPhase = phase;
+    
     return noErr;
 }
 
@@ -40,6 +105,8 @@ static OSStatus outputCallback(void *inRefCon,
 @synthesize outBuffer = _outBuffer;
 @synthesize powerTone = _powerTone;
 @synthesize sensorAlert = _sensorAlert;
+@synthesize sinPhase = _sinPhase;
+@synthesize newDataOut = _newDataOut;
 
 /**
  *  Initializes the audio session and audio units when class is instantiated.
@@ -89,7 +156,7 @@ static OSStatus outputCallback(void *inRefCon,
  *
  *  @param sender NSNotification containing the master volume slider.
  */
-- (void)handleVolumeChanged:(id)sender{
+- (void) handleVolumeChanged:(id)sender{
     if (self.ioUnit) self.volumeSlider.value = 1.0f;
 }
 
@@ -116,8 +183,7 @@ static OSStatus outputCallback(void *inRefCon,
                          kAudioUnitScope_Input,
                          kInputBus,
                          &enableInput,
-                         sizeof(enableInput)
-                         );
+                         sizeof(enableInput));
     
     // Mono stream format for input
     SInt32 bytesPerSample = sizeof(AudioUnitSampleType);    // This obtains the byte size of the type that is used in filling
@@ -131,14 +197,18 @@ static OSStatus outputCallback(void *inRefCon,
     monoStreamFormat.mChannelsPerFrame    = 1;
     monoStreamFormat.mBitsPerChannel      = 8 * bytesPerSample;
     
+    /****
+     Debug
+     ****/
+    NSLog(@"Mono bytesPerSample %d", (int)bytesPerSample);
+    
     // Apply format to input of ioUnit
     AudioUnitSetProperty(ioUnit,
                          kAudioUnitProperty_StreamFormat,
                          kAudioUnitScope_Input,
                          kInputBus,
                          &monoStreamFormat,
-                         sizeof(monoStreamFormat)
-                         );
+                         sizeof(monoStreamFormat));
     
     
     // Stereo stream format for output
@@ -153,14 +223,18 @@ static OSStatus outputCallback(void *inRefCon,
     stereoStreamFormat.mChannelsPerFrame    = 2;
     stereoStreamFormat.mBitsPerChannel      = 8 * bytesPerSample;
     
+    /****
+     Debug 
+     ****/
+    NSLog(@"Stereo bytesPerSample %d", (int)bytesPerSample);
+    
     // Apply format to output of ioUnit
     AudioUnitSetProperty(ioUnit,
                          kAudioUnitProperty_StreamFormat,
                          kAudioUnitScope_Output,
                          kOutputBus,
                          &stereoStreamFormat,
-                         sizeof(stereoStreamFormat)
-                         );
+                         sizeof(stereoStreamFormat));
     
     // Set input callback
     AURenderCallbackStruct callbackStruct;
@@ -181,8 +255,7 @@ static OSStatus outputCallback(void *inRefCon,
                          kAudioUnitScope_Global,
                          kOutputBus,
                          &callbackStruct,
-                         sizeof(callbackStruct)
-                         );
+                         sizeof(callbackStruct));
 }
 
 
@@ -201,35 +274,6 @@ static OSStatus outputCallback(void *inRefCon,
         if (self.ioUnit) {
             [self stopCollecting];
         }
-        
-        // Dismiss any existing alert
-        if (self.sensorAlert) {
-            [self.sensorAlert dismissWithClickedButtonIndex:0 animated:NO];
-        }
-        
-        // Set up image for Alert View
-        UIImageView *alertImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"GSF_Insert_sensor_alert-v2.png"]];
-        
-        // Set up Alert View
-        self.sensorAlert =
-        [[SDCAlertView alloc]
-         initWithTitle:@"Sensor Removed"
-         message:@"Please insert the GSF sensor to collect this data. Pressing \"Cancel\" will end sensor data collection."
-         delegate:self
-         cancelButtonTitle:nil
-         otherButtonTitles:@"Cancel", nil];
-        
-        [alertImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
-        [self.sensorAlert.contentView addSubview:alertImageView];
-        [alertImageView sdc_horizontallyCenterInSuperview];
-        [self.sensorAlert.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[alertImageView]|"
-                                                                                             options:0
-                                                                                             metrics:nil
-                                                                                               views:NSDictionaryOfVariableBindings(alertImageView)]];
-        
-        // Show Alert
-        [self.sensorAlert show];
-
     }
 }
 
@@ -298,77 +342,28 @@ static OSStatus outputCallback(void *inRefCon,
  *
  *  @param notification A notification containing audio change reason
  */
-- (void)audioRouteChangeListener: (NSNotification*)notification {
+- (void) audioRouteChangeListener: (NSNotification*)notification {
     // Initiallize dictionary with notification and grab route change reason
     NSDictionary *interuptionDict = notification.userInfo;
     NSInteger routeChangeReason = [[interuptionDict valueForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
     
-    // Set up image for alert View
-    UIImageView *alertImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"GSF_Insert_sensor_alert-v2.png"]];
-    
     switch (routeChangeReason) {
         // Sensor inserted
         case AVAudioSessionRouteChangeReasonNewDeviceAvailable:
-            // Dismiss any existing alert
-            if (self.sensorAlert) {
-                [self.sensorAlert dismissWithClickedButtonIndex:0 animated:NO];
-            }
             // Start IO communication
             [self startCollecting];
             break;
             
         // Sensor removed
         case AVAudioSessionRouteChangeReasonOldDeviceUnavailable:
-            // Dismiss any existing alert
-            if (self.sensorAlert) {
-                [self.sensorAlert dismissWithClickedButtonIndex:0 animated:NO];
-            }
-            
             // Stop IO audio unit
             [self stopCollecting];
-            
-            // Set up alert View
-            self.sensorAlert =
-            [[SDCAlertView alloc]
-             initWithTitle:@"Sensor Removed"
-             message:@"Please insert the GSF sensor to collect this data. Pressing \"Cancel\" will end sensor data collection."
-             delegate:self
-             cancelButtonTitle:nil
-             otherButtonTitles:@"Cancel", nil];
-            
-            [alertImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
-            [self.sensorAlert.contentView addSubview:alertImageView];
-            [alertImageView sdc_horizontallyCenterInSuperview];
-            [self.sensorAlert.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[alertImageView]|"
-                                                                                                 options:0
-                                                                                                 metrics:nil
-                                                                                                   views:NSDictionaryOfVariableBindings(alertImageView)]];
-            
-            // Show Alert
-            [self.sensorAlert show];
             break;
             
         // Category changed from PlayAndRecord
         case AVAudioSessionRouteChangeReasonCategoryChange:
-            // Dismiss any existing alert
-            if (self.sensorAlert) {
-                [self.sensorAlert dismissWithClickedButtonIndex:0 animated:NO];
-            }
-            
             // Stop IO audio unit
             [self stopCollecting];
-            
-            // Set up Alert View
-            self.sensorAlert =
-            [[SDCAlertView alloc]
-             initWithTitle:@"Audio Source Changed"
-             message:@"The audio input has changed from the GSF App. To continue collecting sensor data press \"Continue\". Pressing \"Cancel\" will end sensor data collection."
-             delegate:self
-             cancelButtonTitle:nil
-             otherButtonTitles:@"Cancel", @"Continue", nil];
-            
-            // Show Alert
-            [self.sensorAlert show];
             break;
             
         default:
@@ -427,6 +422,64 @@ static OSStatus outputCallback(void *inRefCon,
     for (int i = 0; i < (inBuffer.mDataByteSize / sizeof(inBuffer)); i++) {
         NSLog(@"%d", buffer[i]);
     }
+    
+    // Fill output buffer with commands and set new output data flag
+    
+}
+
+/**
+ *  Adds the alert view to the data staging area after an audio route change occurs
+ *
+ *  @param view         The UIView for the data staging area
+ *  @param changeReason The NSInteger holding the reason why the audio route changed
+ */
+- (void) addAlertViewToView:(UIView*) view :(NSInteger) changeReason {
+    // Dismiss any existing alert
+    if (self.sensorAlert) {
+        [self.sensorAlert dismissWithClickedButtonIndex:0 animated:NO];
+    }
+    
+    // Set up image for alert View
+    UIImageView *alertImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"GSF_Insert_sensor_alert-v2.png"]];
+    
+    switch (changeReason) {
+        case 0:
+            // Set up alert View
+            self.sensorAlert =
+            [[SDCAlertView alloc]
+             initWithTitle:@"No Sensor"
+             message:@"Please insert the GSF sensor to collect this data. Pressing \"Cancel\" will end sensor data collection."
+             delegate:self
+             cancelButtonTitle:nil
+             otherButtonTitles:@"Cancel", nil];
+            
+            [alertImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
+            [self.sensorAlert.contentView addSubview:alertImageView];
+            [alertImageView sdc_horizontallyCenterInSuperview];
+            [self.sensorAlert.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[alertImageView]|"
+                                                                                                 options:0
+                                                                                                 metrics:nil
+                                                                                                   views:NSDictionaryOfVariableBindings(alertImageView)]];
+            break;
+        case 1:
+            // Set up Alert View
+            self.sensorAlert =
+            [[SDCAlertView alloc]
+             initWithTitle:@"Audio Source Changed"
+             message:@"The audio input has changed from the GSF App. To continue collecting sensor data press \"Continue\". Pressing \"Cancel\" will end sensor data collection."
+             delegate:self
+             cancelButtonTitle:nil
+             otherButtonTitles:@"Cancel", @"Continue", nil];
+            break;
+        default:
+            NSLog(@"Blowing It In- addAlertViewToView");
+    }
+    
+    // Add alertView to current view
+    [view addSubview:self.sensorAlert];
+    
+    // Show Alert
+    [self.sensorAlert show];
 }
 
 @end

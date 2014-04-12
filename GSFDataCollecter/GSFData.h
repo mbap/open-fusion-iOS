@@ -13,6 +13,7 @@
 
 @interface GSFData : NSObject
 
+@property (nonatomic) double noiseLevel;                // Noise level in dB
 @property (nonatomic) GSFImage *gsfImage;               // original images
 @property (nonatomic) CLLocation *coords;               // this contains all of the below
 @property (nonatomic) NSString *date;
