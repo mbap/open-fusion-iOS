@@ -7,7 +7,27 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <AVFoundation/AVFoundation.h>
+#import <AVFoundation/AVAudioSession.h>
+#import <CoreAudio/CoreAudioTypes.h>
 
-@interface GSFNoiseLevelController : NSObject
+#import <SDCAlertView.h>
+#import <UIView+SDCAutoLayout.h>
+
+@interface GSFNoiseLevelController : NSObject{
+    // Private variables
+    AVAudioRecorder *noiseRecorder;
+}
+
+// Public control properties
+@property SDCAlertView* removeSensorAlert;
+@property double avgDBInput;
+@property double peakDBInput;
+
+// Public fuction prototypes
+- (void) mointorNoise: (BOOL) enable;
+- (void) collectNoise;
+- (BOOL) isSensorConnected;
+- (void) addAlertViewToView:(UIView*) view :(NSInteger) changeReason;
 
 @end
