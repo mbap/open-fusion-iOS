@@ -16,6 +16,11 @@
 @interface GSFData : NSObject
 
 /**
+ * Double used to store the noise level at a given GPS location given in dB.
+ */
+@property (nonatomic) double noiseLevel;
+
+/**
  *  A GSFImage object used to store picture data.
  */
 @property (nonatomic) GSFImage *gsfImage;

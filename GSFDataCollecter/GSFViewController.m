@@ -144,6 +144,10 @@
     if ([[self.capturedImages lastObject] isKindOfClass:[GSFData class]]){
         GSFData *data = [self.capturedImages lastObject];
         data.coords = self.bestEffort;
+        
+        // Collect Noise
+        [self.noiseMonitor collectNoise];
+        data.noiseLevel = self.noiseMonitor.avgDBInput;
     }
 }
 

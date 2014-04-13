@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "GSFTaggedVCViewController.h"
 #import "GSFImageSelectorPreview.h"
+#import "GSFSensorIOController.h"
+#import "GSFNoiseLevelController.h"
 
 /**
  *  The main class used to collect image data for the GSFDataCollector application.
@@ -24,5 +26,7 @@
  *  Property to determine if pedestrian (people) detection is to be used.
  */
 @property (nonatomic) BOOL personDetect;
+@property (nonatomic) GSFNoiseLevelController *noiseMonitor;
+@property (nonatomic) GSFSensorIOController *sensorIO;
 
 @end
