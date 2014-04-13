@@ -170,8 +170,8 @@
     [noiseRecorder updateMeters];
     
     // Set current avg and peak dB levels
-    avgDBInput = [noiseRecorder averagePowerForChannel:0];
-    peakDBInput = [noiseRecorder peakPowerForChannel:0];
+    self.avgDBInput = [noiseRecorder averagePowerForChannel:0];
+    self.peakDBInput = [noiseRecorder peakPowerForChannel:0];
 }
 
 - (void) addAlertViewToView:(UIView*) view :(NSInteger) changeReason {

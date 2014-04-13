@@ -55,7 +55,7 @@
 {
     // Return the number of rows in the section.
     // this should be the number of properties in a GSF Geojson object.
-    return 8;
+    return 9;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -101,13 +101,19 @@
                 if ([properties objectForKey:@"faces_detected"]) {
                     cell.textLabel.text = [[NSString alloc] initWithFormat:@"Faces: %d detected.", [[properties objectForKey:@"faces_detected"] intValue]];
                 } else {
-                    cell.textLabel.text = [[NSString alloc] initWithFormat:@"Faces: 0."];
+                    cell.textLabel.text = [[NSString alloc] initWithFormat:@"Faces: n/a."];
                 }
             } else if (7 == indexPath.row) {
                 if ([properties objectForKey:@"people_detected"]) {
                     cell.textLabel.text = [[NSString alloc] initWithFormat:@"People: %d detected.", [[properties objectForKey:@"people_detected"] intValue]];
                 } else {
-                    cell.textLabel.text = [[NSString alloc] initWithFormat:@"People: 0."];
+                    cell.textLabel.text = [[NSString alloc] initWithFormat:@"People: n/a."];
+                }
+            } else if (8 == indexPath.row) {
+                if ([properties objectForKey:@"noise_level"]) {
+                    cell.textLabel.text = [[NSString alloc] initWithFormat:@"Noise(dB): %f.", [[properties objectForKey:@"noise_level"] doubleValue]];
+                } else {
+                    cell.textLabel.text = [[NSString alloc] initWithFormat:@"Noise(dB): n/a."];
                 }
             }
         }
