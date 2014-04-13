@@ -347,6 +347,8 @@ static OSStatus outputCallback(void *inRefCon,
     NSDictionary *interuptionDict = notification.userInfo;
     NSInteger routeChangeReason = [[interuptionDict valueForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
     
+    NSLog(@"Blowing it in sensor audio route change callback");
+    
     switch (routeChangeReason) {
         // Sensor inserted
         case AVAudioSessionRouteChangeReasonNewDeviceAvailable:

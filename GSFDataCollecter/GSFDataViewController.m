@@ -59,6 +59,7 @@
         // Init GSFSensorIOController instance
         self.sensorIO = [[GSFSensorIOController alloc] init];
         if (!self.sensorIO.isSensorConnected){
+            self.sensorToggle.on = NO;
             [self.sensorIO addAlertViewToView:self.view :0];
         }
     }
@@ -71,6 +72,7 @@
         
         self.noiseMonitor = [[GSFNoiseLevelController alloc] init];
         if (self.noiseMonitor.isSensorConnected){
+            self.noiseDetectionToggle.on = NO;
             [self.noiseMonitor addAlertViewToView:self.view :0];
         }
     }
@@ -98,8 +100,8 @@
         GSFViewController *child = (GSFViewController*)segue.destinationViewController;
         child.personDetect = self.personDetectToggle.on;
         child.faceDetect = self.faceDetectionToggle.on;
-        child.noiseDetect = self.noiseDetectionToggle.on;
-        child.sensorCollect = self.sensorToggle.on;
+        child.noiseMonitor = self.noiseMonitor;
+        child.sensorIO = self.sensorIO;
     }
 }
 

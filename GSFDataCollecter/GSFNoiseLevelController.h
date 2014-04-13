@@ -17,12 +17,12 @@
 @interface GSFNoiseLevelController : NSObject{
     // Private variables
     AVAudioRecorder *noiseRecorder;
-    double avgDBInput;
-    double peakDBInput;
 }
 
 // Public control properties
 @property SDCAlertView* removeSensorAlert;
+@property double avgDBInput;
+@property double peakDBInput;
 
 // Public fuction prototypes
 - (void) mointorNoise: (BOOL) enable;

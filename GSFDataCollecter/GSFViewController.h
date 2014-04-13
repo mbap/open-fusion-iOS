@@ -10,11 +10,14 @@
 #import "GSFTaggedVCViewController.h"
 #import "GSFImageSelectorPreview.h"
 
+#import "GSFSensorIOController.h"
+#import "GSFNoiseLevelController.h"
+
 @interface GSFViewController : GSFTaggedVCViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (nonatomic) BOOL faceDetect;
 @property (nonatomic) BOOL personDetect;
-@property (nonatomic) BOOL noiseDetect;
-@property (nonatomic) BOOL sensorCollect;
+@property (nonatomic) GSFNoiseLevelController *noiseMonitor;
+@property (nonatomic) GSFSensorIOController *sensorIO;
 
 @end

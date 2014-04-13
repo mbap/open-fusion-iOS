@@ -89,6 +89,10 @@
         [properties setObject:gsfdata.gsfImage.personDetectionNumber forKey:@"people_detected"];
     }
     
+    if (gsfdata.noiseLevel) {
+        [properties setObject:[NSNumber numberWithDouble:gsfdata.noiseLevel] forKey:@"noise_level"];
+    }
+    
     [jsonData setObject:properties forKey:@"properties"];
     return jsonData;
 }

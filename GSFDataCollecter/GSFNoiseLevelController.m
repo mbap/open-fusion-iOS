@@ -47,14 +47,11 @@
     BOOL success;
     NSError *error;
     
-    success = [session setCategory:AVAudioSessionCategoryRecord error:&error];
+    success = [session setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
 	if (!success) NSLog(@"ERROR initNoiseRecorder: AVAudioSession failed overrideOutputAudio- %@", error);
     
     success = [session setActive:YES error:&error];
     if (!success) NSLog(@"ERROR initNoiseRecorder: AVAudioSession failed activating- %@", error);
-    
-    // Add audio route change listner
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(audioRouteChangeListener::) name:AVAudioSessionRouteChangeNotification object:nil];
 }
 
 /**
@@ -62,23 +59,20 @@
  *
  *  @param notification A notification containing audio change reason
  */
-- (void) audioRouteChangeListener: (NSNotification*)notification : (UIView*) view {
+- (void) noiseAudioRouteChangeListener: (NSNotification*)notification : (UIView*) view {
     // Initiallize dictionary with notification and grab route change reason
     NSDictionary *interuptionDict = notification.userInfo;
     NSInteger routeChangeReason = [[interuptionDict valueForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
     
+    NSLog(@"Blowing it in noise audio route change callback");
+    
     switch (routeChangeReason) {
         // Sensor inserted
         case AVAudioSessionRouteChangeReasonNewDeviceAvailable:
-            
             break;
             
         // Sensor removed
         case AVAudioSessionRouteChangeReasonOldDeviceUnavailable:
-            // Dismiss any existing alert
-            if (self.removeSensorAlert) {
-                [self.removeSensorAlert dismissWithClickedButtonIndex:0 animated:YES];
-            }
             // Initialize recorder
             [self initNoiseRecorder];
             break;
@@ -126,7 +120,12 @@
  *  @param enable Boolean value that if true enables noise monitoring and if false disbales the noise monitoring.
  */
 - (void) mointorNoise: (BOOL) enable {
-    if (enable && !self.isSensorConnected) [self initNoiseRecorder];
+    if (enable && !self.isSensorConnected) {
+        [self initNoiseRecorder];
+        
+        // Add audio route change listner
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noiseAudioRouteChangeListener::) name:AVAudioSessionRouteChangeNotification object:nil];
+    }
     else {
         [[NSNotificationCenter defaultCenter] removeObserver: self];
     }
@@ -173,14 +172,12 @@
     // Set current avg and peak dB levels
     avgDBInput = [noiseRecorder averagePowerForChannel:0];
     peakDBInput = [noiseRecorder peakPowerForChannel:0];
-    
-    /**** ADD COLLECTION PACKAGE ****/
-    // Add levels to collection suit
 }
 
 - (void) addAlertViewToView:(UIView*) view :(NSInteger) changeReason {
     // Dismiss any existing alert
     if (self.removeSensorAlert) {
+        NSLog(@"Should NOT be here");
         [self.removeSensorAlert dismissWithClickedButtonIndex:0 animated:NO];
     }
     
@@ -207,11 +204,7 @@
                                                                                                        metrics:nil
                                                                                                          views:NSDictionaryOfVariableBindings(alertImageView)]];
             
-            // Add alertView to current view
-            [view addSubview:self.removeSensorAlert];
-            
-            // Show Alert
-            [self.removeSensorAlert show];            break;
+            break;
         case 1:
             // Set up Alert View
             self.removeSensorAlert =
