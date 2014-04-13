@@ -10,4 +10,9 @@
 
 @implementation GSFTrackerHelper
 
+- (void)moveGpsToCollected:(CLLocationCoordinate2D)coord
+{
+    
+}
+
 @end
