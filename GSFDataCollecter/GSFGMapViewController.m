@@ -13,11 +13,11 @@
 @interface GSFGMapViewController () <GMSMapViewDelegate>
 
 @property (nonatomic) GMSMapView *mapView;
-//@property (nonatomic) CLLocation *currentLocation;
 
 @property (nonatomic) NSMutableArray *waypoints;
 @property (nonatomic) NSMutableArray *waypointStrings;
 
+@property (nonatomic) CLLocation *bestEffort;
 @end
 
 @implementation GSFGMapViewController
@@ -27,9 +27,15 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    // get the current user location.
+    self.locationManager = [[CLLocationManager alloc] init];
+    self.locationManager.delegate = self;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+    [self.locationManager startUpdatingLocation];
+    
     // Create a GMSCameraPosition that tells the map to display the
     // coordinate -33.86,151.20 at zoom level 6.
-    GMSCameraPosition *camera = [GMSCameraPosition cameraWithTarget:self.mapView.myLocation.coordinate zoom:12];
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithTarget:self.bestEffort.coordinate zoom:12];
     self.mapView = [GMSMapView mapWithFrame:CGRectZero camera:camera];
     self.mapView.myLocationEnabled = YES;
     self.mapView.settings.myLocationButton = YES;
@@ -71,6 +77,37 @@
     GMSPath *path = [GMSPath pathFromEncodedPath:overview_route];
     GMSPolyline *polyline = [GMSPolyline polylineWithPath:path];
     polyline.map = self.mapView;
+}
+
+// delegate for super class location manager
+// gets called several times while the location manager is update gps coords.
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
+    
+    // test the age of the location measurement to determine if the measurement is cached
+    // in most cases you will not want to rely on cached measurements
+    NSTimeInterval locationAge = -[newLocation.timestamp timeIntervalSinceNow];
+    
+    if (locationAge > 5.0) return;
+    // test that the horizontal accuracy does not indicate an invalid measurement
+    
+    if (newLocation.horizontalAccuracy < 0) return;
+    // test the measurement to see if it is more accurate than the previous measurement
+    
+    if (self.bestEffort == nil || self.bestEffort.horizontalAccuracy > newLocation.horizontalAccuracy) {
+        // store the location as the "best effort"
+        self.bestEffort = newLocation;
+        // test the measurement to see if it meets the desired accuracy
+        //
+        // IMPORTANT!!! kCLLocationAccuracyBest should not be used for comparison with location coordinate or altitidue
+        // accuracy because it is a negative value. Instead, compare against some predetermined "real" measure of
+        // acceptable accuracy, or depend on the timeout to stop updating. This sample depends on the timeout.
+        //
+        if (newLocation.horizontalAccuracy <= self.locationManager.desiredAccuracy) {
+            [self.locationManager stopUpdatingLocation];
+            GMSCameraPosition *currentLocation = [GMSCameraPosition cameraWithLatitude:self.bestEffort.coordinate.latitude longitude:self.bestEffort.coordinate.longitude zoom:12];
+            [self.mapView setCamera:currentLocation];
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning
