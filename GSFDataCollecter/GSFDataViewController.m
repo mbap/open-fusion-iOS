@@ -54,13 +54,15 @@
 // Turn off noise monitoring switch if sensor monitor is on
 - (IBAction)sensorToggleFlipped:(id)sender {
     if (self.sensorToggle.on) {
+        if (self.noiseMonitor) {
+            [self.noiseMonitor mointorNoise:NO];
+        }
         self.noiseDetectionToggle.on = NO;
         
         // Init GSFSensorIOController instance
-        self.sensorIO = [[GSFSensorIOController alloc] init];
-        if (!self.sensorIO.isSensorConnected){
-            self.sensorToggle.on = NO;
-            [self.sensorIO addAlertViewToView:self.view :0];
+        if (!self.sensorIO) {
+            self.sensorIO = [[GSFSensorIOController alloc] init];
+            [self.sensorIO monitorSensors:YES];
         }
     }
 }
@@ -68,24 +70,35 @@
 // Turn off sensor monitoring switch if noise monitoring is on
 - (IBAction)noiseToggleFlipped:(id)sender {
     if (self.noiseDetectionToggle.on) {
+        if (self.sensorIO) {
+            [self.sensorIO monitorSensors:NO];
+        }
         self.sensorToggle.on = NO;
         
-        self.noiseMonitor = [[GSFNoiseLevelController alloc] init];
-        if (self.noiseMonitor.isSensorConnected){
-            self.noiseDetectionToggle.on = NO;
-            [self.noiseMonitor addAlertViewToView:self.view :0];
+        if (!self.noiseMonitor) {
+            self.noiseMonitor = [[GSFNoiseLevelController alloc] init];
+            [self.noiseMonitor mointorNoise:YES];
         }
     }
 }
 
 - (IBAction)startCollecting:(id)sender {
-    if (self.noiseDetectionToggle.on) {
-        NSLog(@"Start audio session recorder and add to collection.");
-    }
-    if (self.sensorToggle.on) {
-        NSLog(@"Start collecting sensor data and add to collection.");
-    }
-    if (self.personDetectToggle.on || self.faceDetectionToggle.on) {
+    NSLog(@"Noise Change Reason: %d", self.noiseMonitor.audioChangeReason);
+    NSLog(@"Sensor Change Reason: %d", self.sensorIO.audioChangeReason);
+    if (self.noiseDetectionToggle.on && self.noiseMonitor.audioChangeReason != NO_CHANGE) {
+        if (self.noiseMonitor.isSensorConnected){
+            self.noiseDetectionToggle.on = NO;
+            [self.noiseMonitor addAlertViewToView:self.view :self.noiseMonitor.audioChangeReason];
+        }
+    } else if (self.sensorToggle.on && self.sensorIO.audioChangeReason != NO_CHANGE) {
+        if (self.noiseMonitor.isSensorConnected){
+            self.noiseDetectionToggle.on = NO;
+            [self.sensorIO addAlertViewToView:self.view :self.sensorIO.audioChangeReason];
+        }
+    } else if (self.personDetectToggle.on ||
+               self.faceDetectionToggle.on ||
+               self.noiseDetectionToggle.on ||
+               self.sensorToggle.on) {
         [self performSegueWithIdentifier:@"imagePickerSegue" sender:self];
     }
 }

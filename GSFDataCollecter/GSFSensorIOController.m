@@ -185,22 +185,15 @@ static OSStatus outputCallback(void *inRefCon,
                          &enableInput,
                          sizeof(enableInput));
     
-    // Mono stream format for input
-    SInt32 bytesPerSample = sizeof(AudioUnitSampleType);    // This obtains the byte size of the type that is used in filling
     AudioStreamBasicDescription monoStreamFormat;
     monoStreamFormat.mSampleRate          = 44100.00;
     monoStreamFormat.mFormatID            = kAudioFormatLinearPCM;
     monoStreamFormat.mFormatFlags         = kAudioFormatFlagsAudioUnitCanonical;
-    monoStreamFormat.mBytesPerPacket      = bytesPerSample;
-    monoStreamFormat.mBytesPerFrame       = bytesPerSample;
+    monoStreamFormat.mBytesPerPacket      = 2;
+    monoStreamFormat.mBytesPerFrame       = 2;
     monoStreamFormat.mFramesPerPacket     = 1;
     monoStreamFormat.mChannelsPerFrame    = 1;
-    monoStreamFormat.mBitsPerChannel      = 8 * bytesPerSample;
-    
-    /****
-     Debug
-     ****/
-    NSLog(@"Mono bytesPerSample %d", (int)bytesPerSample);
+    monoStreamFormat.mBitsPerChannel      = 16;
     
     // Apply format to input of ioUnit
     AudioUnitSetProperty(ioUnit,
@@ -211,22 +204,15 @@ static OSStatus outputCallback(void *inRefCon,
                          sizeof(monoStreamFormat));
     
     
-    // Stereo stream format for output
-    bytesPerSample = sizeof(AudioUnitSampleType);    // This obtains the byte size of the type that is used in filling
     AudioStreamBasicDescription stereoStreamFormat;
     stereoStreamFormat.mSampleRate          = 44100.00;
     stereoStreamFormat.mFormatID            = kAudioFormatLinearPCM;
     stereoStreamFormat.mFormatFlags         = kAudioFormatFlagsAudioUnitCanonical;
-    stereoStreamFormat.mBytesPerPacket      = bytesPerSample;
-    stereoStreamFormat.mBytesPerFrame       = bytesPerSample;
+    stereoStreamFormat.mBytesPerPacket      = 4;
+    stereoStreamFormat.mBytesPerFrame       = 4;
     stereoStreamFormat.mFramesPerPacket     = 1;
     stereoStreamFormat.mChannelsPerFrame    = 2;
-    stereoStreamFormat.mBitsPerChannel      = 8 * bytesPerSample;
-    
-    /****
-     Debug 
-     ****/
-    NSLog(@"Stereo bytesPerSample %d", (int)bytesPerSample);
+    stereoStreamFormat.mBitsPerChannel      = 32;
     
     // Apply format to output of ioUnit
     AudioUnitSetProperty(ioUnit,
@@ -260,12 +246,14 @@ static OSStatus outputCallback(void *inRefCon,
 
 
 - (void) monitorSensors: (BOOL) enable {
-    if (enable && self.isSensorConnected) {
+    if (enable) {
         // Register audio route change listner with notification callback
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(audioRouteChangeListener:) name:AVAudioSessionRouteChangeNotification object:nil];
         
         // Start IO communication
         [self startCollecting];
+        
+        NSLog(@"Sensor monitor STARTED");
     } else {
         // Unregister notification callbacks
         [[NSNotificationCenter defaultCenter] removeObserver: self];
@@ -274,6 +262,8 @@ static OSStatus outputCallback(void *inRefCon,
         if (self.ioUnit) {
             [self stopCollecting];
         }
+        
+        NSLog(@"Sensor monitor STOPPED");
     }
 }
 
@@ -347,25 +337,33 @@ static OSStatus outputCallback(void *inRefCon,
     NSDictionary *interuptionDict = notification.userInfo;
     NSInteger routeChangeReason = [[interuptionDict valueForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
     
-    NSLog(@"Blowing it in sensor audio route change callback");
+    NSLog(@"MADE IT: sensorAudioRouteChageListener");
     
     switch (routeChangeReason) {
         // Sensor inserted
         case AVAudioSessionRouteChangeReasonNewDeviceAvailable:
             // Start IO communication
             [self startCollecting];
+            
+            
+            NSLog(@"Sensor INSERTED");
             break;
             
         // Sensor removed
         case AVAudioSessionRouteChangeReasonOldDeviceUnavailable:
             // Stop IO audio unit
             [self stopCollecting];
+            
+            
+            NSLog(@"Sensor REMOVED");
             break;
             
         // Category changed from PlayAndRecord
         case AVAudioSessionRouteChangeReasonCategoryChange:
             // Stop IO audio unit
             [self stopCollecting];
+            
+            NSLog(@"Category CHANGED");
             break;
             
         default:
@@ -445,7 +443,7 @@ static OSStatus outputCallback(void *inRefCon,
     UIImageView *alertImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"GSF_Insert_sensor_alert-v2.png"]];
     
     switch (changeReason) {
-        case 0:
+        case 1:
             // Set up alert View
             self.sensorAlert =
             [[SDCAlertView alloc]
@@ -463,7 +461,7 @@ static OSStatus outputCallback(void *inRefCon,
                                                                                                  metrics:nil
                                                                                                    views:NSDictionaryOfVariableBindings(alertImageView)]];
             break;
-        case 1:
+        case 2:
             // Set up Alert View
             self.sensorAlert =
             [[SDCAlertView alloc]
