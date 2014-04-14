@@ -17,7 +17,6 @@
 {
     // add api keys for services (google maps and crashlytics)
     [GMSServices provideAPIKey:[GSFCreds GoogleMapsApiKey]];
-    [Crashlytics startWithAPIKey:[GSFCreds crashlyticsApiKey]];
     
     // create directory in documents for storing GEOJSON feature collection objects as NSData.
     NSFileManager *man = [[NSFileManager alloc] init];
@@ -33,7 +32,11 @@
             NSLog(@"Dir Creation Error: %@", error);
         }
     }
-        
+    
+    // this must be the last api call or it wont work because crashlytics is stupid like that
+    [Crashlytics startWithAPIKey:[GSFCreds crashlyticsApiKey]];
+    [Crashlytics sharedInstance].debugMode = YES;
+    
     return YES;
 }
 

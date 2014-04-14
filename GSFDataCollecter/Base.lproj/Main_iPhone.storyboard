@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D38" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="YX5-vb-Juf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="YX5-vb-Juf">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -472,7 +472,21 @@
                             <constraint firstItem="RRe-wR-M2d" firstAttribute="top" secondItem="sHd-MA-jxS" secondAttribute="bottom" constant="20" id="vcK-U8-fMU"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Data Collecter" id="mE5-TV-W4Y"/>
+                    <navigationItem key="navigationItem" title="Data Collecter" id="mE5-TV-W4Y">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="kqs-gF-Zzb">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="FGu-AC-0Bp">
+                                <rect key="frame" x="233" y="5" width="71" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="Archived">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="archivedData:" destination="KhN-c9-7dH" eventType="touchUpInside" id="AHA-Dp-mBS"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="faceDetectionToggle" destination="DoS-SC-70X" id="Avt-Wl-uvd"/>
                         <outlet property="imageView" destination="Obo-OU-vr2" id="8ge-eZ-ypp"/>
@@ -481,6 +495,7 @@
                         <outlet property="sensorToggle" destination="1Cw-8g-YnK" id="4TB-2a-fYW"/>
                         <segue destination="HvR-I5-gkG" kind="push" identifier="imagePickerSegue" id="kEg-c3-iIB"/>
                         <segue destination="JP9-ma-9R9" kind="push" identifier="mapSegue" id="F9A-YN-B9i"/>
+                        <segue destination="MgZ-ry-aGy" kind="push" identifier="archived" id="4ni-dW-v1n"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vka-Xb-pvN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -531,6 +546,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="U1r-Pi-Dpp"/>
+        <segue reference="4ni-dW-v1n"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -352,6 +352,7 @@
 		D3D7807818A038B500E5AB50 /* ImagePickerController */ = {
 			isa = PBXGroup;
 			children = (
+				966F6C8B18AAC10B00BE3334 /* XMLClassifiers */,
 				96EAC4BB18AD88450084B331 /* GSFImageSelectorPreview.h */,
 				96EAC4BC18AD88450084B331 /* GSFImageSelectorPreview.m */,
 				DBB428521880A64F00139082 /* GSFViewController.h */,
@@ -387,7 +388,6 @@
 				96B5990218920061001D29CF /* GSFDataViewController.m */,
 				96FE0E0618D24B37002C40A5 /* GSFSpinner.h */,
 				96FE0E0718D24B37002C40A5 /* GSFSpinner.m */,
-				966F6C8B18AAC10B00BE3334 /* XMLClassifiers */,
 			);
 			name = Main;
 			sourceTree = "<group>";
