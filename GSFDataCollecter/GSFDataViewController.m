@@ -14,6 +14,7 @@
 #import "GSFNoiseLevelController.h"
 #import "GSFSensorIOController.h"
 
+
 @interface GSFDataViewController ()
 
 @property GSFNoiseLevelController *noiseMonitor;
@@ -105,6 +106,9 @@
     }
 }
 
+- (IBAction)archivedData:(id)sender {
+    [self performSegueWithIdentifier:@"archived" sender:self];
+}
 
 
 @end

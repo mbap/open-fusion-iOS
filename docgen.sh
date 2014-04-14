@@ -14,6 +14,7 @@ appledoc \
    --no-repeat-first-par \
    --ignore "*.m" \
    --ignore "*.mm" \
+   --ignore "Crashlytics.framework" \
    --ignore "GoogleMaps.bundle" \
    --ignore "GoogleMaps.framework" \
    --ignore "GSFDataCollecter.*" \
