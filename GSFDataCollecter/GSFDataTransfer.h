@@ -91,8 +91,6 @@
 
 /**
  *  If an upload is in progres, this will cancel the upload.
- *
- *  @param task The session upload task that is uploading content.
  */
 - (void)cancelUpload;
 
