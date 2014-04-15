@@ -176,7 +176,7 @@ static OSStatus outputCallback(void *inRefCon,
     // Get Audio units
     AudioComponentInstanceNew(inputComponent, &ioUnit);
     
-    // Enable input, which disabled by default. Output enable by default
+    // Enable input, which is disabled by default. Output is enabled by default
     UInt32 enableInput = 1;
     AudioUnitSetProperty(ioUnit,
                          kAudioOutputUnitProperty_EnableIO,
@@ -188,70 +188,92 @@ static OSStatus outputCallback(void *inRefCon,
     AudioStreamBasicDescription monoStreamFormat;
     monoStreamFormat.mSampleRate          = 44100.00;
     monoStreamFormat.mFormatID            = kAudioFormatLinearPCM;
-    monoStreamFormat.mFormatFlags         = kAudioFormatFlagsAudioUnitCanonical;
+    monoStreamFormat.mFormatFlags         = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked;
     monoStreamFormat.mBytesPerPacket      = 2;
     monoStreamFormat.mBytesPerFrame       = 2;
     monoStreamFormat.mFramesPerPacket     = 1;
     monoStreamFormat.mChannelsPerFrame    = 1;
     monoStreamFormat.mBitsPerChannel      = 16;
-    
-    // Apply format to input of ioUnit
-    AudioUnitSetProperty(ioUnit,
-                         kAudioUnitProperty_StreamFormat,
-                         kAudioUnitScope_Input,
-                         kInputBus,
-                         &monoStreamFormat,
-                         sizeof(monoStreamFormat));
-    
+     
     
     AudioStreamBasicDescription stereoStreamFormat;
     stereoStreamFormat.mSampleRate          = 44100.00;
     stereoStreamFormat.mFormatID            = kAudioFormatLinearPCM;
-    stereoStreamFormat.mFormatFlags         = kAudioFormatFlagsAudioUnitCanonical;
+    stereoStreamFormat.mFormatFlags         = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked;
     stereoStreamFormat.mBytesPerPacket      = 4;
     stereoStreamFormat.mBytesPerFrame       = 4;
     stereoStreamFormat.mFramesPerPacket     = 1;
     stereoStreamFormat.mChannelsPerFrame    = 2;
-    stereoStreamFormat.mBitsPerChannel      = 32;
+    stereoStreamFormat.mBitsPerChannel      = 16;
     
-    // Apply format to output of ioUnit
-    AudioUnitSetProperty(ioUnit,
-                         kAudioUnitProperty_StreamFormat,
-                         kAudioUnitScope_Output,
-                         kOutputBus,
-                         &stereoStreamFormat,
-                         sizeof(stereoStreamFormat));
+    @try {
+        // Apply format to input of ioUnit
+        AudioUnitSetProperty(ioUnit,
+                             kAudioUnitProperty_StreamFormat,
+                             kAudioUnitScope_Input,
+                             kInputBus,
+                             &monoStreamFormat,
+                             sizeof(stereoStreamFormat));
+        
+        // Apply format to output of ioUnit
+        AudioUnitSetProperty(ioUnit,
+                             kAudioUnitProperty_StreamFormat,
+                             kAudioUnitScope_Output,
+                             kOutputBus,
+                             &stereoStreamFormat,
+                             sizeof(stereoStreamFormat));
+        
+        // Set input callback
+        AURenderCallbackStruct callbackStruct;
+        callbackStruct.inputProc = inputCallback;
+        callbackStruct.inputProcRefCon = (__bridge void *)(self);
+        AudioUnitSetProperty(ioUnit,
+                             kAudioUnitProperty_SetRenderCallback,
+                             kAudioUnitScope_Global,
+                             kInputBus,
+                             &callbackStruct,
+                             sizeof(callbackStruct));
+        
+        // Set output callback
+        callbackStruct.inputProc = outputCallback;
+        callbackStruct.inputProcRefCon = (__bridge void *)(self);
+        AudioUnitSetProperty(ioUnit,
+                             kAudioUnitProperty_SetRenderCallback,
+                             kAudioUnitScope_Global,
+                             kOutputBus,
+                             &callbackStruct,
+                             sizeof(callbackStruct));
+        
+        
+        
+        // Initialize audio unit
+        OSErr err = AudioUnitInitialize(self.ioUnit);
+        NSAssert1(err == noErr, @"Error initializing unit: %hd", err);
+        
+        //AudioUnitInitialize(self.ioUnit);
+        
+        // Start audio IO
+        
+        err = AudioOutputUnitStart(self.ioUnit);
+        NSAssert1(err == noErr, @"Error starting unit: %hd", err);
+        
+        //AudioOutputUnitStart(self.ioUnit);
+
+    }
+    @catch (NSException *exception) {
+        NSLog(@"Failed with exception: %@", exception);
+    }
     
-    // Set input callback
-    AURenderCallbackStruct callbackStruct;
-    callbackStruct.inputProc = inputCallback;
-    callbackStruct.inputProcRefCon = (__bridge void *)(self);
-    AudioUnitSetProperty(ioUnit,
-                         kAudioUnitProperty_SetRenderCallback,
-                         kAudioUnitScope_Global,
-                         kInputBus,
-                         &callbackStruct,
-                         sizeof(callbackStruct));
-    
-    // Set output callback
-    callbackStruct.inputProc = outputCallback;
-    callbackStruct.inputProcRefCon = (__bridge void *)(self);
-    AudioUnitSetProperty(ioUnit,
-                         kAudioUnitProperty_SetRenderCallback,
-                         kAudioUnitScope_Global,
-                         kOutputBus,
-                         &callbackStruct,
-                         sizeof(callbackStruct));
 }
 
 
 - (void) monitorSensors: (BOOL) enable {
     if (enable) {
-        // Register audio route change listner with notification callback
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(audioRouteChangeListener:) name:AVAudioSessionRouteChangeNotification object:nil];
-        
         // Start IO communication
         [self startCollecting];
+        
+        // Register audio route change listner with notification callback
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(audioRouteChangeListener:) name:AVAudioSessionRouteChangeNotification object:nil];
         
         NSLog(@"Sensor monitor STARTED");
     } else {
@@ -270,17 +292,8 @@ static OSStatus outputCallback(void *inRefCon,
 
 - (void) startCollecting {
     [self setUpSensorIO];
-    
-    // Initialize audio unit
-    OSErr err = AudioUnitInitialize(self.ioUnit);
-    NSAssert1(err == noErr, @"Error initializing unit: %hd", err);
-    
     // Set Master Volume to 100%
     self.volumeSlider.value = 1.0f;
-    
-    // Start audio IO
-    err = AudioOutputUnitStart(self.ioUnit);
-    NSAssert1(err == noErr, @"Error starting unit: %hd", err);
 }
 
 

@@ -76,11 +76,11 @@
  */
 - (void) mointorNoise: (BOOL) enable {
     if (enable) {
-        // Add audio route change listner callback
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noiseAudioRouteChangeListener:) name:AVAudioSessionRouteChangeNotification object:nil];
-        
         // Start recorder
         [self startNoiseRecorder];
+        
+        // Add audio route change listner callback
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noiseAudioRouteChangeListener:) name:AVAudioSessionRouteChangeNotification object:nil];
         
         NSLog(@"Noise monitor STARTED");
     }

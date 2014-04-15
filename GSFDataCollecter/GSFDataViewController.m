@@ -60,10 +60,10 @@
         self.noiseDetectionToggle.on = NO;
         
         // Init GSFSensorIOController instance
-        if (!self.sensorIO) {
+        //if (!self.sensorIO) {
             self.sensorIO = [[GSFSensorIOController alloc] init];
             [self.sensorIO monitorSensors:YES];
-        }
+        //}
     }
 }
 
@@ -75,10 +75,10 @@
         }
         self.sensorToggle.on = NO;
         
-        if (!self.noiseMonitor) {
+        //if (!self.noiseMonitor) {
             self.noiseMonitor = [[GSFNoiseLevelController alloc] init];
             [self.noiseMonitor mointorNoise:YES];
-        }
+        //}
     }
 }
 
