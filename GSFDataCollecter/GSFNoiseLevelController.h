@@ -14,15 +14,21 @@
 #import <SDCAlertView.h>
 #import <UIView+SDCAutoLayout.h>
 
+#define NO_CHANGE               0
+#define SENSOR_INSERTED         1
+#define AUDIO_CATEGORY_CHANGE   2
+
 @interface GSFNoiseLevelController : NSObject{
     // Private variables
     AVAudioRecorder *noiseRecorder;
+    AVAudioSession *noiseAudioSession;
 }
 
 // Public control properties
 @property SDCAlertView* removeSensorAlert;
 @property double avgDBInput;
 @property double peakDBInput;
+@property int audioChangeReason;
 
 // Public fuction prototypes
 - (void) mointorNoise: (BOOL) enable;

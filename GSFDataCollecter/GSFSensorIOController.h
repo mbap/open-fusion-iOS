@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-//#import <MediaPlayer/MPMusicPlayerController.h>   // Not sure ATM.
 #import <AVFoundation/AVFoundation.h>               // Audio session APIs
 #import <MediaPlayer/MPVolumeView.h>                // For master volume control
 #import <AudioToolbox/AudioToolbox.h>               // Audio unit control
@@ -40,6 +39,7 @@
 // Public control properties
 @property SDCAlertView *sensorAlert;
 @property (nonatomic, strong) UISlider *volumeSlider;
+@property (nonatomic) int audioChangeReason;
 
 // Function prototypes
 - (void) monitorSensors: (BOOL) enable;
