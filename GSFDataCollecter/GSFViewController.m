@@ -153,8 +153,10 @@
 
 // delegate for super class location manager
 // gets called several times while the location manager is update gps coords.
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
     // store all of the measurements, just so we can see what kind of data we might receive
+    CLLocation *newLocation = [locations lastObject];
     [self.locationMeasurements addObject:newLocation];
     
     // test the age of the location measurement to determine if the measurement is cached

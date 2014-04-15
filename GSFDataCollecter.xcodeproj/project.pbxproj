@@ -12,6 +12,9 @@
 		5B86529C18FA372F00C4E4E0 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B86529B18FA372F00C4E4E0 /* Crashlytics.framework */; };
 		5BC3156318E9CAE3004BBD95 /* GSFNoiseLevelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC3156218E9CAE3004BBD95 /* GSFNoiseLevelController.m */; };
 		5BFF04F918E907AE00A86354 /* GSFSensorIOController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFF04F818E907AE00A86354 /* GSFSensorIOController.m */; };
+		9633F8E518FBA9AC0016E8CE /* BpTspSolver.js in Sources */ = {isa = PBXBuildFile; fileRef = 9633F8E318FBA9AC0016E8CE /* BpTspSolver.js */; };
+		9633F8E618FBA9AC0016E8CE /* tsp.js in Sources */ = {isa = PBXBuildFile; fileRef = 9633F8E418FBA9AC0016E8CE /* tsp.js */; };
+		9633F8E818FBAA270016E8CE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9633F8E718FBAA270016E8CE /* JavaScriptCore.framework */; };
 		96546A2018F2327A003F8BBB /* GSFProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96546A1F18F2327A003F8BBB /* GSFProgressView.m */; };
 		966F6C8A18AAC0A100BE3334 /* hogcascade_pedestrians.xml in Resources */ = {isa = PBXBuildFile; fileRef = 966F6C8818AAC0A100BE3334 /* hogcascade_pedestrians.xml */; };
 		966F6C9118AB579200BE3334 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 966F6C9018AB579200BE3334 /* GoogleMaps.framework */; };
@@ -119,6 +122,9 @@
 		5BC3156218E9CAE3004BBD95 /* GSFNoiseLevelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFNoiseLevelController.m; sourceTree = "<group>"; };
 		5BFF04F718E907AE00A86354 /* GSFSensorIOController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFSensorIOController.h; sourceTree = "<group>"; };
 		5BFF04F818E907AE00A86354 /* GSFSensorIOController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFSensorIOController.m; sourceTree = "<group>"; };
+		9633F8E318FBA9AC0016E8CE /* BpTspSolver.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = BpTspSolver.js; sourceTree = "<group>"; };
+		9633F8E418FBA9AC0016E8CE /* tsp.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = tsp.js; sourceTree = "<group>"; };
+		9633F8E718FBAA270016E8CE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		96546A1E18F2327A003F8BBB /* GSFProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFProgressView.h; sourceTree = "<group>"; };
 		96546A1F18F2327A003F8BBB /* GSFProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFProgressView.m; sourceTree = "<group>"; };
 		966F6C8818AAC0A100BE3334 /* hogcascade_pedestrians.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = hogcascade_pedestrians.xml; path = GSFDataCollecter/hogcascade_pedestrians.xml; sourceTree = "<group>"; };
@@ -238,6 +244,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9633F8E818FBAA270016E8CE /* JavaScriptCore.framework in Frameworks */,
 				D312C5CB18D6830B00B8641A /* Security.framework in Frameworks */,
 				966F6CA318AB587500BE3334 /* SystemConfiguration.framework in Frameworks */,
 				5B86529C18FA372F00C4E4E0 /* Crashlytics.framework in Frameworks */,
@@ -306,6 +313,15 @@
 			name = SavedDataController;
 			sourceTree = "<group>";
 		};
+		9633F8E218FBA98B0016E8CE /* TSP */ = {
+			isa = PBXGroup;
+			children = (
+				9633F8E318FBA9AC0016E8CE /* BpTspSolver.js */,
+				9633F8E418FBA9AC0016E8CE /* tsp.js */,
+			);
+			name = TSP;
+			sourceTree = "<group>";
+		};
 		966F6C8B18AAC10B00BE3334 /* XMLClassifiers */ = {
 			isa = PBXGroup;
 			children = (
@@ -321,6 +337,7 @@
 		966F6CA418AC847000BE3334 /* GMaps */ = {
 			isa = PBXGroup;
 			children = (
+				9633F8E218FBA98B0016E8CE /* TSP */,
 				966F6CA518AC84C600BE3334 /* GSFGMapViewController.h */,
 				966F6CA618AC84C600BE3334 /* GSFGMapViewController.m */,
 				D397AC4218BAC4920067691D /* GSFDirectionService.h */,
@@ -426,6 +443,7 @@
 		DBB428391880A64F00139082 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9633F8E718FBAA270016E8CE /* JavaScriptCore.framework */,
 				D36F5D7018F0E8EF00C9C8B6 /* Crashlytics.framework */,
 				5B27182818E89D61005BF15E /* AudioToolbox.framework */,
 				D312C5CA18D6830B00B8641A /* Security.framework */,
@@ -580,7 +598,7 @@
 				ORGANIZATIONNAME = "Michael Baptist - LLNL";
 				TargetAttributes = {
 					DBB428361880A64F00139082 = {
-						DevelopmentTeam = Z5SLZ6QPTL;
+						DevelopmentTeam = 58K2V57UB6;
 					};
 					DBB4285A1880A64F00139082 = {
 						TestTargetID = DBB428361880A64F00139082;
@@ -720,6 +738,8 @@
 				D3BF4D1418CE4746003CB52B /* GSFPageControllerContentViewController.m in Sources */,
 				96EAC4BD18AD88450084B331 /* GSFImageSelectorPreview.m in Sources */,
 				96EAC4D818B18ADD0084B331 /* GSFImage.m in Sources */,
+				9633F8E618FBA9AC0016E8CE /* tsp.js in Sources */,
+				9633F8E518FBA9AC0016E8CE /* BpTspSolver.js in Sources */,
 				5BC3156318E9CAE3004BBD95 /* GSFNoiseLevelController.m in Sources */,
 				96B599091895FB4D001D29CF /* GSFImageCollectionViewCell.m in Sources */,
 				96EAF06618CD89940041A265 /* GSFSavedDataDetailViewController.m in Sources */,
