@@ -13,6 +13,7 @@
 @interface GSFGMapViewController () <GMSMapViewDelegate, GSFDirectionServer>
 
 @property (nonatomic) GMSMapView *mapView;
+@property (nonatomic) NSMutableArray *polylines;
 
 @property (nonatomic) NSMutableArray *waypoints;
 @property (nonatomic) NSMutableArray *waypointStrings;
@@ -50,6 +51,7 @@
     self.waypoints = [[NSMutableArray alloc] init];
     self.waypointStrings = [[NSMutableArray alloc] init];
     self.locationMeasurements = [[NSMutableArray alloc] init];
+    self.polylines = [[NSMutableArray alloc] init];
 }
 
 - (void)mapView:(GMSMapView *)mapView didTapAtCoordinate: (CLLocationCoordinate2D)coordinate {
@@ -65,11 +67,18 @@
     [self.serv solveTSP];
 }
 
+- (void)clearPolylines
+{
+    for (GMSPolyline *polyline in self.polylines) {
+        polyline.map = nil;
+    }
+}
+
 - (void)getTSPResults:(NSDictionary *)data
 {
-    NSLog(@"%@", data.description);
+    /*
     NSMutableString *finalRoute = [[NSMutableString alloc] init];
-    [finalRoute stringByAppendingString:@""];
+    [finalRoute appendString:@""];
     if ([[data objectForKey:@"legs"] isKindOfClass:[NSArray class]]) {
         NSArray *legs = [data objectForKey:@"legs"];
         if ([[legs objectAtIndex:0] isKindOfClass:[NSDictionary class]]) {
@@ -80,15 +89,48 @@
                     if ([[stuff objectForKey:@"polyline"] isKindOfClass:[NSDictionary class]]) {
                         NSDictionary *polyline = [stuff objectForKey:@"polyline"];
                         NSString *poly = [polyline objectForKey:@"points"];
-                        [finalRoute stringByAppendingString:poly];
+                        [finalRoute appendString:poly];
                     }
                 }
             }
         }
     }
-    GMSPath *path = [GMSPath pathFromEncodedPath:finalRoute];
-    GMSPolyline *polyline = [GMSPolyline polylineWithPath:path];
-    polyline.map = self.mapView;
+    */
+    
+    [self clearPolylines];
+    
+    NSArray *bestPath = [data objectForKey:@"bestPath"];
+    NSLog(@"%@, %@", bestPath.description, self.waypoints.description);
+    NSMutableArray *bestLegs = [[NSMutableArray alloc] init];
+    for (int i = 1; i <= bestPath.count; ++i) {
+        NSNumber *ind = [[NSNumber alloc] init];
+        if (i < bestPath.count) {
+            ind = bestPath[i];
+        }
+        NSURL *query = nil;
+        if (i  == bestPath.count) {
+            query = [self.serv createURLStringWithOrigin:[self.waypointStrings firstObject] withDestination:[self.waypointStrings lastObject] withStops:nil];
+        } else {
+            query = [self.serv createURLStringWithOrigin:self.waypointStrings[ind.intValue-1] withDestination:self.waypointStrings[ind.intValue] withStops:nil];
+        }
+        NSError* error = nil;
+        NSData* data = [NSData dataWithContentsOfURL:query];
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        if (json) {
+            [bestLegs addObject:json];
+        } else {
+            NSLog(@"%@", error);
+        }
+    }
+    for (NSDictionary *data in bestLegs) {
+        NSDictionary *routes = [data objectForKey:@"routes"][0];
+        NSDictionary *route = [routes objectForKey:@"overview_polyline"];
+        NSString *overview_route = [route objectForKey:@"points"];
+        GMSPath *path = [GMSPath pathFromEncodedPath:overview_route];
+        GMSPolyline *polyline = [GMSPolyline polylineWithPath:path];
+        [self.polylines addObject:polyline];
+        polyline.map = self.mapView;
+    }
 }
 
 //- (void)mapView:(GMSMapView *)mapView didTapAtCoordinate: (CLLocationCoordinate2D)coordinate {

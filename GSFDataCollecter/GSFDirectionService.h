@@ -14,7 +14,6 @@
 - (void)checkJSONResults:(NSDictionary *)data;
 - (void)getTSPResults:(NSDictionary *)data;
 
-
 @end
 
 
@@ -25,6 +24,9 @@
 
 // init override.
 - (GSFDirectionService*)initWithGPSCoords:(NSArray *)gpsCoords andWithWaypointStrings:(NSArray *)waypointStrings;
+
+// create url from gps strings.
+- (NSURL *)createURLStringWithOrigin:(NSString *)origin withDestination:(NSString *)destination withStops:(NSArray *)stops;
 
 // add comments for this function
 - (void)setDirectionsQuery:(NSDictionary *)object;

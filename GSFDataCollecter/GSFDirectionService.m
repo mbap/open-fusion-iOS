@@ -141,7 +141,6 @@ static NSString *kMDDirectionsURL = @"https://maps.googleapis.com/maps/api/direc
         
         // process the data recieved from google.
         if (json) {
-            NSLog(@"%@", json.description);
             if ([[json objectForKey:@"routes"][0] isKindOfClass:[NSDictionary class]]) {
                 NSDictionary *routes = [json objectForKey:@"routes"][0];
                 if ([[routes objectForKey:@"legs"] isKindOfClass:[NSArray class]]) {
@@ -430,6 +429,7 @@ static NSString *kMDDirectionsURL = @"https://maps.googleapis.com/maps/api/direc
     NSDictionary *directionsResultRoutes = @{ @"legs": directionsResultLegs,
                                               @"bounds": directionsResultBounds,
                                               @"overview_path": directionsResultOverview,
+                                              @"bestPath" : bestPath
                                             };
     [self.delegate getTSPResults:directionsResultRoutes];
 }
@@ -482,6 +482,7 @@ static NSString *kMDDirectionsURL = @"https://maps.googleapis.com/maps/api/direc
         }
     }
     url = (NSMutableString*)[url stringByAddingPercentEscapesUsingEncoding: NSASCIIStringEncoding];
+    NSLog(@"%@", [NSURL URLWithString:url]);
     return [NSURL URLWithString:url];
 }
 
