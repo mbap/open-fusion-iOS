@@ -10,7 +10,7 @@
 #import "GSFGMapViewController.h"
 #import "GSFDirectionService.h"
 
-@interface GSFGMapViewController () <GMSMapViewDelegate>
+@interface GSFGMapViewController () <GMSMapViewDelegate, GSFDirectionServer>
 
 @property (nonatomic) GMSMapView *mapView;
 
@@ -19,6 +19,8 @@
 
 @property (nonatomic) CLLocation *bestEffort;
 @property (nonatomic) NSMutableArray *locationMeasurements;
+
+@property (nonatomic) GSFDirectionService *serv;
 
 // sets the camera of the map.
 - (void)setGoogleMapCameraLocation:(CLLocation*)location;
@@ -47,10 +49,10 @@
     self.mapView.delegate = self;
     self.waypoints = [[NSMutableArray alloc] init];
     self.waypointStrings = [[NSMutableArray alloc] init];
+    self.locationMeasurements = [[NSMutableArray alloc] init];
 }
 
 - (void)mapView:(GMSMapView *)mapView didTapAtCoordinate: (CLLocationCoordinate2D)coordinate {
-    
     CLLocationCoordinate2D position = CLLocationCoordinate2DMake(coordinate.latitude, coordinate.longitude);
     GMSMarker *marker = [GMSMarker markerWithPosition:position];
     marker.map = self.mapView;
@@ -58,36 +60,81 @@
     NSString *positionString = [[NSString alloc] initWithFormat:@"%f,%f",
                                 coordinate.latitude,coordinate.longitude];
     [self.waypointStrings addObject:positionString];
-    if([self.waypoints count]>1){
-        NSString *sensor = @"false";
-        NSArray *parameters = [NSArray arrayWithObjects:sensor, self.waypointStrings,
-                               nil];
-        NSArray *keys = [NSArray arrayWithObjects:@"sensor", @"waypoints", nil];
-        NSDictionary *query = [NSDictionary dictionaryWithObjects:parameters
-                                                          forKeys:keys];
-        GSFDirectionService *serv = [[GSFDirectionService alloc] init];
-        SEL selector = @selector(addDirections:);
-        [serv setDirectionsQuery:query withSelector:selector withDelegate:self];
-    }
+    self.serv = [[GSFDirectionService alloc] initWithGPSCoords:self.waypoints andWithWaypointStrings:self.waypointStrings];
+    self.serv.delegate = self;
+    [self.serv solveTSP];
 }
 
-
-- (void)addDirections:(NSDictionary *)json {
-    
-    NSDictionary *routes = [json objectForKey:@"routes"][0];
-    
-    NSDictionary *route = [routes objectForKey:@"overview_polyline"];
-    NSString *overview_route = [route objectForKey:@"points"];
-    GMSPath *path = [GMSPath pathFromEncodedPath:overview_route];
+- (void)getTSPResults:(NSDictionary *)data
+{
+    NSLog(@"%@", data.description);
+    NSMutableString *finalRoute = [[NSMutableString alloc] init];
+    [finalRoute stringByAppendingString:@""];
+    if ([[data objectForKey:@"legs"] isKindOfClass:[NSArray class]]) {
+        NSArray *legs = [data objectForKey:@"legs"];
+        if ([[legs objectAtIndex:0] isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *tmp = [legs objectAtIndex:0];
+            if([[tmp objectForKey:@"steps"] isKindOfClass:[NSArray class]]) {
+                NSArray *steps = [tmp objectForKey:@"steps"];
+                for (NSDictionary *stuff in steps) {
+                    if ([[stuff objectForKey:@"polyline"] isKindOfClass:[NSDictionary class]]) {
+                        NSDictionary *polyline = [stuff objectForKey:@"polyline"];
+                        NSString *poly = [polyline objectForKey:@"points"];
+                        [finalRoute stringByAppendingString:poly];
+                    }
+                }
+            }
+        }
+    }
+    GMSPath *path = [GMSPath pathFromEncodedPath:finalRoute];
     GMSPolyline *polyline = [GMSPolyline polylineWithPath:path];
     polyline.map = self.mapView;
 }
+
+//- (void)mapView:(GMSMapView *)mapView didTapAtCoordinate: (CLLocationCoordinate2D)coordinate {
+//    
+//    CLLocationCoordinate2D position = CLLocationCoordinate2DMake(coordinate.latitude, coordinate.longitude);
+//    GMSMarker *marker = [GMSMarker markerWithPosition:position];
+//    marker.map = self.mapView;
+//    [self.waypoints addObject:marker];
+//    NSString *positionString = [[NSString alloc] initWithFormat:@"%f,%f",
+//                                coordinate.latitude,coordinate.longitude];
+//    [self.waypointStrings addObject:positionString];
+//    if([self.waypoints count]>1){
+//        NSString *sensor = @"false";
+//        NSArray *parameters = [NSArray arrayWithObjects:sensor, self.waypointStrings,
+//                               nil];
+//        NSArray *keys = [NSArray arrayWithObjects:@"sensor", @"waypoints", nil];
+//        NSDictionary *query = [NSDictionary dictionaryWithObjects:parameters
+//                                                          forKeys:keys];
+//        self.serv = [[GSFDirectionService alloc] init];
+//        self.serv.delegate = self;
+//        [self.serv setDirectionsQuery:query];
+//    }
+//}
+//
+//- (void)checkJSONResults:(NSDictionary *)data
+//{
+//    NSDictionary *routes = [data objectForKey:@"routes"][0];
+//    
+//    NSDictionary *route = [routes objectForKey:@"overview_polyline"];
+//    NSString *overview_route = [route objectForKey:@"points"];
+//    GMSPath *path = [GMSPath pathFromEncodedPath:overview_route];
+//    GMSPolyline *polyline = [GMSPolyline polylineWithPath:path];
+//    polyline.map = self.mapView;
+//}
+
 
 - (void)setGoogleMapCameraLocation:(CLLocation*)location
 {
     GMSCameraPosition *currentLocation = [GMSCameraPosition cameraWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude zoom:12];
     [self.mapView setCamera:currentLocation];
-
+    if (self.waypoints.count == 0) {
+        [self.waypoints addObject:[GMSMarker markerWithPosition:location.coordinate]];
+        NSString *positionString = [[NSString alloc] initWithFormat:@"%f,%f",
+                                    location.coordinate.latitude, location.coordinate.longitude];
+        [self.waypointStrings addObject:positionString];
+    }
 }
 
 

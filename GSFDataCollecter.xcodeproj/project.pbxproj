@@ -12,12 +12,14 @@
 		5B86529C18FA372F00C4E4E0 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B86529B18FA372F00C4E4E0 /* Crashlytics.framework */; };
 		5BC3156318E9CAE3004BBD95 /* GSFNoiseLevelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC3156218E9CAE3004BBD95 /* GSFNoiseLevelController.m */; };
 		5BFF04F918E907AE00A86354 /* GSFSensorIOController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFF04F818E907AE00A86354 /* GSFSensorIOController.m */; };
+		9621249518FF4F970078C2BF /* BpTspSolver.js in Resources */ = {isa = PBXBuildFile; fileRef = 9633F8E318FBA9AC0016E8CE /* BpTspSolver.js */; };
+		9621249618FF4F970078C2BF /* tsp.js in Resources */ = {isa = PBXBuildFile; fileRef = 9633F8E418FBA9AC0016E8CE /* tsp.js */; };
+		9628237A190082BA00ABA86E /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 96282379190082BA00ABA86E /* GoogleMaps.bundle */; };
+		9628237C190082CB00ABA86E /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9628237B190082CB00ABA86E /* GoogleMaps.framework */; };
 		9633F8E518FBA9AC0016E8CE /* BpTspSolver.js in Sources */ = {isa = PBXBuildFile; fileRef = 9633F8E318FBA9AC0016E8CE /* BpTspSolver.js */; };
 		9633F8E618FBA9AC0016E8CE /* tsp.js in Sources */ = {isa = PBXBuildFile; fileRef = 9633F8E418FBA9AC0016E8CE /* tsp.js */; };
-		9633F8E818FBAA270016E8CE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9633F8E718FBAA270016E8CE /* JavaScriptCore.framework */; };
 		96546A2018F2327A003F8BBB /* GSFProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96546A1F18F2327A003F8BBB /* GSFProgressView.m */; };
 		966F6C8A18AAC0A100BE3334 /* hogcascade_pedestrians.xml in Resources */ = {isa = PBXBuildFile; fileRef = 966F6C8818AAC0A100BE3334 /* hogcascade_pedestrians.xml */; };
-		966F6C9118AB579200BE3334 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 966F6C9018AB579200BE3334 /* GoogleMaps.framework */; };
 		966F6C9318AB57CF00BE3334 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 966F6C9218AB57CF00BE3334 /* CoreData.framework */; };
 		966F6C9518AB57EE00BE3334 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 966F6C9418AB57EE00BE3334 /* CoreText.framework */; };
 		966F6C9718AB57F800BE3334 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 966F6C9618AB57F800BE3334 /* GLKit.framework */; };
@@ -41,7 +43,6 @@
 		96EAC4B918AD88280084B331 /* haarcascade_frontalface_alt2.xml in Resources */ = {isa = PBXBuildFile; fileRef = 96EAC4B618AD88280084B331 /* haarcascade_frontalface_alt2.xml */; };
 		96EAC4BA18AD88280084B331 /* haarcascade_frontalface_default.xml in Resources */ = {isa = PBXBuildFile; fileRef = 96EAC4B718AD88280084B331 /* haarcascade_frontalface_default.xml */; };
 		96EAC4BD18AD88450084B331 /* GSFImageSelectorPreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 96EAC4BC18AD88450084B331 /* GSFImageSelectorPreview.m */; };
-		96EAC4BF18AD8E250084B331 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 96EAC4BE18AD8E250084B331 /* GoogleMaps.bundle */; };
 		96EAC4D818B18ADD0084B331 /* GSFImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 96EAC4D718B18ADD0084B331 /* GSFImage.m */; };
 		96EAC4DC18BC75A90084B331 /* GSFDataTransfer.m in Sources */ = {isa = PBXBuildFile; fileRef = 96EAC4DB18BC75A90084B331 /* GSFDataTransfer.m */; };
 		96EAF06618CD89940041A265 /* GSFSavedDataDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96EAF06518CD89940041A265 /* GSFSavedDataDetailViewController.m */; };
@@ -122,13 +123,14 @@
 		5BC3156218E9CAE3004BBD95 /* GSFNoiseLevelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFNoiseLevelController.m; sourceTree = "<group>"; };
 		5BFF04F718E907AE00A86354 /* GSFSensorIOController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFSensorIOController.h; sourceTree = "<group>"; };
 		5BFF04F818E907AE00A86354 /* GSFSensorIOController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFSensorIOController.m; sourceTree = "<group>"; };
+		96282379190082BA00ABA86E /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GoogleMaps.bundle; sourceTree = "<group>"; };
+		9628237B190082CB00ABA86E /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
 		9633F8E318FBA9AC0016E8CE /* BpTspSolver.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = BpTspSolver.js; sourceTree = "<group>"; };
 		9633F8E418FBA9AC0016E8CE /* tsp.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = tsp.js; sourceTree = "<group>"; };
 		9633F8E718FBAA270016E8CE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		96546A1E18F2327A003F8BBB /* GSFProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFProgressView.h; sourceTree = "<group>"; };
 		96546A1F18F2327A003F8BBB /* GSFProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFProgressView.m; sourceTree = "<group>"; };
 		966F6C8818AAC0A100BE3334 /* hogcascade_pedestrians.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = hogcascade_pedestrians.xml; path = GSFDataCollecter/hogcascade_pedestrians.xml; sourceTree = "<group>"; };
-		966F6C9018AB579200BE3334 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
 		966F6C9218AB57CF00BE3334 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		966F6C9418AB57EE00BE3334 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		966F6C9618AB57F800BE3334 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
@@ -156,7 +158,6 @@
 		96EAC4B718AD88280084B331 /* haarcascade_frontalface_default.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = haarcascade_frontalface_default.xml; path = GSFDataCollecter/haarcascade_frontalface_default.xml; sourceTree = "<group>"; };
 		96EAC4BB18AD88450084B331 /* GSFImageSelectorPreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFImageSelectorPreview.h; sourceTree = "<group>"; };
 		96EAC4BC18AD88450084B331 /* GSFImageSelectorPreview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFImageSelectorPreview.m; sourceTree = "<group>"; };
-		96EAC4BE18AD8E250084B331 /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GoogleMaps.bundle; sourceTree = "<group>"; };
 		96EAC4D618B18ADD0084B331 /* GSFImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFImage.h; sourceTree = "<group>"; };
 		96EAC4D718B18ADD0084B331 /* GSFImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFImage.m; sourceTree = "<group>"; };
 		96EAC4DA18BC75A90084B331 /* GSFDataTransfer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFDataTransfer.h; sourceTree = "<group>"; };
@@ -244,7 +245,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9633F8E818FBAA270016E8CE /* JavaScriptCore.framework in Frameworks */,
 				D312C5CB18D6830B00B8641A /* Security.framework in Frameworks */,
 				966F6CA318AB587500BE3334 /* SystemConfiguration.framework in Frameworks */,
 				5B86529C18FA372F00C4E4E0 /* Crashlytics.framework in Frameworks */,
@@ -266,8 +266,8 @@
 				96C6A52818984501004D70F0 /* AssetsLibrary.framework in Frameworks */,
 				96C6A52918984501004D70F0 /* AVFoundation.framework in Frameworks */,
 				96C6A525189844F2004D70F0 /* Accelerate.framework in Frameworks */,
-				966F6C9118AB579200BE3334 /* GoogleMaps.framework in Frameworks */,
 				D36F5D7118F0E8EF00C9C8B6 /* Crashlytics.framework in Frameworks */,
+				9628237C190082CB00ABA86E /* GoogleMaps.framework in Frameworks */,
 				DBB4283F1880A64F00139082 /* UIKit.framework in Frameworks */,
 				DBB4283B1880A64F00139082 /* Foundation.framework in Frameworks */,
 				D9F9F3AD5A024F9181F4F432 /* libPods.a in Frameworks */,
@@ -443,11 +443,12 @@
 		DBB428391880A64F00139082 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9628237B190082CB00ABA86E /* GoogleMaps.framework */,
+				96282379190082BA00ABA86E /* GoogleMaps.bundle */,
 				9633F8E718FBAA270016E8CE /* JavaScriptCore.framework */,
 				D36F5D7018F0E8EF00C9C8B6 /* Crashlytics.framework */,
 				5B27182818E89D61005BF15E /* AudioToolbox.framework */,
 				D312C5CA18D6830B00B8641A /* Security.framework */,
-				96EAC4BE18AD8E250084B331 /* GoogleMaps.bundle */,
 				966F6CA218AB587500BE3334 /* SystemConfiguration.framework */,
 				966F6CA018AB584000BE3334 /* OpenGLES.framework */,
 				966F6C9E18AB583900BE3334 /* libz.dylib */,
@@ -458,7 +459,6 @@
 				966F6C9618AB57F800BE3334 /* GLKit.framework */,
 				966F6C9418AB57EE00BE3334 /* CoreText.framework */,
 				966F6C9218AB57CF00BE3334 /* CoreData.framework */,
-				966F6C9018AB579200BE3334 /* GoogleMaps.framework */,
 				D3D7807B18A0396900E5AB50 /* CoreLocation.framework */,
 				96C6A53018984534004D70F0 /* QuartzCore.framework */,
 				96C6A52A1898451A004D70F0 /* CoreImage.framework */,
@@ -629,6 +629,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9621249518FF4F970078C2BF /* BpTspSolver.js in Resources */,
+				9628237A190082BA00ABA86E /* GoogleMaps.bundle in Resources */,
+				9621249618FF4F970078C2BF /* tsp.js in Resources */,
 				D3641AFC18E10A7C00DBB5E7 /* Delete-icon.png in Resources */,
 				D312C5E518D691C900B8641A /* globe-transparent5.png in Resources */,
 				D312C5E918D691C900B8641A /* icon-transparent-white5.png in Resources */,
@@ -640,7 +643,6 @@
 				D312C5D918D6919800B8641A /* icon-black.png in Resources */,
 				D3BF4D2318CE62C4003CB52B /* transparent1.png in Resources */,
 				5B67ACEA18E4B6EF008CC092 /* GSF_Insert_sensor_alert-v2.png in Resources */,
-				96EAC4BF18AD8E250084B331 /* GoogleMaps.bundle in Resources */,
 				D312C5D618D6919800B8641A /* globe-black.png in Resources */,
 				DBB428511880A64F00139082 /* Main_iPad.storyboard in Resources */,
 				D312C5C918CFEC9C00B8641A /* upload.png in Resources */,
