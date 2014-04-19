@@ -534,12 +534,12 @@
     var nextAbove = -1;
     for (var i = curr + 1; i < waypoints.length; ++i) {
       if (wpActive[i]) {
-	if (nextAbove == -1) {
-	  nextAbove = i;
-	} else {
-	  wayArr.push(makeDirWp(waypoints[i], addresses[i]));
-	  wayArr.push(makeDirWp(waypoints[curr], addresses[curr]));
-	}
+	    if (nextAbove == -1) {
+	      nextAbove = i;
+	    } else {
+	      wayArr.push(makeDirWp(waypoints[i], addresses[i]));
+	      wayArr.push(makeDirWp(waypoints[curr], addresses[curr]));
+	    }
       }
     }
     if (nextAbove != -1) {
@@ -554,17 +554,17 @@
     var index = currInd;
     for (var i = curr + 1; i < waypoints.length; ++i) {
       if (wpActive[i]) {
-	index++;
-	if (nextAbove == -1) {
-	  nextAbove = i;
-	} else {
-	  legs[currInd][index] = legsTmp[distIndex];
-	  dist[currInd][index] = distances[distIndex];
-	  dur[currInd][index] = durations[distIndex++];
-	  legs[index][currInd] = legsTmp[distIndex];
-	  dist[index][currInd] = distances[distIndex];
-	  dur[index][currInd] = durations[distIndex++];
-	}
+	    index++;
+	    if (nextAbove == -1) {
+	      nextAbove = i;
+        } else {
+	    legs[currInd][index] = legsTmp[distIndex];
+	    dist[currInd][index] = distances[distIndex];
+	    dur[currInd][index] = durations[distIndex++];
+        legs[index][currInd] = legsTmp[distIndex];
+	    dist[index][currInd] = distances[distIndex];
+	    dur[index][currInd] = durations[distIndex++];
+	    }
       }
     }
     if (nextAbove != -1) {
@@ -594,9 +594,9 @@
 
     for (var i = 0; i < waypoints.length; ++i) {
       if (wpActive[i]) {
-	wayArr.push(makeDirWp(waypoints[i], addresses[i]));
-	getWayArr(i);
-	break;
+        wayArr.push(makeDirWp(waypoints[i], addresses[i]));
+	    getWayArr(i);
+	    break;
       }
     }
 
@@ -622,7 +622,7 @@
     if (chunkNode < wayArr.length) {
       var wayArrChunk = new Array();
       for (var i = 0; i < maxSize && i + chunkNode < wayArr.length; ++i) {
-	wayArrChunk.push(wayArr[chunkNode+i]);
+	    wayArrChunk.push(wayArr[chunkNode+i]);
       }
       var origin;
       var destination;
@@ -630,17 +630,17 @@
       destination = wayArrChunk[wayArrChunk.length-1].location;
       var wayArrChunk2 = new Array();
       for (var i = 1; i < wayArrChunk.length - 1; i++) {
-	wayArrChunk2[i-1] = wayArrChunk[i];
+	    wayArrChunk2[i-1] = wayArrChunk[i];
       }
       chunkNode += maxSize;
       if (chunkNode < wayArr.length-1) {
-	chunkNode--;
+	    chunkNode--;
       }
 	    
       var myGebDirections = new google.maps.DirectionsService();
 	    
       myGebDirections.route({
-	origin: origin,
+	    origin: origin,
 	    destination: destination,
 	    waypoints: wayArrChunk2,
 	    avoidHighways: avoidHighways,
@@ -688,11 +688,11 @@
     numActive = 0;
     for (var i = 0; i < waypoints.length; ++i) {
       if (wpActive[i]) {
-	legs.push(new Array());
-	dist.push(new Array());
-	dur.push(new Array());
-	addr[numActive] = addresses[i];
-	numActive++;
+        legs.push(new Array());
+	    dist.push(new Array());
+	    dur.push(new Array());
+	    addr[numActive] = addresses[i];
+	    numActive++;
       }
     }
     for (var i = 0; i < numActive; ++i) {

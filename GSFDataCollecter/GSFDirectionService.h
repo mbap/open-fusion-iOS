@@ -8,18 +8,31 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol GSFDirectionServer <NSObject>
+
+@optional
+- (void)checkJSONResults:(NSDictionary *)data;
+- (void)getTSPResults:(NSDictionary *)data;
+
+@end
+
+
 @interface GSFDirectionService : NSObject
 
-// add comments for this function
-- (void)setDirectionsQuery:(NSDictionary *)object withSelector:(SEL)selector
-              withDelegate:(id)delegate;
+// custom delegate
+@property (nonatomic, weak) id <GSFDirectionServer> delegate;
+
+// init override.
+- (GSFDirectionService*)initWithGPSCoords:(NSArray *)gpsCoords andWithWaypointStrings:(NSArray *)waypointStrings;
+
+// create url from gps strings.
+- (NSURL *)createURLStringWithOrigin:(NSString *)origin withDestination:(NSString *)destination withStops:(NSArray *)stops;
 
 // add comments for this function
-- (void)retrieveDirections:(SEL)sel withDelegate:(id)delegate;
+- (void)setDirectionsQuery:(NSDictionary *)object;
 
-// add comments for this function
-- (void)fetchedData:(NSData *)data withSelector:(SEL)selector
-       withDelegate:(id)delegate;
+// solves the tsp for the waypoints.
+- (void)solveTSP;
 
 @end
 
