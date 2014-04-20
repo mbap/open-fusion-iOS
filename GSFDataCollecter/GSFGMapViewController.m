@@ -10,13 +10,15 @@
 #import "GSFGMapViewController.h"
 #import "GSFDirectionService.h"
 
-@interface GSFGMapViewController () <GMSMapViewDelegate, GSFDirectionServer>
+@interface GSFGMapViewController () <GMSMapViewDelegate, GSFDirectionServer, UIActionSheetDelegate>
 
 @property (nonatomic) GMSMapView *mapView;
-@property (nonatomic) NSMutableArray *polylines;
+@property (nonatomic) GMSCoordinateBounds *bounds;
 
+@property (nonatomic) NSMutableArray *polylines;
 @property (nonatomic) NSMutableArray *waypoints;
 @property (nonatomic) NSMutableArray *waypointStrings;
+@property (nonatomic) NSMutableArray *bestPathIndex;
 
 @property (nonatomic) CLLocation *bestEffort;
 @property (nonatomic) NSMutableArray *locationMeasurements;
@@ -74,6 +76,13 @@
     }
 }
 
+- (void)clearMarkers
+{
+    for (GMSMarker *marker in self.waypoints) {
+        marker.map = nil;
+    }
+}
+
 - (void)getTSPResults:(NSDictionary *)data
 {
     /*
@@ -98,9 +107,8 @@
     */
     
     [self clearPolylines];
-    
     NSArray *bestPath = [data objectForKey:@"bestPath"];
-    NSLog(@"%@, %@", bestPath.description, self.waypoints.description);
+    self.bestPathIndex = [NSMutableArray arrayWithArray:bestPath];
     NSMutableArray *bestLegs = [[NSMutableArray alloc] init];
     for (int i = 1; i <= bestPath.count; ++i) {
         NSNumber *ind = [[NSNumber alloc] init];
@@ -225,6 +233,66 @@
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
     NSLog(@"Location Services has failed.\n%@\n", error);
+}
+
+- (IBAction)openGoogleMapsApp:(id)sender
+{
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"User Actions" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Reset Map" otherButtonTitles:@"Get Directions", @"First Leg: Google Maps App", @"Fit Camera to Route", nil];
+    [sheet showInView:self.view];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (0 == buttonIndex) {
+        // reset the map
+        [self clearPolylines];
+        [self clearMarkers];
+        [self.polylines removeAllObjects];
+        [self.waypoints removeAllObjects];
+        [self.waypointStrings removeAllObjects];
+        [self.waypoints addObject:[GMSMarker markerWithPosition:self.bestEffort.coordinate]];
+        self.bounds = [[GMSCoordinateBounds alloc] initWithCoordinate:self.bestEffort.coordinate coordinate:self.bestEffort.coordinate];
+        NSString *positionString = [[NSString alloc] initWithFormat:@"%f,%f",
+                                    self.bestEffort.coordinate.latitude, self.bestEffort.coordinate.longitude];
+        [self.waypointStrings addObject:positionString];
+    } else if (1 == buttonIndex) {
+        // get directions for entire route in safari
+        NSMutableString *url = [NSMutableString stringWithFormat:@"https://www.google.com/maps/dir/"];
+        NSUInteger wpCount = [self.waypointStrings count];
+        for(int i = 0; i < wpCount; i++){
+            NSNumber *ind = self.bestPathIndex[i];
+            [url appendString:[self.waypointStrings objectAtIndex:ind.intValue]];
+            [url appendString: @"/"];
+        }
+        [url appendString:[self.waypointStrings firstObject]];
+        [url appendString: @"/"];
+        [url appendString: @"@"];
+        [url appendString:[self.waypointStrings firstObject]];
+        [url appendString: @"/"];
+        if (![[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]]) {
+            NSLog(@"Google Maps App not installed.");
+        }
+    } else if (2 == buttonIndex) {
+        // plot one leg in googele maps.
+        NSNumber *s = self.bestPathIndex[1];
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"comgooglemaps://?saddr=%@&daddr=%@",[self.waypointStrings firstObject], [self.waypointStrings objectAtIndex:s.intValue]]];
+        if (![[UIApplication sharedApplication] canOpenURL:url]) {
+            NSLog(@"Google Maps app is not installed");
+            //maybe have an alert view pop up here. telling them to push different option
+        } else {
+            [[UIApplication sharedApplication] openURL:url];
+        }
+    } else if (3 == buttonIndex) {
+        // fit the camera
+        self.bounds = [[GMSCoordinateBounds alloc] initWithCoordinate:self.bestEffort.coordinate coordinate:self.bestEffort.coordinate];
+        for (GMSMarker *extender in self.waypoints) {
+            self.bounds = [self.bounds includingCoordinate:extender.position];
+        }
+        GMSCameraUpdate *update = [GMSCameraUpdate fitBounds:self.bounds];
+        [self.mapView moveCamera:update];
+    } else {
+        // do nothing cancel button was hit.
+    }
 }
 
 - (void)didReceiveMemoryWarning
