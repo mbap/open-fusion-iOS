@@ -441,14 +441,12 @@ static NSString *kMDDirectionsURL = @"https://maps.googleapis.com/maps/api/direc
     NSString *destination = [self.waypoints objectAtIndex:destinationPos];
     NSString *sensor = [query objectForKey:@"sensor"];
     NSMutableString *url = [NSMutableString stringWithFormat:@"%@&origin=%@&destination=%@&sensor=%@", kMDDirectionsURL, origin, destination, sensor];
-    NSLog(@"%@", url);
     if ([self.waypoints count] > 2) {
         [url appendString:@"&waypoints=optimize:true"];
         NSUInteger wpCount = [self.waypoints count] - 2;
         for(int i = 1; i < wpCount; i++){
             [url appendString: @"|"];
             [url appendString:[self.waypoints objectAtIndex:i]];
-            NSLog(@"%@", url);
         }
     }
     url = (NSMutableString*)[url stringByAddingPercentEscapesUsingEncoding: NSASCIIStringEncoding];
@@ -482,7 +480,6 @@ static NSString *kMDDirectionsURL = @"https://maps.googleapis.com/maps/api/direc
         }
     }
     url = (NSMutableString*)[url stringByAddingPercentEscapesUsingEncoding: NSASCIIStringEncoding];
-    NSLog(@"%@", [NSURL URLWithString:url]);
     return [NSURL URLWithString:url];
 }
 
