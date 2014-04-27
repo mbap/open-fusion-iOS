@@ -8,14 +8,11 @@
 
 #import "GSFOpenCvImageViewController.h"
 #import "GSFImage.h"
-#import "GSFOpenCvImageProcessor.h"
+//#import "GSFOpenCvImageProcessor.h"
 #import "GSFDataTransfer.h"
+#import "GSFPageControllerContentViewController.h"
 
-#define OPENCV 1
-#define ORIG   2
-#define BOTH   3
-
-@interface GSFOpenCvImageViewController () <NSURLSessionTaskDelegate, NSURLSessionDelegate, UIActionSheetDelegate>
+@interface GSFOpenCvImageViewController () <NSURLSessionTaskDelegate, NSURLSessionDelegate, UIActionSheetDelegate, UIPageViewControllerDataSource, UIPageViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
@@ -23,71 +20,105 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *saveData;
 @property (nonatomic) NSNumber *sendPref;
 
+// property to increase the value of number of people.
+@property (weak, nonatomic) IBOutlet UIStepper *stepper;
+@property (weak, nonatomic) IBOutlet UILabel *quantityval;
+@property (weak, nonatomic) IBOutlet UILabel *quantity;
+
+// properties of the page controller;
+@property (nonatomic) NSMutableArray *cvImages;
+@property (nonatomic) NSUInteger index;
+@property (nonatomic) NSArray *vcs;
+
 @end
+
 
 @implementation GSFOpenCvImageViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
     
-    GSFOpenCvImageProcessor *pro = [[GSFOpenCvImageProcessor alloc] init];
-    NSMutableArray *cycler = [[NSMutableArray alloc] init];
-    int i = 0;
+    self.dataSource = self;
+    self.delegate = self;
+    
+    [self parseOpenImages];
+    
+    GSFPageControllerContentViewController *startingViewController = [self viewControllerAtIndex:0];
+    NSArray *viewControllers = @[startingViewController];
+    [self setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    
+    [self.view bringSubviewToFront:self.toolbar];
+    [self.view bringSubviewToFront:self.quantity];
+    [self.view bringSubviewToFront:self.quantityval];
+    [self.view bringSubviewToFront:self.stepper];
+}
+
+- (void)parseOpenImages {
+    self.cvImages = [[NSMutableArray alloc] init];
     for (GSFData *data in self.originalData) {
-        NSNumber *num = [self.originalOrientation objectAtIndex:i];
-        if (num.intValue == UIImageOrientationLeft) { // requires 90 clockwise rotation
-            if (data.gsfImage.fimage) {
-                [cycler addObject:data.gsfImage.fimage];
-            }
-            if (data.gsfImage.pimage) {
-                [cycler addObject:data.gsfImage.pimage];
-            }
-        } else if (num.intValue == UIImageOrientationUp) { // 90 counter clock
-            if (data.gsfImage.fimage) {
-                data.gsfImage.fimage = [pro rotateImage:data.gsfImage.fimage byDegrees:-90];
-                [cycler addObject:data.gsfImage.fimage];
-            }
-            if (data.gsfImage.pimage) {
-                data.gsfImage.pimage = [pro rotateImage:data.gsfImage.pimage byDegrees:-90];
-                [cycler addObject:data.gsfImage.pimage];
-            }
-        } else if (num.intValue == UIImageOrientationDown) { // 180 rotation.
-            if (data.gsfImage.fimage) {
-                data.gsfImage.fimage = [pro rotateImage:data.gsfImage.fimage byDegrees:-90];
-                [cycler addObject:data.gsfImage.fimage];
-            }
-            if (data.gsfImage.pimage) {
-                data.gsfImage.pimage = [pro rotateImage:data.gsfImage.pimage byDegrees:-90];
-                [cycler addObject:data.gsfImage.pimage];
-            }
-        } else {
-            if (data.gsfImage.fimage) {
-                [cycler addObject:data.gsfImage.fimage];
-            }
-            if (data.gsfImage.pimage) {
-                [cycler addObject:data.gsfImage.pimage];
-            }
-        }
-        ++i;
+        [self.cvImages addObject:data.gsfImage.fimage];
+        [self.cvImages addObject:data.gsfImage.pimage];
+    }
+}
+
+- (GSFPageControllerContentViewController *)viewControllerAtIndex:(NSUInteger)index
+{
+    // Create a new view controller and pass suitable data.
+    GSFPageControllerContentViewController *pageContentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"GSFPageContent"];
+    pageContentViewController.imageView = [[UIImageView alloc] init];
+    pageContentViewController.image = [self.cvImages objectAtIndex:index];
+    pageContentViewController.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    pageContentViewController.index = index;
+    
+    return pageContentViewController;
+}
+
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
+{
+    NSUInteger index = ((GSFPageControllerContentViewController*) viewController).index;
+    
+    if ((index == 0) || (index == NSNotFound)) {
+        return nil;
     }
     
-    self.imageView.animationImages = cycler;
-    self.imageView.animationDuration = 4;
-    self.imageView.animationRepeatCount = 0;
-    [self.imageView startAnimating];
-    [self.view bringSubviewToFront:self.toolbar];
+    index--;
+    return [self viewControllerAtIndex:index];
+}
+
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
+{
+    NSUInteger index = ((GSFPageControllerContentViewController*) viewController).index;
+    
+    if (index == NSNotFound) {
+        return nil;
+    }
+    
+    index++;
+    if (index == [self.cvImages count]) {
+        return nil;
+    }
+    return [self viewControllerAtIndex:index];
+}
+
+- (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController
+{
+    return self.cvImages.count;
+}
+
+- (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController
+{
+    return 0;
 }
 
 - (IBAction)sendDataToDB:(id)sender {
-    UIActionSheet *menu = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Discard", @"OpenCV Image(s)", @"Original Image(s)", @"Both", nil];
+    UIActionSheet *menu = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Discard", @"Send Original(s)", nil];
     [menu showInView:self.view];
 }
 
 - (IBAction)saveDataToFile:(id)sender {
     GSFDataTransfer *driver = [[GSFDataTransfer alloc] init];
-    NSData *saveMe = [driver formatDataAsJSON:self.originalData withFlag:[NSNumber numberWithInteger:BOTH]];
+    NSData *saveMe = [driver formatDataAsJSON:self.originalData];
     NSFileManager *man = [[NSFileManager alloc] init];
     NSArray *urls = [man URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
     NSURL *url = [urls objectAtIndex:0];
@@ -109,15 +140,75 @@
     GSFDataTransfer *driver = [[GSFDataTransfer alloc] init];
     if (0 == buttonIndex) {
         [self.navigationController popViewControllerAnimated:YES];
-    } else if (4 == buttonIndex) {
+    } else if (2 == buttonIndex) {
         // do nothing
     } else {
         dispatch_queue_t networkQueue = dispatch_queue_create("networkQueue", NULL);
         dispatch_async(networkQueue, ^{
-            [driver uploadDataArray:[driver formatDataAsJSON:self.originalData withFlag:[NSNumber numberWithInteger:buttonIndex]]];
+            [driver uploadDataArray:[driver formatDataAsJSON:self.originalData]];
         });
         [self.navigationController popToViewController:[[self.navigationController viewControllers] objectAtIndex:1] animated:YES];
     }
 }
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+
+//- (void)viewDidLoad
+//{
+//    [super viewDidLoad];
+//	// Do any additional setup after loading the view.
+//
+//    GSFOpenCvImageProcessor *pro = [[GSFOpenCvImageProcessor alloc] init];
+//    NSMutableArray *cycler = [[NSMutableArray alloc] init];
+//    int i = 0;
+//    for (GSFData *data in self.originalData) {
+//        NSNumber *num = [self.originalOrientation objectAtIndex:i];
+//        if (num.intValue == UIImageOrientationLeft) { // requires 90 clockwise rotation
+//            if (data.gsfImage.fimage) {
+//                [cycler addObject:data.gsfImage.fimage];
+//            }
+//            if (data.gsfImage.pimage) {
+//                [cycler addObject:data.gsfImage.pimage];
+//            }
+//        } else if (num.intValue == UIImageOrientationUp) { // 90 counter clock
+//            if (data.gsfImage.fimage) {
+//                data.gsfImage.fimage = [pro rotateImage:data.gsfImage.fimage byDegrees:-90];
+//                [cycler addObject:data.gsfImage.fimage];
+//            }
+//            if (data.gsfImage.pimage) {
+//                data.gsfImage.pimage = [pro rotateImage:data.gsfImage.pimage byDegrees:-90];
+//                [cycler addObject:data.gsfImage.pimage];
+//            }
+//        } else if (num.intValue == UIImageOrientationDown) { // 180 rotation.
+//            if (data.gsfImage.fimage) {
+//                data.gsfImage.fimage = [pro rotateImage:data.gsfImage.fimage byDegrees:-90];
+//                [cycler addObject:data.gsfImage.fimage];
+//            }
+//            if (data.gsfImage.pimage) {
+//                data.gsfImage.pimage = [pro rotateImage:data.gsfImage.pimage byDegrees:-90];
+//                [cycler addObject:data.gsfImage.pimage];
+//            }
+//        } else {
+//            if (data.gsfImage.fimage) {
+//                [cycler addObject:data.gsfImage.fimage];
+//            }
+//            if (data.gsfImage.pimage) {
+//                [cycler addObject:data.gsfImage.pimage];
+//            }
+//        }
+//        ++i;
+//    }
+//
+//    self.imageView.animationImages = cycler;
+//    self.imageView.animationDuration = 4;
+//    self.imageView.animationRepeatCount = 0;
+//    [self.imageView startAnimating];
+//    [self.view bringSubviewToFront:self.toolbar];
+//}
 
 @end

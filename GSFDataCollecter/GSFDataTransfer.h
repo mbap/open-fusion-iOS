@@ -64,7 +64,7 @@
  *
  *  @return The GEOJSON data as an NSData object.
  */
-- (NSData *)formatDataAsJSON:(NSMutableArray *)dataArray withFlag:(NSNumber *)option;
+- (NSData *)formatDataAsJSON:(NSMutableArray *)dataArray;
 
 /**
  *  A data concatenation function that runs at O(n^2) speed. Takes a list of feature collections and turns them into one feature collection.

@@ -29,7 +29,7 @@
     
     GSFPageControllerContentViewController *startingViewController = [self viewControllerAtIndex:0];
     NSArray *viewControllers = @[startingViewController];
-    [self setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    [self setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
 }
 
 - (GSFPageControllerContentViewController *)viewControllerAtIndex:(NSUInteger)index

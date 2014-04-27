@@ -12,12 +12,7 @@
 /**
  *  The view controller for the post processing view. After OpenCV has processed the images taken by the user the images are shown in this view.
  */
-@interface GSFOpenCvImageViewController : UIViewController
-
-/**
- *  Containts the data to be send to the GSF Server using the GSFDataTransfer object.
- */
-@property (nonatomic) NSMutableArray *dataArray;
+@interface GSFOpenCvImageViewController : UIPageViewController
 
 /**
  *  Contains the original data or the images taken by the user.
