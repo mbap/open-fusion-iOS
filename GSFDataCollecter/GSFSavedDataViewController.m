@@ -155,8 +155,8 @@
                             NSDictionary *properties = [feature objectForKey:@"properties"];
                             key = [NSString stringWithFormat:@"Section%lu", (unsigned long)sectioniter];
                             UIImage *image = nil;
-                            if ([properties objectForKey:@"oimage"]) {
-                                NSString *oimage = [properties objectForKey:@"oimage"];
+                            if ([properties objectForKey:@"image"]) {
+                                NSString *oimage = [properties objectForKey:@"image"];
                                 NSData *imageData =  [[NSData alloc] initWithBase64EncodedString:oimage options:0];
                                 if (imageData) {
                                     GSFOpenCvImageProcessor *pro = [[GSFOpenCvImageProcessor alloc] init];
@@ -242,7 +242,7 @@
     // set main text view with the timestamp of the feature
     if ([[feature objectForKey:@"properties"] isKindOfClass:[NSDictionary class]]) {
         NSDictionary *properties = [feature objectForKey:@"properties"];
-        cell.textLabel.text = [properties objectForKey:@"timestamp"];
+        cell.textLabel.text = [properties objectForKey:@"time"];
     }
     
     NSArray *images = [self.imageCache objectForKey:[NSString stringWithFormat:@"Section%ld", (long)indexPath.section]];

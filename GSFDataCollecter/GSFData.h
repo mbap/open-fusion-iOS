@@ -68,6 +68,6 @@
  *
  *  @return A Apple JSON conformant dictionary containing a GSFData object.
  */
-+ (NSDictionary *)convertGSFDataToDict:(GSFData *)gsfdata withFlag:(NSNumber *)option;
++ (NSDictionary *)convertGSFDataToDict:(GSFData *)gsfdata;
 
 @end

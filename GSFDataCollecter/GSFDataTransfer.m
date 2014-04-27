@@ -42,13 +42,13 @@
     return self;
 }
 
-- (NSData *)formatDataAsJSON:(NSMutableArray *)dataArray withFlag:(NSNumber *)option
+- (NSData *)formatDataAsJSON:(NSMutableArray *)dataArray
 {
     NSMutableDictionary *featureCollection = [[NSMutableDictionary alloc] init];
     [featureCollection setObject:@"FeatureCollection" forKey:@"type"];
     NSMutableArray *features = [[NSMutableArray alloc] init]; // mutable array to hold all json objects.
     for (GSFData *data in dataArray) {
-        NSDictionary *feature = [GSFData convertGSFDataToDict:data withFlag:option]; //convert gsfdata into dictionary for json parsing
+        NSDictionary *feature = [GSFData convertGSFDataToDict:data]; //convert gsfdata into dictionary for json parsing
         [features addObject:feature];
     }
     [featureCollection setObject:features forKey:@"features"];

@@ -113,7 +113,7 @@
             </objects>
             <point key="canvasLocation" x="81" y="195"/>
         </scene>
-        <!--Open Cv Image View Controller - Person Detection-->
+        <!--Open Cv Image View Controller - Results-->
         <scene sceneID="djJ-6L-veC">
             <objects>
                 <viewController id="2K4-BG-KDV" customClass="GSFOpenCvImageViewController" sceneMemberID="viewController">
@@ -146,6 +146,26 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
+                            <stepper opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="fLF-LX-XYd">
+                                <rect key="frame" x="206" y="74" width="94" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            </stepper>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.49999999999999961" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0dk-eW-n9O">
+                                <rect key="frame" x="156" y="78" width="42" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.49999999999999961" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quantity:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uU1-Ex-h1l">
+                                <rect key="frame" x="80" y="78" width="70" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -153,17 +173,26 @@
                             <constraint firstItem="qIx-rP-L0U" firstAttribute="leading" secondItem="32l-Wq-eXU" secondAttribute="leading" id="059-OL-avs"/>
                             <constraint firstItem="qIx-rP-L0U" firstAttribute="trailing" secondItem="32l-Wq-eXU" secondAttribute="trailing" id="7SM-cg-ONe"/>
                             <constraint firstItem="qIx-rP-L0U" firstAttribute="bottom" secondItem="32l-Wq-eXU" secondAttribute="bottom" id="Ezl-Lr-5hI"/>
+                            <constraint firstAttribute="trailing" secondItem="fLF-LX-XYd" secondAttribute="trailing" constant="20" symbolic="YES" id="Ezl-Zk-jkg"/>
                             <constraint firstItem="32l-Wq-eXU" firstAttribute="top" secondItem="iwF-m6-AKg" secondAttribute="top" id="I9e-B2-sEl"/>
+                            <constraint firstItem="0dk-eW-n9O" firstAttribute="centerY" secondItem="fLF-LX-XYd" secondAttribute="centerY" id="ItC-gF-2Gr"/>
+                            <constraint firstItem="fLF-LX-XYd" firstAttribute="top" secondItem="VOH-S2-pip" secondAttribute="bottom" constant="10" id="MBa-Pe-lf7"/>
                             <constraint firstAttribute="bottom" secondItem="32l-Wq-eXU" secondAttribute="bottom" id="Q0Y-Ng-piG"/>
                             <constraint firstItem="qIx-rP-L0U" firstAttribute="leading" secondItem="iwF-m6-AKg" secondAttribute="leading" id="ZBh-85-0Tg"/>
+                            <constraint firstItem="fLF-LX-XYd" firstAttribute="leading" secondItem="0dk-eW-n9O" secondAttribute="trailing" constant="8" symbolic="YES" id="doX-Oe-YqM"/>
+                            <constraint firstItem="0dk-eW-n9O" firstAttribute="baseline" secondItem="uU1-Ex-h1l" secondAttribute="baseline" id="pZo-sy-Wr2"/>
                             <constraint firstAttribute="trailing" secondItem="32l-Wq-eXU" secondAttribute="trailing" id="tAg-cU-d5P"/>
+                            <constraint firstItem="0dk-eW-n9O" firstAttribute="leading" secondItem="uU1-Ex-h1l" secondAttribute="trailing" constant="6" id="xNs-zK-m2S"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Person Detection" id="ddh-Ny-Grq"/>
+                    <navigationItem key="navigationItem" title="Results" id="ddh-Ny-Grq"/>
                     <connections>
                         <outlet property="imageView" destination="32l-Wq-eXU" id="hTQ-Xu-WQ9"/>
+                        <outlet property="quantity" destination="uU1-Ex-h1l" id="fhT-xK-a7x"/>
+                        <outlet property="quantityval" destination="0dk-eW-n9O" id="5Xo-vY-0bx"/>
                         <outlet property="saveData" destination="d1W-PZ-6y0" id="dMZ-g8-QAW"/>
                         <outlet property="sendData" destination="dGv-cY-rN0" id="QMe-w2-qaL"/>
+                        <outlet property="stepper" destination="fLF-LX-XYd" id="I42-kK-5dn"/>
                         <outlet property="toolbar" destination="qIx-rP-L0U" id="UGt-V1-3l0"/>
                         <segue destination="MgZ-ry-aGy" kind="push" identifier="savedData" id="U1r-Pi-Dpp"/>
                     </connections>
@@ -563,6 +592,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="4ni-dW-v1n"/>
+        <segue reference="U1r-Pi-Dpp"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -84,7 +84,7 @@
             }
             if(2 == indexPath.row) {
                 NSString *datestring = @"Date: ";
-                cell.textLabel.text = [datestring stringByAppendingString:[properties objectForKey:@"timestamp"]];
+                cell.textLabel.text = [datestring stringByAppendingString:[properties objectForKey:@"time"]];
             } else if (3 == indexPath.row) {
                 if ([properties objectForKey:@"altitude"]) {
                     cell.textLabel.text = [[NSString alloc] initWithFormat:@"Altitude: %.2fm", [[properties objectForKey:@"altitude"] doubleValue]];
@@ -139,8 +139,8 @@
             UIImage *oimage = nil;
             UIImage *fimage = nil;
             UIImage *pimage = nil;
-            if ([properties objectForKey:@"oimage"]) {
-                oimage = [[UIImage alloc] initWithData:[[NSData alloc] initWithBase64EncodedString:[properties objectForKey:@"oimage"] options:0]];
+            if ([properties objectForKey:@"image"]) {
+                oimage = [[UIImage alloc] initWithData:[[NSData alloc] initWithBase64EncodedString:[properties objectForKey:@"image"] options:0]];
             }
             if ([properties objectForKey:@"pimage"]) {
                 pimage = [[UIImage alloc] initWithData:[[NSData alloc] initWithBase64EncodedString:[properties objectForKey:@"pimage"] options:0]];

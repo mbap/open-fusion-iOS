@@ -108,7 +108,8 @@ static NSString *kMDDirectionsURL = @"https://maps.googleapis.com/maps/api/direc
         [self.wayStrings addObject:[self.waypoints objectAtIndex:nextAbove]];
         [self getWayArr:nextAbove];
         [self.waysGPS addObject:[self.gpsCoords objectAtIndex:curr]];
-        [self.wayStrings addObject:[self.waypoints objectAtIndex:curr]];    }
+        [self.wayStrings addObject:[self.waypoints objectAtIndex:curr]];
+    }
 }
 
 // get data from google for tsp algorithm.
