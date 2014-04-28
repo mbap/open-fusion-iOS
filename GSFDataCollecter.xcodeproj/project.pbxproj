@@ -461,12 +461,12 @@
 		DBB428401880A64F00139082 /* GSFDataCollecter */ = {
 			isa = PBXGroup;
 			children = (
+				D3D7807918A038E400E5AB50 /* Main */,
 				9633F8E118FA31040016E8CE /* SavedDataController */,
 				5BC3156418E9E04B004BBD95 /* NoiseLevelController */,
 				D312C5EB18D782A800B8641A /* SensorsController */,
 				DBB428551880A64F00139082 /* Images.xcassets */,
 				96EAC4D918BC75870084B331 /* Data Transfer */,
-				D3D7807918A038E400E5AB50 /* Main */,
 				D3D7808018A051B500E5AB50 /* Model */,
 				966F6CA418AC847000BE3334 /* GMaps */,
 				D3D7807818A038B500E5AB50 /* ImagePickerController */,
