@@ -8,25 +8,14 @@
 
 #import "GSFOpenCvImageViewController.h"
 #import "GSFImage.h"
-//#import "GSFOpenCvImageProcessor.h"
 #import "GSFDataTransfer.h"
-#import "GSFPageControllerContentViewController.h"
+#import "GSFOpenCVPageViewController.h"
 
-@interface GSFOpenCvImageViewController () <NSURLSessionTaskDelegate, NSURLSessionDelegate, UIActionSheetDelegate, UIPageViewControllerDataSource, UIPageViewControllerDelegate>
-
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
-@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *sendData;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *saveData;
-@property (nonatomic) NSNumber *sendPref;
-
-// property to increase the value of number of people.
-@property (weak, nonatomic) IBOutlet UIStepper *stepper;
-@property (weak, nonatomic) IBOutlet UILabel *quantityval;
-@property (weak, nonatomic) IBOutlet UILabel *quantity;
+@interface GSFOpenCvImageViewController () <NSURLSessionTaskDelegate, NSURLSessionDelegate, UIActionSheetDelegate, UIPageViewControllerDataSource, UIPageViewControllerDelegate, GSFOpenCVPageViewControllerDelegate>
 
 // properties of the page controller;
 @property (nonatomic) NSMutableArray *cvImages;
+@property (nonatomic) NSMutableArray *cvNums;
 @property (nonatomic) NSUInteger index;
 @property (nonatomic) NSArray *vcs;
 
@@ -44,39 +33,44 @@
     
     [self parseOpenImages];
     
-    GSFPageControllerContentViewController *startingViewController = [self viewControllerAtIndex:0];
+    GSFOpenCVPageViewController *startingViewController = [self viewControllerAtIndex:0];
     NSArray *viewControllers = @[startingViewController];
     [self setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
-    
-    [self.view bringSubviewToFront:self.toolbar];
-    [self.view bringSubviewToFront:self.quantity];
-    [self.view bringSubviewToFront:self.quantityval];
-    [self.view bringSubviewToFront:self.stepper];
 }
 
 - (void)parseOpenImages {
     self.cvImages = [[NSMutableArray alloc] init];
+    self.cvNums = [[NSMutableArray alloc] init];
     for (GSFData *data in self.originalData) {
-        [self.cvImages addObject:data.gsfImage.fimage];
-        [self.cvImages addObject:data.gsfImage.pimage];
+        if (data.gsfImage.fimage) {
+           [self.cvImages addObject:data.gsfImage.fimage];
+           [self.cvNums addObject:data.gsfImage.faceDetectionNumber];
+        }
+        if (data.gsfImage.pimage) {
+            [self.cvImages addObject:data.gsfImage.pimage];
+            [self.cvNums addObject:data.gsfImage.personDetectionNumber];
+        }
     }
 }
 
-- (GSFPageControllerContentViewController *)viewControllerAtIndex:(NSUInteger)index
+- (GSFOpenCVPageViewController *)viewControllerAtIndex:(NSUInteger)index
 {
     // Create a new view controller and pass suitable data.
-    GSFPageControllerContentViewController *pageContentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"GSFPageContent"];
+    GSFOpenCVPageViewController *pageContentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"cvpager"];
     pageContentViewController.imageView = [[UIImageView alloc] init];
-    pageContentViewController.image = [self.cvImages objectAtIndex:index];
+    UIImage *image = [self.cvImages objectAtIndex:index];
+    pageContentViewController.image = image;
     pageContentViewController.imageView.contentMode = UIViewContentModeScaleAspectFit;
     pageContentViewController.index = index;
-    
+    pageContentViewController.delegate = self;
+    NSNumber *num = [self.cvNums objectAtIndex:index];
+    pageContentViewController.quantity = [[NSNumber alloc] initWithInt:num.intValue];
     return pageContentViewController;
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
-    NSUInteger index = ((GSFPageControllerContentViewController*) viewController).index;
+    NSUInteger index = ((GSFOpenCVPageViewController*) viewController).index;
     
     if ((index == 0) || (index == NSNotFound)) {
         return nil;
@@ -88,7 +82,7 @@
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
-    NSUInteger index = ((GSFPageControllerContentViewController*) viewController).index;
+    NSUInteger index = ((GSFOpenCVPageViewController*) viewController).index;
     
     if (index == NSNotFound) {
         return nil;
@@ -111,12 +105,14 @@
     return 0;
 }
 
-- (IBAction)sendDataToDB:(id)sender {
+- (void)sendData
+{
     UIActionSheet *menu = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Discard", @"Send Original(s)", nil];
     [menu showInView:self.view];
 }
 
-- (IBAction)saveDataToFile:(id)sender {
+- (void)saveData
+{
     GSFDataTransfer *driver = [[GSFDataTransfer alloc] init];
     NSData *saveMe = [driver formatDataAsJSON:self.originalData];
     NSFileManager *man = [[NSFileManager alloc] init];
@@ -133,6 +129,26 @@
     }
     NSArray *viewControllers = [self.navigationController viewControllers];
     [self.navigationController popToViewController:[viewControllers objectAtIndex:1] animated:YES];
+}
+
+- (void)updateResult:(NSNumber *)update atIndex:(NSUInteger)index
+{
+    [self.cvNums replaceObjectAtIndex:index withObject:update];
+    if (self.originalData.count == self.cvNums.count) {         // we know that only face or person happened.
+       GSFData *data = [self.originalData objectAtIndex:index];
+        if (data.gsfImage.fimage) {
+            data.gsfImage.faceDetectionNumber = update;
+        } else {
+            data.gsfImage.personDetectionNumber = update;
+        }
+    } else {                                                    // we know that both are on.
+       GSFData *data = [self.originalData objectAtIndex:index/2];
+        if (index%2 == 0) {
+            data.gsfImage.faceDetectionNumber = update;
+        } else {
+            data.gsfImage.personDetectionNumber = update;
+        }
+    }
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex

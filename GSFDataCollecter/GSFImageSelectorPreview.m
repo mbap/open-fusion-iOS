@@ -41,7 +41,9 @@
 
 - (IBAction)discardImageFromSet:(id)sender
 {
-    [self.delegate addItemViewController:self didFinishEnteringItem:self.index];
+    if ([self.delegate respondsToSelector:@selector(addItemViewController:didFinishEnteringItem:)]) {
+       [self.delegate addItemViewController:self didFinishEnteringItem:self.index];
+    }
     [self.navigationController popViewControllerAnimated:YES];
 }
 

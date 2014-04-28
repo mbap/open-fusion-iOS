@@ -14,6 +14,7 @@
 		5BFF04F918E907AE00A86354 /* GSFSensorIOController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFF04F818E907AE00A86354 /* GSFSensorIOController.m */; };
 		9628237A190082BA00ABA86E /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 96282379190082BA00ABA86E /* GoogleMaps.bundle */; };
 		9628237C190082CB00ABA86E /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9628237B190082CB00ABA86E /* GoogleMaps.framework */; };
+		964F0B74190DB7AF0007464A /* GSFOpenCVPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 964F0B73190DB7AF0007464A /* GSFOpenCVPageViewController.m */; };
 		96546A2018F2327A003F8BBB /* GSFProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96546A1F18F2327A003F8BBB /* GSFProgressView.m */; };
 		966F6C8A18AAC0A100BE3334 /* hogcascade_pedestrians.xml in Resources */ = {isa = PBXBuildFile; fileRef = 966F6C8818AAC0A100BE3334 /* hogcascade_pedestrians.xml */; };
 		966F6C9318AB57CF00BE3334 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 966F6C9218AB57CF00BE3334 /* CoreData.framework */; };
@@ -121,6 +122,8 @@
 		96282379190082BA00ABA86E /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GoogleMaps.bundle; sourceTree = "<group>"; };
 		9628237B190082CB00ABA86E /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
 		9633F8E718FBAA270016E8CE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		964F0B72190DB7AF0007464A /* GSFOpenCVPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFOpenCVPageViewController.h; sourceTree = "<group>"; };
+		964F0B73190DB7AF0007464A /* GSFOpenCVPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFOpenCVPageViewController.m; sourceTree = "<group>"; };
 		96546A1E18F2327A003F8BBB /* GSFProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFProgressView.h; sourceTree = "<group>"; };
 		96546A1F18F2327A003F8BBB /* GSFProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFProgressView.m; sourceTree = "<group>"; };
 		966F6C8818AAC0A100BE3334 /* hogcascade_pedestrians.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = hogcascade_pedestrians.xml; path = GSFDataCollecter/hogcascade_pedestrians.xml; sourceTree = "<group>"; };
@@ -352,6 +355,8 @@
 			isa = PBXGroup;
 			children = (
 				966F6C8B18AAC10B00BE3334 /* XMLClassifiers */,
+				964F0B72190DB7AF0007464A /* GSFOpenCVPageViewController.h */,
+				964F0B73190DB7AF0007464A /* GSFOpenCVPageViewController.m */,
 				96EAC4BB18AD88450084B331 /* GSFImageSelectorPreview.h */,
 				96EAC4BC18AD88450084B331 /* GSFImageSelectorPreview.m */,
 				DBB428521880A64F00139082 /* GSFViewController.h */,
@@ -580,7 +585,7 @@
 				ORGANIZATIONNAME = "Michael Baptist - LLNL";
 				TargetAttributes = {
 					DBB428361880A64F00139082 = {
-						DevelopmentTeam = Z5SLZ6QPTL;
+						DevelopmentTeam = 58K2V57UB6;
 					};
 					DBB4285A1880A64F00139082 = {
 						TestTargetID = DBB428361880A64F00139082;
@@ -710,6 +715,7 @@
 				D30862D218A2F8F100407EA5 /* GSFOpenCvImageViewController.m in Sources */,
 				96EAC4DC18BC75A90084B331 /* GSFDataTransfer.m in Sources */,
 				D3D7808318A051DA00E5AB50 /* GSFData.m in Sources */,
+				964F0B74190DB7AF0007464A /* GSFOpenCVPageViewController.m in Sources */,
 				96F52DB018CFE08500684E64 /* GSFTableButton.m in Sources */,
 				D312C5CE18D6870300B8641A /* UYLPasswordManager.m in Sources */,
 				96546A2018F2327A003F8BBB /* GSFProgressView.m in Sources */,

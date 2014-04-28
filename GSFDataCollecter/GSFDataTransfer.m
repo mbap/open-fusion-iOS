@@ -219,7 +219,9 @@
 // delegate method that provides data for the upload progres view indicator.
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didSendBodyData:(int64_t)bytesSent totalBytesSent:(int64_t)totalBytesSent totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
 {
-    [self.delegate uploadPercentage:((float)totalBytesSent / (float)totalBytesExpectedToSend)];
+    if ([self.delegate respondsToSelector:@selector(uploadPercentage:)]) {
+        [self.delegate uploadPercentage:((float)totalBytesSent / (float)totalBytesExpectedToSend)];
+    }
 }
 
 @end

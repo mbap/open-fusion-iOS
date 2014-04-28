@@ -432,7 +432,9 @@ static NSString *kMDDirectionsURL = @"https://maps.googleapis.com/maps/api/direc
                                               @"overview_path": directionsResultOverview,
                                               @"bestPath" : bestPath
                                             };
-    [self.delegate getTSPResults:directionsResultRoutes];
+    if ([self.delegate respondsToSelector:@selector(getTSPResults:)]) {
+        [self.delegate getTSPResults:directionsResultRoutes];
+    }
 }
 
 - (void)setDirectionsQuery:(NSDictionary *)query {
@@ -465,7 +467,9 @@ static NSString *kMDDirectionsURL = @"https://maps.googleapis.com/maps/api/direc
 - (void)fetchedData:(NSData *)data {
     NSError* error;
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    [self.delegate checkJSONResults:json];
+    if ([self.delegate respondsToSelector:@selector(checkJSONResults:)]) {
+        [self.delegate checkJSONResults:json];
+    }
 }
 
 - (NSURL *)createURLStringWithOrigin:(NSString *)origin withDestination:(NSString *)destination withStops:(NSArray *)stops

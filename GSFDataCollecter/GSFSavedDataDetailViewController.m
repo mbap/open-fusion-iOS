@@ -8,6 +8,8 @@
 
 #import "GSFSavedDataDetailViewController.h"
 #import "GSFSavedDataImageViewController.h"
+#import "GSFOpenCVPageViewController.h"
+#import "GSFOpenCvImageProcessor.h"
 
 @interface GSFSavedDataDetailViewController ()
 
@@ -66,7 +68,17 @@
     }
     
     if (0 == [indexPath row]) {
-        cell.textLabel.text = @"View Images";
+        cell.textLabel.text = @"View Fullscreen Image";
+        NSDictionary *properties = nil;
+        if ([[self.feature objectForKey:@"properties"] isKindOfClass:[NSDictionary class]]) {
+            properties = [self.feature objectForKey:@"properties"];
+        }
+        if ([properties objectForKey:@"image"]) {
+            UIImage *image = [[UIImage alloc] initWithData:[[NSData alloc] initWithBase64EncodedString:[properties objectForKey:@"image"] options:0]];
+            GSFOpenCvImageProcessor *pro = [[GSFOpenCvImageProcessor alloc] init];
+            image = [pro rotateImage:image byDegrees:90];
+            cell.imageView.image = image;
+        }
     } else {
         if (1 == indexPath.row) {
             if ([[self.feature objectForKey:@"geometry"] isKindOfClass:[NSDictionary class]]) {

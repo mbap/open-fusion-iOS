@@ -16,8 +16,9 @@
 /**
  *  A protocol for telling the GSFViewController parent view that the user wants to remove a image from the collection view.
  */
-@protocol GSFImageSelectorDelegate
+@protocol GSFImageSelectorDelegate <NSObject>
 
+@optional
 /**
  *  This is called when the user wants to remove an image from the collection view from the parent view controller.
  *
