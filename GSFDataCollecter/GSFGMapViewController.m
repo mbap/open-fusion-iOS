@@ -14,6 +14,7 @@
 
 @property (nonatomic) GMSMapView *mapView;
 @property (nonatomic) GMSCoordinateBounds *bounds;
+@property (nonatomic) BOOL tappable;
 
 @property (nonatomic) NSMutableArray *polylines;
 @property (nonatomic) NSMutableArray *waypoints;
@@ -54,19 +55,58 @@
     self.waypointStrings = [[NSMutableArray alloc] init];
     self.locationMeasurements = [[NSMutableArray alloc] init];
     self.polylines = [[NSMutableArray alloc] init];
+    
+    if (self.serverData) {
+        self.tappable = false;
+    } else {
+        self.tappable = true;
+    }
+}
+
+- (void)parseServerData
+{
+    if ([[self.serverData objectForKey:@"geometries"] isKindOfClass:[NSArray class]]) {
+        NSArray *points = [self.serverData objectForKey:@"geometries"];
+        for (NSDictionary *data in points) {
+            if ([data isKindOfClass:[NSDictionary class]]) {
+                if ([[data objectForKey:@"coordinates"] isKindOfClass:[NSArray class]]) {
+                    NSArray *coords = [data objectForKey:@"coordinates"];
+                    NSNumber *longitude = [coords firstObject];
+                    NSNumber *latitude = [coords lastObject];
+                    CLLocationCoordinate2D position = CLLocationCoordinate2DMake(latitude.doubleValue, longitude.doubleValue);
+                    GMSMarker *marker = [GMSMarker markerWithPosition:position];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        marker.map = self.mapView;
+                    });
+                    [self.waypoints addObject:marker];
+                    NSString *positionString = [[NSString alloc] initWithFormat:@"%f,%f",
+                                                latitude.doubleValue, longitude.doubleValue];
+                    [self.waypointStrings addObject:positionString];
+                }
+            }
+        }
+    }
 }
 
 - (void)mapView:(GMSMapView *)mapView didTapAtCoordinate: (CLLocationCoordinate2D)coordinate {
-    CLLocationCoordinate2D position = CLLocationCoordinate2DMake(coordinate.latitude, coordinate.longitude);
-    GMSMarker *marker = [GMSMarker markerWithPosition:position];
-    marker.map = self.mapView;
-    [self.waypoints addObject:marker];
-    NSString *positionString = [[NSString alloc] initWithFormat:@"%f,%f",
-                                coordinate.latitude,coordinate.longitude];
-    [self.waypointStrings addObject:positionString];
-    self.serv = [[GSFDirectionService alloc] initWithGPSCoords:self.waypoints andWithWaypointStrings:self.waypointStrings];
-    self.serv.delegate = self;
-    [self.serv solveTSP];
+    if (true == self.tappable) {
+        CLLocationCoordinate2D position = CLLocationCoordinate2DMake(coordinate.latitude, coordinate.longitude);
+        GMSMarker *marker = [GMSMarker markerWithPosition:position];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            marker.map = self.mapView;
+        });
+        [self.waypoints addObject:marker];
+        NSString *positionString = [[NSString alloc] initWithFormat:@"%f,%f",
+                                    coordinate.latitude,coordinate.longitude];
+        [self.waypointStrings addObject:positionString];
+        self.serv = [[GSFDirectionService alloc] initWithGPSCoords:self.waypoints andWithWaypointStrings:self.waypointStrings];
+        self.serv.delegate = self;
+        dispatch_queue_t tspQueue = dispatch_queue_create("tspQueue", NULL);
+        dispatch_async(tspQueue, ^{
+            // add spinner
+            [self.serv solveTSP];
+        });
+    }
 }
 
 - (void)clearPolylines
@@ -137,7 +177,9 @@
         GMSPath *path = [GMSPath pathFromEncodedPath:overview_route];
         GMSPolyline *polyline = [GMSPolyline polylineWithPath:path];
         [self.polylines addObject:polyline];
-        polyline.map = self.mapView;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            polyline.map = self.mapView;
+        });
     }
 }
 
@@ -184,6 +226,17 @@
         NSString *positionString = [[NSString alloc] initWithFormat:@"%f,%f",
                                     location.coordinate.latitude, location.coordinate.longitude];
         [self.waypointStrings addObject:positionString];
+        if (self.serverData) {
+            [self parseServerData];
+            self.tappable = false;
+            self.serv = [[GSFDirectionService alloc] initWithGPSCoords:self.waypoints andWithWaypointStrings:self.waypointStrings];
+            self.serv.delegate = self;
+            dispatch_queue_t tspqueue = dispatch_queue_create("tspqueue", NULL);
+            dispatch_async(tspqueue, ^{
+                // add spinner.
+                [self.serv solveTSP];
+            });
+        }
     }
 }
 
@@ -289,7 +342,9 @@
             self.bounds = [self.bounds includingCoordinate:extender.position];
         }
         GMSCameraUpdate *update = [GMSCameraUpdate fitBounds:self.bounds];
-        [self.mapView moveCamera:update];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.mapView moveCamera:update];
+        });
     } else {
         // do nothing cancel button was hit.
     }

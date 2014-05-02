@@ -13,9 +13,10 @@
 
 #import "GSFNoiseLevelController.h"
 #import "GSFSensorIOController.h"
+#import "GSFGMapViewController.h"
+#import "GSFDataTransfer.h"
 
-
-@interface GSFDataViewController ()
+@interface GSFDataViewController () <GSFDataTransferDelegate>
 
 @property GSFNoiseLevelController *noiseMonitor;
 @property GSFSensorIOController *sensorIO;
@@ -24,11 +25,11 @@
 @property (weak, nonatomic) IBOutlet UISwitch *noiseDetectionToggle;
 @property (weak, nonatomic) IBOutlet UISwitch *sensorToggle;
 @property (nonatomic) IBOutlet UIImageView *imageView;
+@property (nonatomic) NSDictionary *mapData;
 
 @end
 
 @implementation GSFDataViewController
-
 
 - (void)viewDidLoad
 {
@@ -116,6 +117,11 @@
         child.faceDetect = self.faceDetectionToggle.on;
         child.noiseMonitor = self.noiseMonitor;
         child.sensorIO = self.sensorIO;
+    } else if ([[segue identifier] isEqualToString:@"mapSegue"]) {
+        if (self.mapData) {
+            GSFGMapViewController *child = (GSFGMapViewController *)segue.destinationViewController;
+            child.serverData = self.mapData; // this is getting passed through as nil for some reason.
+        }
     }
 }
 
@@ -123,5 +129,63 @@
     [self performSegueWithIdentifier:@"archived" sender:self];
 }
 
+- (void)handleUrlRequest:(NSString *)url
+{
+    /*
+    GSFDataTransfer *transfer = [[GSFDataTransfer alloc] init];
+    transfer.delegate = self;
+    [transfer getCollectionRoute:url];
+     */
+    
+    /* TEST DATA BEGIN */
+    NSString *string = @"{\
+	\"type\": \"GeometryCollection\",\
+	\"geometries\": [\
+                   {\
+                       \"type\": \"Point\",\
+                       \"coordinates\": [-122.0617279, 37.0032456]\
+                   },\
+                   {\
+                       \"type\": \"Point\",\
+                       \"coordinates\": [-122.0213875, 37.0072211]\
+                   },\
+    {\
+        \"type\": \"Point\",\
+        \"coordinates\": [-121.9918617, 36.9878901]\
+	},\
+    {\
+        \"type\": \"Point\",\
+        \"coordinates\": [-122.0047363, 36.9791141]\
+	},\
+    {\
+        \"type\": \"Point\",\
+        \"coordinates\": [-122.0375236, 36.9596388]\
+	}\
+                   ]\
+}\
+    ";
+    NSError *error = nil;
+    NSData *d = [string dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *data = [NSJSONSerialization JSONObjectWithData:d options:kNilOptions error:&error];
+    if (error) NSLog(@"%@", error);
+    if (data) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.mapData = data;
+            [self performSegueWithIdentifier:@"mapSegue" sender:self];
+        });
+    }
+    /* TEST DATA END*/
+    
+}
+
+- (void)getRouteFromServer:(NSDictionary *)data
+{
+    if (data) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.mapData = data;
+            [self performSegueWithIdentifier:@"mapSegue" sender:self];
+        });
+    }
+}
 
 @end
