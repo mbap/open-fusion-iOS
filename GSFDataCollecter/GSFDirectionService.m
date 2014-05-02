@@ -437,6 +437,26 @@ static NSString *kMDDirectionsURL = @"https://maps.googleapis.com/maps/api/direc
     }
 }
 
+- (NSURL *)createURLStringWithOrigin:(NSString *)origin withDestination:(NSString *)destination withStops:(NSArray *)stops
+{
+    NSString *sensor = @"false";
+    NSMutableString *url = [NSMutableString stringWithFormat:@"%@&origin=%@&destination=%@&sensor=%@", kMDDirectionsURL, origin, destination, sensor];
+    if ([stops count] > 0) {
+        [url appendString:@"&waypoints=optimize:true"];
+        NSUInteger wpCount = [stops count];
+        for(int i = 0; i < wpCount; i++){
+            [url appendString: @"|"];
+            [url appendString:[stops objectAtIndex:i]];
+        }
+    }
+    url = (NSMutableString*)[url stringByAddingPercentEscapesUsingEncoding: NSASCIIStringEncoding];
+    return [NSURL URLWithString:url];
+}
+
+
+
+
+// The old code that just returns the google solution for one query,
 - (void)setDirectionsQuery:(NSDictionary *)query {
     self.waypoints = [query objectForKey:@"waypoints"];  // get object out of dictionary for key waypoints
     NSString *origin = [self.waypoints objectAtIndex:0]; // get first object in the array
@@ -471,21 +491,6 @@ static NSString *kMDDirectionsURL = @"https://maps.googleapis.com/maps/api/direc
         [self.delegate checkJSONResults:json];
     }
 }
-
-- (NSURL *)createURLStringWithOrigin:(NSString *)origin withDestination:(NSString *)destination withStops:(NSArray *)stops
-{
-    NSString *sensor = @"false";
-    NSMutableString *url = [NSMutableString stringWithFormat:@"%@&origin=%@&destination=%@&sensor=%@", kMDDirectionsURL, origin, destination, sensor];
-    if ([stops count] > 0) {
-        [url appendString:@"&waypoints=optimize:true"];
-        NSUInteger wpCount = [stops count];
-        for(int i = 0; i < wpCount; i++){
-            [url appendString: @"|"];
-            [url appendString:[stops objectAtIndex:i]];
-        }
-    }
-    url = (NSMutableString*)[url stringByAddingPercentEscapesUsingEncoding: NSASCIIStringEncoding];
-    return [NSURL URLWithString:url];
-}
+// end old code.
 
 @end

@@ -20,6 +20,8 @@
 
 @property (nonatomic) NSURLSessionUploadTask *postDataTask;
 
+@property (nonatomic) NSURLSessionDataTask *getDataTask;
+
 @end
 
 @implementation GSFDataTransfer
@@ -222,6 +224,65 @@
     if ([self.delegate respondsToSelector:@selector(uploadPercentage:)]) {
         [self.delegate uploadPercentage:((float)totalBytesSent / (float)totalBytesExpectedToSend)];
     }
+}
+
+- (void)getCollectionRoute:(NSString *)component
+{
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    configuration.allowsCellularAccess = YES;
+    
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+    
+    NSMutableString *urlString = [NSMutableString stringWithString:@"https://gsf.soe.ucsc.edu/api/coordinates/?id="];
+    if (component) {
+        [urlString appendString:component];
+    }
+    
+    UYLPasswordManager *pman = [UYLPasswordManager sharedInstance];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                       timeoutInterval:30.0];
+    if ([pman validKey:nil forIdentifier:@"apikey"]) {
+        NSString *key = [pman keyForIdentifier:@"apikey"];
+        [request setValue:key forHTTPHeaderField:@"Authorization"];
+    }
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPMethod:@"GET"];
+    
+    self.getDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (error) {
+            NSLog(@"%@", error);
+        } else {
+            // get the data and convert data to dictionary then send to delegate method.
+            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+            if ([self.delegate respondsToSelector:@selector(getRouteFromServer:)]) {
+                [self.delegate getRouteFromServer:json];
+            }
+            // we may want to add alerts for the user so they can see why it worked or didnt work.
+            
+            NSHTTPURLResponse *resp = (NSHTTPURLResponse*)response; // according to the apple documentation this is a safe cast.
+            if ([resp statusCode] == 200) { // OK: request has succeeded
+                NSLog(@"Response: 200 Success.\n");
+                
+            } else if ([resp statusCode] == 400) { // bad request, syntax incorrect
+                NSLog(@"Response: 400 Bad Request.\n");
+            } else if ([resp statusCode] == 403 || [resp statusCode] == 500) { // forbidden: server understood request but denyed anyway
+                if ([resp statusCode] == 500) {                                // server error: something bad happened on the server
+                    NSLog(@"Response: 500 Server Error.\n");
+                } else {
+                    NSLog(@"Response: 403 Forbidden.\n");
+                }
+            } else if ([resp statusCode] == 404) {
+                NSLog(@"Response: 404 Not Found.\n");
+            } else {
+                NSLog(@"Response: %ld Not Yet Supported.\n", (long)[resp statusCode]);
+            }
+            if ([self.delegate respondsToSelector:@selector(checkHttpStatus:)]) {
+                [self.delegate checkHttpStatus:[resp statusCode]];
+            }
+        }
+    }];
+    [self.getDataTask resume];
 }
 
 @end

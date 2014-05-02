@@ -30,6 +30,12 @@
  */
 - (void)uploadPercentage:(float)percent;
 
+/**
+ *  Sends the download task data through to the implmenting class.
+ *
+ *  @param data A GEOJSON Geometry collection object.
+ */
+- (void)getRouteFromServer:(NSDictionary *)data;
 
 @end
 
@@ -39,7 +45,7 @@
 @interface GSFDataTransfer : NSObject
 
 /**
- *  Creates a new GSFDataTransfer object with the url provided. Use this when you want to transfer one collection to the server.
+ *  Creates a new GSFDataTransfer object with the url provided. Use this when you want to transfer one collection to the server. Or download one route collection from the server.
  *
  *  @param url Url of the file to be transfered.
  *
@@ -93,6 +99,11 @@
  *  If an upload is in progres, this will cancel the upload.
  */
 - (void)cancelUpload;
+
+/**
+ *  Gets a collection route that a GSF admin creates.
+ */
+- (void)getCollectionRoute:(NSString *)component;
 
 /**
  *  The delegate object.

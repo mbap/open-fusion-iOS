@@ -9,9 +9,18 @@
 #import <UIKit/UIKit.h>
 #import "GSFTaggedVCViewController.h"
 
+
 /**
  *  Main menu View Controller for the GSFDataCollector Application.
  */
 @interface GSFDataViewController : GSFTaggedVCViewController
 
+/**
+ *  Handles a url scheme request.
+ *
+ *  @param url The url passed in from the source application.
+ */
+- (void)handleUrlRequest:(NSString *)url;
+
 @end
+

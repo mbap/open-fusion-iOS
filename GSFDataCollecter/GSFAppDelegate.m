@@ -10,6 +10,8 @@
 #import <Crashlytics/Crashlytics.h>
 #import "GSFAppDelegate.h"
 #import "GSFCreds.h"
+#import "GSFDataViewController.h"
+
 @implementation GSFAppDelegate
 
 
@@ -42,8 +44,20 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-    NSLog(@"%@\n%@\n%@\n%@\n", application, url, sourceApplication, annotation);
-    return YES;
+    if ([sourceApplication isEqualToString:@"com.apple.MobileSMS"] || [sourceApplication isEqualToString:@"com.apple.mobilesafari"]) {
+        
+        // grab our own navigation controller
+        UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
+        
+        // grab our table view controller
+        GSFDataViewController *mainVC = (GSFDataViewController *)navigationController.topViewController;
+        
+        // pass the url to the main vc.
+        [mainVC handleUrlRequest:[url query]];
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
