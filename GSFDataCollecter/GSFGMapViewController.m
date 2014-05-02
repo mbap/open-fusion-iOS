@@ -9,6 +9,7 @@
 #import <GoogleMaps/GoogleMaps.h>
 #import "GSFGMapViewController.h"
 #import "GSFDirectionService.h"
+#import "GSFSpinner.h"
 
 @interface GSFGMapViewController () <GMSMapViewDelegate, GSFDirectionServer, UIActionSheetDelegate>
 
@@ -25,6 +26,7 @@
 @property (nonatomic) NSMutableArray *locationMeasurements;
 
 @property (nonatomic) GSFDirectionService *serv;
+@property (nonatomic) GSFSpinner *spinner;
 
 // sets the camera of the map.
 - (void)setGoogleMapCameraLocation:(CLLocation*)location;
@@ -101,9 +103,13 @@
         [self.waypointStrings addObject:positionString];
         self.serv = [[GSFDirectionService alloc] initWithGPSCoords:self.waypoints andWithWaypointStrings:self.waypointStrings];
         self.serv.delegate = self;
+        self.spinner = [[GSFSpinner alloc] init];
+        [self.mapView addSubview:self.spinner];
+        [self.mapView bringSubviewToFront:self.spinner];
+        [self.spinner setLabelText:@"Loading..."];
+        [self.spinner.spinner startAnimating];
         dispatch_queue_t tspQueue = dispatch_queue_create("tspQueue", NULL);
         dispatch_async(tspQueue, ^{
-            // add spinner
             [self.serv solveTSP];
         });
     }
@@ -179,6 +185,9 @@
         [self.polylines addObject:polyline];
         dispatch_async(dispatch_get_main_queue(), ^{
             polyline.map = self.mapView;
+            [self.spinner.spinner stopAnimating];
+            [self.spinner removeFromSuperview];
+            self.spinner = nil;
         });
     }
 }
@@ -231,9 +240,13 @@
             self.tappable = false;
             self.serv = [[GSFDirectionService alloc] initWithGPSCoords:self.waypoints andWithWaypointStrings:self.waypointStrings];
             self.serv.delegate = self;
+            self.spinner = [[GSFSpinner alloc] init];
+            [self.mapView addSubview:self.spinner];
+            [self.mapView bringSubviewToFront:self.spinner];
+            [self.spinner setLabelText:@"Loading..."];
+            [self.spinner.spinner startAnimating];
             dispatch_queue_t tspqueue = dispatch_queue_create("tspqueue", NULL);
             dispatch_async(tspqueue, ^{
-                // add spinner.
                 [self.serv solveTSP];
             });
         }
