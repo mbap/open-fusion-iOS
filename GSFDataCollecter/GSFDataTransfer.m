@@ -104,20 +104,27 @@
         NSLog(@"response = %@\nerror = %@\ndata = %@", response, error, reqeustData);
         if (error) {
             [self saveData:data];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Something went wrong. Saving data to archived." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                [alert show];
+            });
         } else {
-            
-            // we may want to add alerts for the user so they can see why it worked or didnt work.
-            
             NSHTTPURLResponse *resp = (NSHTTPURLResponse*)response; // according to the apple documentation this is a safe cast.
             if ([resp statusCode] == 200) { // OK: request has succeeded
-                NSLog(@"Response: 200 Success.\n");
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success" message:@"Data sent to server." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                    [alert show];
+                });
                 if (self.url) {
                     [self deleteFile:self.url];
                 } else if (self.urls) {
                     [self deleteFiles:self.urls];
                 }
             } else if ([resp statusCode] == 201){ // Created: Request Fulfilled resource created.
-                NSLog(@"Response: 201 Resouce Created.\n");
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success" message:@"Data sent to server." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                    [alert show];
+                });
                 if (self.url) {
                     [self deleteFile:self.url];
                 } else if (self.urls) {
@@ -125,11 +132,23 @@
                 }
             } else if ([resp statusCode] == 400) { // bad request, syntax incorrect
                 NSLog(@"Response: 400 Bad Request.\n");
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Bad Request." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                    [alert show];
+                });
             } else if ([resp statusCode] == 403 || [resp statusCode] == 500) { // forbidden: server understood request but denyed anyway
                 if ([resp statusCode] == 500) {                                // server error: something bad happened on the server
                     NSLog(@"Response: 500 Server Error.\n");
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Server Error." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                        [alert show];
+                    });
                 } else {
                     NSLog(@"Response: 403 Forbidden.\n");
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Server denied the upload." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                        [alert show];
+                    });
                 }
                 [self saveData:data];
             } else {
@@ -252,19 +271,19 @@
     self.getDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error) {
             NSLog(@"%@", error);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Something went wrong." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                [alert show];
+            });
+            
         } else {
             // get the data and convert data to dictionary then send to delegate method.
             NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
             if ([self.delegate respondsToSelector:@selector(getRouteFromServer:)]) {
                 [self.delegate getRouteFromServer:json];
             }
-            // we may want to add alerts for the user so they can see why it worked or didnt work.
-            
             NSHTTPURLResponse *resp = (NSHTTPURLResponse*)response; // according to the apple documentation this is a safe cast.
-            if ([resp statusCode] == 200) { // OK: request has succeeded
-                NSLog(@"Response: 200 Success.\n");
-                
-            } else if ([resp statusCode] == 400) { // bad request, syntax incorrect
+            if ([resp statusCode] == 400) { // bad request, syntax incorrect
                 NSLog(@"Response: 400 Bad Request.\n");
             } else if ([resp statusCode] == 403 || [resp statusCode] == 500) { // forbidden: server understood request but denyed anyway
                 if ([resp statusCode] == 500) {                                // server error: something bad happened on the server

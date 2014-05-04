@@ -20,3 +20,4 @@
 @property (nonatomic, weak) NSDictionary *serverData;
 
 @end
+
