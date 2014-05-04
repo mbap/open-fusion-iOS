@@ -16,7 +16,7 @@
 #define SPINNERWIDTH  150
 #define SPINNERHEIGHT 100
 
-@interface GSFViewController () <UICollectionViewDataSource, UICollectionViewDelegate, GSFImageSelectorDelegate>
+@interface GSFViewController () <UICollectionViewDataSource, UICollectionViewDelegate, GSFImageSelectorDelegate, GSFOpenCvImageViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 
@@ -61,7 +61,7 @@
     // select accuracy for the gps. we can go even higher in accuracy.
     self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
     
-    self.collectionView.backgroundColor = [UIColor clearColor];
+    self.collectionView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"dataviewstubimage320.png"]];
     self.navigationController.delegate = self;
     
     [self.locationManager startUpdatingLocation];
@@ -192,6 +192,9 @@
 // we segue here to the collection view.
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
+    if (0 == self.capturedImages.count) {
+        self.collectionView.backgroundColor = [UIColor clearColor];
+    }
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
     if (image.size.width > 2000) { // 2000 is magic number and means it has to be main camera
         GSFOpenCvImageProcessor *pro = [[GSFOpenCvImageProcessor alloc] init];
@@ -251,6 +254,7 @@
         preview.delegate = self;
     } else if ([[segue identifier] isEqualToString:@"viewOpenCvImages"]) {
         GSFOpenCvImageViewController *controller = (GSFOpenCvImageViewController*)segue.destinationViewController;
+        controller.delegate2 = self;
         
         // pass copy of cvImagesWithDrawings for viewing.
         // pass images with no drawings aswell.
@@ -284,13 +288,26 @@
 }
 
 // delegate method for image selector.
-- (void)addItemViewController:(id)controller didFinishEnteringItem:(NSIndexPath *)indexPath{
+- (void)addItemViewController:(id)controller didFinishEnteringItem:(NSIndexPath *)indexPath
+{
     if (indexPath.item < self.capturedImages.count) {
         [self.capturedImages removeObjectAtIndex:indexPath.item];
         [self.collectionView deleteItemsAtIndexPaths:[NSArray arrayWithObject:indexPath]];
+        if (self.capturedImages.count == 0) {
+            self.collectionView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"dataviewstubimage320.png"]];
+        }
     }
 }
 
+// delegate method for the opencv post processing controllers. gets called when data is saved or sent to clear the collection view.
+- (void)resetDataCollections
+{
+    [self.capturedImages removeAllObjects];
+    [self.collectionView performBatchUpdates:^{
+        [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
+    } completion:nil];
+    self.collectionView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"dataviewstubimage320.png"]];
+}
 
 // hide status bar when image picker controller comes up. some buttons are hard to push
 - (BOOL)prefersStatusBarHidden {

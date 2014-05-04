@@ -127,8 +127,12 @@
     } else {
         NSLog(@"Write to filesystem succeeded.\n");
     }
-    NSArray *viewControllers = [self.navigationController viewControllers];
-    [self.navigationController popToViewController:[viewControllers objectAtIndex:1] animated:YES];
+    if ([self.delegate2 respondsToSelector:@selector(resetDataCollections)]) {
+        [self.delegate2 resetDataCollections];
+    }
+    [self.navigationController popViewControllerAnimated:YES];
+    //NSArray *viewControllers = [self.navigationController viewControllers];
+    //[self.navigationController popToViewController:[viewControllers objectAtIndex:1] animated:YES];
 }
 
 - (void)updateResult:(NSNumber *)update atIndex:(NSUInteger)index
@@ -163,7 +167,11 @@
         dispatch_async(networkQueue, ^{
             [driver uploadDataArray:[driver formatDataAsJSON:self.originalData]];
         });
-        [self.navigationController popToViewController:[[self.navigationController viewControllers] objectAtIndex:1] animated:YES];
+        if ([self.delegate2 respondsToSelector:@selector(resetDataCollections)]) {
+            [self.delegate2 resetDataCollections];
+        }
+        [self.navigationController popViewControllerAnimated:YES];
+        //[self.navigationController popToViewController:[[self.navigationController viewControllers] objectAtIndex:1] animated:YES];
     }
 }
 
@@ -172,59 +180,5 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
-//- (void)viewDidLoad
-//{
-//    [super viewDidLoad];
-//	// Do any additional setup after loading the view.
-//
-//    GSFOpenCvImageProcessor *pro = [[GSFOpenCvImageProcessor alloc] init];
-//    NSMutableArray *cycler = [[NSMutableArray alloc] init];
-//    int i = 0;
-//    for (GSFData *data in self.originalData) {
-//        NSNumber *num = [self.originalOrientation objectAtIndex:i];
-//        if (num.intValue == UIImageOrientationLeft) { // requires 90 clockwise rotation
-//            if (data.gsfImage.fimage) {
-//                [cycler addObject:data.gsfImage.fimage];
-//            }
-//            if (data.gsfImage.pimage) {
-//                [cycler addObject:data.gsfImage.pimage];
-//            }
-//        } else if (num.intValue == UIImageOrientationUp) { // 90 counter clock
-//            if (data.gsfImage.fimage) {
-//                data.gsfImage.fimage = [pro rotateImage:data.gsfImage.fimage byDegrees:-90];
-//                [cycler addObject:data.gsfImage.fimage];
-//            }
-//            if (data.gsfImage.pimage) {
-//                data.gsfImage.pimage = [pro rotateImage:data.gsfImage.pimage byDegrees:-90];
-//                [cycler addObject:data.gsfImage.pimage];
-//            }
-//        } else if (num.intValue == UIImageOrientationDown) { // 180 rotation.
-//            if (data.gsfImage.fimage) {
-//                data.gsfImage.fimage = [pro rotateImage:data.gsfImage.fimage byDegrees:-90];
-//                [cycler addObject:data.gsfImage.fimage];
-//            }
-//            if (data.gsfImage.pimage) {
-//                data.gsfImage.pimage = [pro rotateImage:data.gsfImage.pimage byDegrees:-90];
-//                [cycler addObject:data.gsfImage.pimage];
-//            }
-//        } else {
-//            if (data.gsfImage.fimage) {
-//                [cycler addObject:data.gsfImage.fimage];
-//            }
-//            if (data.gsfImage.pimage) {
-//                [cycler addObject:data.gsfImage.pimage];
-//            }
-//        }
-//        ++i;
-//    }
-//
-//    self.imageView.animationImages = cycler;
-//    self.imageView.animationDuration = 4;
-//    self.imageView.animationRepeatCount = 0;
-//    [self.imageView startAnimating];
-//    [self.view bringSubviewToFront:self.toolbar];
-//}
 
 @end

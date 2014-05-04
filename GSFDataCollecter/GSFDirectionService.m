@@ -35,6 +35,8 @@
 @property (nonatomic) NSNumber *chunkNum;
 @property (nonatomic) NSNumber *okChunkNum;
 
+@property (nonatomic) BOOL abortTSP;
+
 // tsp functions
 - (void)getWayArr:(int)curr;
 - (void)getChunk;
@@ -78,6 +80,7 @@ static NSString *kMDDirectionsURL = @"https://maps.googleapis.com/maps/api/direc
 - (void)solveTSP
 {
     // add caching check here if this gets used a lot. otherwise we will hit our rate limit most likely.
+    self.abortTSP = false;
     self.chunkNum = [NSNumber numberWithInt:0];
     self.okChunkNum = [NSNumber numberWithInt:0];
     self.legsTmp = [[NSMutableArray alloc] init];
@@ -142,21 +145,26 @@ static NSString *kMDDirectionsURL = @"https://maps.googleapis.com/maps/api/direc
         
         // process the data recieved from google.
         if (json) {
-            if ([[json objectForKey:@"routes"][0] isKindOfClass:[NSDictionary class]]) {
-                NSDictionary *routes = [json objectForKey:@"routes"][0];
-                if ([[routes objectForKey:@"legs"] isKindOfClass:[NSArray class]]) {
-                    NSArray *legs = [routes objectForKey:@"legs"];
-                    for (int i = 0; i < legs.count; ++i) {
-                        NSDictionary *leg = [legs objectAtIndex:i];
-                        [self.legsTmp addObject:leg];
-                        NSDictionary *dur = [leg objectForKey:@"duration"];
-                        NSNumber *duration = [NSNumber numberWithInt:[[dur objectForKey:@"value"] intValue]];
-                        [self.durations addObject:duration];
-                        NSDictionary *dist = [leg objectForKey:@"distance"];
-                        NSNumber *distance = [NSNumber numberWithInt:[[dist objectForKey:@"value"] intValue]];
-                        [self.distances addObject:distance];
+            NSDictionary *test = [json objectForKey:@"routes"];
+            if ([test count]) {
+                if ([[json objectForKey:@"routes"][0] isKindOfClass:[NSDictionary class]]) {
+                    NSDictionary *routes = [json objectForKey:@"routes"][0];
+                    if ([[routes objectForKey:@"legs"] isKindOfClass:[NSArray class]]) {
+                        NSArray *legs = [routes objectForKey:@"legs"];
+                        for (int i = 0; i < legs.count; ++i) {
+                            NSDictionary *leg = [legs objectAtIndex:i];
+                            [self.legsTmp addObject:leg];
+                            NSDictionary *dur = [leg objectForKey:@"duration"];
+                            NSNumber *duration = [NSNumber numberWithInt:[[dur objectForKey:@"value"] intValue]];
+                            [self.durations addObject:duration];
+                            NSDictionary *dist = [leg objectForKey:@"distance"];
+                            NSNumber *distance = [NSNumber numberWithInt:[[dist objectForKey:@"value"] intValue]];
+                            [self.distances addObject:distance];
+                        }
                     }
                 }
+            } else  {
+                self.abortTSP = true;
             }
             self.okChunkNum = self.chunkNum;
             [self getChunk];
@@ -166,7 +174,13 @@ static NSString *kMDDirectionsURL = @"https://maps.googleapis.com/maps/api/direc
         }
     } else {
         // ready data structure for tsp.
-        [self readyTsp];
+        if (self.abortTSP == false) {
+            [self readyTsp];
+        } else {
+            if ([self.delegate respondsToSelector:@selector(getTSPResults:)]) {
+                [self.delegate getTSPResults:nil];
+            }
+        }
     }
 }
 

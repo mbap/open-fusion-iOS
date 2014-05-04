@@ -151,80 +151,55 @@
         }
     }
     */
-    
-    [self clearPolylines];
-    NSArray *bestPath = [data objectForKey:@"bestPath"];
-    self.bestPathIndex = [NSMutableArray arrayWithArray:bestPath];
-    NSMutableArray *bestLegs = [[NSMutableArray alloc] init];
-    for (int i = 1; i <= bestPath.count; ++i) {
-        NSNumber *ind = [[NSNumber alloc] init];
-        if (i < bestPath.count) {
-            ind = bestPath[i];
+    if (data) {
+        [self clearPolylines];
+        NSArray *bestPath = [data objectForKey:@"bestPath"];
+        self.bestPathIndex = [NSMutableArray arrayWithArray:bestPath];
+        NSMutableArray *bestLegs = [[NSMutableArray alloc] init];
+        for (int i = 1; i <= bestPath.count; ++i) {
+            NSNumber *ind = [[NSNumber alloc] init];
+            if (i < bestPath.count) {
+                ind = bestPath[i];
+            }
+            NSURL *query = nil;
+            if (i  == bestPath.count) {
+                query = [self.serv createURLStringWithOrigin:[self.waypointStrings firstObject] withDestination:[self.waypointStrings lastObject] withStops:nil];
+            } else {
+                query = [self.serv createURLStringWithOrigin:self.waypointStrings[ind.intValue-1] withDestination:self.waypointStrings[ind.intValue] withStops:nil];
+            }
+            NSError* error = nil;
+            NSData* data = [NSData dataWithContentsOfURL:query];
+            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+            if (json) {
+                [bestLegs addObject:json];
+            } else {
+                NSLog(@"%@", error);
+            }
         }
-        NSURL *query = nil;
-        if (i  == bestPath.count) {
-            query = [self.serv createURLStringWithOrigin:[self.waypointStrings firstObject] withDestination:[self.waypointStrings lastObject] withStops:nil];
-        } else {
-            query = [self.serv createURLStringWithOrigin:self.waypointStrings[ind.intValue-1] withDestination:self.waypointStrings[ind.intValue] withStops:nil];
+        for (NSDictionary *data in bestLegs) {
+            NSDictionary *routes = [data objectForKey:@"routes"][0];
+            NSDictionary *route = [routes objectForKey:@"overview_polyline"];
+            NSString *overview_route = [route objectForKey:@"points"];
+            GMSPath *path = [GMSPath pathFromEncodedPath:overview_route];
+            GMSPolyline *polyline = [GMSPolyline polylineWithPath:path];
+            [self.polylines addObject:polyline];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                polyline.map = self.mapView;
+                [self.spinner.spinner stopAnimating];
+                [self.spinner removeFromSuperview];
+                self.spinner = nil;
+            });
         }
-        NSError* error = nil;
-        NSData* data = [NSData dataWithContentsOfURL:query];
-        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-        if (json) {
-            [bestLegs addObject:json];
-        } else {
-            NSLog(@"%@", error);
-        }
-    }
-    for (NSDictionary *data in bestLegs) {
-        NSDictionary *routes = [data objectForKey:@"routes"][0];
-        NSDictionary *route = [routes objectForKey:@"overview_polyline"];
-        NSString *overview_route = [route objectForKey:@"points"];
-        GMSPath *path = [GMSPath pathFromEncodedPath:overview_route];
-        GMSPolyline *polyline = [GMSPolyline polylineWithPath:path];
-        [self.polylines addObject:polyline];
+    } else {
         dispatch_async(dispatch_get_main_queue(), ^{
-            polyline.map = self.mapView;
             [self.spinner.spinner stopAnimating];
             [self.spinner removeFromSuperview];
             self.spinner = nil;
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Google direction service failed." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
         });
     }
 }
-
-//- (void)mapView:(GMSMapView *)mapView didTapAtCoordinate: (CLLocationCoordinate2D)coordinate {
-//    
-//    CLLocationCoordinate2D position = CLLocationCoordinate2DMake(coordinate.latitude, coordinate.longitude);
-//    GMSMarker *marker = [GMSMarker markerWithPosition:position];
-//    marker.map = self.mapView;
-//    [self.waypoints addObject:marker];
-//    NSString *positionString = [[NSString alloc] initWithFormat:@"%f,%f",
-//                                coordinate.latitude,coordinate.longitude];
-//    [self.waypointStrings addObject:positionString];
-//    if([self.waypoints count]>1){
-//        NSString *sensor = @"false";
-//        NSArray *parameters = [NSArray arrayWithObjects:sensor, self.waypointStrings,
-//                               nil];
-//        NSArray *keys = [NSArray arrayWithObjects:@"sensor", @"waypoints", nil];
-//        NSDictionary *query = [NSDictionary dictionaryWithObjects:parameters
-//                                                          forKeys:keys];
-//        self.serv = [[GSFDirectionService alloc] init];
-//        self.serv.delegate = self;
-//        [self.serv setDirectionsQuery:query];
-//    }
-//}
-//
-//- (void)checkJSONResults:(NSDictionary *)data
-//{
-//    NSDictionary *routes = [data objectForKey:@"routes"][0];
-//    
-//    NSDictionary *route = [routes objectForKey:@"overview_polyline"];
-//    NSString *overview_route = [route objectForKey:@"points"];
-//    GMSPath *path = [GMSPath pathFromEncodedPath:overview_route];
-//    GMSPolyline *polyline = [GMSPolyline polylineWithPath:path];
-//    polyline.map = self.mapView;
-//}
-
 
 - (void)setGoogleMapCameraLocation:(CLLocation*)location
 {

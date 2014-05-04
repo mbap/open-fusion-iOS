@@ -12,6 +12,7 @@
 		5B86529C18FA372F00C4E4E0 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B86529B18FA372F00C4E4E0 /* Crashlytics.framework */; };
 		5BC3156318E9CAE3004BBD95 /* GSFNoiseLevelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC3156218E9CAE3004BBD95 /* GSFNoiseLevelController.m */; };
 		5BFF04F918E907AE00A86354 /* GSFSensorIOController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFF04F818E907AE00A86354 /* GSFSensorIOController.m */; };
+		96232BE21915CAD100C19E54 /* dataviewstubimage320.png in Resources */ = {isa = PBXBuildFile; fileRef = 96232BE11915CAD100C19E54 /* dataviewstubimage320.png */; };
 		9628237A190082BA00ABA86E /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 96282379190082BA00ABA86E /* GoogleMaps.bundle */; };
 		9628237C190082CB00ABA86E /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9628237B190082CB00ABA86E /* GoogleMaps.framework */; };
 		964F0B74190DB7AF0007464A /* GSFOpenCVPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 964F0B73190DB7AF0007464A /* GSFOpenCVPageViewController.m */; };
@@ -119,6 +120,7 @@
 		5BC3156218E9CAE3004BBD95 /* GSFNoiseLevelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFNoiseLevelController.m; sourceTree = "<group>"; };
 		5BFF04F718E907AE00A86354 /* GSFSensorIOController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFSensorIOController.h; sourceTree = "<group>"; };
 		5BFF04F818E907AE00A86354 /* GSFSensorIOController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFSensorIOController.m; sourceTree = "<group>"; };
+		96232BE11915CAD100C19E54 /* dataviewstubimage320.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dataviewstubimage320.png; sourceTree = "<group>"; };
 		96282379190082BA00ABA86E /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GoogleMaps.bundle; sourceTree = "<group>"; };
 		9628237B190082CB00ABA86E /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
 		9633F8E718FBAA270016E8CE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -483,6 +485,7 @@
 		DBB428411880A64F00139082 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				96232BE11915CAD100C19E54 /* dataviewstubimage320.png */,
 				5B86529A18FA306100C4E4E0 /* GSFDataCollecter.entitlements */,
 				D3641AFB18E10A7C00DBB5E7 /* Delete-icon.png */,
 				5B67ACE918E4B6EF008CC092 /* GSF_Insert_sensor_alert-v2.png */,
@@ -627,6 +630,7 @@
 				D3BF4D1D18CE5E35003CB52B /* transparent.png in Resources */,
 				D312C5D918D6919800B8641A /* icon-black.png in Resources */,
 				D3BF4D2318CE62C4003CB52B /* transparent1.png in Resources */,
+				96232BE21915CAD100C19E54 /* dataviewstubimage320.png in Resources */,
 				5B67ACEA18E4B6EF008CC092 /* GSF_Insert_sensor_alert-v2.png in Resources */,
 				D312C5D618D6919800B8641A /* globe-black.png in Resources */,
 				DBB428511880A64F00139082 /* Main_iPad.storyboard in Resources */,

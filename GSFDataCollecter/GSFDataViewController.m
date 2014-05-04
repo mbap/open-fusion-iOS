@@ -131,13 +131,13 @@
 
 - (void)handleUrlRequest:(NSString *)url
 {
-    /*
+    
     GSFDataTransfer *transfer = [[GSFDataTransfer alloc] init];
     transfer.delegate = self;
     [transfer getCollectionRoute:url];
-     */
     
-    /* TEST DATA BEGIN */
+    /*
+    // TEST DATA BEGIN
     NSString *string = @"{\
 	\"type\": \"GeometryCollection\",\
 	\"geometries\": [\
@@ -174,7 +174,8 @@
             [self performSegueWithIdentifier:@"mapSegue" sender:self];
         });
     }
-    /* TEST DATA END*/
+    // TEST DATA END
+    */
     
 }
 
