@@ -69,8 +69,10 @@
 
 /**
  *  Solved the tsp problem for the waypoints that are passed in the init function for this class.
+ *
+ *  @param aToZ If yes then this will solve the tsp using the last marker as the destination. If no then it will route round trip to the users current location.
  */
-- (void)solveTSP;
+- (void)solveTSP:(BOOL)aToZ;
 
 @end
 

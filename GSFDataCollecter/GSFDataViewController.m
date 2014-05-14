@@ -120,7 +120,7 @@
     } else if ([[segue identifier] isEqualToString:@"mapSegue"]) {
         if (self.mapData) {
             GSFGMapViewController *child = (GSFGMapViewController *)segue.destinationViewController;
-            child.serverData = self.mapData; // this is getting passed through as nil for some reason.
+            child.serverData = self.mapData; 
         }
     }
 }

@@ -44,7 +44,7 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-    if ([sourceApplication isEqualToString:@"com.apple.MobileSMS"] || [sourceApplication isEqualToString:@"com.apple.mobilesafari"]) {
+    if ([sourceApplication isEqualToString:@"com.apple.MobileSMS"]) {
         
         // grab our own navigation controller
         UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;

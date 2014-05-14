@@ -77,7 +77,7 @@ static NSString *kMDDirectionsURL = @"https://maps.googleapis.com/maps/api/direc
 }
 
 // tsp attempt below.
-- (void)solveTSP
+- (void)solveTSP:(BOOL)RT
 {
     // add caching check here if this gets used a lot. otherwise we will hit our rate limit most likely.
     self.abortTSP = false;
@@ -88,10 +88,14 @@ static NSString *kMDDirectionsURL = @"https://maps.googleapis.com/maps/api/direc
     self.distances = [[NSMutableArray alloc] init];
     self.waysGPS = [[NSMutableArray alloc] init];
     self.wayStrings = [[NSMutableArray alloc] init];
-    [self.waysGPS addObject:[self.gpsCoords objectAtIndex:0]];
-    [self.wayStrings addObject:[self.waypoints objectAtIndex:0]];
+    
+    // if we want AtoZ route do not add the origin as the destination.
+    if (RT == YES || self.waypoints.count == 2) {
+        [self.waysGPS addObject:[self.gpsCoords objectAtIndex:0]];
+        [self.wayStrings addObject:[self.waypoints objectAtIndex:0]];
+    }
     [self getWayArr:0];
-    [self getChunk];
+    [self getChunk]; 
 }
 
 - (void)getWayArr:(int)curr {
@@ -388,9 +392,10 @@ static NSString *kMDDirectionsURL = @"https://maps.googleapis.com/maps/api/direc
 - (void)tspGreedyWithVisited:(NSMutableArray*)visited currPath:(NSMutableArray*)currPath bestPath:(NSMutableArray*)bestPath bestTrip:(NSNumber*)bestTrip {
     int curr = 0;
     int currDist = 0;
-    int numSteps = self.waypoints.count - 1;
+    NSNumber *ns = [NSNumber numberWithUnsignedLong:self.waypoints.count];
+    int numSteps = ns.intValue - 1;
     int lastNode = 0;
-    int numToVisit = self.waypoints.count;
+    int numToVisit = ns.intValue;
     for (int step = 0; step < numSteps; ++step) {
         visited[curr] = @YES;
         bestPath[step] = [NSNumber numberWithInt:curr];
