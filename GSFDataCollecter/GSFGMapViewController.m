@@ -22,9 +22,6 @@
 @property (nonatomic) NSMutableArray *waypointStrings;
 @property (nonatomic) NSMutableArray *bestPathIndex;
 
-// no means A2Z yes means Roundtrip
-@property (nonatomic) BOOL RT_A2Z_toggle;
-
 @property (nonatomic) CLLocation *bestEffort;
 @property (nonatomic) NSMutableArray *locationMeasurements;
 
@@ -42,9 +39,6 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    
-    // this means roundtrip
-    self.RT_A2Z_toggle = YES;
     
     // get the current user location.
     self.locationManager = [[CLLocationManager alloc] init];
@@ -116,7 +110,7 @@
         [self.spinner.spinner startAnimating];
         dispatch_queue_t tspQueue = dispatch_queue_create("tspQueue", NULL);
         dispatch_async(tspQueue, ^{
-            [self.serv solveTSP:self.RT_A2Z_toggle];
+            [self.serv solveTSP];
         });
     }
 }
@@ -149,19 +143,13 @@
             }
             NSURL *query = nil;
             if (i == bestPath.count) {
-                if (self.RT_A2Z_toggle == YES) {
-                    query = [self.serv createURLStringWithOrigin:[self.waypointStrings firstObject] withDestination:[self.waypointStrings lastObject] withStops:nil];
-                }
+                query = [self.serv createURLStringWithOrigin:[self.waypointStrings firstObject] withDestination:[self.waypointStrings lastObject] withStops:nil];
             } else {
                 query = [self.serv createURLStringWithOrigin:self.waypointStrings[ind.intValue-1] withDestination:self.waypointStrings[ind.intValue] withStops:nil];
             }
             NSError *error = nil;
-            NSData *data = nil;
-            NSDictionary *json = nil;
-            if (query) {
-                data = [NSData dataWithContentsOfURL:query];
-                json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-            }
+            NSData *data = [NSData dataWithContentsOfURL:query];
+            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];;
             if (json) {
                 [bestLegs addObject:json];
             } else {
@@ -215,7 +203,7 @@
             [self.spinner.spinner startAnimating];
             dispatch_queue_t tspqueue = dispatch_queue_create("tspqueue", NULL);
             dispatch_async(tspqueue, ^{
-                [self.serv solveTSP:self.RT_A2Z_toggle];
+                [self.serv solveTSP];
             });
         }
     }
@@ -333,25 +321,11 @@
     });
 }
 
-- (void)toggleRTA2Z
-{
-    self.RT_A2Z_toggle = !self.RT_A2Z_toggle;
-    self.spinner = [[GSFSpinner alloc] init];
-    [self.mapView addSubview:self.spinner];
-    [self.mapView bringSubviewToFront:self.spinner];
-    [self.spinner setLabelText:@"Loading..."];
-    [self.spinner.spinner startAnimating];
-    dispatch_queue_t togglequeue = dispatch_queue_create("togglequeue", NULL);
-    dispatch_async(togglequeue, ^{
-        [self.serv solveTSP:self.RT_A2Z_toggle];
-    });
-}
-
 
 // really should be named open Action Menu.
 - (IBAction)openGoogleMapsApp:(id)sender
 {
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"User Actions" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Reset Map" otherButtonTitles:@"Get Directions", @"First Leg: Google Maps App", @"Fit Camera to Route", @"Toggle RoundTrip / AtoZ", nil];
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"User Actions" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Reset Map" otherButtonTitles:@"Get Directions", @"First Leg: Google Maps App", @"Fit Camera to Route", nil];
     [sheet showInView:self.view];
 }
 
@@ -365,8 +339,6 @@
         [self plotLegInGoogleMapsApp];
     } else if (3 == buttonIndex) {
         [self fitRouteToMap];
-    } else if (4 == buttonIndex) {
-        [self toggleRTA2Z];
     } else {
         // do nothing cancel button was hit.
     }
