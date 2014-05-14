@@ -131,26 +131,6 @@
 
 - (void)getTSPResults:(NSDictionary *)data
 {
-    /*
-    NSMutableString *finalRoute = [[NSMutableString alloc] init];
-    [finalRoute appendString:@""];
-    if ([[data objectForKey:@"legs"] isKindOfClass:[NSArray class]]) {
-        NSArray *legs = [data objectForKey:@"legs"];
-        if ([[legs objectAtIndex:0] isKindOfClass:[NSDictionary class]]) {
-            NSDictionary *tmp = [legs objectAtIndex:0];
-            if([[tmp objectForKey:@"steps"] isKindOfClass:[NSArray class]]) {
-                NSArray *steps = [tmp objectForKey:@"steps"];
-                for (NSDictionary *stuff in steps) {
-                    if ([[stuff objectForKey:@"polyline"] isKindOfClass:[NSDictionary class]]) {
-                        NSDictionary *polyline = [stuff objectForKey:@"polyline"];
-                        NSString *poly = [polyline objectForKey:@"points"];
-                        [finalRoute appendString:poly];
-                    }
-                }
-            }
-        }
-    }
-    */
     if (data) {
         [self clearPolylines];
         NSArray *bestPath = [data objectForKey:@"bestPath"];
@@ -162,14 +142,14 @@
                 ind = bestPath[i];
             }
             NSURL *query = nil;
-            if (i  == bestPath.count) {
+            if (i == bestPath.count) {
                 query = [self.serv createURLStringWithOrigin:[self.waypointStrings firstObject] withDestination:[self.waypointStrings lastObject] withStops:nil];
             } else {
                 query = [self.serv createURLStringWithOrigin:self.waypointStrings[ind.intValue-1] withDestination:self.waypointStrings[ind.intValue] withStops:nil];
             }
-            NSError* error = nil;
-            NSData* data = [NSData dataWithContentsOfURL:query];
-            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+            NSError *error = nil;
+            NSData *data = [NSData dataWithContentsOfURL:query];
+            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];;
             if (json) {
                 [bestLegs addObject:json];
             } else {
@@ -188,6 +168,7 @@
                 [self.spinner.spinner stopAnimating];
                 [self.spinner removeFromSuperview];
                 self.spinner = nil;
+                [self fitRouteToMap];
             });
         }
     } else {
@@ -276,6 +257,72 @@
     NSLog(@"Location Services has failed.\n%@\n", error);
 }
 
+- (void)resetAllMapObjects
+{
+    // reset the map
+    [self clearPolylines];
+    [self clearMarkers];
+    [self.polylines removeAllObjects];
+    [self.waypoints removeAllObjects];
+    [self.waypointStrings removeAllObjects];
+    [self.waypoints addObject:[GMSMarker markerWithPosition:self.bestEffort.coordinate]];
+    self.bounds = [[GMSCoordinateBounds alloc] initWithCoordinate:self.bestEffort.coordinate coordinate:self.bestEffort.coordinate];
+    NSString *positionString = [[NSString alloc] initWithFormat:@"%f,%f",
+                                self.bestEffort.coordinate.latitude, self.bestEffort.coordinate.longitude];
+    [self.waypointStrings addObject:positionString];
+    
+    // if we truly want to reset it we should not point strongly to the old coordinates and turn on map tap below.
+    
+}
+
+- (void)getDirectionsUsingSafari
+{
+    // get directions for entire route in safari
+    NSMutableString *url = [NSMutableString stringWithFormat:@"https://www.google.com/maps/dir/"];
+    NSUInteger wpCount = [self.waypointStrings count];
+    for(int i = 0; i < wpCount; i++){
+        NSNumber *ind = self.bestPathIndex[i];
+        [url appendString:[self.waypointStrings objectAtIndex:ind.intValue]];
+        [url appendString: @"/"];
+    }
+    [url appendString:[self.waypointStrings firstObject]];
+    [url appendString: @"/"];
+    [url appendString: @"@"];
+    [url appendString:[self.waypointStrings firstObject]];
+    [url appendString: @"/"];
+    if (![[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]]) {
+        NSLog(@"Google Maps App not installed.");
+    }
+}
+
+- (void)plotLegInGoogleMapsApp
+{
+    // plot one leg in googele maps.
+    NSNumber *s = self.bestPathIndex[1];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"comgooglemaps://?saddr=%@&daddr=%@",[self.waypointStrings firstObject], [self.waypointStrings objectAtIndex:s.intValue]]];
+    if (![[UIApplication sharedApplication] canOpenURL:url]) {
+        NSLog(@"Google Maps app is not installed");
+        //maybe have an alert view pop up here. telling them to push different option
+    } else {
+        [[UIApplication sharedApplication] openURL:url];
+    }
+}
+
+- (void)fitRouteToMap
+{
+    // fit the camera
+    self.bounds = [[GMSCoordinateBounds alloc] initWithCoordinate:self.bestEffort.coordinate coordinate:self.bestEffort.coordinate];
+    for (GMSMarker *extender in self.waypoints) {
+        self.bounds = [self.bounds includingCoordinate:extender.position];
+    }
+    GMSCameraUpdate *update = [GMSCameraUpdate fitBounds:self.bounds];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.mapView moveCamera:update];
+    });
+}
+
+
+// really should be named open Action Menu.
 - (IBAction)openGoogleMapsApp:(id)sender
 {
     UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"User Actions" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Reset Map" otherButtonTitles:@"Get Directions", @"First Leg: Google Maps App", @"Fit Camera to Route", nil];
@@ -285,54 +332,13 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (0 == buttonIndex) {
-        // reset the map
-        [self clearPolylines];
-        [self clearMarkers];
-        [self.polylines removeAllObjects];
-        [self.waypoints removeAllObjects];
-        [self.waypointStrings removeAllObjects];
-        [self.waypoints addObject:[GMSMarker markerWithPosition:self.bestEffort.coordinate]];
-        self.bounds = [[GMSCoordinateBounds alloc] initWithCoordinate:self.bestEffort.coordinate coordinate:self.bestEffort.coordinate];
-        NSString *positionString = [[NSString alloc] initWithFormat:@"%f,%f",
-                                    self.bestEffort.coordinate.latitude, self.bestEffort.coordinate.longitude];
-        [self.waypointStrings addObject:positionString];
+        [self resetAllMapObjects];
     } else if (1 == buttonIndex) {
-        // get directions for entire route in safari
-        NSMutableString *url = [NSMutableString stringWithFormat:@"https://www.google.com/maps/dir/"];
-        NSUInteger wpCount = [self.waypointStrings count];
-        for(int i = 0; i < wpCount; i++){
-            NSNumber *ind = self.bestPathIndex[i];
-            [url appendString:[self.waypointStrings objectAtIndex:ind.intValue]];
-            [url appendString: @"/"];
-        }
-        [url appendString:[self.waypointStrings firstObject]];
-        [url appendString: @"/"];
-        [url appendString: @"@"];
-        [url appendString:[self.waypointStrings firstObject]];
-        [url appendString: @"/"];
-        if (![[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]]) {
-            NSLog(@"Google Maps App not installed.");
-        }
+        [self getDirectionsUsingSafari];
     } else if (2 == buttonIndex) {
-        // plot one leg in googele maps.
-        NSNumber *s = self.bestPathIndex[1];
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"comgooglemaps://?saddr=%@&daddr=%@",[self.waypointStrings firstObject], [self.waypointStrings objectAtIndex:s.intValue]]];
-        if (![[UIApplication sharedApplication] canOpenURL:url]) {
-            NSLog(@"Google Maps app is not installed");
-            //maybe have an alert view pop up here. telling them to push different option
-        } else {
-            [[UIApplication sharedApplication] openURL:url];
-        }
+        [self plotLegInGoogleMapsApp];
     } else if (3 == buttonIndex) {
-        // fit the camera
-        self.bounds = [[GMSCoordinateBounds alloc] initWithCoordinate:self.bestEffort.coordinate coordinate:self.bestEffort.coordinate];
-        for (GMSMarker *extender in self.waypoints) {
-            self.bounds = [self.bounds includingCoordinate:extender.position];
-        }
-        GMSCameraUpdate *update = [GMSCameraUpdate fitBounds:self.bounds];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.mapView moveCamera:update];
-        });
+        [self fitRouteToMap];
     } else {
         // do nothing cancel button was hit.
     }

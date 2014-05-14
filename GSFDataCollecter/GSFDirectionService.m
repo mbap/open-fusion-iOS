@@ -388,9 +388,10 @@ static NSString *kMDDirectionsURL = @"https://maps.googleapis.com/maps/api/direc
 - (void)tspGreedyWithVisited:(NSMutableArray*)visited currPath:(NSMutableArray*)currPath bestPath:(NSMutableArray*)bestPath bestTrip:(NSNumber*)bestTrip {
     int curr = 0;
     int currDist = 0;
-    int numSteps = self.waypoints.count - 1;
+    NSNumber *ns = [NSNumber numberWithUnsignedLong:self.waypoints.count];
+    int numSteps = ns.intValue - 1;
     int lastNode = 0;
-    int numToVisit = self.waypoints.count;
+    int numToVisit = ns.intValue;
     for (int step = 0; step < numSteps; ++step) {
         visited[curr] = @YES;
         bestPath[step] = [NSNumber numberWithInt:curr];
