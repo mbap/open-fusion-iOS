@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="YX5-vb-Juf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="YX5-vb-Juf">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -127,16 +127,51 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                     </view>
-                    <navigationItem key="navigationItem" title="Results" id="ddh-Ny-Grq"/>
+                    <navigationItem key="navigationItem" title="Results" id="ddh-Ny-Grq">
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="Btg-pZ-db3">
+                            <connections>
+                                <action selector="viewLiveDataTable:" destination="2K4-BG-KDV" id="9Vq-Ud-YVU"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="saveData" destination="d1W-PZ-6y0" id="dMZ-g8-QAW"/>
                         <outlet property="sendData" destination="dGv-cY-rN0" id="QMe-w2-qaL"/>
-                        <segue destination="MgZ-ry-aGy" kind="push" identifier="savedData" id="U1r-Pi-Dpp"/>
+                        <segue destination="otg-eY-9VU" kind="push" identifier="viewLiveDataTable" id="mXL-l7-PAc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ygL-fq-Icc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="626" y="923"/>
+        </scene>
+        <!--Live Data Table View Controller - Collected Data-->
+        <scene sceneID="7iN-Ns-PRL">
+            <objects>
+                <tableViewController id="otg-eY-9VU" customClass="GSFLiveDataTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="JYX-tr-Vb5">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" id="hZi-i9-7ya">
+                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hZi-i9-7ya" id="vUw-KI-Hig">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="otg-eY-9VU" id="Wv8-nP-fOK"/>
+                            <outlet property="delegate" destination="otg-eY-9VU" id="aw1-Yk-I7M"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Collected Data" id="u20-RW-k4c"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="89V-S5-eUP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1133" y="923"/>
         </scene>
         <!--OpenCV Page View Controller-->
         <scene sceneID="tk6-fY-PWh">
@@ -221,7 +256,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DPe-Hx-o8I" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="626" y="1622"/>
+            <point key="canvasLocation" x="626" y="1563"/>
         </scene>
         <!--Saved Data View Controller - Saved Data-->
         <scene sceneID="scA-F2-YPZ">
@@ -284,7 +319,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fq2-KE-Fhy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1137" y="923"/>
+            <point key="canvasLocation" x="1133" y="-487"/>
         </scene>
         <!--Saved Data Detail View Controller-->
         <scene sceneID="k9P-Ae-6iX">
@@ -316,7 +351,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eyc-he-LOp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1573" y="923"/>
+            <point key="canvasLocation" x="1689" y="-487"/>
         </scene>
         <!--Saved Data Image View Controller-->
         <scene sceneID="FJJ-aE-hjb">
@@ -326,7 +361,7 @@
                 </pageViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J5d-O5-Jav" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2020" y="923"/>
+            <point key="canvasLocation" x="2136" y="-487"/>
         </scene>
         <!--Page Controller Content View Controller-->
         <scene sceneID="hgS-4H-iGp">
@@ -359,7 +394,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pca-GF-JTt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2020" y="239"/>
+            <point key="canvasLocation" x="2136" y="195"/>
         </scene>
         <!--Image Selector Preview - Image Preview-->
         <scene sceneID="vvb-wc-0p5">
@@ -635,7 +670,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EaD-1r-mH0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="626" y="-487"/>
+            <point key="canvasLocation" x="-429" y="-487"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

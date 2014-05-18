@@ -35,7 +35,7 @@
 @property (nonatomic) NSMutableArray *datasource;
 
 // property for caching the images in the file system.
-@property (nonatomic) NSMutableDictionary *imageCache;
+@property (strong, nonatomic) NSMutableDictionary *imageCache;
 
 // dictionary that will get passed to the segued view Controller.
 @property (nonatomic) NSDictionary *selectedFeature;
@@ -155,27 +155,17 @@
                             NSDictionary *properties = [feature objectForKey:@"properties"];
                             key = [NSString stringWithFormat:@"Section%lu", (unsigned long)sectioniter];
                             UIImage *image = nil;
-                            if ([properties objectForKey:@"image"]) {
-                                NSString *oimage = [properties objectForKey:@"image"];
+                            if ([properties objectForKey:@"loimage"]) {
+                                NSString *oimage = [properties objectForKey:@"loimage"];
                                 NSData *imageData =  [[NSData alloc] initWithBase64EncodedString:oimage options:0];
                                 if (imageData) {
                                     GSFOpenCvImageProcessor *pro = [[GSFOpenCvImageProcessor alloc] init];
                                     image = [pro rotateImage:[[UIImage alloc] initWithData:imageData] byDegrees:90];
                                 }
-                            } else if ([properties objectForKey:@"fimage"]) {
-                                NSString *fimage = [properties objectForKey:@"fimage"];
-                                NSData *imageData =  [[NSData alloc] initWithBase64EncodedString:fimage options:0];
-                                if (imageData) {
-                                    image = [UIImage imageWithData:imageData];
-                                }
-                            } else if ([properties objectForKey:@"pimage"]) {
-                                NSString *pimage = [properties objectForKey:@"pimage"];
-                                NSData *imageData =  [[NSData alloc] initWithBase64EncodedString:pimage options:0];
-                                if (imageData) {
-                                    image = [UIImage imageWithData:imageData];
-                                }
                             }
-                            [images addObject:image];
+                            if (image) {
+                                [images addObject:image];
+                            }
                         }
                     }
                     sectioniter++;

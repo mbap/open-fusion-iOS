@@ -18,7 +18,7 @@
 /**
  * Double used to store the noise level at a given GPS location given in dB.
  */
-@property (nonatomic) double noiseLevel;
+@property (nonatomic) NSNumber* noiseLevel;
 
 /**
  *  A GSFImage object used to store picture data.
@@ -35,7 +35,15 @@
  */
 @property (nonatomic) NSString *date;
 
-// add properties for noise level, temperature, humidity and other data here.
+/**
+ *  Double to store the temp data from the pluggable sensor.
+ */
+@property (nonatomic) NSNumber *temp;
+
+/**
+ *  Double to store the humidity data.
+ */
+@property (nonatomic) NSNumber *humidity;
 
 /**
  *  Creates a GSFData obejct and sets the gsfimage property using the image passed in.
@@ -63,11 +71,11 @@
 /**
  *  Converts a GSFData Object into a dictionary that is Apple JSON conformant.
  *
- *  @param gsfdata The GSFData object to be converted into a dictionary.
- *  @param option  The option used to package the GSFData into dictionaries. Passing 1 will package only the OpenCV images. Passing 2 will package only the Original images. Passing 3 will package both option 1 and 2.
+ *  @param gsfdata The GSFData object to be converted into a dictionary. Uses both the high resolution and low resolution original images.
  *
  *  @return A Apple JSON conformant dictionary containing a GSFData object.
  */
 + (NSDictionary *)convertGSFDataToDict:(GSFData *)gsfdata;
+
 
 @end
