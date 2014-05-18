@@ -26,6 +26,13 @@
  *  Property to determine if pedestrian (people) detection is to be used.
  */
 @property (nonatomic) BOOL personDetect;
+
+/**
+ *  Determines if noise switch it on.
+ */
+@property (nonatomic) BOOL noiseSwitch;
+
+
 @property (nonatomic) GSFNoiseLevelController *noiseMonitor;
 @property (nonatomic) GSFSensorIOController *sensorIO;
 

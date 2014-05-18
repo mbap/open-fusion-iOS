@@ -13,6 +13,8 @@
 
 @interface GSFSavedDataDetailViewController ()
 
+@property (weak, nonatomic) UIImage *cacheImage;
+
 @end
 
 @implementation GSFSavedDataDetailViewController
@@ -38,6 +40,20 @@
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    
+    // cache image so that the table wont hang on scrolling.
+    NSDictionary *properties = nil;
+    if ([[self.feature objectForKey:@"properties"] isKindOfClass:[NSDictionary class]]) {
+        properties = [self.feature objectForKey:@"properties"];
+    }
+    // NOTE: went down to lorez image. HIGH rez image takes too long to cache
+    if ([properties objectForKey:@"loimage"]) {
+        UIImage *image = [[UIImage alloc] initWithData:[[NSData alloc] initWithBase64EncodedString:[properties objectForKey:@"loimage"] options:0]];
+        GSFOpenCvImageProcessor *pro = [[GSFOpenCvImageProcessor alloc] init];
+        self.cacheImage = [pro rotateImage:image byDegrees:90];
+        image = nil;
+        pro = nil;
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -57,7 +73,7 @@
 {
     // Return the number of rows in the section.
     // this should be the number of properties in a GSF Geojson object.
-    return 9;
+    return 11;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -73,11 +89,9 @@
         if ([[self.feature objectForKey:@"properties"] isKindOfClass:[NSDictionary class]]) {
             properties = [self.feature objectForKey:@"properties"];
         }
-        if ([properties objectForKey:@"image"]) {
-            UIImage *image = [[UIImage alloc] initWithData:[[NSData alloc] initWithBase64EncodedString:[properties objectForKey:@"image"] options:0]];
-            GSFOpenCvImageProcessor *pro = [[GSFOpenCvImageProcessor alloc] init];
-            image = [pro rotateImage:image byDegrees:90];
-            cell.imageView.image = image;
+        // NOTE: went down to lorez image. HIGH rez image is not cached here and it slow when scrolling the table. CACHE IMAGE IF YOU WANT INCREASE IN PERFORMANCE.
+        if ([properties objectForKey:@"loimage"]) {
+            cell.imageView.image =  self.cacheImage;
         }
     } else {
         if (1 == indexPath.row) {
@@ -127,6 +141,18 @@
                 } else {
                     cell.textLabel.text = [[NSString alloc] initWithFormat:@"Noise(dB): n/a."];
                 }
+            } else if (9 == indexPath.row) {
+                if ([properties objectForKey:@"temperature"]) {
+                    cell.textLabel.text = [[NSString alloc] initWithFormat:@"Temperture(˚C): %f.", [[properties objectForKey:@"temperature"] doubleValue]];
+                } else {
+                    cell.textLabel.text = [[NSString alloc] initWithFormat:@"Temperture(˚C): n/a."];
+                }
+            } else if (10 == indexPath.row) {
+                if ([properties objectForKey:@"humidity"]) {
+                    cell.textLabel.text = [[NSString alloc] initWithFormat:@"Humidity(%%): %f%%.", [[properties objectForKey:@"humidity"] doubleValue]];
+                } else {
+                    cell.textLabel.text = [[NSString alloc] initWithFormat:@"Humidity(%%): n/a."];
+                }
             }
         }
     }
@@ -151,8 +177,8 @@
             UIImage *oimage = nil;
             UIImage *fimage = nil;
             UIImage *pimage = nil;
-            if ([properties objectForKey:@"image"]) {
-                oimage = [[UIImage alloc] initWithData:[[NSData alloc] initWithBase64EncodedString:[properties objectForKey:@"image"] options:0]];
+            if ([properties objectForKey:@"loimage"]) {
+                oimage = [[UIImage alloc] initWithData:[[NSData alloc] initWithBase64EncodedString:[properties objectForKey:@"loimage"] options:0]];
             }
             if ([properties objectForKey:@"pimage"]) {
                 pimage = [[UIImage alloc] initWithData:[[NSData alloc] initWithBase64EncodedString:[properties objectForKey:@"pimage"] options:0]];

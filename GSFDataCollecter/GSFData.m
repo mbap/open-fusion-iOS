@@ -51,36 +51,30 @@
     [properties setObject:[NSNumber numberWithDouble:gsfdata.coords.altitude] forKey:@"altitude"];
     [properties setObject:[NSNumber numberWithDouble:gsfdata.coords.horizontalAccuracy] forKey:@"h_accuracy"];
     [properties setObject:[NSNumber numberWithDouble:gsfdata.coords.verticalAccuracy] forKey:@"v_accuracy"];
+
     
-    /******
-     ADD USER INPUT TEXT HERE IF WE GET TO THAT
-     ******/
-    
-    if (gsfdata.gsfImage.oimage) {
-        NSData *imageData = UIImagePNGRepresentation(gsfdata.gsfImage.oimage);
+    if (gsfdata.gsfImage.highResImage) {
+        NSData *imageData = UIImagePNGRepresentation(gsfdata.gsfImage.highResImage);
         NSString *imageString = [imageData base64EncodedStringWithOptions:0];
         [properties setObject:imageString forKey:@"image"]; // set image in dict
     }
     
-    // not sending these images anymore to database -- 4/26/2014
-    /*
-    if ((option.intValue == OPENCV || option.intValue == BOTH)) {
-        if (gsfdata.gsfImage.fimage) {
-            NSData *imageData = UIImagePNGRepresentation(gsfdata.gsfImage.fimage);
-            NSString *imageString = [imageData base64EncodedStringWithOptions:0];
-            [properties setObject:imageString forKey:@"fimage"]; // set image in dict
-        }
-        if (gsfdata.gsfImage.pimage) {
-            NSData *imageData = UIImagePNGRepresentation(gsfdata.gsfImage.pimage);
-            NSString *imageString = [imageData base64EncodedStringWithOptions:0];
-            [properties setObject:imageString forKey:@"pimage"]; // set image in dict
-        }
+    if (gsfdata.gsfImage.oimage) {
+        NSData *imageData = UIImagePNGRepresentation(gsfdata.gsfImage.oimage);
+        NSString *imageString = [imageData base64EncodedStringWithOptions:0];
+        [properties setObject:imageString forKey:@"loimage"]; // set image in dict
     }
-    */
     
-    /*****
-      ADD JSON OBJECTS FOR TEMP, NOISE, and HUMIDY HERE when they are added to the .h file as properties
-    ******/
+    // add temp data.
+    if (gsfdata.temp) {
+        [properties setObject:gsfdata.temp forKey:@"temperature"];
+    }
+    
+    // add humidity data
+    if (gsfdata.humidity) {
+        [properties setObject:gsfdata.humidity forKey:@"humidity"];
+    }
+    
     if (gsfdata.gsfImage.faceDetectionNumber) {
         [properties setObject:gsfdata.gsfImage.faceDetectionNumber forKey:@"faces_detected"];
     }
@@ -88,9 +82,9 @@
         [properties setObject:gsfdata.gsfImage.personDetectionNumber forKey:@"people_detected"];
     }
     
-    
+    // noise level
     if (gsfdata.noiseLevel) {
-        [properties setObject:[NSNumber numberWithDouble:gsfdata.noiseLevel] forKey:@"noise_level"];
+        [properties setObject:gsfdata.noiseLevel forKey:@"noise_level"];
     }
     
     [jsonData setObject:properties forKey:@"properties"];

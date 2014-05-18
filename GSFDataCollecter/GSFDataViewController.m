@@ -115,6 +115,7 @@
         GSFViewController *child = (GSFViewController*)segue.destinationViewController;
         child.personDetect = self.personDetectToggle.on;
         child.faceDetect = self.faceDetectionToggle.on;
+        child.noiseSwitch = self.noiseDetectionToggle.on;
         child.noiseMonitor = self.noiseMonitor;
         child.sensorIO = self.sensorIO;
     } else if ([[segue identifier] isEqualToString:@"mapSegue"]) {

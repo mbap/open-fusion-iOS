@@ -146,8 +146,10 @@
         data.coords = self.bestEffort;
         
         // Collect Noise
-        [self.noiseMonitor collectNoise];
-        data.noiseLevel = self.noiseMonitor.avgDBInput;
+        if (self.noiseSwitch) {
+            [self.noiseMonitor collectNoise];
+            data.noiseLevel = [NSNumber numberWithDouble:self.noiseMonitor.avgDBInput];
+        }
     }
 }
 
@@ -196,6 +198,7 @@
         self.collectionView.backgroundColor = [UIColor clearColor];
     }
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
+    GSFData *newdata = [[GSFData alloc] initWithImage:image];
     if (image.size.width > 2000) { // 2000 is magic number and means it has to be main camera
         GSFOpenCvImageProcessor *pro = [[GSFOpenCvImageProcessor alloc] init];
         UIImageOrientation orient = image.imageOrientation;
@@ -208,8 +211,7 @@
             image = [pro rotateImage:image byDegrees:90];
         }
     }
-    NSLog(@"%f, %f", image.size.width, image.size.height);
-    GSFData *newdata = [[GSFData alloc] initWithImage:image];
+    newdata.gsfImage.oimage = image;
     [self.capturedImages addObject:newdata];
     [self.collectionView performBatchUpdates:^{
         [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];

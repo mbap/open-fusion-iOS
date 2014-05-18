@@ -10,6 +10,7 @@
 #import "GSFImage.h"
 #import "GSFDataTransfer.h"
 #import "GSFOpenCVPageViewController.h"
+#import "GSFLiveDataTableViewController.h"
 
 @interface GSFOpenCvImageViewController () <NSURLSessionTaskDelegate, NSURLSessionDelegate, UIActionSheetDelegate, UIPageViewControllerDataSource, UIPageViewControllerDelegate, GSFOpenCVPageViewControllerDelegate>
 
@@ -55,6 +56,7 @@
 
 - (GSFOpenCVPageViewController *)viewControllerAtIndex:(NSUInteger)index
 {
+    self.index = index;
     // Create a new view controller and pass suitable data.
     GSFOpenCVPageViewController *pageContentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"cvpager"];
     pageContentViewController.imageView = [[UIImageView alloc] init];
@@ -131,14 +133,12 @@
         [self.delegate2 resetDataCollections];
     }
     [self.navigationController popViewControllerAnimated:YES];
-    //NSArray *viewControllers = [self.navigationController viewControllers];
-    //[self.navigationController popToViewController:[viewControllers objectAtIndex:1] animated:YES];
 }
 
 - (void)updateResult:(NSNumber *)update atIndex:(NSUInteger)index
 {
     [self.cvNums replaceObjectAtIndex:index withObject:update];
-    if (self.originalData.count == self.cvNums.count) {         // we know that only face or person happened.
+    if (self.originalData.count == self.cvNums.count) {         // we know that only face or only person detection switch was on.
        GSFData *data = [self.originalData objectAtIndex:index];
         if (data.gsfImage.fimage) {
             data.gsfImage.faceDetectionNumber = update;
@@ -171,7 +171,23 @@
             [self.delegate2 resetDataCollections];
         }
         [self.navigationController popViewControllerAnimated:YES];
-        //[self.navigationController popToViewController:[[self.navigationController viewControllers] objectAtIndex:1] animated:YES];
+    }
+}
+
+- (IBAction)viewLiveDataTable:(id)sender
+{
+    [self performSegueWithIdentifier:@"viewLiveDataTable" sender:self];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([[segue identifier] isEqualToString:@"viewLiveDataTable"]) {
+        GSFLiveDataTableViewController *liveTable = (GSFLiveDataTableViewController *)segue.destinationViewController;
+        if (self.originalData.count == self.cvNums.count) {         // we know that only face or only person detection switch was on.
+            liveTable.data = [self.originalData objectAtIndex:self.index];
+        } else {                                                    // we know that both are on.
+            liveTable.data = [self.originalData objectAtIndex:self.index/2];
+        }
     }
 }
 
