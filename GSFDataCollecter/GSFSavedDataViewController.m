@@ -43,6 +43,9 @@
 // property for the selected section in the custom header view
 @property (nonatomic) NSInteger selectedFeatureSection;
 
+// property for passing the low resolution image to next view.
+@property (weak, nonatomic) UIImage *selectedImage;
+
 // load images into a cache to remove the thread bombing i was doing haha.
 - (void)cacheImagesWithCompletionHandler:(void(^)(void))handler;
 
@@ -155,16 +158,24 @@
                             NSDictionary *properties = [feature objectForKey:@"properties"];
                             key = [NSString stringWithFormat:@"Section%lu", (unsigned long)sectioniter];
                             UIImage *image = nil;
-                            if ([properties objectForKey:@"loimage"]) {
-                                NSString *oimage = [properties objectForKey:@"loimage"];
-                                NSData *imageData =  [[NSData alloc] initWithBase64EncodedString:oimage options:0];
+                            if ([properties objectForKey:@"image"]) {
+                                NSString *highrez = [properties objectForKey:@"image"];
+                                NSData *imageData =  [[NSData alloc] initWithBase64EncodedString:highrez options:0];
+                                highrez = nil;
                                 if (imageData) {
+                                    UIImage *large = [[UIImage alloc] initWithData:imageData];
+                                    imageData = nil;
+                                    UIImage *lowrez = [UIImage imageWithCGImage:large.CGImage];
+                                    large = nil;
                                     GSFOpenCvImageProcessor *pro = [[GSFOpenCvImageProcessor alloc] init];
-                                    image = [pro rotateImage:[[UIImage alloc] initWithData:imageData] byDegrees:90];
+                                    // rotate image 90 degrees sometimes. (needs a conditional added here)
+                                    image = [pro resizedImage:[pro rotateImage:lowrez byDegrees:90]];
+                                    pro = nil;
                                 }
                             }
                             if (image) {
                                 [images addObject:image];
+                                image = nil;
                             }
                         }
                     }
@@ -254,7 +265,15 @@
     }
     
     self.selectedFeature = [features objectAtIndex:[indexPath row]]; // get the feature for this row.
+    
+    // get selected image as well
+    NSArray *images = [self.imageCache objectForKey:[NSString stringWithFormat:@"Section%ld", (long)indexPath.section]];
+    self.selectedImage = [images objectAtIndex:indexPath.row];
+    
     [self performSegueWithIdentifier:@"viewSavedFileDetails" sender:self];
+    
+    //Change the selected background view of the cell.
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 // In a story board-based application, you will often want to do a little preparation before navigation
@@ -264,6 +283,7 @@
         // get selected content and pass it to the next controller
         GSFSavedDataDetailViewController *controller = (GSFSavedDataDetailViewController*)segue.destinationViewController;
         controller.feature = self.selectedFeature;
+        controller.thumbnail = self.selectedImage;
     }
 }
 
