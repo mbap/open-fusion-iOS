@@ -59,12 +59,6 @@
         [properties setObject:imageString forKey:@"image"]; // set image in dict
     }
     
-    if (gsfdata.gsfImage.oimage) {
-        NSData *imageData = UIImagePNGRepresentation(gsfdata.gsfImage.oimage);
-        NSString *imageString = [imageData base64EncodedStringWithOptions:0];
-        [properties setObject:imageString forKey:@"loimage"]; // set image in dict
-    }
-    
     // add temp data.
     if (gsfdata.temp) {
         [properties setObject:gsfdata.temp forKey:@"temperature"];

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="YX5-vb-Juf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="YX5-vb-Juf">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -346,7 +346,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="NAW-z9-Wtn"/>
                     <connections>
-                        <segue destination="qxQ-Cs-F6T" kind="push" identifier="viewSavedFileImages" id="bo5-7n-uFg"/>
+                        <segue destination="8QS-31-U3x" kind="push" identifier="viewSavedFileImages" id="WWz-8g-xIv"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eyc-he-LOp" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -354,47 +354,32 @@
             <point key="canvasLocation" x="1689" y="-487"/>
         </scene>
         <!--Saved Data Image View Controller-->
-        <scene sceneID="FJJ-aE-hjb">
+        <scene sceneID="7Bc-AG-JZm">
             <objects>
-                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="qxQ-Cs-F6T" customClass="GSFSavedDataImageViewController" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="zj0-uE-NmG"/>
-                </pageViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="J5d-O5-Jav" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2136" y="-487"/>
-        </scene>
-        <!--Page Controller Content View Controller-->
-        <scene sceneID="hgS-4H-iGp">
-            <objects>
-                <viewController storyboardIdentifier="GSFPageContent" id="ZV1-J1-Dia" customClass="GSFPageControllerContentViewController" sceneMemberID="viewController">
+                <viewController id="8QS-31-U3x" customClass="GSFSavedDataImageViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="ikc-jC-a3a"/>
-                        <viewControllerLayoutGuide type="bottom" id="bbJ-jj-BSH"/>
+                        <viewControllerLayoutGuide type="top" id="oss-sN-IpR"/>
+                        <viewControllerLayoutGuide type="bottom" id="GIj-gw-n2W"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="EQE-Nb-myf">
+                    <view key="view" contentMode="scaleToFill" id="gdY-sN-5Jf">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9HA-Ns-MB4">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uWC-DV-LFF">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="9HA-Ns-MB4" secondAttribute="trailing" id="5PN-Tp-gyy"/>
-                            <constraint firstItem="9HA-Ns-MB4" firstAttribute="leading" secondItem="EQE-Nb-myf" secondAttribute="leading" id="L6g-1x-Gkx"/>
-                            <constraint firstAttribute="bottom" secondItem="9HA-Ns-MB4" secondAttribute="bottom" id="d86-bc-XxP"/>
-                            <constraint firstItem="9HA-Ns-MB4" firstAttribute="top" secondItem="EQE-Nb-myf" secondAttribute="top" id="ww3-C9-mmd"/>
-                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="iJF-dE-ZQf"/>
                     <connections>
-                        <outlet property="imageView" destination="9HA-Ns-MB4" id="NJG-I2-0n3"/>
+                        <outlet property="imageView" destination="uWC-DV-LFF" id="BwV-H6-MfY"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Pca-GF-JTt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mol-Xc-uQD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2136" y="195"/>
+            <point key="canvasLocation" x="2161" y="-487"/>
         </scene>
         <!--Image Selector Preview - Image Preview-->
         <scene sceneID="vvb-wc-0p5">

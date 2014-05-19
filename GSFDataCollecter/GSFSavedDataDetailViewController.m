@@ -47,12 +47,8 @@
         properties = [self.feature objectForKey:@"properties"];
     }
     // NOTE: went down to lorez image. HIGH rez image takes too long to cache
-    if ([properties objectForKey:@"loimage"]) {
-        UIImage *image = [[UIImage alloc] initWithData:[[NSData alloc] initWithBase64EncodedString:[properties objectForKey:@"loimage"] options:0]];
-        GSFOpenCvImageProcessor *pro = [[GSFOpenCvImageProcessor alloc] init];
-        self.cacheImage = [pro rotateImage:image byDegrees:90];
-        image = nil;
-        pro = nil;
+    if ([properties objectForKey:@"image"]) {
+        self.cacheImage = self.thumbnail;
     }
 }
 
@@ -89,8 +85,7 @@
         if ([[self.feature objectForKey:@"properties"] isKindOfClass:[NSDictionary class]]) {
             properties = [self.feature objectForKey:@"properties"];
         }
-        // NOTE: went down to lorez image. HIGH rez image is not cached here and it slow when scrolling the table. CACHE IMAGE IF YOU WANT INCREASE IN PERFORMANCE.
-        if ([properties objectForKey:@"loimage"]) {
+        if ([properties objectForKey:@"image"]) {
             cell.imageView.image =  self.cacheImage;
         }
     } else {
@@ -172,65 +167,10 @@
 {
     if ([[segue identifier] isEqualToString:@"viewSavedFileImages"]) {
         GSFSavedDataImageViewController *controller = (GSFSavedDataImageViewController*)segue.destinationViewController;
-        if ([[self.feature objectForKey:@"properties"] isKindOfClass:[NSDictionary class]]) {
-            NSDictionary *properties = [self.feature objectForKey:@"properties"];
-            UIImage *oimage = nil;
-            UIImage *fimage = nil;
-            UIImage *pimage = nil;
-            if ([properties objectForKey:@"loimage"]) {
-                oimage = [[UIImage alloc] initWithData:[[NSData alloc] initWithBase64EncodedString:[properties objectForKey:@"loimage"] options:0]];
-            }
-            if ([properties objectForKey:@"pimage"]) {
-                pimage = [[UIImage alloc] initWithData:[[NSData alloc] initWithBase64EncodedString:[properties objectForKey:@"pimage"] options:0]];
-            }
-            if ([properties objectForKey:@"fimage"]) {
-                fimage = [[UIImage alloc] initWithData:[[NSData alloc] initWithBase64EncodedString:[properties objectForKey:@"fimage"] options:0]];
-            }
-            NSArray *images = [[NSArray alloc] initWithObjects:oimage, pimage, fimage, nil];
-            controller.images = images;
-        }
+        controller.image = self.cacheImage;
     }
 }
 
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 
 @end

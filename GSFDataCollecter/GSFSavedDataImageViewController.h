@@ -11,11 +11,11 @@
 /**
  *  Class used to present the images from a single GSFData object.
  */
-@interface GSFSavedDataImageViewController : UIPageViewController
+@interface GSFSavedDataImageViewController : UIViewController
 
 /**
- *  Array of images to be displayed.
+ *  An image to be displayed.
  */
-@property (nonatomic) NSArray *images;
+@property (weak, nonatomic) UIImage *image;
 
 @end

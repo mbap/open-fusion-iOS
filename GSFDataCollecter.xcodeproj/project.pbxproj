@@ -72,7 +72,6 @@
 		D397AC4118B514D30067691D /* GSFAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D397AC4018B514D30067691D /* GSFAppDelegate.m */; };
 		D397AC4418BAC4920067691D /* GSFDirectionService.m in Sources */ = {isa = PBXBuildFile; fileRef = D397AC4318BAC4920067691D /* GSFDirectionService.m */; };
 		D397AC4918BE80C40067691D /* GSFTrackerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D397AC4818BE80C40067691D /* GSFTrackerHelper.m */; };
-		D3BF4D1418CE4746003CB52B /* GSFPageControllerContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3BF4D1318CE4746003CB52B /* GSFPageControllerContentViewController.m */; };
 		D3BF4D1C18CE5E35003CB52B /* black.png in Resources */ = {isa = PBXBuildFile; fileRef = D3BF4D1918CE5E35003CB52B /* black.png */; };
 		D3BF4D1D18CE5E35003CB52B /* transparent.png in Resources */ = {isa = PBXBuildFile; fileRef = D3BF4D1A18CE5E35003CB52B /* transparent.png */; };
 		D3BF4D1E18CE5E35003CB52B /* white.png in Resources */ = {isa = PBXBuildFile; fileRef = D3BF4D1B18CE5E35003CB52B /* white.png */; };
@@ -202,8 +201,6 @@
 		D397AC4318BAC4920067691D /* GSFDirectionService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFDirectionService.m; sourceTree = "<group>"; };
 		D397AC4718BE80C40067691D /* GSFTrackerHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFTrackerHelper.h; sourceTree = "<group>"; };
 		D397AC4818BE80C40067691D /* GSFTrackerHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFTrackerHelper.m; sourceTree = "<group>"; };
-		D3BF4D1218CE4746003CB52B /* GSFPageControllerContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFPageControllerContentViewController.h; sourceTree = "<group>"; };
-		D3BF4D1318CE4746003CB52B /* GSFPageControllerContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFPageControllerContentViewController.m; sourceTree = "<group>"; };
 		D3BF4D1918CE5E35003CB52B /* black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = black.png; sourceTree = "<group>"; };
 		D3BF4D1A18CE5E35003CB52B /* transparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = transparent.png; sourceTree = "<group>"; };
 		D3BF4D1B18CE5E35003CB52B /* white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = white.png; sourceTree = "<group>"; };
@@ -305,8 +302,6 @@
 				96EAF06518CD89940041A265 /* GSFSavedDataDetailViewController.m */,
 				96EAF06718CD89B90041A265 /* GSFSavedDataImageViewController.h */,
 				96EAF06818CD89B90041A265 /* GSFSavedDataImageViewController.m */,
-				D3BF4D1218CE4746003CB52B /* GSFPageControllerContentViewController.h */,
-				D3BF4D1318CE4746003CB52B /* GSFPageControllerContentViewController.m */,
 				96F52DAE18CFE08500684E64 /* GSFTableButton.h */,
 				96F52DAF18CFE08500684E64 /* GSFTableButton.m */,
 			);
@@ -593,7 +588,7 @@
 				ORGANIZATIONNAME = "Michael Baptist - LLNL";
 				TargetAttributes = {
 					DBB428361880A64F00139082 = {
-						DevelopmentTeam = Z5SLZ6QPTL;
+						DevelopmentTeam = 58K2V57UB6;
 					};
 					DBB4285A1880A64F00139082 = {
 						TestTargetID = DBB428361880A64F00139082;
@@ -732,7 +727,6 @@
 				D3D7807F18A0416400E5AB50 /* GSFTaggedVCViewController.m in Sources */,
 				D36F5D7418F0F39C00C9C8B6 /* GSFCreds.m in Sources */,
 				96EAF06918CD89B90041A265 /* GSFSavedDataImageViewController.m in Sources */,
-				D3BF4D1418CE4746003CB52B /* GSFPageControllerContentViewController.m in Sources */,
 				96EAC4BD18AD88450084B331 /* GSFImageSelectorPreview.m in Sources */,
 				96EAC4D818B18ADD0084B331 /* GSFImage.m in Sources */,
 				5BC3156318E9CAE3004BBD95 /* GSFNoiseLevelController.m in Sources */,
