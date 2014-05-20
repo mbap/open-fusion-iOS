@@ -159,17 +159,12 @@
                             key = [NSString stringWithFormat:@"Section%lu", (unsigned long)sectioniter];
                             UIImage *image = nil;
                             if ([properties objectForKey:@"image"]) {
-                                NSString *highrez = [properties objectForKey:@"image"];
-                                NSData *imageData =  [[NSData alloc] initWithBase64EncodedString:highrez options:0];
-                                highrez = nil;
+                                NSData *imageData =  [[NSData alloc] initWithBase64EncodedString:[properties objectForKey:@"image"] options:0];
                                 if (imageData) {
-                                    UIImage *large = [[UIImage alloc] initWithData:imageData];
-                                    imageData = nil;
-                                    UIImage *lowrez = [UIImage imageWithCGImage:large.CGImage];
-                                    large = nil;
                                     GSFOpenCvImageProcessor *pro = [[GSFOpenCvImageProcessor alloc] init];
                                     // rotate image 90 degrees sometimes. (needs a conditional added here)
-                                    image = [pro resizedImage:[pro rotateImage:lowrez byDegrees:90]];
+                                    image = [pro resizedImage:[pro rotateImage:[UIImage imageWithData:imageData] byDegrees:90]];
+                                    imageData = nil;
                                     pro = nil;
                                 }
                             }
