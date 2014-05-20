@@ -198,7 +198,6 @@
         self.collectionView.backgroundColor = [UIColor clearColor];
     }
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
-    GSFData *newdata = [[GSFData alloc] initWithImage:image];
     if (image.size.width > 2000) { // 2000 is magic number and means it has to be main camera
         GSFOpenCvImageProcessor *pro = [[GSFOpenCvImageProcessor alloc] init];
         UIImageOrientation orient = image.imageOrientation;
@@ -211,7 +210,7 @@
             image = [pro rotateImage:image byDegrees:90];
         }
     }
-    newdata.gsfImage.oimage = image;
+    GSFData *newdata = [[GSFData alloc] initWithImage:image];
     [self.capturedImages addObject:newdata];
     [self.collectionView performBatchUpdates:^{
         [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
