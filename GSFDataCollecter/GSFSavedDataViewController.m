@@ -20,9 +20,6 @@
 
 
 @interface GSFSavedDataViewController () <GSFDataTransferDelegate, UINavigationBarDelegate>
-{
-    void (^_completionHandler)(int someParameter);
-}
 
 // takes paths of files saved in GSF Directory.
 - (void)buildSavedDataListWithContents:(NSArray *)paths; // helper function for building the list.
