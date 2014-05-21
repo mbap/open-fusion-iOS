@@ -46,8 +46,8 @@
 // property for passing the low resolution image to next view.
 @property (weak, nonatomic) UIImage *selectedImage;
 
-// load images into a cache to remove the thread bombing i was doing haha.
-- (void)cacheImagesWithCompletionHandler:(void(^)(void))handler;
+// load images into a cache.
+- (void)cacheImages;
 
 //button that uploads all the files.
 @property (weak, nonatomic) IBOutlet UIButton *uploadAllButton;
@@ -97,9 +97,7 @@
         self.fileList = [man contentsOfDirectoryAtPath:[url path] error:nil];
         [self buildSavedDataListWithContents:self.fileList];
         self.imageCache = [[NSMutableDictionary alloc] init];
-        [self cacheImagesWithCompletionHandler:^{
-            [self.tableView reloadData];
-        }];
+        [self cacheImages];
         dispatch_async(dispatch_get_main_queue(), ^{
             [spinner.spinner stopAnimating];
             [spinner removeFromSuperview];
@@ -141,12 +139,12 @@
 // cache one of the images in the background for the cell image view
 // refresh the table with a call back after ward?
 // n^2 algorithm for caching an image a bit slow but good for now.
-- (void)cacheImagesWithCompletionHandler:(void(^)(void))handler
+- (void)cacheImages
 {
     NSArray *features = nil;
     NSUInteger sectioniter = 0;
     for (NSDictionary *data in self.datasource) {
-        if ([data isKindOfClass:[NSMutableDictionary class]]) {
+        if ([data isKindOfClass:[NSDictionary class]]) {
             if ([[data objectForKey:@"features"] isKindOfClass:[NSArray class]]) {
                 features = [data objectForKey:@"features"];
                 NSMutableArray *images = [[NSMutableArray alloc] init];
@@ -180,7 +178,6 @@
             }
         }
     }
-    if (handler) handler();
 }
 
 
