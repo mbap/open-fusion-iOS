@@ -11,6 +11,7 @@
 #define WIDTH 300
 #define HEIGHT 100
 
+
 @implementation GSFProgressView
 
 - (id)init
@@ -21,9 +22,9 @@
         // Initialization code
         self.height = HEIGHT;
         self.width = WIDTH;
-        self.label = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width*.4, (self.frame.size.height*.6), self.frame.size.width/2, self.frame.size.height/3)];
+        self.label = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width*.3, (self.frame.size.height*.6), self.frame.size.width/2, self.frame.size.height/3)];
         self.backgroundColor = [UIColor blackColor];
-        self.alpha = .7; // semi transparent
+        self.alpha = .8; // semi transparent
         [self.layer setCornerRadius:5.0];
         self.progressBar = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
         self.progressBar.center = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
