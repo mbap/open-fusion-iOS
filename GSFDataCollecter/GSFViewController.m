@@ -62,6 +62,7 @@
     self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
     
     self.collectionView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"dataviewstubimage320.png"]];
+    
     self.navigationController.delegate = self;
     
     [self.locationManager startUpdatingLocation];
@@ -294,9 +295,6 @@
     if (indexPath.item < self.capturedImages.count) {
         [self.capturedImages removeObjectAtIndex:indexPath.item];
         [self.collectionView deleteItemsAtIndexPaths:[NSArray arrayWithObject:indexPath]];
-        if (self.capturedImages.count == 0) {
-            self.collectionView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"dataviewstubimage320.png"]];
-        }
     }
 }
 
@@ -307,7 +305,6 @@
     [self.collectionView performBatchUpdates:^{
         [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
     } completion:nil];
-    self.collectionView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"dataviewstubimage320.png"]];
 }
 
 // hide status bar when image picker controller comes up. some buttons are hard to push

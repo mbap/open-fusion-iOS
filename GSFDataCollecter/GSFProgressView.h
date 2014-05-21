@@ -27,7 +27,7 @@
 - (id)initWithFrame:(CGRect)frame;
 
 /**
- *  The actual progress view itself that is inside the custom view. Since this is a regular UIActivity spinner. The developer can customize it how ever they want.
+ *  The actual progress view itself that is inside the custom view. Since this is a regular UIProgressView. The developer can customize it how ever they want.
  */
 @property (nonatomic) UIProgressView *progressBar;
 

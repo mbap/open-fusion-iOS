@@ -158,7 +158,7 @@
                                 if (imageData) {
                                     GSFOpenCvImageProcessor *pro = [[GSFOpenCvImageProcessor alloc] init];
                                     // rotate image 90 degrees sometimes. (needs a conditional added here)
-                                    image = [pro resizedImage:[pro rotateImage:[UIImage imageWithData:imageData] byDegrees:90]];
+                                    image = [pro resizedImage:[UIImage imageWithData:imageData]];
                                     imageData = nil;
                                     pro = nil;
                                 }
@@ -388,6 +388,8 @@
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.uploadBar.progressBar setProgress:percent animated:YES];
+        NSString *percentage = [NSString stringWithFormat:@"Uploading: %.1f%%", percent*100];
+        [self.uploadBar setLabelText:percentage];
     });
 }
 
