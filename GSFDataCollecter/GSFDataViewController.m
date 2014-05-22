@@ -105,7 +105,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if([[segue identifier] isEqualToString:@"imagePickerSegue"]) {
-        GSFViewController *child = (GSFViewController*)segue.destinationViewController;
+        __weak GSFViewController *child = (GSFViewController*)segue.destinationViewController;
         child.personDetect = self.personDetectToggle.on;
         child.faceDetect = self.faceDetectionToggle.on;
         child.noiseSwitch = self.noiseDetectionToggle.on;

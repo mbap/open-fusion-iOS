@@ -7,6 +7,7 @@
 //
 
 #import "GSFViewController.h"
+#import "GSFImageSelectorPreview.h"
 #import "GSFOpenCvImageProcessor.h"
 #import "GSFImageCollectionViewCell.h"
 #import "GSFOpenCvImageViewController.h"
@@ -16,7 +17,7 @@
 #define SPINNERWIDTH  150
 #define SPINNERHEIGHT 100
 
-@interface GSFViewController () <UICollectionViewDataSource, UICollectionViewDelegate, GSFImageSelectorDelegate, GSFOpenCvImageViewControllerDelegate>
+@interface GSFViewController () <UICollectionViewDataSource, UICollectionViewDelegate, GSFImageSelectorDelegate, GSFOpenCvImageViewControllerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 
@@ -148,6 +149,7 @@
         
         // Collect Noise
         if (self.noiseSwitch) {
+            self.noiseMonitor = [[GSFNoiseLevelController alloc] init];
             [self.noiseMonitor collectNoise];
             data.noiseLevel = [NSNumber numberWithDouble:self.noiseMonitor.avgDBInput];
         }
