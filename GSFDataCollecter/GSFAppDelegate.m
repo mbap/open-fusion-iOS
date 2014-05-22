@@ -7,17 +7,15 @@
 //
 
 #import <GoogleMaps/GoogleMaps.h>
-#import <Crashlytics/Crashlytics.h>
 #import "GSFAppDelegate.h"
 #import "GSFCreds.h"
-#import "GSFDataViewController.h"
+#import "GSFRootViewController.h"
 
 @implementation GSFAppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // add api keys for services (google maps and crashlytics)
     [GMSServices provideAPIKey:[GSFCreds GoogleMapsApiKey]];
     
     // create directory in documents for storing GEOJSON feature collection objects as NSData.
@@ -35,10 +33,6 @@
         }
     }
     
-    // this must be the last api call or it wont work because crashlytics is stupid like that
-    [Crashlytics startWithAPIKey:[GSFCreds crashlyticsApiKey]];
-    [Crashlytics sharedInstance].debugMode = YES;
-    
     return YES;
 }
 
@@ -50,7 +44,7 @@
         UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
         
         // grab our table view controller
-        GSFDataViewController *mainVC = (GSFDataViewController *)navigationController.topViewController;
+        GSFRootViewController *mainVC = (GSFRootViewController *)navigationController.topViewController;
         
         // pass the url to the main vc.
         [mainVC handleUrlRequest:[url query]];
