@@ -7,7 +7,6 @@
 //
 
 #import <GoogleMaps/GoogleMaps.h>
-#import <Crashlytics/Crashlytics.h>
 #import "GSFAppDelegate.h"
 #import "GSFCreds.h"
 #import "GSFRootViewController.h"
@@ -17,7 +16,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // add api keys for services (google maps and crashlytics)
     [GMSServices provideAPIKey:[GSFCreds GoogleMapsApiKey]];
     
     // create directory in documents for storing GEOJSON feature collection objects as NSData.
@@ -34,10 +32,6 @@
             NSLog(@"Dir Creation Error: %@", error);
         }
     }
-    
-    // this must be the last api call or it wont work because crashlytics is stupid like that
-    [Crashlytics startWithAPIKey:[GSFCreds crashlyticsApiKey]];
-    [Crashlytics sharedInstance].debugMode = YES;
     
     return YES;
 }

@@ -11,14 +11,6 @@
 @interface GSFCreds : NSObject
 
 /**
- *  Returns your Crashlytics API Key
- *
- *  @return Crashlytics API Key
- */
-+ (NSString *)crashlyticsApiKey;
-
-
-/**
  *  Returns the Google Maps Api Key from your Google Maps console.
  *
  *  @return Your Google Maps iOS API Key

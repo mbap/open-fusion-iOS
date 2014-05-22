@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		5B27182918E89D61005BF15E /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B27182818E89D61005BF15E /* AudioToolbox.framework */; };
 		5B67ACEA18E4B6EF008CC092 /* GSF_Insert_sensor_alert-v2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B67ACE918E4B6EF008CC092 /* GSF_Insert_sensor_alert-v2.png */; };
-		5B86529C18FA372F00C4E4E0 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B86529B18FA372F00C4E4E0 /* Crashlytics.framework */; };
 		5BC3156318E9CAE3004BBD95 /* GSFNoiseLevelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC3156218E9CAE3004BBD95 /* GSFNoiseLevelController.m */; };
 		5BFF04F918E907AE00A86354 /* GSFSensorIOController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFF04F818E907AE00A86354 /* GSFSensorIOController.m */; };
 		96232BE21915CAD100C19E54 /* dataviewstubimage320.png in Resources */ = {isa = PBXBuildFile; fileRef = 96232BE11915CAD100C19E54 /* dataviewstubimage320.png */; };
@@ -123,7 +122,6 @@
 		5B27182818E89D61005BF15E /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		5B67ACE918E4B6EF008CC092 /* GSF_Insert_sensor_alert-v2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GSF_Insert_sensor_alert-v2.png"; sourceTree = "<group>"; };
 		5B86529A18FA306100C4E4E0 /* GSFDataCollecter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = GSFDataCollecter.entitlements; sourceTree = "<group>"; };
-		5B86529B18FA372F00C4E4E0 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		5BC3156118E9CAE3004BBD95 /* GSFNoiseLevelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFNoiseLevelController.h; sourceTree = "<group>"; };
 		5BC3156218E9CAE3004BBD95 /* GSFNoiseLevelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFNoiseLevelController.m; sourceTree = "<group>"; };
 		5BFF04F718E907AE00A86354 /* GSFSensorIOController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFSensorIOController.h; sourceTree = "<group>"; };
@@ -141,7 +139,6 @@
 		9627878E192D803A00535DBD /* collect5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = collect5.png; sourceTree = "<group>"; };
 		96282379190082BA00ABA86E /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GoogleMaps.bundle; sourceTree = "<group>"; };
 		9628237B190082CB00ABA86E /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
-		9633F8E718FBAA270016E8CE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		964F0B72190DB7AF0007464A /* GSFOpenCVPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFOpenCVPageViewController.h; sourceTree = "<group>"; };
 		964F0B73190DB7AF0007464A /* GSFOpenCVPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFOpenCVPageViewController.m; sourceTree = "<group>"; };
 		96546A1E18F2327A003F8BBB /* GSFProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFProgressView.h; sourceTree = "<group>"; };
@@ -211,7 +208,6 @@
 		D312C5E218D691C900B8641A /* icon-transparent-white5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-transparent-white5.png"; sourceTree = "<group>"; };
 		D312C5E318D691C900B8641A /* icon-white5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-white5.png"; sourceTree = "<group>"; };
 		D3641AFB18E10A7C00DBB5E7 /* Delete-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Delete-icon.png"; sourceTree = "<group>"; };
-		D36F5D7018F0E8EF00C9C8B6 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		D36F5D7218F0F39C00C9C8B6 /* GSFCreds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFCreds.h; sourceTree = "<group>"; };
 		D36F5D7318F0F39C00C9C8B6 /* GSFCreds.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFCreds.m; sourceTree = "<group>"; };
 		D397AC4018B514D30067691D /* GSFAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFAppDelegate.m; sourceTree = "<group>"; };
@@ -263,7 +259,6 @@
 			files = (
 				D312C5CB18D6830B00B8641A /* Security.framework in Frameworks */,
 				966F6CA318AB587500BE3334 /* SystemConfiguration.framework in Frameworks */,
-				5B86529C18FA372F00C4E4E0 /* Crashlytics.framework in Frameworks */,
 				966F6CA118AB584000BE3334 /* OpenGLES.framework in Frameworks */,
 				966F6C9F18AB583900BE3334 /* libz.dylib in Frameworks */,
 				966F6C9D18AB582C00BE3334 /* libicucore.dylib in Frameworks */,
@@ -456,15 +451,12 @@
 			children = (
 				9628237B190082CB00ABA86E /* GoogleMaps.framework */,
 				96282379190082BA00ABA86E /* GoogleMaps.bundle */,
-				9633F8E718FBAA270016E8CE /* JavaScriptCore.framework */,
-				D36F5D7018F0E8EF00C9C8B6 /* Crashlytics.framework */,
 				5B27182818E89D61005BF15E /* AudioToolbox.framework */,
 				D312C5CA18D6830B00B8641A /* Security.framework */,
 				966F6CA218AB587500BE3334 /* SystemConfiguration.framework */,
 				966F6CA018AB584000BE3334 /* OpenGLES.framework */,
 				966F6C9E18AB583900BE3334 /* libz.dylib */,
 				966F6C9C18AB582C00BE3334 /* libicucore.dylib */,
-				5B86529B18FA372F00C4E4E0 /* Crashlytics.framework */,
 				966F6C9A18AB581C00BE3334 /* libc++.dylib */,
 				966F6C9818AB580A00BE3334 /* ImageIO.framework */,
 				966F6C9618AB57F800BE3334 /* GLKit.framework */,
@@ -616,7 +608,7 @@
 				ORGANIZATIONNAME = "Michael Baptist - LLNL";
 				TargetAttributes = {
 					DBB428361880A64F00139082 = {
-						DevelopmentTeam = Z5SLZ6QPTL;
+						DevelopmentTeam = 58K2V57UB6;
 					};
 					DBB4285A1880A64F00139082 = {
 						TestTargetID = DBB428361880A64F00139082;
