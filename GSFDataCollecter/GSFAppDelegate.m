@@ -10,7 +10,7 @@
 #import <Crashlytics/Crashlytics.h>
 #import "GSFAppDelegate.h"
 #import "GSFCreds.h"
-#import "GSFDataViewController.h"
+#import "GSFRootViewController.h"
 
 @implementation GSFAppDelegate
 
@@ -50,7 +50,7 @@
         UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
         
         // grab our table view controller
-        GSFDataViewController *mainVC = (GSFDataViewController *)navigationController.topViewController;
+        GSFRootViewController *mainVC = (GSFRootViewController *)navigationController.topViewController;
         
         // pass the url to the main vc.
         [mainVC handleUrlRequest:[url query]];

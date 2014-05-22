@@ -13,6 +13,14 @@
 		5BC3156318E9CAE3004BBD95 /* GSFNoiseLevelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC3156218E9CAE3004BBD95 /* GSFNoiseLevelController.m */; };
 		5BFF04F918E907AE00A86354 /* GSFSensorIOController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFF04F818E907AE00A86354 /* GSFSensorIOController.m */; };
 		96232BE21915CAD100C19E54 /* dataviewstubimage320.png in Resources */ = {isa = PBXBuildFile; fileRef = 96232BE11915CAD100C19E54 /* dataviewstubimage320.png */; };
+		96278767192D45FC00535DBD /* GSFMainViewButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 96278766192D45FC00535DBD /* GSFMainViewButton.m */; };
+		9627876D192D5B6800535DBD /* GSFRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9627876C192D5B6800535DBD /* GSFRootViewController.m */; };
+		96278789192D7D2100535DBD /* saved.png in Resources */ = {isa = PBXBuildFile; fileRef = 96278786192D7D2100535DBD /* saved.png */; };
+		9627878A192D7D2100535DBD /* route.png in Resources */ = {isa = PBXBuildFile; fileRef = 96278787192D7D2100535DBD /* route.png */; };
+		9627878B192D7D2100535DBD /* collect.png in Resources */ = {isa = PBXBuildFile; fileRef = 96278788192D7D2100535DBD /* collect.png */; };
+		9627878F192D803A00535DBD /* saved5.png in Resources */ = {isa = PBXBuildFile; fileRef = 9627878C192D803A00535DBD /* saved5.png */; };
+		96278790192D803A00535DBD /* route5.png in Resources */ = {isa = PBXBuildFile; fileRef = 9627878D192D803A00535DBD /* route5.png */; };
+		96278791192D803A00535DBD /* collect5.png in Resources */ = {isa = PBXBuildFile; fileRef = 9627878E192D803A00535DBD /* collect5.png */; };
 		9628237A190082BA00ABA86E /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 96282379190082BA00ABA86E /* GoogleMaps.bundle */; };
 		9628237C190082CB00ABA86E /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9628237B190082CB00ABA86E /* GoogleMaps.framework */; };
 		964F0B74190DB7AF0007464A /* GSFOpenCVPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 964F0B73190DB7AF0007464A /* GSFOpenCVPageViewController.m */; };
@@ -121,6 +129,16 @@
 		5BFF04F718E907AE00A86354 /* GSFSensorIOController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFSensorIOController.h; sourceTree = "<group>"; };
 		5BFF04F818E907AE00A86354 /* GSFSensorIOController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFSensorIOController.m; sourceTree = "<group>"; };
 		96232BE11915CAD100C19E54 /* dataviewstubimage320.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dataviewstubimage320.png; sourceTree = "<group>"; };
+		96278765192D45FC00535DBD /* GSFMainViewButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFMainViewButton.h; sourceTree = "<group>"; };
+		96278766192D45FC00535DBD /* GSFMainViewButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFMainViewButton.m; sourceTree = "<group>"; };
+		9627876B192D5B6800535DBD /* GSFRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFRootViewController.h; sourceTree = "<group>"; };
+		9627876C192D5B6800535DBD /* GSFRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFRootViewController.m; sourceTree = "<group>"; };
+		96278786192D7D2100535DBD /* saved.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = saved.png; sourceTree = "<group>"; };
+		96278787192D7D2100535DBD /* route.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = route.png; sourceTree = "<group>"; };
+		96278788192D7D2100535DBD /* collect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = collect.png; sourceTree = "<group>"; };
+		9627878C192D803A00535DBD /* saved5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = saved5.png; sourceTree = "<group>"; };
+		9627878D192D803A00535DBD /* route5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = route5.png; sourceTree = "<group>"; };
+		9627878E192D803A00535DBD /* collect5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = collect5.png; sourceTree = "<group>"; };
 		96282379190082BA00ABA86E /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GoogleMaps.bundle; sourceTree = "<group>"; };
 		9628237B190082CB00ABA86E /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
 		9633F8E718FBAA270016E8CE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -394,6 +412,10 @@
 				96B5990218920061001D29CF /* GSFDataViewController.m */,
 				96FE0E0618D24B37002C40A5 /* GSFSpinner.h */,
 				96FE0E0718D24B37002C40A5 /* GSFSpinner.m */,
+				96278765192D45FC00535DBD /* GSFMainViewButton.h */,
+				96278766192D45FC00535DBD /* GSFMainViewButton.m */,
+				9627876B192D5B6800535DBD /* GSFRootViewController.h */,
+				9627876C192D5B6800535DBD /* GSFRootViewController.m */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -485,6 +507,12 @@
 		DBB428411880A64F00139082 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9627878C192D803A00535DBD /* saved5.png */,
+				9627878D192D803A00535DBD /* route5.png */,
+				9627878E192D803A00535DBD /* collect5.png */,
+				96278786192D7D2100535DBD /* saved.png */,
+				96278787192D7D2100535DBD /* route.png */,
+				96278788192D7D2100535DBD /* collect.png */,
 				96232BE11915CAD100C19E54 /* dataviewstubimage320.png */,
 				5B86529A18FA306100C4E4E0 /* GSFDataCollecter.entitlements */,
 				D3641AFB18E10A7C00DBB5E7 /* Delete-icon.png */,
@@ -588,7 +616,7 @@
 				ORGANIZATIONNAME = "Michael Baptist - LLNL";
 				TargetAttributes = {
 					DBB428361880A64F00139082 = {
-						DevelopmentTeam = 58K2V57UB6;
+						DevelopmentTeam = Z5SLZ6QPTL;
 					};
 					DBB4285A1880A64F00139082 = {
 						TestTargetID = DBB428361880A64F00139082;
@@ -623,21 +651,27 @@
 				D3641AFC18E10A7C00DBB5E7 /* Delete-icon.png in Resources */,
 				D312C5E518D691C900B8641A /* globe-transparent5.png in Resources */,
 				D312C5E918D691C900B8641A /* icon-transparent-white5.png in Resources */,
+				9627878B192D7D2100535DBD /* collect.png in Resources */,
 				D312C5DC18D6919800B8641A /* icon-white.png in Resources */,
 				D312C5D718D6919800B8641A /* globe-transparent.png in Resources */,
 				D312C5EA18D691C900B8641A /* icon-white5.png in Resources */,
 				D312C5D818D6919800B8641A /* globe-white.png in Resources */,
 				D3BF4D1D18CE5E35003CB52B /* transparent.png in Resources */,
 				D312C5D918D6919800B8641A /* icon-black.png in Resources */,
+				9627878A192D7D2100535DBD /* route.png in Resources */,
 				D3BF4D2318CE62C4003CB52B /* transparent1.png in Resources */,
 				96232BE21915CAD100C19E54 /* dataviewstubimage320.png in Resources */,
 				5B67ACEA18E4B6EF008CC092 /* GSF_Insert_sensor_alert-v2.png in Resources */,
 				D312C5D618D6919800B8641A /* globe-black.png in Resources */,
 				DBB428511880A64F00139082 /* Main_iPad.storyboard in Resources */,
+				96278790192D803A00535DBD /* route5.png in Resources */,
+				9627878F192D803A00535DBD /* saved5.png in Resources */,
 				D312C5C918CFEC9C00B8641A /* upload.png in Resources */,
 				96EAC4B918AD88280084B331 /* haarcascade_frontalface_alt2.xml in Resources */,
+				96278791192D803A00535DBD /* collect5.png in Resources */,
 				96EAC4BA18AD88280084B331 /* haarcascade_frontalface_default.xml in Resources */,
 				DBB428561880A64F00139082 /* Images.xcassets in Resources */,
+				96278789192D7D2100535DBD /* saved.png in Resources */,
 				D3BF4D1E18CE5E35003CB52B /* white.png in Resources */,
 				DBB4284E1880A64F00139082 /* Main_iPhone.storyboard in Resources */,
 				D312C5DA18D6919800B8641A /* icon-transparent-black.png in Resources */,
@@ -725,10 +759,12 @@
 				96546A2018F2327A003F8BBB /* GSFProgressView.m in Sources */,
 				96FCA62418CAD0B000BC01A1 /* GSFSavedDataViewController.m in Sources */,
 				D3D7807F18A0416400E5AB50 /* GSFTaggedVCViewController.m in Sources */,
+				9627876D192D5B6800535DBD /* GSFRootViewController.m in Sources */,
 				D36F5D7418F0F39C00C9C8B6 /* GSFCreds.m in Sources */,
 				96EAF06918CD89B90041A265 /* GSFSavedDataImageViewController.m in Sources */,
 				96EAC4BD18AD88450084B331 /* GSFImageSelectorPreview.m in Sources */,
 				96EAC4D818B18ADD0084B331 /* GSFImage.m in Sources */,
+				96278767192D45FC00535DBD /* GSFMainViewButton.m in Sources */,
 				5BC3156318E9CAE3004BBD95 /* GSFNoiseLevelController.m in Sources */,
 				96B599091895FB4D001D29CF /* GSFImageCollectionViewCell.m in Sources */,
 				96EAF06618CD89940041A265 /* GSFSavedDataDetailViewController.m in Sources */,
