@@ -79,14 +79,14 @@
     if (data) {
         dispatch_async(dispatch_get_main_queue(), ^{
             self.mapData = data;
-            [self performSegueWithIdentifier:@"mapSegue" sender:self];
+            [self performSegueWithIdentifier:@"rootRoute" sender:self];
         });
     }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"mapSegue"]) {
+    if ([[segue identifier] isEqualToString:@"rootRoute"]) {
         if (self.mapData) {
             GSFGMapViewController *child = (GSFGMapViewController *)segue.destinationViewController;
             child.serverData = self.mapData;

@@ -97,7 +97,6 @@
 		DBB428451880A64F00139082 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DBB428431880A64F00139082 /* InfoPlist.strings */; };
 		DBB428471880A64F00139082 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DBB428461880A64F00139082 /* main.m */; };
 		DBB4284E1880A64F00139082 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBB4284C1880A64F00139082 /* Main_iPhone.storyboard */; };
-		DBB428511880A64F00139082 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBB4284F1880A64F00139082 /* Main_iPad.storyboard */; };
 		DBB428541880A64F00139082 /* GSFViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBB428531880A64F00139082 /* GSFViewController.m */; };
 		DBB428561880A64F00139082 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBB428551880A64F00139082 /* Images.xcassets */; };
 		DBB4285D1880A64F00139082 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB4285C1880A64F00139082 /* XCTest.framework */; };
@@ -241,7 +240,6 @@
 		DBB428481880A64F00139082 /* GSFDataCollecter-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GSFDataCollecter-Prefix.pch"; sourceTree = "<group>"; };
 		DBB428491880A64F00139082 /* GSFAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GSFAppDelegate.h; sourceTree = "<group>"; };
 		DBB4284D1880A64F00139082 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
-		DBB428501880A64F00139082 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		DBB428521880A64F00139082 /* GSFViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GSFViewController.h; sourceTree = "<group>"; };
 		DBB428531880A64F00139082 /* GSFViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GSFViewController.m; sourceTree = "<group>"; };
 		DBB428551880A64F00139082 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -364,10 +362,12 @@
 			name = SensorsController;
 			sourceTree = "<group>";
 		};
-		D3D7807818A038B500E5AB50 /* ImagePickerController */ = {
+		D3D7807818A038B500E5AB50 /* Data Collection */ = {
 			isa = PBXGroup;
 			children = (
 				966F6C8B18AAC10B00BE3334 /* XMLClassifiers */,
+				96B5990118920061001D29CF /* GSFDataViewController.h */,
+				96B5990218920061001D29CF /* GSFDataViewController.m */,
 				964F0B72190DB7AF0007464A /* GSFOpenCVPageViewController.h */,
 				964F0B73190DB7AF0007464A /* GSFOpenCVPageViewController.m */,
 				96EAC4BB18AD88450084B331 /* GSFImageSelectorPreview.h */,
@@ -383,12 +383,13 @@
 				D3CBA3EE1928332C0091966D /* GSFLiveDataTableViewController.h */,
 				D3CBA3EF1928332C0091966D /* GSFLiveDataTableViewController.m */,
 			);
-			name = ImagePickerController;
+			name = "Data Collection";
 			sourceTree = "<group>";
 		};
 		D3D7807918A038E400E5AB50 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				DBB4284C1880A64F00139082 /* Main_iPhone.storyboard */,
 				96546A1E18F2327A003F8BBB /* GSFProgressView.h */,
 				96546A1F18F2327A003F8BBB /* GSFProgressView.m */,
 				D36F5D7218F0F39C00C9C8B6 /* GSFCreds.h */,
@@ -399,12 +400,8 @@
 				96FE0E0A18D2B838002C40A5 /* GSFLoginViewController.m */,
 				D397AC4018B514D30067691D /* GSFAppDelegate.m */,
 				DBB428491880A64F00139082 /* GSFAppDelegate.h */,
-				DBB4284F1880A64F00139082 /* Main_iPad.storyboard */,
-				DBB4284C1880A64F00139082 /* Main_iPhone.storyboard */,
 				D3D7807D18A0416400E5AB50 /* GSFTaggedVCViewController.h */,
 				D3D7807E18A0416400E5AB50 /* GSFTaggedVCViewController.m */,
-				96B5990118920061001D29CF /* GSFDataViewController.h */,
-				96B5990218920061001D29CF /* GSFDataViewController.m */,
 				96FE0E0618D24B37002C40A5 /* GSFSpinner.h */,
 				96FE0E0718D24B37002C40A5 /* GSFSpinner.m */,
 				96278765192D45FC00535DBD /* GSFMainViewButton.h */,
@@ -490,7 +487,7 @@
 				96EAC4D918BC75870084B331 /* Data Transfer */,
 				D3D7808018A051B500E5AB50 /* Model */,
 				966F6CA418AC847000BE3334 /* GMaps */,
-				D3D7807818A038B500E5AB50 /* ImagePickerController */,
+				D3D7807818A038B500E5AB50 /* Data Collection */,
 				DBB428411880A64F00139082 /* Supporting Files */,
 			);
 			path = GSFDataCollecter;
@@ -655,7 +652,6 @@
 				96232BE21915CAD100C19E54 /* dataviewstubimage320.png in Resources */,
 				5B67ACEA18E4B6EF008CC092 /* GSF_Insert_sensor_alert-v2.png in Resources */,
 				D312C5D618D6919800B8641A /* globe-black.png in Resources */,
-				DBB428511880A64F00139082 /* Main_iPad.storyboard in Resources */,
 				96278790192D803A00535DBD /* route5.png in Resources */,
 				9627878F192D803A00535DBD /* saved5.png in Resources */,
 				D312C5C918CFEC9C00B8641A /* upload.png in Resources */,
@@ -808,14 +804,6 @@
 				DBB4284D1880A64F00139082 /* Base */,
 			);
 			name = Main_iPhone.storyboard;
-			sourceTree = "<group>";
-		};
-		DBB4284F1880A64F00139082 /* Main_iPad.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				DBB428501880A64F00139082 /* Base */,
-			);
-			name = Main_iPad.storyboard;
 			sourceTree = "<group>";
 		};
 		DBB428651880A64F00139082 /* InfoPlist.strings */ = {

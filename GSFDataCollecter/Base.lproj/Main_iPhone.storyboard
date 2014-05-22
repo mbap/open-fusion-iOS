@@ -451,7 +451,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="TBQ-l0-Ms1">
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TBQ-l0-Ms1">
                                 <rect key="frame" x="20" y="153" width="51" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
@@ -477,26 +477,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WkC-fn-euT">
-                                <rect key="frame" x="8" y="430" width="48" height="30"/>
+                                <rect key="frame" x="136" y="430" width="48" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Collect">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="startCollecting:" destination="KhN-c9-7dH" eventType="touchUpInside" id="e46-jw-J8u"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sHd-MA-jxS">
-                                <rect key="frame" x="210" y="430" width="107" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="107" id="7jB-mG-shw"/>
-                                </constraints>
-                                <state key="normal" title="Route Plotter">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="startMapData:" destination="KhN-c9-7dH" eventType="touchUpInside" id="O7T-H0-hG2"/>
                                 </connections>
                             </button>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DoS-SC-70X">
@@ -539,18 +526,16 @@
                             <constraint firstItem="Obo-OU-vr2" firstAttribute="leading" secondItem="Dh3-0f-IBt" secondAttribute="leading" id="Otf-lo-930"/>
                             <constraint firstItem="tRm-tR-1h6" firstAttribute="centerY" secondItem="TBQ-l0-Ms1" secondAttribute="centerY" id="PRp-4c-Mnm"/>
                             <constraint firstAttribute="bottom" secondItem="Obo-OU-vr2" secondAttribute="bottom" id="QiH-00-iDd"/>
-                            <constraint firstItem="sHd-MA-jxS" firstAttribute="baseline" secondItem="WkC-fn-euT" secondAttribute="baseline" id="TQp-RM-bso"/>
                             <constraint firstItem="DoS-SC-70X" firstAttribute="top" secondItem="eAd-Lu-MqM" secondAttribute="bottom" constant="8" symbolic="YES" id="VcY-tN-8Sx"/>
                             <constraint firstItem="Obo-OU-vr2" firstAttribute="centerX" secondItem="RLa-Kz-uO5" secondAttribute="centerX" id="VlU-zt-UD7"/>
                             <constraint firstItem="eAd-Lu-MqM" firstAttribute="leading" secondItem="Dh3-0f-IBt" secondAttribute="leading" constant="20" symbolic="YES" id="YRy-fi-BVY"/>
                             <constraint firstItem="RRe-wR-M2d" firstAttribute="top" secondItem="WkC-fn-euT" secondAttribute="bottom" constant="20" id="alK-Is-kQg"/>
-                            <constraint firstItem="WkC-fn-euT" firstAttribute="leading" secondItem="Dh3-0f-IBt" secondAttribute="leading" constant="8" id="dDU-hT-uVD"/>
+                            <constraint firstItem="WkC-fn-euT" firstAttribute="leading" secondItem="Dh3-0f-IBt" secondAttribute="leading" constant="136" id="dDU-hT-uVD"/>
                             <constraint firstItem="TBQ-l0-Ms1" firstAttribute="top" secondItem="DoS-SC-70X" secondAttribute="bottom" constant="8" symbolic="YES" id="eMA-sb-ucZ"/>
                             <constraint firstItem="1Cw-8g-YnK" firstAttribute="centerY" secondItem="TJw-b9-JHY" secondAttribute="centerY" id="g5C-ol-eOU"/>
                             <constraint firstItem="TJw-b9-JHY" firstAttribute="leading" secondItem="tRm-tR-1h6" secondAttribute="leading" id="hjS-Bv-h7a"/>
                             <constraint firstItem="mc7-Pc-ch9" firstAttribute="leading" secondItem="RLa-Kz-uO5" secondAttribute="leading" id="jpB-2e-Lje"/>
                             <constraint firstItem="eAd-Lu-MqM" firstAttribute="top" secondItem="mVe-VR-cCg" secondAttribute="bottom" constant="11" id="kpa-yX-TwD"/>
-                            <constraint firstAttribute="trailing" secondItem="sHd-MA-jxS" secondAttribute="trailing" constant="3" id="lGa-xr-tlY"/>
                             <constraint firstItem="eAd-Lu-MqM" firstAttribute="bottom" secondItem="RLa-Kz-uO5" secondAttribute="bottom" id="n4E-Q3-bU2"/>
                             <constraint firstAttribute="trailing" secondItem="Obo-OU-vr2" secondAttribute="trailing" id="n5S-37-iUH"/>
                             <constraint firstItem="mc7-Pc-ch9" firstAttribute="leading" secondItem="tRm-tR-1h6" secondAttribute="leading" id="odP-ji-0Bh"/>
@@ -579,8 +564,8 @@
                         <outlet property="noiseDetectionToggle" destination="TBQ-l0-Ms1" id="LCx-Pq-lwI"/>
                         <outlet property="personDetectToggle" destination="eAd-Lu-MqM" id="ju7-zL-Hit"/>
                         <outlet property="sensorToggle" destination="1Cw-8g-YnK" id="4TB-2a-fYW"/>
-                        <segue destination="HvR-I5-gkG" kind="push" identifier="imagePickerSegue" id="kEg-c3-iIB"/>
                         <segue destination="MgZ-ry-aGy" kind="push" identifier="archived" id="4ni-dW-v1n"/>
+                        <segue destination="HvR-I5-gkG" kind="push" identifier="imagePickerSegue" id="M9Q-RS-sVN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vka-Xb-pvN" userLabel="First Responder" sceneMemberID="firstResponder"/>
