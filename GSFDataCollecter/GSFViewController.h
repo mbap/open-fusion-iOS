@@ -8,14 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "GSFTaggedVCViewController.h"
-#import "GSFImageSelectorPreview.h"
-#import "GSFSensorIOController.h"
-#import "GSFNoiseLevelController.h"
 
 /**
  *  The main class used to collect image data for the GSFDataCollector application.
  */
-@interface GSFViewController : GSFTaggedVCViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface GSFViewController : GSFTaggedVCViewController
 
 /**
  *  Property to determine if facial detection is to be used.
@@ -32,8 +29,9 @@
  */
 @property (nonatomic) BOOL noiseSwitch;
 
-
-@property (nonatomic) GSFNoiseLevelController *noiseMonitor;
-@property (nonatomic) GSFSensorIOController *sensorIO;
+/**
+ *  Determines if pluggable sensor monitoring is activated.
+ */
+@property (nonatomic) BOOL sensorIOSwitch;
 
 @end
