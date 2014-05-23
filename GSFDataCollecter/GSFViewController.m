@@ -63,8 +63,6 @@
     
     self.collectionView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"dataviewstubimage320.png"]];
     
-    self.navigationController.delegate = self;
-    
     [self.locationManager startUpdatingLocation];
 
 }
@@ -138,6 +136,7 @@
 - (void)finishAndUpdate
 {
     [self dismissViewControllerAnimated:YES completion:NULL];
+    self.imagePickerController.delegate = nil;
     self.imagePickerController = nil;
     [self setNeedsStatusBarAppearanceUpdate]; // bring status bar back
     [self.view bringSubviewToFront:self.toolbar];

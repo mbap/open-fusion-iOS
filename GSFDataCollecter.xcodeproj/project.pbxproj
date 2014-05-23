@@ -24,6 +24,7 @@
 		9628237C190082CB00ABA86E /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9628237B190082CB00ABA86E /* GoogleMaps.framework */; };
 		964F0B74190DB7AF0007464A /* GSFOpenCVPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 964F0B73190DB7AF0007464A /* GSFOpenCVPageViewController.m */; };
 		96546A2018F2327A003F8BBB /* GSFProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96546A1F18F2327A003F8BBB /* GSFProgressView.m */; };
+		9658DB8C192FF43D00A70655 /* GSFCreds.m in Sources */ = {isa = PBXBuildFile; fileRef = 9658DB8B192FF43D00A70655 /* GSFCreds.m */; };
 		966F6C8A18AAC0A100BE3334 /* hogcascade_pedestrians.xml in Resources */ = {isa = PBXBuildFile; fileRef = 966F6C8818AAC0A100BE3334 /* hogcascade_pedestrians.xml */; };
 		966F6C9318AB57CF00BE3334 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 966F6C9218AB57CF00BE3334 /* CoreData.framework */; };
 		966F6C9518AB57EE00BE3334 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 966F6C9418AB57EE00BE3334 /* CoreText.framework */; };
@@ -75,7 +76,6 @@
 		D312C5E918D691C900B8641A /* icon-transparent-white5.png in Resources */ = {isa = PBXBuildFile; fileRef = D312C5E218D691C900B8641A /* icon-transparent-white5.png */; };
 		D312C5EA18D691C900B8641A /* icon-white5.png in Resources */ = {isa = PBXBuildFile; fileRef = D312C5E318D691C900B8641A /* icon-white5.png */; };
 		D3641AFC18E10A7C00DBB5E7 /* Delete-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D3641AFB18E10A7C00DBB5E7 /* Delete-icon.png */; };
-		D36F5D7418F0F39C00C9C8B6 /* GSFCreds.m in Sources */ = {isa = PBXBuildFile; fileRef = D36F5D7318F0F39C00C9C8B6 /* GSFCreds.m */; };
 		D397AC4118B514D30067691D /* GSFAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D397AC4018B514D30067691D /* GSFAppDelegate.m */; };
 		D397AC4418BAC4920067691D /* GSFDirectionService.m in Sources */ = {isa = PBXBuildFile; fileRef = D397AC4318BAC4920067691D /* GSFDirectionService.m */; };
 		D397AC4918BE80C40067691D /* GSFTrackerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D397AC4818BE80C40067691D /* GSFTrackerHelper.m */; };
@@ -142,6 +142,7 @@
 		964F0B73190DB7AF0007464A /* GSFOpenCVPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFOpenCVPageViewController.m; sourceTree = "<group>"; };
 		96546A1E18F2327A003F8BBB /* GSFProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFProgressView.h; sourceTree = "<group>"; };
 		96546A1F18F2327A003F8BBB /* GSFProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFProgressView.m; sourceTree = "<group>"; };
+		9658DB8B192FF43D00A70655 /* GSFCreds.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFCreds.m; sourceTree = "<group>"; };
 		966F6C8818AAC0A100BE3334 /* hogcascade_pedestrians.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = hogcascade_pedestrians.xml; path = GSFDataCollecter/hogcascade_pedestrians.xml; sourceTree = "<group>"; };
 		966F6C9218AB57CF00BE3334 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		966F6C9418AB57EE00BE3334 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
@@ -208,7 +209,6 @@
 		D312C5E318D691C900B8641A /* icon-white5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-white5.png"; sourceTree = "<group>"; };
 		D3641AFB18E10A7C00DBB5E7 /* Delete-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Delete-icon.png"; sourceTree = "<group>"; };
 		D36F5D7218F0F39C00C9C8B6 /* GSFCreds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFCreds.h; sourceTree = "<group>"; };
-		D36F5D7318F0F39C00C9C8B6 /* GSFCreds.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFCreds.m; sourceTree = "<group>"; };
 		D397AC4018B514D30067691D /* GSFAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFAppDelegate.m; sourceTree = "<group>"; };
 		D397AC4218BAC4920067691D /* GSFDirectionService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFDirectionService.h; sourceTree = "<group>"; };
 		D397AC4318BAC4920067691D /* GSFDirectionService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFDirectionService.m; sourceTree = "<group>"; };
@@ -393,7 +393,7 @@
 				96546A1E18F2327A003F8BBB /* GSFProgressView.h */,
 				96546A1F18F2327A003F8BBB /* GSFProgressView.m */,
 				D36F5D7218F0F39C00C9C8B6 /* GSFCreds.h */,
-				D36F5D7318F0F39C00C9C8B6 /* GSFCreds.m */,
+				9658DB8B192FF43D00A70655 /* GSFCreds.m */,
 				D312C5CC18D6870300B8641A /* UYLPasswordManager.h */,
 				D312C5CD18D6870300B8641A /* UYLPasswordManager.m */,
 				96FE0E0918D2B838002C40A5 /* GSFLoginViewController.h */,
@@ -734,7 +734,6 @@
 				96FCA62418CAD0B000BC01A1 /* GSFSavedDataViewController.m in Sources */,
 				D3D7807F18A0416400E5AB50 /* GSFTaggedVCViewController.m in Sources */,
 				9627876D192D5B6800535DBD /* GSFRootViewController.m in Sources */,
-				D36F5D7418F0F39C00C9C8B6 /* GSFCreds.m in Sources */,
 				96EAF06918CD89B90041A265 /* GSFSavedDataImageViewController.m in Sources */,
 				96EAC4BD18AD88450084B331 /* GSFImageSelectorPreview.m in Sources */,
 				96EAC4D818B18ADD0084B331 /* GSFImage.m in Sources */,
@@ -743,6 +742,7 @@
 				96B599091895FB4D001D29CF /* GSFImageCollectionViewCell.m in Sources */,
 				96EAF06618CD89940041A265 /* GSFSavedDataDetailViewController.m in Sources */,
 				D3D78071189996FE00E5AB50 /* GSFOpenCvImageProcessor.mm in Sources */,
+				9658DB8C192FF43D00A70655 /* GSFCreds.m in Sources */,
 				D397AC4118B514D30067691D /* GSFAppDelegate.m in Sources */,
 				5BFF04F918E907AE00A86354 /* GSFSensorIOController.m in Sources */,
 				D397AC4418BAC4920067691D /* GSFDirectionService.m in Sources */,
