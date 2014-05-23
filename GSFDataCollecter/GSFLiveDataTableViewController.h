@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "GSFData.h"
 
+/**
+ *  Tableview for loading in live data details.
+ */
 @interface GSFLiveDataTableViewController : UITableViewController
 
 /**

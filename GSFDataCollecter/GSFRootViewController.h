@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ *  Root view controller for the GSFDataCollecter App.
+ */
 @interface GSFRootViewController : UIViewController
 
 /**
