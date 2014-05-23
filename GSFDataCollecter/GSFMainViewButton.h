@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ *  Button class that allows for sleek user interface for the root view controller.
+ */
 @interface GSFMainViewButton : UIButton
 
 /**

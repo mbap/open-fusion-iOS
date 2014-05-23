@@ -11,6 +11,9 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
+/**
+ *  Object that runs image processing tasks.
+ */
 @interface GSFOpenCvImageProcessor : NSObject
 
 /**

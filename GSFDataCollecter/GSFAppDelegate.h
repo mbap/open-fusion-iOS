@@ -8,8 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ *  Application Delegate for the GSFDataCollecter App.
+ */
 @interface GSFAppDelegate : UIResponder <UIApplicationDelegate>
 
+/**
+ *  The main window.
+ */
 @property (strong, nonatomic) UIWindow *window;
 
 @end

@@ -78,7 +78,6 @@
 		D3641AFC18E10A7C00DBB5E7 /* Delete-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D3641AFB18E10A7C00DBB5E7 /* Delete-icon.png */; };
 		D397AC4118B514D30067691D /* GSFAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D397AC4018B514D30067691D /* GSFAppDelegate.m */; };
 		D397AC4418BAC4920067691D /* GSFDirectionService.m in Sources */ = {isa = PBXBuildFile; fileRef = D397AC4318BAC4920067691D /* GSFDirectionService.m */; };
-		D397AC4918BE80C40067691D /* GSFTrackerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D397AC4818BE80C40067691D /* GSFTrackerHelper.m */; };
 		D3BF4D1C18CE5E35003CB52B /* black.png in Resources */ = {isa = PBXBuildFile; fileRef = D3BF4D1918CE5E35003CB52B /* black.png */; };
 		D3BF4D1D18CE5E35003CB52B /* transparent.png in Resources */ = {isa = PBXBuildFile; fileRef = D3BF4D1A18CE5E35003CB52B /* transparent.png */; };
 		D3BF4D1E18CE5E35003CB52B /* white.png in Resources */ = {isa = PBXBuildFile; fileRef = D3BF4D1B18CE5E35003CB52B /* white.png */; };
@@ -212,8 +211,6 @@
 		D397AC4018B514D30067691D /* GSFAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFAppDelegate.m; sourceTree = "<group>"; };
 		D397AC4218BAC4920067691D /* GSFDirectionService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFDirectionService.h; sourceTree = "<group>"; };
 		D397AC4318BAC4920067691D /* GSFDirectionService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFDirectionService.m; sourceTree = "<group>"; };
-		D397AC4718BE80C40067691D /* GSFTrackerHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFTrackerHelper.h; sourceTree = "<group>"; };
-		D397AC4818BE80C40067691D /* GSFTrackerHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFTrackerHelper.m; sourceTree = "<group>"; };
 		D3BF4D1918CE5E35003CB52B /* black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = black.png; sourceTree = "<group>"; };
 		D3BF4D1A18CE5E35003CB52B /* transparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = transparent.png; sourceTree = "<group>"; };
 		D3BF4D1B18CE5E35003CB52B /* white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = white.png; sourceTree = "<group>"; };
@@ -338,8 +335,6 @@
 				966F6CA618AC84C600BE3334 /* GSFGMapViewController.m */,
 				D397AC4218BAC4920067691D /* GSFDirectionService.h */,
 				D397AC4318BAC4920067691D /* GSFDirectionService.m */,
-				D397AC4718BE80C40067691D /* GSFTrackerHelper.h */,
-				D397AC4818BE80C40067691D /* GSFTrackerHelper.m */,
 			);
 			name = GMaps;
 			sourceTree = "<group>";
@@ -753,7 +748,6 @@
 				D3CBA3F01928332C0091966D /* GSFLiveDataTableViewController.m in Sources */,
 				96FE0E0818D24B37002C40A5 /* GSFSpinner.m in Sources */,
 				96B5990318920061001D29CF /* GSFDataViewController.m in Sources */,
-				D397AC4918BE80C40067691D /* GSFTrackerHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

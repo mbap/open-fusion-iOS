@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+ *  Class to hide you credentials. The user of this code must make their own GSFCreds.m file with their own google maps api key.
+ */
 @interface GSFCreds : NSObject
 
 /**

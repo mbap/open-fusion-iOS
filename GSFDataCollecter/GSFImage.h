@@ -13,7 +13,6 @@
  */
 @interface GSFImage : NSObject
 
-// init with an image.
 /**
  *  Creates a GSFImage object using the image provided.
  *

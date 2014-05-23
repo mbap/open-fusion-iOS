@@ -30,7 +30,9 @@
 
 @end
 
-
+/**
+ *  Direction Service Object that can run traveling salesman as well as other utilies.
+ */
 @interface GSFDirectionService : NSObject
 
 /**

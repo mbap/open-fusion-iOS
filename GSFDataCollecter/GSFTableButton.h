@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ *  Custom button class for the saved data table.
+ */
 @interface GSFTableButton : UIButton
 
 /**

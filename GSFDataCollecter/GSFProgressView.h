@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ *  Custom progress view class for upload progress for user interface.
+ */
 @interface GSFProgressView : UIView
 
 /**
