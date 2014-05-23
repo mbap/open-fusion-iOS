@@ -565,7 +565,6 @@
 				DBB428341880A64F00139082 /* Frameworks */,
 				DBB428351880A64F00139082 /* Resources */,
 				1265E63F7BB04CCDBD2B58D7 /* Copy Pods Resources */,
-				D3DC777B18F0E55000D4E22B /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -702,19 +701,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		D3DC777B18F0E55000D4E22B /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "[ -f .gsf_app_credentials ] && source .gsf_app_credentials\n if [ \"$CRASHLYTICS_API_KEY\" != \"x\" ]; then\n     ./Crashlytics.framework/run $CRASHLYTICS_API_KEY\n else\n     echo \"warning: Crashytics API Key not found\"\n fi";
 		};
 		EF2C562301214810BCE53C4B /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

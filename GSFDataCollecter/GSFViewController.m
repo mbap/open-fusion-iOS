@@ -13,6 +13,7 @@
 #import "GSFOpenCvImageViewController.h"
 #import "GSFData.h"
 #import "GSFSpinner.h"
+#import "GSFNoiseLevelController.h"
 
 #define SPINNERWIDTH  150
 #define SPINNERHEIGHT 100
@@ -22,20 +23,18 @@
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 
 @property (nonatomic) UIImagePickerController *imagePickerController;
-@property (nonatomic, weak) NSTimer *cameraTimer;
 
 @property (nonatomic) NSMutableArray *capturedImages;
-@property (nonatomic) BOOL showDetectionImages;
-
 @property (nonatomic) GSFSpinner *spinner;
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-@property (nonatomic) UIImageView *imagePreview;
 @property (nonatomic) GSFImageCollectionViewCell *imagecell;
 @property (nonatomic) NSIndexPath *index;
 
 @property (nonatomic, weak) NSMutableArray *locationMeasurements;
 @property (nonatomic) CLLocation *bestEffort;
+
+@property (nonatomic) GSFNoiseLevelController *noiseMonitor;
 @end
 
 @implementation GSFViewController
@@ -87,7 +86,6 @@
 - (IBAction)doneWithPhotoPicker:(id)sender
 {
     if (self.capturedImages.count) {
-        self.showDetectionImages = YES;
         GSFOpenCvImageProcessor *processor = [[GSFOpenCvImageProcessor alloc] init];
         dispatch_queue_t hogQueue = dispatch_queue_create("hogQueue", NULL);
         self.spinner = [[GSFSpinner alloc] init];

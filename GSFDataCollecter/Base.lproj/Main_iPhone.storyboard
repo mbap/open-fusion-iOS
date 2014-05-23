@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Uiu-lD-l7B">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="scr-AU-pHu">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -111,7 +111,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="81" y="195"/>
+            <point key="canvasLocation" x="81" y="191"/>
         </scene>
         <!--Open Cv Image View Controller - Results-->
         <scene sceneID="djJ-6L-veC">
@@ -437,7 +437,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="626" y="195"/>
+            <point key="canvasLocation" x="626" y="191"/>
         </scene>
         <!--Data View Controller - Data Collecter-->
         <scene sceneID="IVV-kd-6Oi">
@@ -454,9 +454,6 @@
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TBQ-l0-Ms1">
                                 <rect key="frame" x="20" y="153" width="51" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <connections>
-                                    <action selector="noiseToggleFlipped:" destination="KhN-c9-7dH" eventType="valueChanged" id="aCR-Wj-sOF"/>
-                                </connections>
                             </switch>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Monitor Noise Level" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tRm-tR-1h6">
                                 <rect key="frame" x="94" y="158" width="153" height="21"/>
@@ -511,9 +508,6 @@
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="1Cw-8g-YnK">
                                 <rect key="frame" x="20" y="192" width="51" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <connections>
-                                    <action selector="sensorToggleFlipped:" destination="KhN-c9-7dH" eventType="valueChanged" id="z0D-k6-mSV"/>
-                                </connections>
                             </switch>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -570,7 +564,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vka-Xb-pvN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-429" y="195"/>
+            <point key="canvasLocation" x="-429" y="191"/>
         </scene>
         <!--Root View Controller - GSF Data System-->
         <scene sceneID="RL4-PH-JiT">
@@ -594,7 +588,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="geE-AS-PvL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-927" y="195"/>
+            <point key="canvasLocation" x="-927" y="191"/>
         </scene>
         <!--Map View Controller - GSF Map-->
         <scene sceneID="WHb-gH-qkD">
@@ -651,22 +645,22 @@
             <point key="canvasLocation" x="-927" y="-487"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="eL1-zE-xIB">
+        <scene sceneID="AY8-Ao-IMP">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Uiu-lD-l7B" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="scr-AU-pHu" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="c1A-hF-klS">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="s4j-1f-zIG">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="A2a-ap-o2s" kind="relationship" relationship="rootViewController" id="Ong-bw-1WI"/>
+                        <segue destination="A2a-ap-o2s" kind="relationship" relationship="rootViewController" id="YKs-b0-AeD"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="JIi-Oi-XuS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Gno-na-kzj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1453" y="195"/>
+            <point key="canvasLocation" x="-1453" y="191"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
@@ -675,6 +669,6 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="4ni-dW-v1n"/>
+        <segue reference="9YO-51-LUY"/>
     </inferredMetricsTieBreakers>
 </document>

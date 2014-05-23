@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "GSFTaggedVCViewController.h"
-#import "GSFSensorIOController.h"
-#import "GSFNoiseLevelController.h"
 
 /**
  *  The main class used to collect image data for the GSFDataCollector application.
@@ -31,8 +29,9 @@
  */
 @property (nonatomic) BOOL noiseSwitch;
 
-
-@property (nonatomic) GSFNoiseLevelController *noiseMonitor;
-@property (nonatomic) GSFSensorIOController *sensorIO;
+/**
+ *  Determines if pluggable sensor monitoring is activated.
+ */
+@property (nonatomic) BOOL sensorIOSwitch;
 
 @end
