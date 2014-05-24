@@ -15,6 +15,8 @@
 
 @property (nonatomic) NSDictionary *mapData;
 
+- (IBAction)buttonPressed:(id)sender;
+
 @end
 
 @implementation GSFRootViewController
@@ -56,14 +58,17 @@
     [self.view addSubview:route];
 }
 
-- (void)buttonPressed:(GSFMainViewButton *)button
+- (IBAction)buttonPressed:(id)sender
 {
-    if (0 == button.row) {
-        [self performSegueWithIdentifier:@"rootCollect" sender:self];
-    } else if (1 == button.row) {
-        [self performSegueWithIdentifier:@"rootSaved" sender:self];
-    } else {
-        [self performSegueWithIdentifier:@"rootRoute" sender:self];
+    if ([sender isKindOfClass:[GSFMainViewButton class]]) {
+        GSFMainViewButton *button = (GSFMainViewButton *)sender;
+        if (0 == button.row) {
+            [self performSegueWithIdentifier:@"rootCollect" sender:self];
+        } else if (1 == button.row) {
+            [self performSegueWithIdentifier:@"rootSaved" sender:self];
+        } else if (2 == button.row) {
+            [self performSegueWithIdentifier:@"rootRoute" sender:self];
+        }
     }
 }
 

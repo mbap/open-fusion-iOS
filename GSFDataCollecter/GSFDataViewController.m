@@ -20,6 +20,8 @@
 @property (weak, nonatomic) IBOutlet UISwitch *sensorToggle;
 @property (nonatomic) IBOutlet UIImageView *imageView;
 
+@property (nonatomic) BOOL apiKeyChecked;
+
 @end
 
 @implementation GSFDataViewController
@@ -32,12 +34,21 @@
     // add background image here.
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"white.png"]];
     
+    // set api key to false;
+    self.apiKeyChecked = NO;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
     // see if user has an api key.
-    UYLPasswordManager *pman = [UYLPasswordManager sharedInstance];
-    if (![pman validKey:nil forIdentifier:@"apikey"]) {
-        // push view controller to get the api key.
-        [self.navigationController pushViewController:[[GSFLoginViewController alloc] init] animated:YES];
+    if (self.apiKeyChecked == NO) {
+        UYLPasswordManager *pman = [UYLPasswordManager sharedInstance];
+        if (![pman validKey:nil forIdentifier:@"apikey"]) {
+            // push view controller to get the api key.
+            [self.navigationController pushViewController:[[GSFLoginViewController alloc] init] animated:YES];
+        }
     }
+    self.apiKeyChecked = YES;
 }
 
 - (void)didReceiveMemoryWarning
