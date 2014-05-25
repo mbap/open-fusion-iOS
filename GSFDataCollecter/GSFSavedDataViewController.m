@@ -19,7 +19,7 @@
 #define imageWidth 150
 
 
-@interface GSFSavedDataViewController () <GSFDataTransferDelegate, UINavigationBarDelegate>
+@interface GSFSavedDataViewController () <GSFDataTransferDelegate>
 
 // takes paths of files saved in GSF Directory.
 - (void)buildSavedDataListWithContents:(NSArray *)paths; // helper function for building the list.

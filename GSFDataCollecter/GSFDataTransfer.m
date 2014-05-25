@@ -173,7 +173,7 @@
 
 - (void)saveData:(NSData *)data
 {
-    if (nil == self.url) { // already saved if url was passed in.
+    if (nil == self.url && nil == self.urls) { // already saved if url was passed in or urls.
         NSLog(@"There was a network error. Saving the data to disk.\n.");
         NSFileManager *man = [[NSFileManager alloc] init];
         NSArray *urls = [man URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
