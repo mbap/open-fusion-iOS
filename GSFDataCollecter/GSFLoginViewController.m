@@ -42,6 +42,7 @@
     self.later.titleLabel.textColor = [UIColor lightGrayColor];
     [self.later addTarget:self action:@selector(popMe) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:self.later];
+    self.navigationItem.hidesBackButton = YES;
 }
 
 - (void)popMe

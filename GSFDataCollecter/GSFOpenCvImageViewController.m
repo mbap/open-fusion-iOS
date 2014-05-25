@@ -11,14 +11,16 @@
 #import "GSFDataTransfer.h"
 #import "GSFOpenCVPageViewController.h"
 #import "GSFLiveDataTableViewController.h"
+#import "GSFProgressView.h"
 
-@interface GSFOpenCvImageViewController () <NSURLSessionTaskDelegate, NSURLSessionDelegate, UIActionSheetDelegate, UIPageViewControllerDataSource, UIPageViewControllerDelegate, GSFOpenCVPageViewControllerDelegate>
+@interface GSFOpenCvImageViewController () <NSURLSessionTaskDelegate, NSURLSessionDelegate, UIActionSheetDelegate, UIPageViewControllerDataSource, UIPageViewControllerDelegate, GSFOpenCVPageViewControllerDelegate, GSFDataTransferDelegate>
 
 // properties of the page controller;
 @property (nonatomic) NSMutableArray *cvImages;
 @property (nonatomic) NSMutableArray *cvNums;
 @property (nonatomic) NSUInteger index;
 @property (nonatomic) NSArray *vcs;
+@property (nonatomic) GSFProgressView *uploadBar;
 
 @end
 
@@ -157,22 +159,44 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    GSFDataTransfer *driver = [[GSFDataTransfer alloc] init];
     if (0 == buttonIndex) {
         [self.navigationController popViewControllerAnimated:YES];
     } else if (2 == buttonIndex) {
         // do nothing
     } else {
+        // send data.
+        __block GSFDataTransfer *driver = [[GSFDataTransfer alloc] init];
+        driver.delegate = self;
+        self.uploadBar = [[GSFProgressView alloc] init];
+        [self.view addSubview:self.uploadBar];
+        [self.view bringSubviewToFront:self.uploadBar];
         dispatch_queue_t networkQueue = dispatch_queue_create("networkQueue", NULL);
         dispatch_async(networkQueue, ^{
             [driver uploadDataArray:[driver formatDataAsJSON:self.originalData]];
         });
+    }
+}
+
+- (void)checkHttpStatus:(NSInteger)statusCode
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
         if ([self.delegate2 respondsToSelector:@selector(resetDataCollections)]) {
             [self.delegate2 resetDataCollections];
         }
         [self.navigationController popViewControllerAnimated:YES];
-    }
+    });
 }
+
+// delegate method that provides data for the upload progres view indicator.
+- (void)uploadPercentage:(float)percent
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.uploadBar.progressBar setProgress:percent animated:YES];
+        NSString *percentage = [NSString stringWithFormat:@"Uploading: %.1f%%", percent*100];
+        [self.uploadBar setLabelText:percentage];
+    });
+}
+
 
 - (IBAction)viewLiveDataTable:(id)sender
 {
