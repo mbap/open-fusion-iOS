@@ -36,9 +36,6 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
-//    // allocate the data source
-//    self.collectedData = [[NSMutableArray alloc] init];
-    
     // set api key to false;
     self.apiKeyChecked = NO;
     
@@ -58,6 +55,8 @@
         }
     }
     self.apiKeyChecked = YES;
+    
+    // this might not need to be called.
     [self.tableView reloadData];
 }
 

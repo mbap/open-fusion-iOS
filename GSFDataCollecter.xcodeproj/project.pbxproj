@@ -90,10 +90,10 @@
 		D3C578171932CFCF0004658A /* image4.png in Resources */ = {isa = PBXBuildFile; fileRef = D3C578141932CFCF0004658A /* image4.png */; };
 		D3C578181932CFCF0004658A /* pluggable4.png in Resources */ = {isa = PBXBuildFile; fileRef = D3C578151932CFCF0004658A /* pluggable4.png */; };
 		D3C578191932CFCF0004658A /* sound4.png in Resources */ = {isa = PBXBuildFile; fileRef = D3C578161932CFCF0004658A /* sound4.png */; };
-		D3C5781E1932DE320004658A /* normal4.png in Resources */ = {isa = PBXBuildFile; fileRef = D3C5781A1932DE320004658A /* normal4.png */; };
-		D3C5781F1932DE320004658A /* normal5.png in Resources */ = {isa = PBXBuildFile; fileRef = D3C5781B1932DE320004658A /* normal5.png */; };
-		D3C578201932DE320004658A /* retina4.png in Resources */ = {isa = PBXBuildFile; fileRef = D3C5781C1932DE320004658A /* retina4.png */; };
-		D3C578211932DE320004658A /* retina5.png in Resources */ = {isa = PBXBuildFile; fileRef = D3C5781D1932DE320004658A /* retina5.png */; };
+		D3C5781E1932DE320004658A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = D3C5781A1932DE320004658A /* Default.png */; };
+		D3C5781F1932DE320004658A /* Default-568h.png in Resources */ = {isa = PBXBuildFile; fileRef = D3C5781B1932DE320004658A /* Default-568h.png */; };
+		D3C578201932DE320004658A /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D3C5781C1932DE320004658A /* Default@2x.png */; };
+		D3C578211932DE320004658A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D3C5781D1932DE320004658A /* Default-568h@2x.png */; };
 		D3CBA3F01928332C0091966D /* GSFLiveDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3CBA3EF1928332C0091966D /* GSFLiveDataTableViewController.m */; };
 		D3D78071189996FE00E5AB50 /* GSFOpenCvImageProcessor.mm in Sources */ = {isa = PBXBuildFile; fileRef = D3D78070189996FE00E5AB50 /* GSFOpenCvImageProcessor.mm */; };
 		D3D7807C18A0396900E5AB50 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3D7807B18A0396900E5AB50 /* CoreLocation.framework */; };
@@ -233,10 +233,10 @@
 		D3C578141932CFCF0004658A /* image4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image4.png; sourceTree = "<group>"; };
 		D3C578151932CFCF0004658A /* pluggable4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pluggable4.png; sourceTree = "<group>"; };
 		D3C578161932CFCF0004658A /* sound4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sound4.png; sourceTree = "<group>"; };
-		D3C5781A1932DE320004658A /* normal4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = normal4.png; sourceTree = "<group>"; };
-		D3C5781B1932DE320004658A /* normal5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = normal5.png; sourceTree = "<group>"; };
-		D3C5781C1932DE320004658A /* retina4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = retina4.png; sourceTree = "<group>"; };
-		D3C5781D1932DE320004658A /* retina5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = retina5.png; sourceTree = "<group>"; };
+		D3C5781A1932DE320004658A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		D3C5781B1932DE320004658A /* Default-568h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h.png"; sourceTree = "<group>"; };
+		D3C5781C1932DE320004658A /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		D3C5781D1932DE320004658A /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		D3CBA3EE1928332C0091966D /* GSFLiveDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFLiveDataTableViewController.h; sourceTree = "<group>"; };
 		D3CBA3EF1928332C0091966D /* GSFLiveDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFLiveDataTableViewController.m; sourceTree = "<group>"; };
 		D3D7806F189996FE00E5AB50 /* GSFOpenCvImageProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFOpenCvImageProcessor.h; sourceTree = "<group>"; };
@@ -511,10 +511,10 @@
 		DBB428411880A64F00139082 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				D3C5781A1932DE320004658A /* normal4.png */,
-				D3C5781B1932DE320004658A /* normal5.png */,
-				D3C5781C1932DE320004658A /* retina4.png */,
-				D3C5781D1932DE320004658A /* retina5.png */,
+				D3C5781D1932DE320004658A /* Default-568h@2x.png */,
+				D3C5781B1932DE320004658A /* Default-568h.png */,
+				D3C5781C1932DE320004658A /* Default@2x.png */,
+				D3C5781A1932DE320004658A /* Default.png */,
 				D3C578141932CFCF0004658A /* image4.png */,
 				D3C578151932CFCF0004658A /* pluggable4.png */,
 				D3C578161932CFCF0004658A /* sound4.png */,
@@ -663,10 +663,10 @@
 				9628237A190082BA00ABA86E /* GoogleMaps.bundle in Resources */,
 				D3641AFC18E10A7C00DBB5E7 /* Delete-icon.png in Resources */,
 				D312C5E518D691C900B8641A /* globe-transparent5.png in Resources */,
-				D3C578201932DE320004658A /* retina4.png in Resources */,
+				D3C578201932DE320004658A /* Default@2x.png in Resources */,
 				D312C5E918D691C900B8641A /* icon-transparent-white5.png in Resources */,
 				9627878B192D7D2100535DBD /* collect.png in Resources */,
-				D3C578211932DE320004658A /* retina5.png in Resources */,
+				D3C578211932DE320004658A /* Default-568h@2x.png in Resources */,
 				D312C5DC18D6919800B8641A /* icon-white.png in Resources */,
 				D312C5D718D6919800B8641A /* globe-transparent.png in Resources */,
 				D312C5EA18D691C900B8641A /* icon-white5.png in Resources */,
@@ -696,9 +696,9 @@
 				D312C5E718D691C900B8641A /* icon-black5.png in Resources */,
 				D312C5E818D691C900B8641A /* icon-transparent-black5.png in Resources */,
 				966F6C8A18AAC0A100BE3334 /* hogcascade_pedestrians.xml in Resources */,
-				D3C5781F1932DE320004658A /* normal5.png in Resources */,
+				D3C5781F1932DE320004658A /* Default-568h.png in Resources */,
 				D3BF4D1C18CE5E35003CB52B /* black.png in Resources */,
-				D3C5781E1932DE320004658A /* normal4.png in Resources */,
+				D3C5781E1932DE320004658A /* Default.png in Resources */,
 				D3C578181932CFCF0004658A /* pluggable4.png in Resources */,
 				D3BF4D2218CE62C4003CB52B /* black1.png in Resources */,
 				D3C578121932CE0E0004658A /* pluggable5.png in Resources */,
