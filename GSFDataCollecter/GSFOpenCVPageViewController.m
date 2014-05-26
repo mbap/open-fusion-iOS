@@ -35,17 +35,10 @@
     self.stepper.value = self.quantity.doubleValue;
 }
 
-- (IBAction)sendDataToServer:(id)sender
+- (IBAction)doneWithEdits:(id)sender
 {
-    if ([self.delegate respondsToSelector:@selector(sendData)]) {
-        [self.delegate sendData];
-    }
-}
-
-- (IBAction)saveDataToFileSystem:(id)sender
-{
-    if ([self.delegate respondsToSelector:@selector(saveData)]) {
-        [self.delegate saveData];
+    if ([self.delegate respondsToSelector:@selector(doneModifyingResults)]) {
+        [self.delegate doneModifyingResults];
     }
 }
 

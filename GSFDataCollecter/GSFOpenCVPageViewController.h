@@ -17,14 +17,9 @@
 @optional
 
 /**
- *  Tells the calling class that the data should be sent to the GSF server.
+ *  Tells the calling class that the data should be saved to the feature collection.
  */
-- (void)sendData;
-
-/**
- *  Tells the calling class that the data should be saved to the file system.
- */
-- (void)saveData;
+- (void)doneModifyingResults;
 
 /**
  *  Updates a gsfImage detection number.

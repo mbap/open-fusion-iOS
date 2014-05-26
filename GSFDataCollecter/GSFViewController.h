@@ -15,23 +15,8 @@
 @interface GSFViewController : GSFTaggedVCViewController
 
 /**
- *  Property to determine if facial detection is to be used.
+ *  Property to store all collected data in.
  */
-@property (nonatomic) BOOL faceDetect;
-
-/**
- *  Property to determine if pedestrian (people) detection is to be used.
- */
-@property (nonatomic) BOOL personDetect;
-
-/**
- *  Determines if noise switch it on.
- */
-@property (nonatomic) BOOL noiseSwitch;
-
-/**
- *  Determines if pluggable sensor monitoring is activated.
- */
-@property (nonatomic) BOOL sensorIOSwitch;
+@property (nonatomic, weak) NSMutableArray *collectedData;
 
 @end

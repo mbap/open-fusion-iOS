@@ -13,7 +13,6 @@
 #import "GSFOpenCvImageViewController.h"
 #import "GSFData.h"
 #import "GSFSpinner.h"
-#import "GSFNoiseLevelController.h"
 
 #define SPINNERWIDTH  150
 #define SPINNERHEIGHT 100
@@ -34,7 +33,6 @@
 @property (nonatomic, weak) NSMutableArray *locationMeasurements;
 @property (nonatomic) CLLocation *bestEffort;
 
-@property (nonatomic) GSFNoiseLevelController *noiseMonitor;
 @end
 
 @implementation GSFViewController
@@ -93,14 +91,8 @@
         [self.spinner.spinner startAnimating];
         self.navigationItem.hidesBackButton = YES;
         dispatch_async(hogQueue, ^{
-            if (self.personDetect && !self.faceDetect) {
-                [processor detectPeopleUsingImageArray:self.capturedImages];
-            } else if (self.faceDetect && !self.personDetect) {
-                [processor detectFacesUsingImageArray:self.capturedImages];
-            } else if (self.personDetect && self.faceDetect) {
-                [processor detectPeopleUsingImageArray:self.capturedImages];
-                [processor detectFacesUsingImageArray:self.capturedImages];
-            }
+            [processor detectPeopleUsingImageArray:self.capturedImages];
+            [processor detectFacesUsingImageArray:self.capturedImages];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.spinner.spinner stopAnimating];
                 [self.spinner removeFromSuperview];
@@ -143,13 +135,6 @@
     if ([[self.capturedImages lastObject] isKindOfClass:[GSFData class]]){
         GSFData *data = [self.capturedImages lastObject];
         data.coords = self.bestEffort;
-        
-        // Collect Noise
-        if (self.noiseSwitch) {
-            self.noiseMonitor = [[GSFNoiseLevelController alloc] init];
-            [self.noiseMonitor collectNoise];
-            data.noiseLevel = [NSNumber numberWithDouble:self.noiseMonitor.avgDBInput];
-        }
     }
 }
 
@@ -269,6 +254,7 @@
             [orient addObject:[NSNumber numberWithInt:data.gsfImage.oimage.imageOrientation]];
         }
         controller.originalOrientation = orient;
+        controller.collectedData = self.collectedData;
     }
 }
 
