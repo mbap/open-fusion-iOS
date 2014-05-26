@@ -20,6 +20,8 @@
 
 @property (nonatomic) BOOL apiKeyChecked;
 
+@property (nonatomic) BOOL dataChecked;
+
 @end
 
 @implementation GSFCollectViewController
@@ -45,6 +47,8 @@
         if (![pman validKey:nil forIdentifier:@"apikey"]) {
             // push view controller to get the api key.
             [self.navigationController pushViewController:[[GSFLoginViewController alloc] init] animated:YES];
+        } else if (self.collectedData.count == 0) {
+            [self performSegueWithIdentifier:@"selectionScreen" sender:self];
         }
     }
     self.apiKeyChecked = YES;
