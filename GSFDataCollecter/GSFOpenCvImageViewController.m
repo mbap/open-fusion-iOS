@@ -147,6 +147,7 @@
     [self performSegueWithIdentifier:@"viewLiveDataTable" sender:self];
 }
 
+// out of date since the user interface change however the code still functions correctly.
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if([[segue identifier] isEqualToString:@"viewLiveDataTable"]) {

@@ -44,16 +44,23 @@
     NSMutableDictionary *geometry = [[NSMutableDictionary alloc] init];
     [geometry setObject:@"Point" forKey:@"type"];
     NSMutableArray *temp = [[NSMutableArray alloc] init];
-    [temp addObject:[NSNumber numberWithDouble:gsfdata.coords.coordinate.longitude]];
-    [temp addObject:[NSNumber numberWithDouble:gsfdata.coords.coordinate.latitude]];
-    [geometry setObject:temp forKey:@"coordinates"];
+    
+    if (gsfdata.coords) {
+        [temp addObject:[NSNumber numberWithDouble:gsfdata.coords.coordinate.longitude]];
+        [temp addObject:[NSNumber numberWithDouble:gsfdata.coords.coordinate.latitude]];
+        [geometry setObject:temp forKey:@"coordinates"];
+    }
     [jsonData setObject:geometry forKey:@"geometry"];
     
     NSMutableDictionary *properties = [[NSMutableDictionary alloc] init];
-    [properties setObject:gsfdata.date forKey:@"time"];
-    [properties setObject:[NSNumber numberWithDouble:gsfdata.coords.altitude] forKey:@"altitude"];
-    [properties setObject:[NSNumber numberWithDouble:gsfdata.coords.horizontalAccuracy] forKey:@"h_accuracy"];
-    [properties setObject:[NSNumber numberWithDouble:gsfdata.coords.verticalAccuracy] forKey:@"v_accuracy"];
+    if (gsfdata.date) {
+        [properties setObject:gsfdata.date forKey:@"time"];
+    }
+    if (gsfdata.coords) {
+        [properties setObject:[NSNumber numberWithDouble:gsfdata.coords.altitude] forKey:@"altitude"];
+        [properties setObject:[NSNumber numberWithDouble:gsfdata.coords.horizontalAccuracy] forKey:@"h_accuracy"];
+        [properties setObject:[NSNumber numberWithDouble:gsfdata.coords.verticalAccuracy] forKey:@"v_accuracy"];
+    }
 
     
     if (gsfdata.gsfImage.highResImage) {

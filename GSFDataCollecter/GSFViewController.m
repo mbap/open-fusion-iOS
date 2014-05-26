@@ -134,7 +134,7 @@
     [self.view bringSubviewToFront:self.toolbar];
     if ([[self.capturedImages lastObject] isKindOfClass:[GSFData class]]){
         GSFData *data = [self.capturedImages lastObject];
-        data.coords = self.bestEffort;
+        data.coords = [[CLLocation alloc] initWithCoordinate:self.bestEffort.coordinate altitude:self.bestEffort.altitude horizontalAccuracy:self.bestEffort.horizontalAccuracy verticalAccuracy:self.bestEffort.verticalAccuracy timestamp:self.bestEffort.timestamp];
     }
 }
 
@@ -268,10 +268,6 @@
         [self performSegueWithIdentifier:@"selectorImagePreviewSegue" sender:self];
     }
     
-}
-
-- (IBAction)goToSavedImagesFromStaging:(id)sender {
-    [self performSegueWithIdentifier:@"savedFromStager" sender:self];
 }
 
 // delegate method for image selector.

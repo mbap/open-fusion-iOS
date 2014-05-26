@@ -13,4 +13,9 @@
  */
 @interface GSFCollectViewController : UIViewController
 
+/**
+ *  Array to hold one feature collection of data.
+ */
+@property (nonatomic) NSMutableArray *collectedData;
+
 @end
