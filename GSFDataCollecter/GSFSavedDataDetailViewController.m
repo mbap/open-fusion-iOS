@@ -105,6 +105,31 @@
         [self.validDataStrings addObject:@"View Fullscreen Image"];
     }
     
+    // add face detection number
+    if (self.data.gsfImage.faceDetectionNumber) {
+        [self.validDataStrings addObject:[NSString stringWithFormat:@"Faces: %d detected.", [self.data.gsfImage.faceDetectionNumber intValue]]];
+    }
+    
+    // add person detection number
+    if (self.data.gsfImage.personDetectionNumber) {
+        [self.validDataStrings addObject:[NSString stringWithFormat:@"People: %d detected.", [self.data.gsfImage.personDetectionNumber intValue]]];
+    }
+    
+    // add noiseLevel
+    if (self.data.noiseLevel) {
+        [self.validDataStrings addObject:[NSString stringWithFormat:@"Noise(dB): %f.", [self.data.noiseLevel doubleValue]]];
+    }
+    
+    // add temperature data
+    if (self.data.temp) {
+        [self.validDataStrings addObject:[NSString stringWithFormat:@"Temperture(˚C): %f.", [self.data.temp doubleValue]]];
+    }
+    
+    // add humidity data
+    if (self.data.humidity) {
+        [self.validDataStrings addObject:[NSString stringWithFormat:@"Humidity(%%): %f%%.", [self.data.humidity doubleValue]]];
+    }
+    
     // gps coord string
     if (self.data.coords) {
         __weak CLLocation *coords = self.data.coords;
@@ -131,31 +156,6 @@
     // add vertical accuracy
     if (self.data.coords) {
         [self.validDataStrings addObject:[NSString stringWithFormat:@"V_Acc: %.1f", self.data.coords.verticalAccuracy]];
-    }
-    
-    // add face detection number
-    if (self.data.gsfImage.faceDetectionNumber) {
-        [self.validDataStrings addObject:[NSString stringWithFormat:@"Faces: %d detected.", [self.data.gsfImage.faceDetectionNumber intValue]]];
-    }
-    
-    // add person detection number
-    if (self.data.gsfImage.personDetectionNumber) {
-        [self.validDataStrings addObject:[NSString stringWithFormat:@"People: %d detected.", [self.data.gsfImage.personDetectionNumber intValue]]];
-    }
-    
-    // add noiseLevel
-    if (self.data.noiseLevel) {
-        [self.validDataStrings addObject:[NSString stringWithFormat:@"Noise(dB): %f.", [self.data.noiseLevel doubleValue]]];
-    }
-    
-    // add temperature data
-    if (self.data.temp) {
-        [self.validDataStrings addObject:[NSString stringWithFormat:@"Temperture(˚C): %f.", [self.data.temp doubleValue]]];
-    }
-    
-    // add humidity data
-    if (self.data.humidity) {
-        [self.validDataStrings addObject:[NSString stringWithFormat:@"Humidity(%%): %f%%.", [self.data.humidity doubleValue]]];
     }
 }
 
