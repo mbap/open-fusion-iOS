@@ -10,7 +10,11 @@
 
 @interface GSFLiveDataTableViewController ()
 
+// contains the table strings.
 @property (nonatomic) NSMutableArray *validDataStrings;
+
+// creates the table strings or the details of the data object.
+- (void)createTableStrings;
 
 @end
 
@@ -30,7 +34,7 @@
     [super viewDidLoad];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.validDataStrings = [[NSMutableArray alloc] init];
+    [self createTableStrings];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -42,11 +46,25 @@
 {
     // Return the number of rows in the section.
     // this should be the number of non nil properties in a GSF Geojson object.
+    return self.validDataStrings.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    if (cell == nil) { //create a new cell (only gets called for searchResultsTableView)
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+    }
     
-    // clear the valid strings array so we get fresh data
-    // was having a problem with this function getting called twice duplicating all
-    // the data in the table.
-    [self.validDataStrings removeAllObjects];
+    cell.textLabel.text = [self.validDataStrings objectAtIndex:indexPath.row];
+    
+    return cell;
+}
+
+- (void)createTableStrings
+{
+    // create the strings that go into the table.
+    self.validDataStrings = [[NSMutableArray alloc] init];
     
     // gps coord string
     if (self.data.coords) {
@@ -54,7 +72,7 @@
         NSString *coord = [NSString stringWithFormat:@"GPS: %.4f, %.4f", coords.coordinate.latitude, coords.coordinate.longitude];
         [self.validDataStrings addObject:coord];
     }
-
+    
     // date string
     if (self.data.date) {
         NSString *datestring = @"Date: ";
@@ -100,20 +118,6 @@
     if (self.data.humidity) {
         [self.validDataStrings addObject:[NSString stringWithFormat:@"Humidity(%%): %f%%.", [self.data.humidity doubleValue]]];
     }
-    
-    return self.validDataStrings.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    if (cell == nil) { //create a new cell (only gets called for searchResultsTableView)
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-    }
-    
-    cell.textLabel.text = [self.validDataStrings objectAtIndex:indexPath.row];
-    
-    return cell;
 }
 
 - (void)didReceiveMemoryWarning

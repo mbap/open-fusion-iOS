@@ -27,7 +27,7 @@
 
 @property (nonatomic, weak) GSFData *selectedData;
 
-- (IBAction)discardFeatureCollection:(id)sender;
+- (IBAction)discardFeature:(id)sender;
 
 @end
 
@@ -42,8 +42,8 @@
     // set api key to false;
     self.apiKeyChecked = NO;
     
-    // add custom bar button item
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Discard All" style:UIBarButtonItemStyleBordered target:self action:@selector(discardFeatureCollection:)];
+    // add edit bar button item
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(discardFeature:)];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -64,7 +64,11 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    if (self.collectedData.count) {
+        return 1;
+    } else {
+        return 0;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -90,7 +94,6 @@
     return cell;
 }
 
-
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -98,12 +101,29 @@
     return YES;
 }
 
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return UITableViewCellEditingStyleDelete;
+}
+
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        // delete data from collected data array
+        [self.collectedData removeObjectAtIndex:indexPath.row];
+        
+        [tableView beginUpdates];
+        
+        // delete data from the table.
+        // if only one item in the table we must delete the section as well.
+        if (self.collectedData.count > 0) {
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        } else {
+            [tableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
+        }
+        
+        [tableView endUpdates];
     }
 }
 
@@ -152,6 +172,7 @@
 - (void)checkHttpStatus:(NSInteger)statusCode
 {
     dispatch_async(dispatch_get_main_queue(), ^{
+        [self.collectedData removeAllObjects];
         [self.navigationController popViewControllerAnimated:YES];
     });
 }
@@ -178,16 +199,19 @@
     NSError *error = nil;
     [saveMe writeToURL:[url URLByAppendingPathComponent:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]]] options:NSDataWritingAtomic error:&error];
     if (error) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Problem writing to filesystem. Collection won't be cleared." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
         NSLog(@"Problem writing to filesystem.\n");
     } else {
-        NSLog(@"Write to filesystem succeeded.\n");
+        //NSLog(@"Write to filesystem succeeded.\n");
+        [self.collectedData removeAllObjects];
     }
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (IBAction)discardFeatureCollection:(id)sender
+- (IBAction)discardFeature:(id)sender
 {
-    [self.collectedData removeAllObjects];
+    [self.tableView setEditing:YES animated:YES];
 }
 
 - (void)didReceiveMemoryWarning

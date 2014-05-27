@@ -40,9 +40,6 @@
 // property for the selected section in the custom header view
 @property (nonatomic) NSInteger selectedFeatureSection;
 
-// property for passing the low resolution image to next view.
-@property (weak, nonatomic) UIImage *selectedImage;
-
 // load images into a cache.
 - (void)cacheImages;
 
@@ -76,10 +73,6 @@
     // set datasource and delegate to self.
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    self.tableView.allowsMultipleSelection = YES;
-    
-    // add image for background
-    //self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"transparent.png"]];
         
     NSFileManager *man = [[NSFileManager alloc] init];
     NSArray *urls = [man URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
@@ -144,10 +137,10 @@
         if ([data isKindOfClass:[NSDictionary class]]) {
             if ([[data objectForKey:@"features"] isKindOfClass:[NSArray class]]) {
                 features = [data objectForKey:@"features"];
-                NSMutableArray *images = [[NSMutableArray alloc] init];
+                NSMutableDictionary *images = [[NSMutableDictionary alloc] init];
                 NSString *key = nil;
-                NSUInteger iter = 0;
-                if ([[features objectAtIndex:iter] isKindOfClass:[NSDictionary class]]) {
+                if ([[features objectAtIndex:0] isKindOfClass:[NSDictionary class]]) {
+                    NSUInteger rowiter = 0;
                     for (NSDictionary *feature in features) {
                         if ([[feature objectForKey:@"properties"] isKindOfClass:[NSDictionary class]]) {
                             NSDictionary *properties = [feature objectForKey:@"properties"];
@@ -164,10 +157,11 @@
                                 }
                             }
                             if (image) {
-                                [images addObject:image];
+                                [images setObject:image forKey:[NSString stringWithFormat:@"Row%lu", (unsigned long)rowiter]];
                                 image = nil;
                             }
                         }
+                        rowiter++;
                     }
                     sectioniter++;
                     [self.imageCache setObject:images forKey:key];
@@ -203,8 +197,8 @@
 
 // fills the rows with data from each feature.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"]; // dequeue cell
-    if (cell == nil) { //create a new cell (only gets called for searchResultsTableView)
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
     }
     
@@ -233,10 +227,15 @@
     if ([[feature objectForKey:@"properties"] isKindOfClass:[NSDictionary class]]) {
         NSDictionary *properties = [feature objectForKey:@"properties"];
         cell.textLabel.text = [properties objectForKey:@"time"];
+        
+        if ([properties objectForKey:@"image"]) {
+            NSLog(@"%ld, %ld", (long)indexPath.section, indexPath.row);
+
+            NSDictionary *images = [self.imageCache objectForKey:[NSString stringWithFormat:@"Section%ld", (long)indexPath.section]];
+            cell.imageView.image = [images objectForKey:[NSString stringWithFormat:@"Row%lu", (unsigned long)indexPath.row]];
+        }
     }
     
-    NSArray *images = [self.imageCache objectForKey:[NSString stringWithFormat:@"Section%ld", (long)indexPath.section]];
-    cell.imageView.image = [images objectAtIndex:indexPath.row];
     
     return cell;
 }
@@ -255,10 +254,6 @@
     
     self.selectedFeature = [features objectAtIndex:[indexPath row]]; // get the feature for this row.
     
-    // get selected image as well
-    NSArray *images = [self.imageCache objectForKey:[NSString stringWithFormat:@"Section%ld", (long)indexPath.section]];
-    self.selectedImage = [images objectAtIndex:indexPath.row];
-    
     [self performSegueWithIdentifier:@"viewSavedFileDetails" sender:self];
     
     //Change the selected background view of the cell.
@@ -272,7 +267,6 @@
         // get selected content and pass it to the next controller
         GSFSavedDataDetailViewController *controller = (GSFSavedDataDetailViewController*)segue.destinationViewController;
         controller.feature = self.selectedFeature;
-        controller.thumbnail = self.selectedImage;
     }
 }
 

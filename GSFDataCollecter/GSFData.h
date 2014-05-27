@@ -77,5 +77,13 @@
  */
 + (NSDictionary *)convertGSFDataToDict:(GSFData *)gsfdata;
 
+/**
+ *  Converts a NSDictionary formatted in the GSF Open Fustion format into a GSFData object.
+ *
+ *  @param dict An apple json conformant dictionary containing a GSFData object in JSON form.
+ *
+ *  @return The GSFData object converted from dict. Loses the timestamp data on the coords field but can be reproduced from the data property of a GSFData object in ISO8601 format.
+ */
++ (GSFData *)convertFeatureDictToGSFData:(NSDictionary *)dict;
 
 @end
