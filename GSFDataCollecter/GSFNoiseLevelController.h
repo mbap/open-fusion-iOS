@@ -29,6 +29,7 @@
 @property double avgDBInput;
 @property double peakDBInput;
 @property int audioChangeReason;
+@property BOOL readyToCollect;
 
 // Public fuction prototypes
 - (void) mointorNoise: (BOOL) enable;
