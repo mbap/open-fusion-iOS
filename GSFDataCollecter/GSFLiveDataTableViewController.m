@@ -10,6 +10,8 @@
 
 @interface GSFLiveDataTableViewController ()
 
+@property (nonatomic) NSMutableArray *validDataStrings;
+
 @end
 
 @implementation GSFLiveDataTableViewController
@@ -28,15 +30,8 @@
     [super viewDidLoad];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.validDataStrings = [[NSMutableArray alloc] init];
 }
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-#pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -46,8 +41,67 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    // this should be the number of properties in a GSF Geojson object.
-    return 10;
+    // this should be the number of non nil properties in a GSF Geojson object.
+    
+    // clear the valid strings array so we get fresh data
+    // was having a problem with this function getting called twice duplicating all
+    // the data in the table.
+    [self.validDataStrings removeAllObjects];
+    
+    // gps coord string
+    if (self.data.coords) {
+        __weak CLLocation *coords = self.data.coords;
+        NSString *coord = [NSString stringWithFormat:@"GPS: %.4f, %.4f", coords.coordinate.latitude, coords.coordinate.longitude];
+        [self.validDataStrings addObject:coord];
+    }
+
+    // date string
+    if (self.data.date) {
+        NSString *datestring = @"Date: ";
+        [self.validDataStrings addObject:[datestring stringByAppendingString:self.data.date]];
+    }
+    
+    // add alitude
+    if (self.data.coords) {
+        [self.validDataStrings addObject:[NSString stringWithFormat:@"Altitude: %.2fm", self.data.coords.altitude]];
+    }
+    
+    // add horizontal accuracy
+    if (self.data.coords) {
+        [self.validDataStrings addObject:[NSString stringWithFormat:@"H_Acc: %.1f", self.data.coords.horizontalAccuracy]];
+    }
+    
+    // add vertical accuracy
+    if (self.data.coords) {
+        [self.validDataStrings addObject:[NSString stringWithFormat:@"V_Acc: %.1f", self.data.coords.verticalAccuracy]];
+    }
+    
+    // add face detection number
+    if (self.data.gsfImage.faceDetectionNumber) {
+        [self.validDataStrings addObject:[NSString stringWithFormat:@"Faces: %d detected.", [self.data.gsfImage.faceDetectionNumber intValue]]];
+    }
+    
+    // add person detection number
+    if (self.data.gsfImage.personDetectionNumber) {
+        [self.validDataStrings addObject:[NSString stringWithFormat:@"People: %d detected.", [self.data.gsfImage.personDetectionNumber intValue]]];
+    }
+    
+    // add noiseLevel
+    if (self.data.noiseLevel) {
+        [self.validDataStrings addObject:[NSString stringWithFormat:@"Noise(dB): %f.", [self.data.noiseLevel doubleValue]]];
+    }
+    
+    // add temperature data
+    if (self.data.temp) {
+        [self.validDataStrings addObject:[NSString stringWithFormat:@"Temperture(˚C): %f.", [self.data.temp doubleValue]]];
+    }
+    
+    // add humidity data
+    if (self.data.humidity) {
+        [self.validDataStrings addObject:[NSString stringWithFormat:@"Humidity(%%): %f%%.", [self.data.humidity doubleValue]]];
+    }
+    
+    return self.validDataStrings.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -57,63 +111,15 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
     
-    if (0 == indexPath.row) {
-        // gps coords
-        if (self.data.coords) {
-            __weak CLLocation *coords = self.data.coords;
-            NSString *coord = [[NSString alloc] initWithFormat:@"GPS: %.4f, %.4f", coords.coordinate.latitude, coords.coordinate.longitude];
-            cell.textLabel.text = coord;
-        }
-    } else if(1 == indexPath.row) {
-        // date string
-        if (self.data.date) {
-            NSString *datestring = @"Date: ";
-            cell.textLabel.text = [datestring stringByAppendingString:self.data.date];
-        }
-    } else if (2 == indexPath.row) {
-        if (self.data.coords) {
-            cell.textLabel.text = [[NSString alloc] initWithFormat:@"Altitude: %.2fm", self.data.coords.altitude];
-        }
-    } else if (3 == indexPath.row) {
-        if (self.data.coords) {
-            cell.textLabel.text = [[NSString alloc] initWithFormat:@"H_Acc: %.1f", self.data.coords.horizontalAccuracy];
-        }
-    } else if (4 == indexPath.row) {
-        if (self.data.coords) {
-            cell.textLabel.text = [[NSString alloc] initWithFormat:@"V_Acc: %.1f", self.data.coords.verticalAccuracy];
-        }
-    } else if (5 == indexPath.row) {
-        if (self.data.gsfImage.faceDetectionNumber) {
-            cell.textLabel.text = [[NSString alloc] initWithFormat:@"Faces: %d detected.", [self.data.gsfImage.faceDetectionNumber intValue]];
-        } else {
-            cell.textLabel.text = [[NSString alloc] initWithFormat:@"Faces: n/a."];
-        }
-    } else if (6 == indexPath.row) {
-        if (self.data.gsfImage.personDetectionNumber) {
-            cell.textLabel.text = [[NSString alloc] initWithFormat:@"People: %d detected.", [self.data.gsfImage.personDetectionNumber intValue]];
-        } else {
-            cell.textLabel.text = [[NSString alloc] initWithFormat:@"People: n/a."];
-        }
-    } else if (7 == indexPath.row) {
-        if (self.data.noiseLevel) {
-            cell.textLabel.text = [[NSString alloc] initWithFormat:@"Noise(dB): %f.", [self.data.noiseLevel doubleValue]];
-        } else {
-            cell.textLabel.text = [[NSString alloc] initWithFormat:@"Noise(dB): n/a."];
-        }
-    } else if (8 == indexPath.row) {
-        if (self.data.temp) {
-            cell.textLabel.text = [[NSString alloc] initWithFormat:@"Temperture(˚C): %f.", [self.data.temp doubleValue]];
-        } else {
-            cell.textLabel.text = [[NSString alloc] initWithFormat:@"Temperture(˚C): n/a."];
-        }
-    } else if (9 == indexPath.row) {
-        if (self.data.humidity) {
-            cell.textLabel.text = [[NSString alloc] initWithFormat:@"Humidity(%%): %f%%.", [self.data.humidity doubleValue]];
-        } else {
-            cell.textLabel.text = [[NSString alloc] initWithFormat:@"Humidity(%%): n/a."];
-        }
-    }
+    cell.textLabel.text = [self.validDataStrings objectAtIndex:indexPath.row];
+    
     return cell;
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 @end

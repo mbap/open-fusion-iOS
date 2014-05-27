@@ -61,10 +61,9 @@
         [properties setObject:[NSNumber numberWithDouble:gsfdata.coords.horizontalAccuracy] forKey:@"h_accuracy"];
         [properties setObject:[NSNumber numberWithDouble:gsfdata.coords.verticalAccuracy] forKey:@"v_accuracy"];
     }
-
     
-    if (gsfdata.gsfImage.highResImage) {
-        NSData *imageData = UIImagePNGRepresentation(gsfdata.gsfImage.highResImage);
+    if (gsfdata.gsfImage.oimage) {
+        NSData *imageData = UIImagePNGRepresentation(gsfdata.gsfImage.oimage);
         NSString *imageString = [imageData base64EncodedStringWithOptions:0];
         [properties setObject:imageString forKey:@"image"]; // set image in dict
     }

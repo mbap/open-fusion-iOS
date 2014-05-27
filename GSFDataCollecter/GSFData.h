@@ -71,7 +71,7 @@
 /**
  *  Converts a GSFData Object into a dictionary that is Apple JSON conformant.
  *
- *  @param gsfdata The GSFData object to be converted into a dictionary. Uses both the high resolution and low resolution original images.
+ *  @param gsfdata The GSFData object to be converted into a dictionary. Uses low resolution original images.
  *
  *  @return A Apple JSON conformant dictionary containing a GSFData object.
  */

@@ -13,6 +13,7 @@
 #import "GSFData.h"
 #import "GSFDataTransfer.h"
 #import "GSFProgressView.h"
+#import "GSFLiveDataTableViewController.h"
 
 @interface GSFCollectViewController () <UITableViewDataSource, UITableViewDelegate, GSFDataTransferDelegate>
 
@@ -23,6 +24,8 @@
 @property (nonatomic) BOOL dataChecked;
 
 @property (nonatomic) GSFProgressView *uploadBar;
+
+@property (nonatomic, weak) GSFData *selectedData;
 
 - (IBAction)discardFeatureCollection:(id)sender;
 
@@ -40,8 +43,7 @@
     self.apiKeyChecked = NO;
     
     // add custom bar button item
-    self.navigationItem.hidesBackButton = YES;
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Discard All" style:UIBarButtonItemStyleBordered target:self action:@selector(discardFeatureCollection:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Discard All" style:UIBarButtonItemStyleBordered target:self action:@selector(discardFeatureCollection:)];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -78,7 +80,6 @@
     }
     
     GSFData *data = [self.collectedData objectAtIndex:indexPath.row];
-    NSLog(@"%@", [NSString stringWithFormat:@"%.2f, %.2f", data.coords.coordinate.latitude, data.coords.coordinate.longitude]);
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%.2f, %.2f", data.coords.coordinate.latitude, data.coords.coordinate.longitude];
     cell.textLabel.text = data.date;
     
@@ -106,6 +107,17 @@
     }
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // weakly point to the selected data object that was selected.
+    self.selectedData = [self.collectedData objectAtIndex:indexPath.row];
+    
+    // perform segue to the live data table to view details.
+    [self performSegueWithIdentifier:@"mainStagingDetails" sender:self];
+    
+    //Change the selected background view of the cell.
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
 
 - (IBAction)collectNewData:(id)sender
 {
@@ -117,6 +129,9 @@
     if ([[segue identifier] isEqualToString:@"selectionScreen"]) {
         GSFDataSelectionViewController *child = (GSFDataSelectionViewController *)segue.destinationViewController;
         child.collectedData = self.collectedData;
+    } else if ([[segue identifier] isEqualToString:@"mainStagingDetails"]) {
+        GSFLiveDataTableViewController *child = (GSFLiveDataTableViewController *)segue.destinationViewController;
+        child.data = self.selectedData;
     }
 }
 
@@ -172,7 +187,7 @@
 
 - (IBAction)discardFeatureCollection:(id)sender
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.collectedData removeAllObjects];
 }
 
 - (void)didReceiveMemoryWarning

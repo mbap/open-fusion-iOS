@@ -615,6 +615,7 @@
                     <connections>
                         <outlet property="tableView" destination="5VX-lv-f5p" id="uJv-iC-PUI"/>
                         <segue destination="JK7-bY-yaG" kind="push" identifier="selectionScreen" id="Fd6-jc-dm1"/>
+                        <segue destination="otg-eY-9VU" kind="push" identifier="mainStagingDetails" id="ENa-cf-wB5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gz0-ri-Ko1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -645,4 +646,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="mXL-l7-PAc"/>
+    </inferredMetricsTieBreakers>
 </document>

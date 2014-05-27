@@ -16,6 +16,6 @@
 /**
  *  Array to hold one feature collection of data.
  */
-@property (nonatomic) NSMutableArray *collectedData;
+@property (nonatomic, weak) NSMutableArray *collectedData;
 
 @end

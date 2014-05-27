@@ -21,6 +21,7 @@
 		96278791192D803A00535DBD /* collect5.png in Resources */ = {isa = PBXBuildFile; fileRef = 9627878E192D803A00535DBD /* collect5.png */; };
 		9628237A190082BA00ABA86E /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 96282379190082BA00ABA86E /* GoogleMaps.bundle */; };
 		9628237C190082CB00ABA86E /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9628237B190082CB00ABA86E /* GoogleMaps.framework */; };
+		963730301933F78500F815B0 /* GSFGeoTagger.m in Sources */ = {isa = PBXBuildFile; fileRef = 9637302F1933F78500F815B0 /* GSFGeoTagger.m */; };
 		964F0B74190DB7AF0007464A /* GSFOpenCVPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 964F0B73190DB7AF0007464A /* GSFOpenCVPageViewController.m */; };
 		96546A2018F2327A003F8BBB /* GSFProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96546A1F18F2327A003F8BBB /* GSFProgressView.m */; };
 		9658DB8C192FF43D00A70655 /* GSFCreds.m in Sources */ = {isa = PBXBuildFile; fileRef = 9658DB8B192FF43D00A70655 /* GSFCreds.m */; };
@@ -145,6 +146,8 @@
 		9627878E192D803A00535DBD /* collect5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = collect5.png; sourceTree = "<group>"; };
 		96282379190082BA00ABA86E /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GoogleMaps.bundle; sourceTree = "<group>"; };
 		9628237B190082CB00ABA86E /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
+		9637302E1933F78500F815B0 /* GSFGeoTagger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFGeoTagger.h; sourceTree = "<group>"; };
+		9637302F1933F78500F815B0 /* GSFGeoTagger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFGeoTagger.m; sourceTree = "<group>"; };
 		964F0B72190DB7AF0007464A /* GSFOpenCVPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFOpenCVPageViewController.h; sourceTree = "<group>"; };
 		964F0B73190DB7AF0007464A /* GSFOpenCVPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFOpenCVPageViewController.m; sourceTree = "<group>"; };
 		96546A1E18F2327A003F8BBB /* GSFProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFProgressView.h; sourceTree = "<group>"; };
@@ -397,6 +400,8 @@
 				D3D78070189996FE00E5AB50 /* GSFOpenCvImageProcessor.mm */,
 				D3CBA3EE1928332C0091966D /* GSFLiveDataTableViewController.h */,
 				D3CBA3EF1928332C0091966D /* GSFLiveDataTableViewController.m */,
+				9637302E1933F78500F815B0 /* GSFGeoTagger.h */,
+				9637302F1933F78500F815B0 /* GSFGeoTagger.m */,
 			);
 			name = "Data Collection";
 			sourceTree = "<group>";
@@ -765,6 +770,7 @@
 				964F0B74190DB7AF0007464A /* GSFOpenCVPageViewController.m in Sources */,
 				96F52DB018CFE08500684E64 /* GSFTableButton.m in Sources */,
 				D312C5CE18D6870300B8641A /* UYLPasswordManager.m in Sources */,
+				963730301933F78500F815B0 /* GSFGeoTagger.m in Sources */,
 				96546A2018F2327A003F8BBB /* GSFProgressView.m in Sources */,
 				96FCA62418CAD0B000BC01A1 /* GSFSavedDataViewController.m in Sources */,
 				D3D7807F18A0416400E5AB50 /* GSFTaggedVCViewController.m in Sources */,

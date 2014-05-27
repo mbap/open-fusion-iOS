@@ -19,6 +19,9 @@
 
 - (IBAction)buttonPressed:(id)sender;
 
+// by having the data allocated in this view the user cannot accidentally delete the feature collection they are working on if they hit the back button.
+@property (nonatomic) NSMutableArray *collectedData;
+
 @end
 
 @implementation GSFRootViewController
@@ -66,8 +69,10 @@
         GSFMainViewButton *button = (GSFMainViewButton *)sender;
         if (0 == button.row) {
             GSFCollectViewController *staging = [self.storyboard instantiateViewControllerWithIdentifier:@"collectStagingArea"];
-            staging.collectedData = nil;
-            staging.collectedData = [[NSMutableArray alloc] init];
+            if (self.collectedData == nil) {
+                self.collectedData = [[NSMutableArray alloc] init];
+            }
+            staging.collectedData = self.collectedData;
             GSFDataSelectionViewController *buttons = [self.storyboard instantiateViewControllerWithIdentifier:@"collectButtonsArea"];
             buttons.collectedData = staging.collectedData;
             [self.navigationController pushViewController:staging animated:NO];
