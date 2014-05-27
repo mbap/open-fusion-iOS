@@ -30,16 +30,21 @@
 /**
  *  Contains the original data or the images taken by the user.
  */
-@property (nonatomic) NSMutableArray *originalData;
+@property (weak, nonatomic) NSMutableArray *originalData;
 
 /**
  *  Contains the original orientations of all images.
  */
-@property (nonatomic) NSMutableArray *originalOrientation;
+@property (weak, nonatomic) NSMutableArray *originalOrientation;
 
 /**
  *  The delegate object.
  */
 @property (nonatomic, weak) id <GSFOpenCvImageViewControllerDelegate> delegate2;
+
+/**
+ *
+ */
+@property (nonatomic, weak) NSMutableArray *collectedData;
 
 @end

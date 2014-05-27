@@ -13,9 +13,6 @@
 - (GSFImage*)initWithImage:(UIImage*)image
 {
     self.oimage = image;
-    
-    // create hard copy of the image that will remain unchanged.
-    self.highResImage = [UIImage imageWithCGImage:image.CGImage];
     return self;
 }
 

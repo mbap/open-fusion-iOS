@@ -18,9 +18,4 @@
  */
 @property (weak, nonatomic) NSDictionary *feature;
 
-/**
- *  The small resolution image thumbnail.
- */
-@property (weak, nonatomic) UIImage *thumbnail;
-
 @end

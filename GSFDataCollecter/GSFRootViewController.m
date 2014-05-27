@@ -10,12 +10,17 @@
 #import "GSFMainViewButton.h"
 #import "GSFDataTransfer.h"
 #import "GSFGMapViewController.h"
+#import "GSFCollectViewController.h"
+#import "GSFDataSelectionViewController.h"
 
 @interface GSFRootViewController () <GSFDataTransferDelegate>
 
 @property (nonatomic) NSDictionary *mapData;
 
 - (IBAction)buttonPressed:(id)sender;
+
+// by having the data allocated in this view the user cannot accidentally delete the feature collection they are working on if they hit the back button.
+@property (nonatomic) NSMutableArray *collectedData;
 
 @end
 
@@ -63,7 +68,15 @@
     if ([sender isKindOfClass:[GSFMainViewButton class]]) {
         GSFMainViewButton *button = (GSFMainViewButton *)sender;
         if (0 == button.row) {
-            [self performSegueWithIdentifier:@"rootCollect" sender:self];
+            GSFCollectViewController *staging = [self.storyboard instantiateViewControllerWithIdentifier:@"collectStagingArea"];
+            if (self.collectedData == nil) {
+                self.collectedData = [[NSMutableArray alloc] init];
+            }
+            staging.collectedData = self.collectedData;
+            GSFDataSelectionViewController *buttons = [self.storyboard instantiateViewControllerWithIdentifier:@"collectButtonsArea"];
+            buttons.collectedData = staging.collectedData;
+            [self.navigationController pushViewController:staging animated:NO];
+            [self.navigationController pushViewController:buttons animated:YES];
         } else if (1 == button.row) {
             [self performSegueWithIdentifier:@"rootSaved" sender:self];
         } else if (2 == button.row) {

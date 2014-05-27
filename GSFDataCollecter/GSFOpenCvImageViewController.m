@@ -7,20 +7,19 @@
 //
 
 #import "GSFOpenCvImageViewController.h"
+#import "GSFData.h"
 #import "GSFImage.h"
-#import "GSFDataTransfer.h"
 #import "GSFOpenCVPageViewController.h"
 #import "GSFLiveDataTableViewController.h"
-#import "GSFProgressView.h"
+#import "GSFCollectViewController.h"
 
-@interface GSFOpenCvImageViewController () <NSURLSessionTaskDelegate, NSURLSessionDelegate, UIActionSheetDelegate, UIPageViewControllerDataSource, UIPageViewControllerDelegate, GSFOpenCVPageViewControllerDelegate, GSFDataTransferDelegate>
+@interface GSFOpenCvImageViewController () <UIPageViewControllerDataSource, UIPageViewControllerDelegate, GSFOpenCVPageViewControllerDelegate>
 
 // properties of the page controller;
 @property (nonatomic) NSMutableArray *cvImages;
 @property (nonatomic) NSMutableArray *cvNums;
 @property (nonatomic) NSUInteger index;
 @property (nonatomic) NSArray *vcs;
-@property (nonatomic) GSFProgressView *uploadBar;
 
 @end
 
@@ -109,32 +108,17 @@
     return 0;
 }
 
-- (void)sendData
+- (void)doneModifyingResults
 {
-    UIActionSheet *menu = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Discard", @"Send Original(s)", nil];
-    [menu showInView:self.view];
-}
-
-- (void)saveData
-{
-    GSFDataTransfer *driver = [[GSFDataTransfer alloc] init];
-    NSData *saveMe = [driver formatDataAsJSON:self.originalData];
-    NSFileManager *man = [[NSFileManager alloc] init];
-    NSArray *urls = [man URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
-    NSURL *url = [urls objectAtIndex:0];
-    url = [url URLByAppendingPathComponent:@"GSFSaveData"];
-    NSLog(@"%@", [url URLByAppendingPathComponent:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]]]);
-    NSError *error = nil;
-    [saveMe writeToURL:[url URLByAppendingPathComponent:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]]] options:NSDataWritingAtomic error:&error];
-    if (error) {
-        NSLog(@"Problem writing to filesystem.\n");
-    } else {
-        NSLog(@"Write to filesystem succeeded.\n");
+    for (GSFData *data in self.originalData) {
+        [self.collectedData addObject:data];
     }
-    if ([self.delegate2 respondsToSelector:@selector(resetDataCollections)]) {
-        [self.delegate2 resetDataCollections];
+    NSArray *viewControllers = [[self navigationController] viewControllers];
+    for(id view in viewControllers){
+        if([view isKindOfClass:[GSFCollectViewController class]]){
+            [[self navigationController] popToViewController:view animated:YES];
+        }
     }
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)updateResult:(NSNumber *)update atIndex:(NSUInteger)index
@@ -157,52 +141,13 @@
     }
 }
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (0 == buttonIndex) {
-        [self.navigationController popViewControllerAnimated:YES];
-    } else if (2 == buttonIndex) {
-        // do nothing
-    } else {
-        // send data.
-        __block GSFDataTransfer *driver = [[GSFDataTransfer alloc] init];
-        driver.delegate = self;
-        self.uploadBar = [[GSFProgressView alloc] init];
-        [self.view addSubview:self.uploadBar];
-        [self.view bringSubviewToFront:self.uploadBar];
-        dispatch_queue_t networkQueue = dispatch_queue_create("networkQueue", NULL);
-        dispatch_async(networkQueue, ^{
-            [driver uploadDataArray:[driver formatDataAsJSON:self.originalData]];
-        });
-    }
-}
-
-- (void)checkHttpStatus:(NSInteger)statusCode
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if ([self.delegate2 respondsToSelector:@selector(resetDataCollections)]) {
-            [self.delegate2 resetDataCollections];
-        }
-        [self.navigationController popViewControllerAnimated:YES];
-    });
-}
-
-// delegate method that provides data for the upload progres view indicator.
-- (void)uploadPercentage:(float)percent
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.uploadBar.progressBar setProgress:percent animated:YES];
-        NSString *percentage = [NSString stringWithFormat:@"Uploading: %.1f%%", percent*100];
-        [self.uploadBar setLabelText:percentage];
-    });
-}
-
 
 - (IBAction)viewLiveDataTable:(id)sender
 {
     [self performSegueWithIdentifier:@"viewLiveDataTable" sender:self];
 }
 
+// out of date since the user interface change however the code still functions correctly.
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if([[segue identifier] isEqualToString:@"viewLiveDataTable"]) {
