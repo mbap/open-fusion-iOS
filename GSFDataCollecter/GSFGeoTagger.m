@@ -12,7 +12,7 @@
 
 @property (nonatomic) CLLocationManager *locationManager;
 
-@property (nonatomic, weak) NSMutableArray *locationMeasurements;
+@property (nonatomic) NSMutableArray *locationMeasurements;
 
 @end
 
@@ -30,6 +30,8 @@
         
         // select accuracy for the gps. we can go even higher in accuracy.
         self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+        
+        self.locationMeasurements = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -72,13 +74,13 @@
     // test the age of the location measurement to determine if the measurement is cached
     // in most cases you will not want to rely on cached measurements
     NSTimeInterval locationAge = -[newLocation.timestamp timeIntervalSinceNow];
-    
+    NSLog(@"%f", locationAge);
     if (locationAge > 5.0) return;
+    
     // test that the horizontal accuracy does not indicate an invalid measurement
-    
     if (newLocation.horizontalAccuracy < 0) return;
-    // test the measurement to see if it is more accurate than the previous measurement
     
+    // test the measurement to see if it is more accurate than the previous measurement
     if (self.bestEffort == nil || self.bestEffort.horizontalAccuracy > newLocation.horizontalAccuracy) {
         // store the location as the "best effort"
         self.bestEffort = newLocation;
@@ -91,7 +93,19 @@
         if (newLocation.horizontalAccuracy <= self.locationManager.desiredAccuracy) {
             [self stopUpdatingGeoTagger];
         }
+    } else if (self.bestEffort != nil && self.locationMeasurements.count > 5) {
+        [self stopUpdatingGeoTagger];
     }
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    NSLog(@"%@", error);
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFinishDeferredUpdatesWithError:(NSError *)error
+{
+    NSLog(@"%@", error);
 }
 
 @end

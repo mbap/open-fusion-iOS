@@ -11,6 +11,8 @@
 
 @protocol GSFGeoTaggerDelegate <NSObject>
 
+@optional
+
 /**
  *  Delegate method to send a message when the location manager stops updating, thus having completed gathering coordinates.
  *
