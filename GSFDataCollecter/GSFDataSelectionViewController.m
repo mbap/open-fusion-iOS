@@ -13,6 +13,8 @@
 #import "GSFData.h"
 #import "GSFGeoTagger.h"
 #import "GSFSpinner.h"
+#import "GSFAmbientNoiseViewController.h"
+#import "GSFSensorViewController.h"
 
 #define SPINNERWIDTH  150
 #define SPINNERHEIGHT 100
@@ -22,7 +24,6 @@
 - (IBAction)buttonPressed:(id)sender;
 
 @property (nonatomic) GSFGeoTagger *geoTagger;
-
 @property (nonatomic) GSFSpinner *spinner;
 
 @end
@@ -71,23 +72,12 @@
     if ([sender isKindOfClass:[GSFMainViewButton class]]) {
         GSFMainViewButton *button = (GSFMainViewButton *)sender;
         if (0 == button.row) {
-            if (self.spinner == nil) {
-                [self performSegueWithIdentifier:@"cameraSelection" sender:self];
-            }
+            [self performSegueWithIdentifier:@"cameraSelection" sender:self];
         } else if (1 == button.row) {
-            if (self.geoTagger == nil) {
-                self.geoTagger = [[GSFGeoTagger alloc] init];
-                self.geoTagger.delegate = self;
-                [self.geoTagger startUpdatingGeoTagger];
-                self.spinner = [[GSFSpinner alloc] init];
-                [self.spinner setLabelText:@"Collecting..."];
-                [self.view addSubview:self.spinner];
-                [self.view bringSubviewToFront:self.spinner];
-                [self.spinner.spinner startAnimating];
-            }
-        } /*else if (2 == button.row) {
-            [self performSegueWithIdentifier:@"" sender:self];
-        }*/
+            [self performSegueWithIdentifier:@"soundSelection" sender:self];
+        } else if (2 == button.row) {
+            [self performSegueWithIdentifier:@"pluggableSelection" sender:self];
+        }
     }
 }
 
@@ -97,40 +87,13 @@
     if ([[segue identifier] isEqualToString:@"cameraSelection"]) {
         GSFViewController *child = (GSFViewController *)segue.destinationViewController;
         child.collectedData = self.collectedData;
-    } /*else if ([[segue identifier] isEqualToString:@""]) {
-        GSFDataSelectionViewController *child = (GSFDataSelectionViewController *)segue.destinationViewController;
-        child.collectData = self.collectedData;
+    } else if ([[segue identifier] isEqualToString:@"soundSelection"]) {
+        GSFAmbientNoiseViewController *child = (GSFAmbientNoiseViewController *)segue.destinationViewController;
+        child.collectedData = self.collectedData;
+    } else if ([[segue identifier] isEqualToString:@"pluggableSelection"]) {
+        GSFSensorViewController *child = (GSFSensorViewController *)segue.destinationViewController;
+        child.collectedData = self.collectedData;
     }
-     */
-}
-
-- (void)gpsLocationHasBeenCollected:(CLLocation *)coords
-{
-    // Collect Noise
-    GSFNoiseLevelController *noiseCtrl = [[GSFNoiseLevelController alloc] init];
-    [noiseCtrl collectNoise];
-    GSFData *data = [[GSFData alloc] init];
-    data.noiseLevel = [NSNumber numberWithDouble:noiseCtrl.avgDBInput];
-    
-    // geo tag the data.
-    data.coords = [[CLLocation alloc] initWithCoordinate:coords.coordinate altitude:coords.altitude horizontalAccuracy:coords.horizontalAccuracy verticalAccuracy:coords.verticalAccuracy timestamp:coords.timestamp];
-    
-    // timestamp the data.
-    [data convertToISO8601:data.coords];
-    
-    // add it to the feature collection.
-    [self.collectedData addObject:data];
-    
-    //clean up
-    self.geoTagger.delegate = nil;
-    self.geoTagger = nil;
-    noiseCtrl = nil;
-    [self.spinner.spinner stopAnimating];
-    [self.spinner removeFromSuperview];
-    self.spinner = nil;
-    
-    // pop the view off.
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="scr-AU-pHu">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="scr-AU-pHu">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -106,6 +106,62 @@
             </objects>
             <point key="canvasLocation" x="696" y="191"/>
         </scene>
+        <!--Ambient Noise View Controller - Ambient Noise Results-->
+        <scene sceneID="PtP-jP-O3M">
+            <objects>
+                <viewController id="6JT-Sd-DSI" customClass="GSFAmbientNoiseViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="sht-7G-kfU"/>
+                        <viewControllerLayoutGuide type="bottom" id="GLQ-qH-mjg"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ApJ-zi-y3b">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Peak Noise Level (dBm):" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5vx-dy-fez">
+                                <rect key="frame" x="12" y="155" width="188" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Avg Noise Level (dBm):" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hlo-Wf-OF5">
+                                <rect key="frame" x="22" y="198" width="178" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="N/A" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cxw-3b-3ib">
+                                <rect key="frame" x="208" y="155" width="75" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="N/A" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YDZ-XZ-fF7">
+                                <rect key="frame" x="208" y="198" width="75" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <toolbarItems>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Sm8-0B-OlC"/>
+                        <barButtonItem title="Done" id="ain-Av-O3g"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="3m9-sF-Q4M"/>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="Ambient Noise Results" id="GKk-Sl-g3C"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="avgDBLabel" destination="YDZ-XZ-fF7" id="NzZ-xn-ZzJ"/>
+                        <outlet property="peakDBLabel" destination="cxw-3b-3ib" id="PF8-iW-Xuh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qKu-0R-9hl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="696" y="929"/>
+        </scene>
         <!--Open Cv Image View Controller - Results-->
         <scene sceneID="djJ-6L-veC">
             <objects>
@@ -164,6 +220,61 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="89V-S5-eUP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1748" y="929"/>
+        </scene>
+        <!--Sensor View Controller - Climate Sensor Results-->
+        <scene sceneID="r1c-gl-DHh">
+            <objects>
+                <viewController id="C1O-5H-iMO" customClass="GSFSensorViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Plh-cM-6dI"/>
+                        <viewControllerLayoutGuide type="bottom" id="OlI-WN-ktf"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="rfb-nW-j3O">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Humidity (%):" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KNl-gb-sii">
+                                <rect key="frame" x="55" y="128" width="104" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Temprature (˚C):" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="96t-N2-I1o">
+                                <rect key="frame" x="37" y="173" width="122" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="N/A" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I09-Eo-PME">
+                                <rect key="frame" x="167" y="128" width="72" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="N/A" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rEF-VP-aoa">
+                                <rect key="frame" x="167" y="173" width="72" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <toolbarItems>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="9Bb-5e-PEI"/>
+                        <barButtonItem title="Done" id="FUE-w8-fsR"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="gny-C0-Jan"/>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="Climate Sensor Results" id="Qfw-VL-5nd"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="humidityLabel" destination="I09-Eo-PME" id="k2H-Yy-Uf8"/>
+                        <outlet property="tempratureLabel" destination="rEF-VP-aoa" id="iYx-sl-wS1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kW1-YE-6M0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="696" y="1574"/>
         </scene>
         <!--OpenCV Page View Controller-->
         <scene sceneID="tk6-fY-PWh">
@@ -449,6 +560,8 @@
                     <navigationItem key="navigationItem" title="Data Selection" id="trD-iR-TdK"/>
                     <connections>
                         <segue destination="HvR-I5-gkG" kind="push" identifier="cameraSelection" id="8Jq-ae-hYE"/>
+                        <segue destination="6JT-Sd-DSI" kind="push" identifier="soundSelection" id="hET-YN-dXy"/>
+                        <segue destination="C1O-5H-iMO" kind="push" identifier="pluggableSelection" id="PEs-oP-0wN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T1E-fa-F74" userLabel="First Responder" sceneMemberID="firstResponder"/>
