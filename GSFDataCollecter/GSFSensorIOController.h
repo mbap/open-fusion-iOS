@@ -33,6 +33,7 @@
 @property SDCAlertView *sensorAlert;
 @property (nonatomic, strong) UISlider *volumeSlider;
 @property (nonatomic) int audioChangeReason;
+@property BOOL audioSetup;
 
 // Public function prototypes
 - (id) initWithView: (UIView *) view;       // Initializes sensor object. Takes the calling UIViews view for alert messages

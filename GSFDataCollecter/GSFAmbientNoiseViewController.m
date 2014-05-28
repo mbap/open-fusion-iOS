@@ -44,6 +44,7 @@
     
     self.ambientNoise = [[GSFNoiseLevelController alloc] init];
     [self.ambientNoise checkAudioStatus];
+    [self.ambientNoise mointorNoise:YES];
     
     self.geoTagger = [[GSFGeoTagger alloc] initWithAccuracy:kCLLocationAccuracyHundredMeters];
     self.geoTagger.delegate = self;
@@ -59,8 +60,8 @@
 - (void)gpsLocationHasBeenCollected:(CLLocation *)coords {
     // Collect Noise
     [self.spinner setLabelText:@"Collecting..."];
-    [self.ambientNoise mointorNoise:YES];
     [self.ambientNoise collectNoise];
+    
     GSFData *data = [[GSFData alloc] init];
     data.noiseLevel = [NSNumber numberWithDouble:self.ambientNoise.avgDBInput];
     
@@ -86,6 +87,16 @@
 }
 
 - (void) popVCNoiseLevel: (GSFNoiseLevelController *) noiseLevelController {
+    [self.ambientNoise mointorNoise:NO];
+    self.ambientNoise = nil;
+    
+    if (self.geoTagger != nil) {
+        self.geoTagger = nil;
+    }
+    if (self.spinner != nil) {
+        self.spinner = nil;
+    }
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 

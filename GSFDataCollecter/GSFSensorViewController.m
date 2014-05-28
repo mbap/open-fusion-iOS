@@ -18,7 +18,6 @@
 @property (nonatomic) GSFSpinner *spinner;
 @property GSFSensorIOController *sensorIO;
 @property NSMutableArray *data;
-@property BOOL collectionFinished;
 @property CLLocation *coords;
 
 // View
@@ -43,7 +42,6 @@
     [super viewDidLoad];
     
     self.data = [[NSMutableArray alloc]init];
-    self.collectionFinished = false;
     
     // Intialize pluggable sensor collection object
     self.sensorIO = [[GSFSensorIOController alloc] initWithView:self.view];
@@ -51,9 +49,6 @@
     // Assign delegates
     self.sensorIO.collectionDelegate = self;
     self.sensorIO.popVCSensorIODelegate = self;
-    
-    // Start collection
-    [self.sensorIO monitorSensors:YES];
     
     // Grab location
     self.geoTagger = [[GSFGeoTagger alloc] initWithAccuracy:kCLLocationAccuracyHundredMeters];
@@ -76,20 +71,18 @@
 - (void) stopAudio {
     // Stop collection
     [self.sensorIO monitorSensors:NO];
-    //if (!self.collectionFinished) {
-        self.collectionFinished = true;
-        // Grab collected sensor data
-        self.data = self.sensorIO.collectSensorData;
-        
-        // Display data
-        if ([self.data count] != 0) {
-            self.humidityLabel.text = [NSString stringWithFormat:@"%@", self.data[0]];
-            self.tempratureLabel.text = [NSString stringWithFormat:@"%@", self.data[1]];
-        } else {
-            self.humidityLabel.text = @"N/A";
-            self.tempratureLabel.text = @"N/A";
-        }
-    //}
+    
+    // Grab collected sensor data
+    self.data = self.sensorIO.collectSensorData;
+    
+    // Display data
+    if ([self.data count] != 0) {
+        self.humidityLabel.text = [NSString stringWithFormat:@"%@", self.data[0]];
+        self.tempratureLabel.text = [NSString stringWithFormat:@"%@", self.data[1]];
+    } else {
+        self.humidityLabel.text = @"N/A";
+        self.tempratureLabel.text = @"N/A";
+    }
     
     GSFData *data = [[GSFData alloc] init];
     data.humidity = self.data[0];
@@ -112,48 +105,33 @@
 
 - (void)gpsLocationHasBeenCollected:(CLLocation *)coords {
     [self.spinner setLabelText:@"Collecting..."];
-    /*GSFData *data = [[GSFData alloc] init];
-    
-    if (!self.collectionFinished) {
-        self.collectionFinished = true;
-        // Grab collected sensor data
-        self.data = self.sensorIO.collectSensorData;
-        
-        // Display data
-        if ([self.data count] != 0) {
-            self.humidityLabel.text = [NSString stringWithFormat:@"%@", self.data[0]];
-            self.tempratureLabel.text = [NSString stringWithFormat:@"%@", self.data[1]];
-        } else {
-            self.humidityLabel.text = @"N/A";
-            self.tempratureLabel.text = @"N/A";
-        }
-    }
-    
-    // Place collected humidity and temprature data in data structure
-    data.humidity = self.data[0];
-    data.temp = self.data[1];
-    
-    // geo tag the data.
-    data.coords = [[CLLocation alloc] initWithCoordinate:coords.coordinate altitude:coords.altitude horizontalAccuracy:coords.horizontalAccuracy verticalAccuracy:coords.verticalAccuracy timestamp:coords.timestamp];
-    
-    // timestamp the data.
-    [data convertToISO8601:data.coords];
-    
-    // add it to the feature collection.
-    [self.collectedData addObject:data];
-    */
     
     self.coords = [[CLLocation alloc] initWithCoordinate:coords.coordinate altitude:coords.altitude horizontalAccuracy:coords.horizontalAccuracy verticalAccuracy:coords.verticalAccuracy timestamp:coords.timestamp];
     
     //clean up
     self.geoTagger.delegate = nil;
     self.geoTagger = nil;
-/*    [self.spinner.spinner stopAnimating];
-    [self.spinner removeFromSuperview];
-    self.spinner = nil;*/
+    
+    // Start collection
+    [self.sensorIO monitorSensors:YES];
 }
 
 - (IBAction)sensorDoneButtonPushed:(id)sender {
+    [self.sensorIO monitorSensors:NO];
+    if (self.sensorIO != nil) {
+        self.sensorIO = nil;
+    }
+    
+    if (self.sensorIO != nil) {
+        self.geoTagger = nil;
+    }
+    if (self.sensorIO != nil) {
+        self.spinner = nil;
+    }
+    if (self.sensorIO != nil) {
+        self.data = nil;
+    }
+    
     NSArray *viewControllers = [[self navigationController] viewControllers];
     for(id view in viewControllers){
         if([view isKindOfClass:[GSFCollectViewController class]]){
@@ -163,6 +141,20 @@
 }
 
 - (void) popVCSensorIO: (GSFSensorIOController *) sensorIOController {
+    [self.sensorIO monitorSensors:NO];
+    if (self.sensorIO != nil) {
+        self.sensorIO = nil;
+    }
+    
+    if (self.sensorIO != nil) {
+        self.geoTagger = nil;
+    }
+    if (self.sensorIO != nil) {
+        self.spinner = nil;
+    }
+    if (self.sensorIO != nil) {
+        self.data = nil;
+    }
     [self.navigationController popViewControllerAnimated:YES];
 }
 

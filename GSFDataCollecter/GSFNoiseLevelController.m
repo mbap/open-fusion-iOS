@@ -8,6 +8,20 @@
 
 #import "GSFNoiseLevelController.h"
 
+@interface GSFNoiseLevelController ()
+
+// Private variables
+@property AVAudioRecorder *noiseRecorder;
+@property AVAudioSession *noiseAudioSession;
+
+@property int audioChangeReason;
+@property BOOL readyToCollect;
+
+- (BOOL) isSensorConnected;
+- (void) addAlertViewToView:(NSInteger) changeReason;
+
+@end
+    
 @implementation GSFNoiseLevelController
 
 - (id) initWithView :(UIView *) view {
@@ -27,24 +41,24 @@
                                AVEncoderAudioQualityKey,
                                nil];
     NSError *err;
-    noiseRecorder = [[AVAudioRecorder alloc] initWithURL:url settings:settings error:&err];
+    self.noiseRecorder = [[AVAudioRecorder alloc] initWithURL:url settings:settings error:&err];
     
-    if (noiseRecorder) {
-        [noiseRecorder prepareToRecord];
-        noiseRecorder.meteringEnabled = YES;
-        [noiseRecorder record];
+    if (self.noiseRecorder) {
+        [self.noiseRecorder prepareToRecord];
+        self.noiseRecorder.meteringEnabled = YES;
+        [self.noiseRecorder record];
     } else
         NSLog(@"%@",[err description]);
     
     // Set up AVAudioSession
-    self->noiseAudioSession = [AVAudioSession sharedInstance];
+    self.noiseAudioSession = [AVAudioSession sharedInstance];
     BOOL success;
     NSError *error;
     
-    success = [self->noiseAudioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
+    success = [self.noiseAudioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
 	if (!success) NSLog(@"ERROR initNoiseRecorder: AVAudioSession failed overrideOutputAudio- %@", error);
     
-    success = [self->noiseAudioSession setActive:YES error:&error];
+    success = [self.noiseAudioSession setActive:YES error:&error];
     if (!success) NSLog(@"ERROR initNoiseRecorder: AVAudioSession failed activating- %@", error);
     
     // Init audio route change reason
@@ -59,7 +73,7 @@
 - (void) startNoiseRecorder {
     BOOL success;
     NSError *error;
-    success = [self->noiseAudioSession setActive:YES error:&error];
+    success = [self.noiseAudioSession setActive:YES error:&error];
     if (!success) NSLog(@"ERROR startNoiseRecorder: AVAudioSession failed activating- %@", error);
 }
 
@@ -255,11 +269,11 @@
 - (void) collectNoise {
     if (self.readyToCollect) {
         // Grab current noise levels
-        [noiseRecorder updateMeters];
+        [self.noiseRecorder updateMeters];
     
         // Set current avg and peak dB levels
-        self.avgDBInput = [noiseRecorder averagePowerForChannel:0];
-        self.peakDBInput = [noiseRecorder peakPowerForChannel:0];
+        self.avgDBInput = [self.noiseRecorder averagePowerForChannel:0];
+        self.peakDBInput = [self.noiseRecorder peakPowerForChannel:0];
     }
 }
 

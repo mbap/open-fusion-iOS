@@ -25,18 +25,12 @@
 
 @end
 
-@interface GSFNoiseLevelController : NSObject{
-    // Private variables
-    AVAudioRecorder *noiseRecorder;
-    AVAudioSession *noiseAudioSession;
-}
+@interface GSFNoiseLevelController : NSObject
 
 // Public control properties
 @property SDCAlertView* removeSensorAlert;
 @property double avgDBInput;
 @property double peakDBInput;
-@property int audioChangeReason;
-@property BOOL readyToCollect;
 
 @property UIView *associatedView;               // *** View for ONE view alert system ***
 
@@ -45,8 +39,6 @@
 - (void) mointorNoise: (BOOL) enable;
 - (void) collectNoise;
 - (void) checkAudioStatus;
-- (BOOL) isSensorConnected;
-- (void) addAlertViewToView:(NSInteger) changeReason;
 
 // Delegate to pop viewcontroller when an alert occurs
 @property (nonatomic, weak) id popVCNoiseLevelDelegate;
