@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B0EDE8319351F0A009B0317 /* GSFSensorIOController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0EDE8119351F0A009B0317 /* GSFSensorIOController.m */; };
+		5B0EDE861935253A009B0317 /* GSFAmbientNoiseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0EDE851935253A009B0317 /* GSFAmbientNoiseViewController.m */; };
+		5B0EDE8919352627009B0317 /* GSFSensorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0EDE8819352627009B0317 /* GSFSensorViewController.m */; };
 		5B27182918E89D61005BF15E /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B27182818E89D61005BF15E /* AudioToolbox.framework */; };
 		5B67ACEA18E4B6EF008CC092 /* GSF_Insert_sensor_alert-v2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B67ACE918E4B6EF008CC092 /* GSF_Insert_sensor_alert-v2.png */; };
 		5BC3156318E9CAE3004BBD95 /* GSFNoiseLevelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC3156218E9CAE3004BBD95 /* GSFNoiseLevelController.m */; };
@@ -129,6 +132,12 @@
 
 /* Begin PBXFileReference section */
 		0D1EB022391E459995534E17 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B0EDE8119351F0A009B0317 /* GSFSensorIOController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFSensorIOController.m; sourceTree = "<group>"; };
+		5B0EDE8219351F0A009B0317 /* GSFSensorIOController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFSensorIOController.h; sourceTree = "<group>"; };
+		5B0EDE841935253A009B0317 /* GSFAmbientNoiseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFAmbientNoiseViewController.h; sourceTree = "<group>"; };
+		5B0EDE851935253A009B0317 /* GSFAmbientNoiseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFAmbientNoiseViewController.m; sourceTree = "<group>"; };
+		5B0EDE8719352627009B0317 /* GSFSensorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFSensorViewController.h; sourceTree = "<group>"; };
+		5B0EDE8819352627009B0317 /* GSFSensorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFSensorViewController.m; sourceTree = "<group>"; };
 		5B27182818E89D61005BF15E /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		5B67ACE918E4B6EF008CC092 /* GSF_Insert_sensor_alert-v2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GSF_Insert_sensor_alert-v2.png"; sourceTree = "<group>"; };
 		5B86529A18FA306100C4E4E0 /* GSFDataCollecter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = GSFDataCollecter.entitlements; sourceTree = "<group>"; };
@@ -376,6 +385,8 @@
 		D312C5EB18D782A800B8641A /* SensorsController */ = {
 			isa = PBXGroup;
 			children = (
+				5B0EDE8219351F0A009B0317 /* GSFSensorIOController.h */,
+				5B0EDE8119351F0A009B0317 /* GSFSensorIOController.m */,
 			);
 			name = SensorsController;
 			sourceTree = "<group>";
@@ -384,6 +395,10 @@
 			isa = PBXGroup;
 			children = (
 				966F6C8B18AAC10B00BE3334 /* XMLClassifiers */,
+				5B0EDE8719352627009B0317 /* GSFSensorViewController.h */,
+				5B0EDE8819352627009B0317 /* GSFSensorViewController.m */,
+				5B0EDE841935253A009B0317 /* GSFAmbientNoiseViewController.h */,
+				5B0EDE851935253A009B0317 /* GSFAmbientNoiseViewController.m */,
 				D3C578081932B96D0004658A /* GSFCollectViewController.h */,
 				D3C578091932B96D0004658A /* GSFCollectViewController.m */,
 				D3C5780B1932BFE30004658A /* GSFDataSelectionViewController.h */,
@@ -770,6 +785,7 @@
 			files = (
 				D30862D218A2F8F100407EA5 /* GSFOpenCvImageViewController.m in Sources */,
 				96EAC4DC18BC75A90084B331 /* GSFDataTransfer.m in Sources */,
+				5B0EDE8919352627009B0317 /* GSFSensorViewController.m in Sources */,
 				D3D7808318A051DA00E5AB50 /* GSFData.m in Sources */,
 				964F0B74190DB7AF0007464A /* GSFOpenCVPageViewController.m in Sources */,
 				96F52DB018CFE08500684E64 /* GSFTableButton.m in Sources */,
@@ -781,6 +797,7 @@
 				9627876D192D5B6800535DBD /* GSFRootViewController.m in Sources */,
 				96EAF06918CD89B90041A265 /* GSFSavedDataImageViewController.m in Sources */,
 				96EAC4BD18AD88450084B331 /* GSFImageSelectorPreview.m in Sources */,
+				5B0EDE8319351F0A009B0317 /* GSFSensorIOController.m in Sources */,
 				96EAC4D818B18ADD0084B331 /* GSFImage.m in Sources */,
 				96278767192D45FC00535DBD /* GSFMainViewButton.m in Sources */,
 				5BC3156318E9CAE3004BBD95 /* GSFNoiseLevelController.m in Sources */,
@@ -790,6 +807,7 @@
 				9658DB8C192FF43D00A70655 /* GSFCreds.m in Sources */,
 				D3C5780D1932BFE30004658A /* GSFDataSelectionViewController.m in Sources */,
 				D397AC4118B514D30067691D /* GSFAppDelegate.m in Sources */,
+				5B0EDE861935253A009B0317 /* GSFAmbientNoiseViewController.m in Sources */,
 				D397AC4418BAC4920067691D /* GSFDirectionService.m in Sources */,
 				DBB428471880A64F00139082 /* main.m in Sources */,
 				DBB428541880A64F00139082 /* GSFViewController.m in Sources */,

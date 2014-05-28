@@ -10,7 +10,7 @@
 
 @implementation GSFNoiseLevelController
 
-- (id) init {
+- (id) initWithView :(UIView *) view {
     self = [super init];
     if (!self) return nil;
     
@@ -49,6 +49,9 @@
     
     // Init audio route change reason
     self.audioChangeReason = NO_CHANGE;
+    self.readyToCollect = true;
+    
+    self.associatedView = view;
     
     return self;
 }
@@ -59,15 +62,6 @@
     success = [self->noiseAudioSession setActive:YES error:&error];
     if (!success) NSLog(@"ERROR startNoiseRecorder: AVAudioSession failed activating- %@", error);
 }
-
-- (void) stopNoiseRecorder {
-    BOOL success;
-    NSError *error;
-    success = [self->noiseAudioSession setActive:NO error:&error];
-    if (!success) NSLog(@"ERROR stopNoiseRecorder: AVAudioSession failed deactivating- %@", error);
-}
-
-
 
 /**
  *  Takes a boolean value that if true will initialize the microphone recorder and if false will unregister from the notification center as an observer of audio route changes.
@@ -88,10 +82,16 @@
         // Remove audio route change listener callback
         [[NSNotificationCenter defaultCenter] removeObserver: self];
         
-        // Stop recorder
-        [self stopNoiseRecorder];
+        self.readyToCollect = false;
         
         NSLog(@"Noise monitor STOPPED");
+    }
+}
+
+
+- (void) checkAudioStatus {
+    if (self.isSensorConnected){
+        [self addAlertViewToView:SENSOR_INSERTED];
     }
 }
 
@@ -111,10 +111,7 @@
         // Sensor inserted
         case AVAudioSessionRouteChangeReasonNewDeviceAvailable:
             // Stop recorder and throw alert
-            if (self->noiseAudioSession) {
-                [self stopNoiseRecorder];
-            }
-            
+            self.readyToCollect = false;
             NSLog(@"Sensor INSERTED");
             self.audioChangeReason = SENSOR_INSERTED;
             break;
@@ -122,9 +119,7 @@
         // Sensor removed
         case AVAudioSessionRouteChangeReasonOldDeviceUnavailable:
             // Start recorder
-            if (!self->noiseAudioSession) {
-                [self startNoiseRecorder];
-            }
+            [self startNoiseRecorder];
             
             NSLog(@"Sensor REMOVED");
             self.audioChangeReason = NO_CHANGE;
@@ -133,10 +128,7 @@
         // Category changed from PlayAndRecord
         case AVAudioSessionRouteChangeReasonCategoryChange:
             // Stop recorder and throw alert
-            if (self->noiseAudioSession) {
-                [self stopNoiseRecorder];
-            }
-            
+            self.readyToCollect = false;
             NSLog(@"Category CHANGED");
             self.audioChangeReason = AUDIO_CATEGORY_CHANGE;
             break;
@@ -147,7 +139,7 @@
     }
 }
 
-- (void) addAlertViewToView:(UIView*) view :(NSInteger) changeReason {
+- (void) addAlertViewToView:(NSInteger) changeReason {
     // Dismiss any existing alert
     if (self.removeSensorAlert) {
         [self.removeSensorAlert dismissWithClickedButtonIndex:0 animated:NO];
@@ -192,7 +184,7 @@
     }
     
     // Add alertView to current view
-    [view addSubview:self.removeSensorAlert];
+    [self.associatedView addSubview:self.removeSensorAlert];
     
     // Show Alert
     [self.removeSensorAlert show];
@@ -209,7 +201,9 @@
         // Cancel Button pushed
         case 0:
             // Unregister notification center observer
+            self.readyToCollect = false;
             [[NSNotificationCenter defaultCenter] removeObserver: self];
+            [self.popVCNoiseLevelDelegate popVCNoiseLevel:self];
             break;
             
         // Continue
@@ -259,12 +253,14 @@
  *  Collects current average and peak dB levels when invoked and adds these results to the data collection packet that can be saved or sent to the server.
  */
 - (void) collectNoise {
-    // Grab current noise levels
-    [noiseRecorder updateMeters];
+    if (self.readyToCollect) {
+        // Grab current noise levels
+        [noiseRecorder updateMeters];
     
-    // Set current avg and peak dB levels
-    self.avgDBInput = [noiseRecorder averagePowerForChannel:0];
-    self.peakDBInput = [noiseRecorder peakPowerForChannel:0];
+        // Set current avg and peak dB levels
+        self.avgDBInput = [noiseRecorder averagePowerForChannel:0];
+        self.peakDBInput = [noiseRecorder peakPowerForChannel:0];
+    }
 }
 
 @end
