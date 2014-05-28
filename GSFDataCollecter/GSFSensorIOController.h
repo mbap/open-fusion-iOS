@@ -42,10 +42,6 @@
 - (NSMutableArray*) collectSensorData;      // Returns an array of sensor readings
 
 // Delegate to limit number of sensor packets collected
-@property (nonatomic, weak) id collectionDelegate;
-- (void) collectionCompleteDelegate;
-
-// Delegate to pop viewcontroller when an alert occurs
-@property (nonatomic, weak) id popVCSensorIODelegate;
+@property (nonatomic, weak) id <GSFSensorIOControllerDelgate> delegate;
 
 @end

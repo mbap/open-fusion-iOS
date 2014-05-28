@@ -14,7 +14,6 @@
 @property AVAudioRecorder *noiseRecorder;
 @property AVAudioSession *noiseAudioSession;
 
-@property int audioChangeReason;
 @property BOOL readyToCollect;
 
 - (BOOL) isSensorConnected;
@@ -62,7 +61,6 @@
     if (!success) NSLog(@"ERROR initNoiseRecorder: AVAudioSession failed activating- %@", error);
     
     // Init audio route change reason
-    self.audioChangeReason = NO_CHANGE;
     self.readyToCollect = true;
     
     self.associatedView = view;
@@ -74,7 +72,12 @@
     BOOL success;
     NSError *error;
     success = [self.noiseAudioSession setActive:YES error:&error];
-    if (!success) NSLog(@"ERROR startNoiseRecorder: AVAudioSession failed activating- %@", error);
+    if (!success) {
+        NSLog(@"ERROR startNoiseRecorder: AVAudioSession failed activating- %@", error);
+        self.readyToCollect = false;
+    }
+    else
+        self.readyToCollect = true;
 }
 
 /**
@@ -119,15 +122,14 @@
     NSDictionary *interuptionDict = notification.userInfo;
     NSInteger routeChangeReason = [[interuptionDict valueForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
     
-    NSLog(@"MADE IT: noiseAudioRouteChageListener");
-    
     switch (routeChangeReason) {
         // Sensor inserted
         case AVAudioSessionRouteChangeReasonNewDeviceAvailable:
             // Stop recorder and throw alert
             self.readyToCollect = false;
+            [self addAlertViewToView:SENSOR_INSERTED];
+            
             NSLog(@"Sensor INSERTED");
-            self.audioChangeReason = SENSOR_INSERTED;
             break;
             
         // Sensor removed
@@ -136,7 +138,6 @@
             [self startNoiseRecorder];
             
             NSLog(@"Sensor REMOVED");
-            self.audioChangeReason = NO_CHANGE;
             break;
             
         // Category changed from PlayAndRecord
@@ -144,7 +145,8 @@
             // Stop recorder and throw alert
             self.readyToCollect = false;
             NSLog(@"Category CHANGED");
-            self.audioChangeReason = AUDIO_CATEGORY_CHANGE;
+            // Start recorder
+            [self startNoiseRecorder];
             break;
             
         default:
@@ -164,15 +166,15 @@
     UIImageView *alertImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"GSF_Insert_sensor_alert-v2.png"]];
     
     switch (changeReason) {
-        case 1:
+        case SENSOR_INSERTED:
             // Set up Alert View
             self.removeSensorAlert =
             [[SDCAlertView alloc]
              initWithTitle:@"Sensor/Headset Found"
-             message:@"Please remove the GSF sensor or headset to collect noise data. Pressing \"Cancel\" will end noise level data collection."
+             message:@"Please remove the GSF sensor or headset adn try collecting the sound data again."
              delegate:self
              cancelButtonTitle:nil
-             otherButtonTitles:@"Cancel", nil];
+             otherButtonTitles:@"Try Again", nil];
             
             [alertImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
             [self.removeSensorAlert.contentView addSubview:alertImageView];
@@ -188,10 +190,10 @@
             self.removeSensorAlert =
             [[SDCAlertView alloc]
              initWithTitle:@"Audio Source Changed"
-             message:@"The audio input has changed from the GSF App. To continue collecting noise level data press \"Continue\". Pressing \"Cancel\" will end noise level data collection."
+             message:@"The audio input has changed from the GSF App. Please try collecting the data again."
              delegate:self
              cancelButtonTitle:nil
-             otherButtonTitles:@"Cancel", @"Continue", nil];
+             otherButtonTitles:@"Try Again", nil];
             break;
         default:
             NSLog(@"Blowing It In- addAlertViewToView");
@@ -217,7 +219,7 @@
             // Unregister notification center observer
             self.readyToCollect = false;
             [[NSNotificationCenter defaultCenter] removeObserver: self];
-            [self.popVCNoiseLevelDelegate popVCNoiseLevel:self];
+            [self.delegate popVCNoiseLevel:self];
             break;
             
         // Continue
@@ -269,7 +271,9 @@
 - (void) collectNoise {
     if (self.readyToCollect) {
         // Grab current noise levels
-        [self.noiseRecorder updateMeters];
+        for (int i = 0; i < 1000; i++) {
+            [self.noiseRecorder updateMeters];
+        }
     
         // Set current avg and peak dB levels
         self.avgDBInput = [self.noiseRecorder averagePowerForChannel:0];

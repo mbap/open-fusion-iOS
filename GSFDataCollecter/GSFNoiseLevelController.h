@@ -41,6 +41,6 @@
 - (void) checkAudioStatus;
 
 // Delegate to pop viewcontroller when an alert occurs
-@property (nonatomic, weak) id popVCNoiseLevelDelegate;
+@property (nonatomic, weak) id <GSFNoiseLevelControllerDelgate> delegate;
 
 @end

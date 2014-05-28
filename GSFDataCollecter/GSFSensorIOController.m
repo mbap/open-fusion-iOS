@@ -145,8 +145,6 @@ static OSStatus hardwareIOCallback(void                         *inRefCon,
 
 @implementation GSFSensorIOController
 
-@synthesize popVCSensorIODelegate;
-@synthesize collectionDelegate;
 @synthesize ioUnit = _ioUnit;
 
 /**
@@ -512,7 +510,7 @@ static OSStatus hardwareIOCallback(void                         *inRefCon,
     switch (routeChangeReason) {
         // Sensor inserted
         case AVAudioSessionRouteChangeReasonNewDeviceAvailable:
-            // Dismiss alert if any and begin collection
+            /*// Dismiss alert if any and begin collection
             if (self.sensorAlert != nil) {
                 [self.sensorAlert dismissWithClickedButtonIndex:2 animated:YES];
                 self.sensorAlert = nil;
@@ -522,7 +520,7 @@ static OSStatus hardwareIOCallback(void                         *inRefCon,
             [self startCollecting];
             
             // **** DEBUG ****
-            NSLog(@"Sensor INSERTED");
+            NSLog(@"Sensor INSERTED"); */
             break;
             
         // Sensor removed
@@ -572,10 +570,10 @@ static OSStatus hardwareIOCallback(void                         *inRefCon,
             self.sensorAlert =
             [[SDCAlertView alloc]
              initWithTitle:@"No Sensor"
-             message:@"Please insert the GSF sensor to collect sensorIO data. Pressing \"Cancel\" will end sensor data collection."
+             message:@"Please insert the GSF sensor and try again."
              delegate:self
              cancelButtonTitle:nil
-             otherButtonTitles:@"Cancel", nil];
+             otherButtonTitles:@"Try Again", nil];
             
             [alertImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
             [self.sensorAlert.contentView addSubview:alertImageView];
@@ -602,10 +600,10 @@ static OSStatus hardwareIOCallback(void                         *inRefCon,
             self.sensorAlert =
             [[SDCAlertView alloc]
              initWithTitle:@"Auto Power Failed"
-             message:@"The sensor needs power. Please adjust the volume slider to the maximum volume to continue."
+             message:@"The sensor needs power. Please adjust the volume, using the volume buttons on the side of your iOS device, to the maximum amount and try collecting again."
              delegate:self
              cancelButtonTitle:nil
-             otherButtonTitles:@"Cancel", nil];
+             otherButtonTitles:@"Try Again", nil];
             /*
             [self.volumeSlider setTranslatesAutoresizingMaskIntoConstraints:NO];
             [self.sensorAlert.contentView addSubview:self.volumeSlider];
@@ -651,7 +649,9 @@ static OSStatus hardwareIOCallback(void                         *inRefCon,
         case 0:
             // Stop IO audio unit
             [self stopCollecting];
-            [self.popVCSensorIODelegate popVCSensorIO:self];
+            if ([self.delegate respondsToSelector:@selector(popVCSensorIO:)]) {
+                [self.delegate popVCSensorIO:self];
+            }
             break;
             
         // Continue
@@ -926,9 +926,11 @@ static OSStatus hardwareIOCallback(void                         *inRefCon,
                         printf("Half Period End- doubleState: %d curWindowState:%d lastWindowState:%d secondLastWindowState:%d\n\n\n", self.doubleState, self.curWindowState, self.lastWindowState, self.secondLastWindowState);
         #endif
                     }
-                    // When four packets have been successfully collected stop collecting
+                    // When two packets have been successfully collected stop collecting
                     if (self.crc_index == 10) {
-                        [self collectionCompleteDelegate];
+                        if ([self.delegate respondsToSelector:@selector(endCollection:)]) {
+                            [self.delegate endCollection:self];
+                        }
                     }
                 }
             }
@@ -948,12 +950,6 @@ static OSStatus hardwareIOCallback(void                         *inRefCon,
     [self addAlertViewToView:CHANNEL_FAILURE];
 }
 
-/**
- *  Delegate message to end collection process
- */
-- (void) collectionCompleteDelegate {
-    [self.collectionDelegate endCollection:self];
-}
 
 /**
  *  Averages sample readings from micro and returns an NSMutableArray of the results.

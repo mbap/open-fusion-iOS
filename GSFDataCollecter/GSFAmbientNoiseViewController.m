@@ -12,11 +12,12 @@
 #import "GSFData.h"
 #import "GSFCollectViewController.h"
 
-@interface GSFAmbientNoiseViewController () <GSFGeoTaggerDelegate>
+@interface GSFAmbientNoiseViewController () <GSFGeoTaggerDelegate, GSFNoiseLevelControllerDelgate>
 
 @property (nonatomic) GSFNoiseLevelController *ambientNoise;
 @property (nonatomic) GSFGeoTagger *geoTagger;
 @property (nonatomic) GSFSpinner *spinner;
+@property (nonatomic) GSFData *data;
 
 // View
 @property (weak, nonatomic) IBOutlet UILabel *peakDBLabel;
@@ -39,12 +40,19 @@
 {
     [super viewDidLoad];
     
+    self.navigationItem.backBarButtonItem = nil;
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Discard" style:UIBarButtonItemStyleBordered target:self action:@selector(discardButtonPushed)];
+    
     self.peakDBLabel.text = @"N/A";
     self.avgDBLabel.text = @"N/A";
     
-    self.ambientNoise = [[GSFNoiseLevelController alloc] init];
-    [self.ambientNoise checkAudioStatus];
+    self.ambientNoise = [[GSFNoiseLevelController alloc] initWithView:self.view];
+    self.ambientNoise.delegate = self;
+    
     [self.ambientNoise mointorNoise:YES];
+    [self.ambientNoise checkAudioStatus];
+    
+    self.data = [[GSFData alloc] init];
     
     self.geoTagger = [[GSFGeoTagger alloc] initWithAccuracy:kCLLocationAccuracyHundredMeters];
     self.geoTagger.delegate = self;
@@ -54,7 +62,6 @@
     [self.view addSubview:self.spinner];
     [self.view bringSubviewToFront:self.spinner];
     [self.spinner.spinner startAnimating];
-    
 }
 
 - (void)gpsLocationHasBeenCollected:(CLLocation *)coords {
@@ -62,38 +69,52 @@
     [self.spinner setLabelText:@"Collecting..."];
     [self.ambientNoise collectNoise];
     
-    GSFData *data = [[GSFData alloc] init];
-    data.noiseLevel = [NSNumber numberWithDouble:self.ambientNoise.avgDBInput];
+    self.data.noiseLevel = [NSNumber numberWithDouble:self.ambientNoise.avgDBInput];
     
     // Update view
     self.peakDBLabel.text = [NSString stringWithFormat:@"%3.2f", self.ambientNoise.peakDBInput];
     self.avgDBLabel.text = [NSString stringWithFormat:@"%3.2f", self.ambientNoise.avgDBInput];
     
     // geo tag the data.
-    data.coords = [[CLLocation alloc] initWithCoordinate:coords.coordinate altitude:coords.altitude horizontalAccuracy:coords.horizontalAccuracy verticalAccuracy:coords.verticalAccuracy timestamp:coords.timestamp];
+    self.data.coords = [[CLLocation alloc] initWithCoordinate:coords.coordinate altitude:coords.altitude horizontalAccuracy:coords.horizontalAccuracy verticalAccuracy:coords.verticalAccuracy timestamp:coords.timestamp];
     
     // timestamp the data.
-    [data convertToISO8601:data.coords];
+    [self.data convertToISO8601:self.data.coords];
     
-    // add it to the feature collection.
-    [self.collectedData addObject:data];
-    
-    //clean up
-    self.geoTagger.delegate = nil;
-    self.geoTagger = nil;
     [self.spinner.spinner stopAnimating];
     [self.spinner removeFromSuperview];
-    self.spinner = nil;
 }
 
 - (void) popVCNoiseLevel: (GSFNoiseLevelController *) noiseLevelController {
     [self.ambientNoise mointorNoise:NO];
-    self.ambientNoise = nil;
     
-    if (self.geoTagger != nil) {
-        self.geoTagger = nil;
-    }
+    self.ambientNoise.delegate = nil;
+    self.ambientNoise = nil;
+    self.geoTagger.delegate = nil;
+    self.geoTagger = nil;
+    self.data = nil;
+    
     if (self.spinner != nil) {
+        [self.spinner.spinner stopAnimating];
+        [self.spinner removeFromSuperview];
+        self.spinner = nil;
+    }
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void) discardButtonPushed {
+    [self.ambientNoise mointorNoise:NO];
+    
+    self.ambientNoise.delegate = nil;
+    self.ambientNoise = nil;
+    self.geoTagger.delegate = nil;
+    self.geoTagger = nil;
+    self.data = nil;
+    
+    if (self.spinner != nil) {
+        [self.spinner.spinner stopAnimating];
+        [self.spinner removeFromSuperview];
         self.spinner = nil;
     }
     
@@ -101,6 +122,25 @@
 }
 
 - (IBAction)noiseDoneButtonPushed:(id)sender {
+    // Add it to the feature collection.
+    if (self.data)
+        [self.collectedData addObject:self.data];
+    
+    // Stop noise colleciton and clean up
+    [self.ambientNoise mointorNoise:NO];
+    
+    self.ambientNoise.delegate = nil;
+    self.ambientNoise = nil;
+    self.geoTagger.delegate = nil;
+    self.geoTagger = nil;
+    self.data = nil;
+    
+    if (self.spinner != nil) {
+        [self.spinner.spinner stopAnimating];
+        [self.spinner removeFromSuperview];
+        self.spinner = nil;
+    }
+    
     NSArray *viewControllers = [[self navigationController] viewControllers];
     for(id view in viewControllers){
         if([view isKindOfClass:[GSFCollectViewController class]]){
