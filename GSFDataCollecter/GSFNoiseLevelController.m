@@ -10,7 +10,7 @@
 
 @implementation GSFNoiseLevelController
 
-- (id) init {
+- (id) initWithView :(UIView *) view {
     self = [super init];
     if (!self) return nil;
     
@@ -51,6 +51,8 @@
     self.audioChangeReason = NO_CHANGE;
     self.readyToCollect = true;
     
+    self.associatedView = view;
+    
     return self;
 }
 
@@ -83,6 +85,13 @@
         self.readyToCollect = false;
         
         NSLog(@"Noise monitor STOPPED");
+    }
+}
+
+
+- (void) checkAudioStatus {
+    if (self.isSensorConnected){
+        [self addAlertViewToView:SENSOR_INSERTED];
     }
 }
 
@@ -130,7 +139,7 @@
     }
 }
 
-- (void) addAlertViewToView:(UIView*) view :(NSInteger) changeReason {
+- (void) addAlertViewToView:(NSInteger) changeReason {
     // Dismiss any existing alert
     if (self.removeSensorAlert) {
         [self.removeSensorAlert dismissWithClickedButtonIndex:0 animated:NO];
@@ -175,7 +184,7 @@
     }
     
     // Add alertView to current view
-    [view addSubview:self.removeSensorAlert];
+    [self.associatedView addSubview:self.removeSensorAlert];
     
     // Show Alert
     [self.removeSensorAlert show];
@@ -192,7 +201,9 @@
         // Cancel Button pushed
         case 0:
             // Unregister notification center observer
+            self.readyToCollect = false;
             [[NSNotificationCenter defaultCenter] removeObserver: self];
+            [self.popVCNoiseLevelDelegate popVCNoiseLevel:self];
             break;
             
         // Continue

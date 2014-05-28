@@ -93,8 +93,6 @@
         if (newLocation.horizontalAccuracy <= self.locationManager.desiredAccuracy) {
             [self stopUpdatingGeoTagger];
         }
-    } else if (self.bestEffort != nil && self.locationMeasurements.count > 5) {
-        [self stopUpdatingGeoTagger];
     }
 }
 

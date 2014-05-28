@@ -19,6 +19,7 @@
 @property GSFSensorIOController *sensorIO;
 @property NSMutableArray *data;
 @property BOOL collectionFinished;
+@property CLLocation *coords;
 
 // View
 @property (weak, nonatomic) IBOutlet UILabel *humidityLabel;
@@ -55,7 +56,7 @@
     [self.sensorIO monitorSensors:YES];
     
     // Grab location
-    self.geoTagger = [[GSFGeoTagger alloc] init];
+    self.geoTagger = [[GSFGeoTagger alloc] initWithAccuracy:kCLLocationAccuracyHundredMeters];
     self.geoTagger.delegate = self;
     [self.geoTagger startUpdatingGeoTagger];
     self.spinner = [[GSFSpinner alloc] init];
@@ -75,7 +76,7 @@
 - (void) stopAudio {
     // Stop collection
     [self.sensorIO monitorSensors:NO];
-    if (!self.collectionFinished) {
+    //if (!self.collectionFinished) {
         self.collectionFinished = true;
         // Grab collected sensor data
         self.data = self.sensorIO.collectSensorData;
@@ -88,12 +89,30 @@
             self.humidityLabel.text = @"N/A";
             self.tempratureLabel.text = @"N/A";
         }
-    }
+    //}
+    
+    GSFData *data = [[GSFData alloc] init];
+    data.humidity = self.data[0];
+    data.temp = self.data[1];
+    
+    // geo tag the data.
+    data.coords = self.coords;
+    
+    // timestamp the data.
+    [data convertToISO8601:data.coords];
+    
+    // add it to the feature collection.
+    [self.collectedData addObject:data];
+    
+    //clean up
+    [self.spinner.spinner stopAnimating];
+    [self.spinner removeFromSuperview];
+    self.spinner = nil;
 }
 
 - (void)gpsLocationHasBeenCollected:(CLLocation *)coords {
     [self.spinner setLabelText:@"Collecting..."];
-    GSFData *data = [[GSFData alloc] init];
+    /*GSFData *data = [[GSFData alloc] init];
     
     if (!self.collectionFinished) {
         self.collectionFinished = true;
@@ -122,13 +141,16 @@
     
     // add it to the feature collection.
     [self.collectedData addObject:data];
+    */
+    
+    self.coords = [[CLLocation alloc] initWithCoordinate:coords.coordinate altitude:coords.altitude horizontalAccuracy:coords.horizontalAccuracy verticalAccuracy:coords.verticalAccuracy timestamp:coords.timestamp];
     
     //clean up
     self.geoTagger.delegate = nil;
     self.geoTagger = nil;
-    [self.spinner.spinner stopAnimating];
+/*    [self.spinner.spinner stopAnimating];
     [self.spinner removeFromSuperview];
-    self.spinner = nil;
+    self.spinner = nil;*/
 }
 
 - (IBAction)sensorDoneButtonPushed:(id)sender {

@@ -509,6 +509,7 @@ static OSStatus hardwareIOCallback(void                         *inRefCon,
         case AVAudioSessionRouteChangeReasonNewDeviceAvailable:
             // Dismiss alert if any
             [self.sensorAlert dismissWithClickedButtonIndex:2 animated:YES];
+            self.sensorAlert = nil;
             
             // Start IO communication
             [self startCollecting];
@@ -552,6 +553,7 @@ static OSStatus hardwareIOCallback(void                         *inRefCon,
 - (void) addAlertViewToView: (NSInteger) changeReason {
     // Dismiss any existing alert
     [self.sensorAlert dismissWithClickedButtonIndex:2 animated:NO];
+    self.sensorAlert = nil;
     
     // Set up image for alert View
     UIImageView *alertImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"GSF_Insert_sensor_alert-v2.png"]];

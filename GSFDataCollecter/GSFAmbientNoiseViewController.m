@@ -14,6 +14,7 @@
 
 @interface GSFAmbientNoiseViewController () <GSFGeoTaggerDelegate>
 
+@property (nonatomic) GSFNoiseLevelController *ambientNoise;
 @property (nonatomic) GSFGeoTagger *geoTagger;
 @property (nonatomic) GSFSpinner *spinner;
 
@@ -41,7 +42,10 @@
     self.peakDBLabel.text = @"N/A";
     self.avgDBLabel.text = @"N/A";
     
-    self.geoTagger = [[GSFGeoTagger alloc] init];
+    self.ambientNoise = [[GSFNoiseLevelController alloc] init];
+    [self.ambientNoise checkAudioStatus];
+    
+    self.geoTagger = [[GSFGeoTagger alloc] initWithAccuracy:kCLLocationAccuracyHundredMeters];
     self.geoTagger.delegate = self;
     [self.geoTagger startUpdatingGeoTagger];
     self.spinner = [[GSFSpinner alloc] init];
@@ -55,14 +59,14 @@
 - (void)gpsLocationHasBeenCollected:(CLLocation *)coords {
     // Collect Noise
     [self.spinner setLabelText:@"Collecting..."];
-    GSFNoiseLevelController *noiseCtrl = [[GSFNoiseLevelController alloc] init];
-    [noiseCtrl collectNoise];
+    [self.ambientNoise mointorNoise:YES];
+    [self.ambientNoise collectNoise];
     GSFData *data = [[GSFData alloc] init];
-    data.noiseLevel = [NSNumber numberWithDouble:noiseCtrl.avgDBInput];
+    data.noiseLevel = [NSNumber numberWithDouble:self.ambientNoise.avgDBInput];
     
     // Update view
-    self.peakDBLabel.text = [NSString stringWithFormat:@"%3.2f", noiseCtrl.peakDBInput];
-    self.avgDBLabel.text = [NSString stringWithFormat:@"%3.2f", noiseCtrl.avgDBInput];
+    self.peakDBLabel.text = [NSString stringWithFormat:@"%3.2f", self.ambientNoise.peakDBInput];
+    self.avgDBLabel.text = [NSString stringWithFormat:@"%3.2f", self.ambientNoise.avgDBInput];
     
     // geo tag the data.
     data.coords = [[CLLocation alloc] initWithCoordinate:coords.coordinate altitude:coords.altitude horizontalAccuracy:coords.horizontalAccuracy verticalAccuracy:coords.verticalAccuracy timestamp:coords.timestamp];
@@ -76,10 +80,13 @@
     //clean up
     self.geoTagger.delegate = nil;
     self.geoTagger = nil;
-    noiseCtrl = nil;
     [self.spinner.spinner stopAnimating];
     [self.spinner removeFromSuperview];
     self.spinner = nil;
+}
+
+- (void) popVCNoiseLevel: (GSFNoiseLevelController *) noiseLevelController {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)noiseDoneButtonPushed:(id)sender {

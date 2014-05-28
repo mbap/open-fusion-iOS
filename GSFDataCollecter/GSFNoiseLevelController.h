@@ -18,6 +18,13 @@
 #define SENSOR_INSERTED         1
 #define AUDIO_CATEGORY_CHANGE   2
 
+@class GSFNoiseLevelController;
+@protocol GSFNoiseLevelControllerDelgate <NSObject>
+
+- (void) popVCNoiseLevel:(GSFNoiseLevelController *) noiseLevelController;
+
+@end
+
 @interface GSFNoiseLevelController : NSObject{
     // Private variables
     AVAudioRecorder *noiseRecorder;
@@ -31,10 +38,17 @@
 @property int audioChangeReason;
 @property BOOL readyToCollect;
 
+@property UIView *associatedView;               // *** View for ONE view alert system ***
+
 // Public fuction prototypes
+- (id) initWithView: (UIView *) view;       // Initializes noise object. Takes the calling UIViews view for alert messages
 - (void) mointorNoise: (BOOL) enable;
 - (void) collectNoise;
+- (void) checkAudioStatus;
 - (BOOL) isSensorConnected;
-- (void) addAlertViewToView:(UIView*) view :(NSInteger) changeReason;
+- (void) addAlertViewToView:(NSInteger) changeReason;
+
+// Delegate to pop viewcontroller when an alert occurs
+@property (nonatomic, weak) id popVCNoiseLevelDelegate;
 
 @end
