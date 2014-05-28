@@ -74,7 +74,6 @@
     // test the age of the location measurement to determine if the measurement is cached
     // in most cases you will not want to rely on cached measurements
     NSTimeInterval locationAge = -[newLocation.timestamp timeIntervalSinceNow];
-    NSLog(@"%f", locationAge);
     if (locationAge > 5.0) return;
     
     // test that the horizontal accuracy does not indicate an invalid measurement

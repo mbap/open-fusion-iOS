@@ -33,6 +33,7 @@
 @property SDCAlertView *sensorAlert;
 @property (nonatomic, strong) UISlider *volumeSlider;
 @property (nonatomic) int audioChangeReason;
+@property BOOL audioSetup;
 
 // Public function prototypes
 - (id) initWithView: (UIView *) view;       // Initializes sensor object. Takes the calling UIViews view for alert messages
@@ -41,10 +42,6 @@
 - (NSMutableArray*) collectSensorData;      // Returns an array of sensor readings
 
 // Delegate to limit number of sensor packets collected
-@property (nonatomic, weak) id collectionDelegate;
-- (void) collectionCompleteDelegate;
-
-// Delegate to pop viewcontroller when an alert occurs
-@property (nonatomic, weak) id popVCSensorIODelegate;
+@property (nonatomic, weak) id <GSFSensorIOControllerDelgate> delegate;
 
 @end
