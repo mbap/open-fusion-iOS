@@ -59,7 +59,16 @@
     // select accuracy for the gps. we can go even higher in accuracy.
     self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
     
-    self.collectionView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"dataviewstubimage320.png"]];
+    // get screen size
+    CGRect screenSize = [[UIScreen mainScreen] bounds];
+    
+    //load images into the views.
+    if (screenSize.size.height > 500) {  // iPhone5/5s
+        self.collectionView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"datastubimageiphone5.png"]];
+
+    } else {                             // iPhone4/4s
+        self.collectionView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"dataviewstubimage320.png"]];
+    }
     
     [self.locationManager startUpdatingLocation];
 

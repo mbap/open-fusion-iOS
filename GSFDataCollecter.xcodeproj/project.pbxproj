@@ -10,7 +10,6 @@
 		5B27182918E89D61005BF15E /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B27182818E89D61005BF15E /* AudioToolbox.framework */; };
 		5B67ACEA18E4B6EF008CC092 /* GSF_Insert_sensor_alert-v2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B67ACE918E4B6EF008CC092 /* GSF_Insert_sensor_alert-v2.png */; };
 		5BC3156318E9CAE3004BBD95 /* GSFNoiseLevelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC3156218E9CAE3004BBD95 /* GSFNoiseLevelController.m */; };
-		96232BE21915CAD100C19E54 /* dataviewstubimage320.png in Resources */ = {isa = PBXBuildFile; fileRef = 96232BE11915CAD100C19E54 /* dataviewstubimage320.png */; };
 		96278767192D45FC00535DBD /* GSFMainViewButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 96278766192D45FC00535DBD /* GSFMainViewButton.m */; };
 		9627876D192D5B6800535DBD /* GSFRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9627876C192D5B6800535DBD /* GSFRootViewController.m */; };
 		96278789192D7D2100535DBD /* saved.png in Resources */ = {isa = PBXBuildFile; fileRef = 96278786192D7D2100535DBD /* saved.png */; };
@@ -22,6 +21,8 @@
 		9628237A190082BA00ABA86E /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 96282379190082BA00ABA86E /* GoogleMaps.bundle */; };
 		9628237C190082CB00ABA86E /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9628237B190082CB00ABA86E /* GoogleMaps.framework */; };
 		963730301933F78500F815B0 /* GSFGeoTagger.m in Sources */ = {isa = PBXBuildFile; fileRef = 9637302F1933F78500F815B0 /* GSFGeoTagger.m */; };
+		9637303619356B5000F815B0 /* dataviewstubimage320.png in Resources */ = {isa = PBXBuildFile; fileRef = 9637303419356B5000F815B0 /* dataviewstubimage320.png */; };
+		9637303819356C7200F815B0 /* datastubimageiphone5.png in Resources */ = {isa = PBXBuildFile; fileRef = 9637303719356C7200F815B0 /* datastubimageiphone5.png */; };
 		964F0B74190DB7AF0007464A /* GSFOpenCVPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 964F0B73190DB7AF0007464A /* GSFOpenCVPageViewController.m */; };
 		96546A2018F2327A003F8BBB /* GSFProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96546A1F18F2327A003F8BBB /* GSFProgressView.m */; };
 		9658DB8C192FF43D00A70655 /* GSFCreds.m in Sources */ = {isa = PBXBuildFile; fileRef = 9658DB8B192FF43D00A70655 /* GSFCreds.m */; };
@@ -133,7 +134,6 @@
 		5B86529A18FA306100C4E4E0 /* GSFDataCollecter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = GSFDataCollecter.entitlements; sourceTree = "<group>"; };
 		5BC3156118E9CAE3004BBD95 /* GSFNoiseLevelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFNoiseLevelController.h; sourceTree = "<group>"; };
 		5BC3156218E9CAE3004BBD95 /* GSFNoiseLevelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFNoiseLevelController.m; sourceTree = "<group>"; };
-		96232BE11915CAD100C19E54 /* dataviewstubimage320.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dataviewstubimage320.png; sourceTree = "<group>"; };
 		96278765192D45FC00535DBD /* GSFMainViewButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFMainViewButton.h; sourceTree = "<group>"; };
 		96278766192D45FC00535DBD /* GSFMainViewButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFMainViewButton.m; sourceTree = "<group>"; };
 		9627876B192D5B6800535DBD /* GSFRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFRootViewController.h; sourceTree = "<group>"; };
@@ -148,6 +148,8 @@
 		9628237B190082CB00ABA86E /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
 		9637302E1933F78500F815B0 /* GSFGeoTagger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFGeoTagger.h; sourceTree = "<group>"; };
 		9637302F1933F78500F815B0 /* GSFGeoTagger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFGeoTagger.m; sourceTree = "<group>"; };
+		9637303419356B5000F815B0 /* dataviewstubimage320.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dataviewstubimage320.png; sourceTree = "<group>"; };
+		9637303719356C7200F815B0 /* datastubimageiphone5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = datastubimageiphone5.png; sourceTree = "<group>"; };
 		964F0B72190DB7AF0007464A /* GSFOpenCVPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFOpenCVPageViewController.h; sourceTree = "<group>"; };
 		964F0B73190DB7AF0007464A /* GSFOpenCVPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFOpenCVPageViewController.m; sourceTree = "<group>"; };
 		96546A1E18F2327A003F8BBB /* GSFProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFProgressView.h; sourceTree = "<group>"; };
@@ -516,6 +518,8 @@
 		DBB428411880A64F00139082 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9637303719356C7200F815B0 /* datastubimageiphone5.png */,
+				9637303419356B5000F815B0 /* dataviewstubimage320.png */,
 				D3C5781D1932DE320004658A /* Default-568h@2x.png */,
 				D3C5781B1932DE320004658A /* Default-568h.png */,
 				D3C5781C1932DE320004658A /* Default@2x.png */,
@@ -532,7 +536,6 @@
 				96278786192D7D2100535DBD /* saved.png */,
 				96278787192D7D2100535DBD /* route.png */,
 				96278788192D7D2100535DBD /* collect.png */,
-				96232BE11915CAD100C19E54 /* dataviewstubimage320.png */,
 				5B86529A18FA306100C4E4E0 /* GSFDataCollecter.entitlements */,
 				D3641AFB18E10A7C00DBB5E7 /* Delete-icon.png */,
 				5B67ACE918E4B6EF008CC092 /* GSF_Insert_sensor_alert-v2.png */,
@@ -679,10 +682,10 @@
 				D3BF4D1D18CE5E35003CB52B /* transparent.png in Resources */,
 				D3C578191932CFCF0004658A /* sound4.png in Resources */,
 				D312C5D918D6919800B8641A /* icon-black.png in Resources */,
+				9637303619356B5000F815B0 /* dataviewstubimage320.png in Resources */,
 				D3C578111932CE0E0004658A /* image5.png in Resources */,
 				9627878A192D7D2100535DBD /* route.png in Resources */,
 				D3BF4D2318CE62C4003CB52B /* transparent1.png in Resources */,
-				96232BE21915CAD100C19E54 /* dataviewstubimage320.png in Resources */,
 				5B67ACEA18E4B6EF008CC092 /* GSF_Insert_sensor_alert-v2.png in Resources */,
 				D312C5D618D6919800B8641A /* globe-black.png in Resources */,
 				D3C578131932CE0E0004658A /* sound5.png in Resources */,
@@ -708,6 +711,7 @@
 				D3BF4D2218CE62C4003CB52B /* black1.png in Resources */,
 				D3C578121932CE0E0004658A /* pluggable5.png in Resources */,
 				96EAC4B818AD88280084B331 /* haarcascade_frontalface_alt.xml in Resources */,
+				9637303819356C7200F815B0 /* datastubimageiphone5.png in Resources */,
 				DBB428451880A64F00139082 /* InfoPlist.strings in Resources */,
 				D312C5E418D691C900B8641A /* globe-black5.png in Resources */,
 				D3BF4D2418CE62C4003CB52B /* white1.png in Resources */,
