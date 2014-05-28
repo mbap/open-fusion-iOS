@@ -10,7 +10,10 @@
 #import "GSFSpinner.h"
 #import "GSFGeoTagger.h"
 #import "GSFData.h"
+<<<<<<< HEAD
 #import "GSFCollectViewController.h"
+=======
+>>>>>>> d426570f1ec891dd53eb448e57b670eb79627ffc
 
 @interface GSFSensorViewController () <GSFGeoTaggerDelegate>
 
@@ -130,6 +133,7 @@
     [self.spinner removeFromSuperview];
     self.spinner = nil;
 }
+
 - (IBAction)sensorDoneButtonPushed:(id)sender {
     NSArray *viewControllers = [[self navigationController] viewControllers];
     for(id view in viewControllers){

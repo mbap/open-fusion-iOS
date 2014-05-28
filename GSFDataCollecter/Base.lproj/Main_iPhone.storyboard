@@ -143,23 +143,14 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CTA-Vi-Y5A">
-                                <rect key="frame" x="0.0" y="524" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <items>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="fIv-ct-x0j"/>
-                                    <barButtonItem title="Done" id="uDQ-J5-f0T">
-                                        <connections>
-                                            <action selector="noiseDoneButtonPushed:" destination="6JT-Sd-DSI" id="uy1-a2-hnC"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="FFh-X3-djG"/>
-                                </items>
-                            </toolbar>
-                        </subviews>
+                       </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <toolbarItems/>
+                    <toolbarItems>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Sm8-0B-OlC"/>
+                        <barButtonItem title="Done" id="ain-Av-O3g"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="3m9-sF-Q4M"/>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" title="Ambient Noise Results" id="GKk-Sl-g3C"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
@@ -266,23 +257,14 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O6e-tn-alu">
-                                <rect key="frame" x="0.0" y="524" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <items>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="Twe-1D-K0u"/>
-                                    <barButtonItem title="Done" id="rIW-J6-MFN">
-                                        <connections>
-                                            <action selector="sensorDoneButtonPushed:" destination="C1O-5H-iMO" id="uwZ-xb-uAV"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="nrn-4Y-NU7"/>
-                                </items>
-                            </toolbar>
-                        </subviews>
+                       </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <toolbarItems/>
+                    <toolbarItems>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="9Bb-5e-PEI"/>
+                        <barButtonItem title="Done" id="FUE-w8-fsR"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="gny-C0-Jan"/>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" title="Climate Sensor Results" id="Qfw-VL-5nd"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
