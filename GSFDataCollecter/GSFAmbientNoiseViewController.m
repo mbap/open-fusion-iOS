@@ -10,7 +10,7 @@
 #import "GSFSpinner.h"
 #import "GSFGeoTagger.h"
 #import "GSFData.h"
-
+#import "GSFCollectViewController.h"
 
 @interface GSFAmbientNoiseViewController () <GSFGeoTaggerDelegate>
 
@@ -80,6 +80,15 @@
     [self.spinner.spinner stopAnimating];
     [self.spinner removeFromSuperview];
     self.spinner = nil;
+}
+
+- (IBAction)noiseDoneButtonPushed:(id)sender {
+    NSArray *viewControllers = [[self navigationController] viewControllers];
+    for(id view in viewControllers){
+        if([view isKindOfClass:[GSFCollectViewController class]]){
+            [[self navigationController] popToViewController:view animated:YES];
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning

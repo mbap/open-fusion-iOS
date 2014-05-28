@@ -10,6 +10,7 @@
 #import "GSFSpinner.h"
 #import "GSFGeoTagger.h"
 #import "GSFData.h"
+#import "GSFCollectViewController.h"
 
 @interface GSFSensorViewController () <GSFGeoTaggerDelegate>
 
@@ -128,6 +129,14 @@
     [self.spinner.spinner stopAnimating];
     [self.spinner removeFromSuperview];
     self.spinner = nil;
+}
+- (IBAction)sensorDoneButtonPushed:(id)sender {
+    NSArray *viewControllers = [[self navigationController] viewControllers];
+    for(id view in viewControllers){
+        if([view isKindOfClass:[GSFCollectViewController class]]){
+            [[self navigationController] popToViewController:view animated:YES];
+        }
+    }
 }
 
 - (void) popVCSensorIO: (GSFSensorIOController *) sensorIOController {
