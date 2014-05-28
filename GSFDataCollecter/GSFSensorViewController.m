@@ -10,10 +10,7 @@
 #import "GSFSpinner.h"
 #import "GSFGeoTagger.h"
 #import "GSFData.h"
-<<<<<<< HEAD
 #import "GSFCollectViewController.h"
-=======
->>>>>>> d426570f1ec891dd53eb448e57b670eb79627ffc
 
 @interface GSFSensorViewController () <GSFGeoTaggerDelegate>
 
