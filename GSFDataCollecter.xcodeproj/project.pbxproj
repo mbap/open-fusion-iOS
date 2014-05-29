@@ -11,6 +11,7 @@
 		5B0EDE861935253A009B0317 /* GSFAmbientNoiseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0EDE851935253A009B0317 /* GSFAmbientNoiseViewController.m */; };
 		5B0EDE8919352627009B0317 /* GSFSensorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0EDE8819352627009B0317 /* GSFSensorViewController.m */; };
 		5B27182918E89D61005BF15E /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B27182818E89D61005BF15E /* AudioToolbox.framework */; };
+		5B62C7331936B2EB00F62BBD /* GSF_remove_sensor_alert-v2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B62C7321936B2EB00F62BBD /* GSF_remove_sensor_alert-v2.png */; };
 		5B67ACEA18E4B6EF008CC092 /* GSF_Insert_sensor_alert-v2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B67ACE918E4B6EF008CC092 /* GSF_Insert_sensor_alert-v2.png */; };
 		5BC3156318E9CAE3004BBD95 /* GSFNoiseLevelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC3156218E9CAE3004BBD95 /* GSFNoiseLevelController.m */; };
 		96278767192D45FC00535DBD /* GSFMainViewButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 96278766192D45FC00535DBD /* GSFMainViewButton.m */; };
@@ -139,6 +140,7 @@
 		5B0EDE8719352627009B0317 /* GSFSensorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFSensorViewController.h; sourceTree = "<group>"; };
 		5B0EDE8819352627009B0317 /* GSFSensorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFSensorViewController.m; sourceTree = "<group>"; };
 		5B27182818E89D61005BF15E /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		5B62C7321936B2EB00F62BBD /* GSF_remove_sensor_alert-v2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GSF_remove_sensor_alert-v2.png"; sourceTree = "<group>"; };
 		5B67ACE918E4B6EF008CC092 /* GSF_Insert_sensor_alert-v2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GSF_Insert_sensor_alert-v2.png"; sourceTree = "<group>"; };
 		5B86529A18FA306100C4E4E0 /* GSFDataCollecter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = GSFDataCollecter.entitlements; sourceTree = "<group>"; };
 		5BC3156118E9CAE3004BBD95 /* GSFNoiseLevelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFNoiseLevelController.h; sourceTree = "<group>"; };
@@ -554,6 +556,7 @@
 				5B86529A18FA306100C4E4E0 /* GSFDataCollecter.entitlements */,
 				D3641AFB18E10A7C00DBB5E7 /* Delete-icon.png */,
 				5B67ACE918E4B6EF008CC092 /* GSF_Insert_sensor_alert-v2.png */,
+				5B62C7321936B2EB00F62BBD /* GSF_remove_sensor_alert-v2.png */,
 				D312C5DD18D691C900B8641A /* globe-black5.png */,
 				D312C5DE18D691C900B8641A /* globe-transparent5.png */,
 				D312C5DF18D691C900B8641A /* globe-white5.png */,
@@ -728,6 +731,7 @@
 				96EAC4B818AD88280084B331 /* haarcascade_frontalface_alt.xml in Resources */,
 				9637303819356C7200F815B0 /* datastubimageiphone5.png in Resources */,
 				DBB428451880A64F00139082 /* InfoPlist.strings in Resources */,
+				5B62C7331936B2EB00F62BBD /* GSF_remove_sensor_alert-v2.png in Resources */,
 				D312C5E418D691C900B8641A /* globe-black5.png in Resources */,
 				D3BF4D2418CE62C4003CB52B /* white1.png in Resources */,
 				D312C5E618D691C900B8641A /* globe-white5.png in Resources */,

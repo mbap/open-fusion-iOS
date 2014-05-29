@@ -163,7 +163,7 @@
     
     /**** UPDATE IMAGE WITH ARROW FACING AWAY FROM iPHONE ****/
     // Setup image for Alert View
-    UIImageView *alertImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"GSF_Insert_sensor_alert-v2.png"]];
+    UIImageView *alertImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"GSF_remove_sensor_alert-v2.png"]];
     
     switch (changeReason) {
         case SENSOR_INSERTED:

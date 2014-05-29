@@ -230,8 +230,6 @@
         cell.textLabel.text = [properties objectForKey:@"time"];
         
         if ([properties objectForKey:@"image"]) {
-            NSLog(@"%ld, %ld", (long)indexPath.section, indexPath.row);
-
             NSDictionary *images = [self.imageCache objectForKey:[NSString stringWithFormat:@"Section%ld", (long)indexPath.section]];
             cell.imageView.image = [images objectForKey:[NSString stringWithFormat:@"Row%lu", (unsigned long)indexPath.row]];
         }
