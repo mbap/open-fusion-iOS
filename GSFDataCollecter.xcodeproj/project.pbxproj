@@ -13,6 +13,14 @@
 		5B27182918E89D61005BF15E /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B27182818E89D61005BF15E /* AudioToolbox.framework */; };
 		5B62C7331936B2EB00F62BBD /* GSF_remove_sensor_alert-v2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B62C7321936B2EB00F62BBD /* GSF_remove_sensor_alert-v2.png */; };
 		5B67ACEA18E4B6EF008CC092 /* GSF_Insert_sensor_alert-v2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B67ACE918E4B6EF008CC092 /* GSF_Insert_sensor_alert-v2.png */; };
+		5BA324F81936E09D0077639E /* climate5.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BA324F71936E09D0077639E /* climate5.png */; };
+		5BA324FB1936E20B0077639E /* climate4_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BA324F91936E20B0077639E /* climate4_large.png */; };
+		5BA324FC1936E20B0077639E /* climate5_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BA324FA1936E20B0077639E /* climate5_large.png */; };
+		5BA324FE1936E2170077639E /* climate4.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BA324FD1936E2170077639E /* climate4.png */; };
+		5BA325011936E46A0077639E /* image5_l.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BA324FF1936E46A0077639E /* image5_l.png */; };
+		5BA325021936E46A0077639E /* sound5_l.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BA325001936E46A0077639E /* sound5_l.png */; };
+		5BA325051936E48F0077639E /* image4_l.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BA325031936E48F0077639E /* image4_l.png */; };
+		5BA325061936E48F0077639E /* sound4_l.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BA325041936E48F0077639E /* sound4_l.png */; };
 		5BC3156318E9CAE3004BBD95 /* GSFNoiseLevelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC3156218E9CAE3004BBD95 /* GSFNoiseLevelController.m */; };
 		96278767192D45FC00535DBD /* GSFMainViewButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 96278766192D45FC00535DBD /* GSFMainViewButton.m */; };
 		9627876D192D5B6800535DBD /* GSFRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9627876C192D5B6800535DBD /* GSFRootViewController.m */; };
@@ -143,6 +151,14 @@
 		5B62C7321936B2EB00F62BBD /* GSF_remove_sensor_alert-v2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GSF_remove_sensor_alert-v2.png"; sourceTree = "<group>"; };
 		5B67ACE918E4B6EF008CC092 /* GSF_Insert_sensor_alert-v2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GSF_Insert_sensor_alert-v2.png"; sourceTree = "<group>"; };
 		5B86529A18FA306100C4E4E0 /* GSFDataCollecter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = GSFDataCollecter.entitlements; sourceTree = "<group>"; };
+		5BA324F71936E09D0077639E /* climate5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = climate5.png; sourceTree = "<group>"; };
+		5BA324F91936E20B0077639E /* climate4_large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = climate4_large.png; sourceTree = "<group>"; };
+		5BA324FA1936E20B0077639E /* climate5_large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = climate5_large.png; sourceTree = "<group>"; };
+		5BA324FD1936E2170077639E /* climate4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = climate4.png; sourceTree = "<group>"; };
+		5BA324FF1936E46A0077639E /* image5_l.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image5_l.png; sourceTree = "<group>"; };
+		5BA325001936E46A0077639E /* sound5_l.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sound5_l.png; sourceTree = "<group>"; };
+		5BA325031936E48F0077639E /* image4_l.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image4_l.png; sourceTree = "<group>"; };
+		5BA325041936E48F0077639E /* sound4_l.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sound4_l.png; sourceTree = "<group>"; };
 		5BC3156118E9CAE3004BBD95 /* GSFNoiseLevelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFNoiseLevelController.h; sourceTree = "<group>"; };
 		5BC3156218E9CAE3004BBD95 /* GSFNoiseLevelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFNoiseLevelController.m; sourceTree = "<group>"; };
 		96278765192D45FC00535DBD /* GSFMainViewButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFMainViewButton.h; sourceTree = "<group>"; };
@@ -546,6 +562,14 @@
 				D3C578161932CFCF0004658A /* sound4.png */,
 				D3C5780E1932CE0E0004658A /* image5.png */,
 				D3C5780F1932CE0E0004658A /* pluggable5.png */,
+				5BA325031936E48F0077639E /* image4_l.png */,
+				5BA325041936E48F0077639E /* sound4_l.png */,
+				5BA324F91936E20B0077639E /* climate4_large.png */,
+				5BA324FF1936E46A0077639E /* image5_l.png */,
+				5BA325001936E46A0077639E /* sound5_l.png */,
+				5BA324FA1936E20B0077639E /* climate5_large.png */,
+				5BA324FD1936E2170077639E /* climate4.png */,
+				5BA324F71936E09D0077639E /* climate5.png */,
 				D3C578101932CE0E0004658A /* sound5.png */,
 				9627878C192D803A00535DBD /* saved5.png */,
 				9627878D192D803A00535DBD /* route5.png */,
@@ -686,17 +710,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BA325021936E46A0077639E /* sound5_l.png in Resources */,
 				9628237A190082BA00ABA86E /* GoogleMaps.bundle in Resources */,
 				D3641AFC18E10A7C00DBB5E7 /* Delete-icon.png in Resources */,
 				D312C5E518D691C900B8641A /* globe-transparent5.png in Resources */,
 				D3C578201932DE320004658A /* Default@2x.png in Resources */,
+				5BA324FC1936E20B0077639E /* climate5_large.png in Resources */,
 				D312C5E918D691C900B8641A /* icon-transparent-white5.png in Resources */,
 				9627878B192D7D2100535DBD /* collect.png in Resources */,
 				D3C578211932DE320004658A /* Default-568h@2x.png in Resources */,
 				D312C5DC18D6919800B8641A /* icon-white.png in Resources */,
 				D312C5D718D6919800B8641A /* globe-transparent.png in Resources */,
 				D312C5EA18D691C900B8641A /* icon-white5.png in Resources */,
+				5BA325051936E48F0077639E /* image4_l.png in Resources */,
 				D312C5D818D6919800B8641A /* globe-white.png in Resources */,
+				5BA325011936E46A0077639E /* image5_l.png in Resources */,
 				D3BF4D1D18CE5E35003CB52B /* transparent.png in Resources */,
 				D3C578191932CFCF0004658A /* sound4.png in Resources */,
 				D312C5D918D6919800B8641A /* icon-black.png in Resources */,
@@ -712,18 +740,21 @@
 				9627878F192D803A00535DBD /* saved5.png in Resources */,
 				D312C5C918CFEC9C00B8641A /* upload.png in Resources */,
 				96EAC4B918AD88280084B331 /* haarcascade_frontalface_alt2.xml in Resources */,
+				5BA324FB1936E20B0077639E /* climate4_large.png in Resources */,
 				96278791192D803A00535DBD /* collect5.png in Resources */,
 				96EAC4BA18AD88280084B331 /* haarcascade_frontalface_default.xml in Resources */,
 				DBB428561880A64F00139082 /* Images.xcassets in Resources */,
 				96278789192D7D2100535DBD /* saved.png in Resources */,
 				D3BF4D1E18CE5E35003CB52B /* white.png in Resources */,
 				DBB4284E1880A64F00139082 /* Main_iPhone.storyboard in Resources */,
+				5BA325061936E48F0077639E /* sound4_l.png in Resources */,
 				D312C5DA18D6919800B8641A /* icon-transparent-black.png in Resources */,
 				D312C5E718D691C900B8641A /* icon-black5.png in Resources */,
 				D312C5E818D691C900B8641A /* icon-transparent-black5.png in Resources */,
 				966F6C8A18AAC0A100BE3334 /* hogcascade_pedestrians.xml in Resources */,
 				D3C5781F1932DE320004658A /* Default-568h.png in Resources */,
 				D3BF4D1C18CE5E35003CB52B /* black.png in Resources */,
+				5BA324F81936E09D0077639E /* climate5.png in Resources */,
 				D3C5781E1932DE320004658A /* Default.png in Resources */,
 				D3C578181932CFCF0004658A /* pluggable4.png in Resources */,
 				D3BF4D2218CE62C4003CB52B /* black1.png in Resources */,
@@ -733,6 +764,7 @@
 				DBB428451880A64F00139082 /* InfoPlist.strings in Resources */,
 				5B62C7331936B2EB00F62BBD /* GSF_remove_sensor_alert-v2.png in Resources */,
 				D312C5E418D691C900B8641A /* globe-black5.png in Resources */,
+				5BA324FE1936E2170077639E /* climate4.png in Resources */,
 				D3BF4D2418CE62C4003CB52B /* white1.png in Resources */,
 				D312C5E618D691C900B8641A /* globe-white5.png in Resources */,
 				D312C5DB18D6919800B8641A /* icon-transparent-white.png in Resources */,

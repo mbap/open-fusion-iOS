@@ -47,13 +47,13 @@
     
     //load images into the views.
     if (screenSize.size.height > 500) {  // iPhone5/5s
-        [camera setButtonImage:[UIImage imageNamed:@"image5.png"]];
-        [sound setButtonImage:[UIImage imageNamed:@"sound5.png"]];
-        [pluggable setButtonImage:[UIImage imageNamed:@"pluggable5.png"]];
+        [camera setButtonImage:[UIImage imageNamed:@"image5_l.png"]];
+        [sound setButtonImage:[UIImage imageNamed:@"sound5_l.png"]];
+        [pluggable setButtonImage:[UIImage imageNamed:@"climate5_large.png"]];
     } else {                             // iPhone4/4s
-        [camera setButtonImage:[UIImage imageNamed:@"image4.png"]];
-        [sound setButtonImage:[UIImage imageNamed:@"sound4.png"]];
-        [pluggable setButtonImage:[UIImage imageNamed:@"pluggable4.png"]];
+        [camera setButtonImage:[UIImage imageNamed:@"image4_l.png"]];
+        [sound setButtonImage:[UIImage imageNamed:@"sound4_l.png"]];
+        [pluggable setButtonImage:[UIImage imageNamed:@"climate4_large.png"]];
     }
     
     // add selector to images to cause segue.
