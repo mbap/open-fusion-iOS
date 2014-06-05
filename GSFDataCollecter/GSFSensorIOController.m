@@ -77,6 +77,7 @@
 
 - (void) processIO: (AudioBufferList*) bufferList;
 - (void) channelFailure;
+- (void) checkAudioStatus;                  // Checks for changes in audio conditions that could disturb collection process.
 
 @end
 
@@ -510,7 +511,7 @@ static OSStatus hardwareIOCallback(void                         *inRefCon,
     switch (routeChangeReason) {
         // Sensor inserted
         case AVAudioSessionRouteChangeReasonNewDeviceAvailable:
-            // Dismiss alert if any and begin collection
+/*            // Dismiss alert if any and begin collection
             if (self.sensorAlert != nil) {
                 [self.sensorAlert dismissWithClickedButtonIndex:0 animated:YES];
                 self.sensorAlert = nil;
@@ -518,7 +519,7 @@ static OSStatus hardwareIOCallback(void                         *inRefCon,
             
             // Start IO communication
             [self startCollecting];
-            
+*/            
             // **** DEBUG ****
             NSLog(@"Sensor INSERTED");
             break;
@@ -551,7 +552,6 @@ static OSStatus hardwareIOCallback(void                         *inRefCon,
 /**
  *  Adds the alert view to the data staging area after an audio route change occurs
  *
- *  @param view         The UIView for the data staging area
  *  @param changeReason The NSInteger holding the reason why the audio route changed
  */
 - (void) addAlertViewToView: (NSInteger) changeReason {
