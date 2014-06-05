@@ -488,7 +488,7 @@ static OSStatus hardwareIOCallback(void                         *inRefCon,
             break;
             
         case AVAudioSessionInterruptionTypeEnded:
-            //[self startCollecting];
+            [self startCollecting];
             NSLog(@"Audio Interruption Ended\n");
             break;
             
@@ -510,9 +510,9 @@ static OSStatus hardwareIOCallback(void                         *inRefCon,
     switch (routeChangeReason) {
         // Sensor inserted
         case AVAudioSessionRouteChangeReasonNewDeviceAvailable:
-            /*// Dismiss alert if any and begin collection
+            // Dismiss alert if any and begin collection
             if (self.sensorAlert != nil) {
-                [self.sensorAlert dismissWithClickedButtonIndex:2 animated:YES];
+                [self.sensorAlert dismissWithClickedButtonIndex:0 animated:YES];
                 self.sensorAlert = nil;
             }
             
@@ -520,7 +520,7 @@ static OSStatus hardwareIOCallback(void                         *inRefCon,
             [self startCollecting];
             
             // **** DEBUG ****
-            NSLog(@"Sensor INSERTED"); */
+            NSLog(@"Sensor INSERTED");
             break;
             
         // Sensor removed
@@ -557,7 +557,7 @@ static OSStatus hardwareIOCallback(void                         *inRefCon,
 - (void) addAlertViewToView: (NSInteger) changeReason {
     // Dismiss any existing alert
     if (self.sensorAlert != nil) {
-        [self.sensorAlert dismissWithClickedButtonIndex:2 animated:NO];
+        [self.sensorAlert dismissWithClickedButtonIndex:0 animated:NO];
         self.sensorAlert = nil;
     }
     
@@ -604,14 +604,14 @@ static OSStatus hardwareIOCallback(void                         *inRefCon,
              delegate:self
              cancelButtonTitle:nil
              otherButtonTitles:@"Try Again", nil];
-            /*
+            
             [self.volumeSlider setTranslatesAutoresizingMaskIntoConstraints:NO];
             [self.sensorAlert.contentView addSubview:self.volumeSlider];
             [self.volumeSlider sdc_horizontallyCenterInSuperview];
             [self.sensorAlert.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[self.volumeSlider]|"
                                                                                                  options:0
                                                                                                  metrics:nil
-                                                                                                   views:NSDictionaryOfVariableBindings(self.volumeSlider)]];*/
+                                                                                                   views:NSDictionaryOfVariableBindings(self.volumeSlider)]];
             break;
             
         case CHANNEL_FAILURE:
@@ -619,7 +619,7 @@ static OSStatus hardwareIOCallback(void                         *inRefCon,
             self.sensorAlert =
             [[SDCAlertView alloc]
              initWithTitle:@"Audio Channel"
-             message:@"The audio input has changed from the GSF App. Please try collecting the sensor data again."
+             message:@"The audio input has interrupted from the GSF App and sensor. Please try collecting the sensor data again."
              delegate:self
              cancelButtonTitle:nil
              otherButtonTitles:@"Try Again", nil];
@@ -643,7 +643,7 @@ static OSStatus hardwareIOCallback(void                         *inRefCon,
  *  @param alertView   A SDCAlertView instance
  *  @param buttonIndex The button index selected by user.
  */
-- (void)alertView:(SDCAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+- (void) alertView:(SDCAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     switch (buttonIndex) {
         // Cancel Button pushed
         case 0:
@@ -671,6 +671,18 @@ static OSStatus hardwareIOCallback(void                         *inRefCon,
     }
 }
 
+- (void) alertView:(SDCAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    switch (buttonIndex) {
+        case 0:
+            // Checking for dismiss
+            NSLog(@"Made it to standard dismiss\n");
+            break;
+            
+        default:
+            NSLog(@"Uncaught dismiss\n");
+            break;
+    }
+}
 
 /**
  *  Process Input readinga and fills right channel output buffer with any response
@@ -682,7 +694,7 @@ static OSStatus hardwareIOCallback(void                         *inRefCon,
     if (self.waitACycle) {
         self.waitACycle = false;
         self.reqNewData = true;
-    } else {
+    } else if (bufferList->mBuffers != nil) {
         @try {
             // Realtime decode
             int j = 0;
