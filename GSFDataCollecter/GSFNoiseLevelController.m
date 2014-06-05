@@ -16,8 +16,10 @@
 
 @property BOOL readyToCollect;
 
+// Private functions
 - (BOOL) isSensorConnected;
 - (void) addAlertViewToView:(NSInteger) changeReason;
+- (void) checkAudioStatus;
 
 @end
     
@@ -92,6 +94,8 @@
         
         // Add audio route change listner callback
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noiseAudioRouteChangeListener:) name:AVAudioSessionRouteChangeNotification object:nil];
+        
+        [self checkAudioStatus];
         
         NSLog(@"Noise monitor STARTED");
     }
@@ -185,6 +189,7 @@
                                                                                                          views:NSDictionaryOfVariableBindings(alertImageView)]];
             
             break;
+            
         case 2:
             // Set up Alert View
             self.removeSensorAlert =
@@ -195,8 +200,10 @@
              cancelButtonTitle:nil
              otherButtonTitles:@"Try Again", nil];
             break;
+            
         default:
             NSLog(@"Blowing It In- addAlertViewToView");
+            break;
     }
     
     // Add alertView to current view

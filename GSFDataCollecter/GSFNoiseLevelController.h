@@ -35,10 +35,26 @@
 @property UIView *associatedView;               // *** View for ONE view alert system ***
 
 // Public fuction prototypes
-- (id) initWithView: (UIView *) view;       // Initializes noise object. Takes the calling UIViews view for alert messages
+/**
+ *  Initializes sensor object.
+ *
+ *  @param view         Takes the calling UIViews view for alert messages.
+ *  @return id          The class instance with initailized audio session and units
+ */
+- (id) initWithView: (UIView *) view;
+
+/**
+ *  Start/Stops the monitoring of an attached sensor
+ *
+ *  @param bool         A flag representing the whether to enable or disable sensor monitoring tools.
+ */
 - (void) mointorNoise: (BOOL) enable;
+
+/**
+ *  Averages ambient noise sample readings from mic.
+ *
+ */
 - (void) collectNoise;
-- (void) checkAudioStatus;
 
 // Delegate to pop viewcontroller when an alert occurs
 @property (nonatomic, weak) id <GSFNoiseLevelControllerDelgate> delegate;

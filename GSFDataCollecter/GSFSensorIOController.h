@@ -36,9 +36,27 @@
 @property BOOL audioSetup;
 
 // Public function prototypes
-- (id) initWithView: (UIView *) view;       // Initializes sensor object. Takes the calling UIViews view for alert messages
+/**
+ *  Initializes sensor object.
+ *
+ *  @param view         Takes the calling UIViews view for alert messages.
+ *  @return id          The class instance with initailized audio session and units
+ */
+- (id) initWithView: (UIView *) view;
+
+/**
+ *  Start/Stops the monitoring of an attached sensor
+ *
+ *  @param bool         A flag representing the whether to enable or disable sensor monitoring tools.
+ */
 - (void) monitorSensors: (BOOL) enable;     // Starts the power and communication with micro
-- (void) checkAudioStatus;                  // Checks for changes in audio conditions that could disturb collection process.
+
+
+/**
+ *  Averages sample readings from micro and returns an NSMutableArray of the results.
+ *
+ *  @return nsmuableArray An NSMutableArray containing the decoded sensor data.
+ */
 - (NSMutableArray*) collectSensorData;      // Returns an array of sensor readings
 
 // Delegate to limit number of sensor packets collected

@@ -59,7 +59,6 @@
     self.ambientNoise.delegate = self;
     
     [self.ambientNoise mointorNoise:YES];
-    [self.ambientNoise checkAudioStatus];
     
     self.data = [[GSFData alloc] init];
     
