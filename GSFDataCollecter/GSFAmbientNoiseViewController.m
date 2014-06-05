@@ -40,6 +40,15 @@
 {
     [super viewDidLoad];
     
+    // get screen size
+    CGRect screenSize = [[UIScreen mainScreen] bounds];
+    UIImageView *noiseBackGroundImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, screenSize.size.width, screenSize.size.height)];
+    noiseBackGroundImage.contentMode = UIViewContentModeCenter;
+    noiseBackGroundImage.image = [UIImage imageNamed:@"ambient_noise_dropshadow_150px.png"];
+    [self.view addSubview:noiseBackGroundImage];
+    [self.view sendSubviewToBack:noiseBackGroundImage];
+
+    
     self.navigationItem.backBarButtonItem = nil;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Discard" style:UIBarButtonItemStyleBordered target:self action:@selector(discardButtonPushed)];
     

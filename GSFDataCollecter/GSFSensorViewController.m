@@ -43,6 +43,14 @@
 {
     [super viewDidLoad];
     
+    // get screen size
+    CGRect screenSize = [[UIScreen mainScreen] bounds];
+    UIImageView *sensorBackGroundImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, screenSize.size.width, screenSize.size.height)];
+    sensorBackGroundImage.contentMode = UIViewContentModeCenter;
+    sensorBackGroundImage.image = [UIImage imageNamed:@"climate_smooth_drop_shadow_150px.png"];
+    [self.view addSubview:sensorBackGroundImage];
+    [self.view sendSubviewToBack:sensorBackGroundImage];
+    
     self.collectionComplete = false;
     self.data = [[GSFData alloc] init];
     
